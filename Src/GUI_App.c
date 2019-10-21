@@ -46,8 +46,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "_config.h"
-#include "_swv.h"
 #include "cmsis_os.h"
 #include "GUI_App.h"
 #include "GUI.h"
@@ -84,8 +82,6 @@ void GRAPHICS_MainTask(void) {
 	GUI_SelectLayer(1);
 	GUI_SetBkColor(GUI_TRANSPARENT);
 	GUI_Clear();
-
-	SWV_SendStrLn("Run");
 
 	GUI_SelectLayer(0);
 #if (HMI_Left == 1)
