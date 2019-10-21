@@ -274,9 +274,9 @@ void DMA2D_IRQHandler(void);
 #endif
 
 /* Define the offset of the frame to be used */
-//#define LCD_FRAME_BUFFER ((U32)0xD0000000)
-#define LCD_LAYER0_FRAME_BUFFER  ((uint32_t)0xD0000000)
-#define LCD_LAYER1_FRAME_BUFFER  ((uint32_t)0xD0400000)
+//#define LCD_FRAME_BUFFER ((U32)0xC0000000)
+#define LCD_LAYER0_FRAME_BUFFER  ((uint32_t)0xC0000000)
+#define LCD_LAYER1_FRAME_BUFFER  ((uint32_t)0xC0400000)
 
 /**
  * @}

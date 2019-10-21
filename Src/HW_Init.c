@@ -96,14 +96,14 @@ void MX_LCD_Init(void) {
 	hltdc.Init.VSPolarity = LTDC_VSPOLARITY_AL;
 	hltdc.Init.DEPolarity = LTDC_DEPOLARITY_AL;
 	hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
-	hltdc.Init.HorizontalSync = 3;
-	hltdc.Init.VerticalSync = 3;
-	hltdc.Init.AccumulatedHBP = 46;
-	hltdc.Init.AccumulatedVBP = 15;
-	hltdc.Init.AccumulatedActiveW = 366;
-	hltdc.Init.AccumulatedActiveH = 255;
-	hltdc.Init.TotalWidth = 374;
-	hltdc.Init.TotalHeigh = 263;
+	hltdc.Init.HorizontalSync = 42;
+	hltdc.Init.VerticalSync = 11;
+	hltdc.Init.AccumulatedHBP = 85;
+	hltdc.Init.AccumulatedVBP = 23;
+	hltdc.Init.AccumulatedActiveW = 405;
+	hltdc.Init.AccumulatedActiveH = 263;
+	hltdc.Init.TotalWidth = 480;
+	hltdc.Init.TotalHeigh = 300;
 	hltdc.Init.Backcolor.Blue = 0;
 	hltdc.Init.Backcolor.Green = 0;
 	hltdc.Init.Backcolor.Red = 0;
@@ -120,7 +120,7 @@ void MX_LCD_Init(void) {
 	pLayerCfg.Alpha0 = 0;
 	pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
 	pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
-	pLayerCfg.FBStartAdress = 0xD0000000;
+	pLayerCfg.FBStartAdress = 0xC0000000;
 	pLayerCfg.ImageWidth = 320;
 	pLayerCfg.ImageHeight = 240;
 	pLayerCfg.Backcolor.Blue = 0;
@@ -139,7 +139,7 @@ void MX_LCD_Init(void) {
 	pLayerCfg1.Alpha0 = 0;
 	pLayerCfg1.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
 	pLayerCfg1.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
-	pLayerCfg1.FBStartAdress = 0xD0400000;
+	pLayerCfg1.FBStartAdress = 0xC0400000;
 	pLayerCfg1.ImageWidth = 320;
 	pLayerCfg1.ImageHeight = 240;
 	pLayerCfg1.Backcolor.Blue = 0;
@@ -172,7 +172,7 @@ void MX_FMC_Init(void) {
 	 */
 	hsdram1.Instance = FMC_SDRAM_DEVICE;
 	/* hsdram1.Init */
-	hsdram1.Init.SDBank = FMC_SDRAM_BANK2;
+	hsdram1.Init.SDBank = FMC_SDRAM_BANK1;
 	hsdram1.Init.ColumnBitsNumber = FMC_SDRAM_COLUMN_BITS_NUM_8;
 	hsdram1.Init.RowBitsNumber = FMC_SDRAM_ROW_BITS_NUM_12;
 	hsdram1.Init.MemoryDataWidth = FMC_SDRAM_MEM_BUS_WIDTH_16;
@@ -209,7 +209,7 @@ void MX_SDRAM_InitEx(void) {
 
 	/* Step 1: Configure a clock configuration enable command */
 	Command.CommandMode = FMC_SDRAM_CMD_CLK_ENABLE;
-	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
 	Command.AutoRefreshNumber = 1;
 	Command.ModeRegisterDefinition = 0;
 
@@ -222,7 +222,7 @@ void MX_SDRAM_InitEx(void) {
 
 	/* Step 3: Configure a PALL (precharge all) command */
 	Command.CommandMode = FMC_SDRAM_CMD_PALL;
-	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
 	Command.AutoRefreshNumber = 1;
 	Command.ModeRegisterDefinition = 0;
 
@@ -231,8 +231,8 @@ void MX_SDRAM_InitEx(void) {
 
 	/* Step 4: Configure an Auto Refresh command */
 	Command.CommandMode = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
-	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
-	Command.AutoRefreshNumber = 4;
+	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
+	Command.AutoRefreshNumber = 8;
 	Command.ModeRegisterDefinition = 0;
 
 	/* Send the command */
@@ -247,7 +247,7 @@ void MX_SDRAM_InitEx(void) {
  SDRAM_MODEREG_WRITEBURST_MODE_SINGLE;
 
 	Command.CommandMode = FMC_SDRAM_CMD_LOAD_MODE;
-	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
 	Command.AutoRefreshNumber = 1;
 	Command.ModeRegisterDefinition = tmpmrd;
 
@@ -281,7 +281,7 @@ void MX_DMA2D_Init(void) {
 //  if(ltdcHandle->Instance==LTDC)
 //  {
 //  /* USER CODE BEGIN LTDC_MspInit 0 */
-////////////////////
+////////////////////////
 //  /* USER CODE END LTDC_MspInit 0 */
 //    /* Enable Peripheral clock */
 //    __HAL_RCC_LTDC_CLK_ENABLE();
@@ -375,7 +375,7 @@ void MX_DMA2D_Init(void) {
 //    HAL_NVIC_SetPriority(LTDC_IRQn, 5, 0);
 //    HAL_NVIC_EnableIRQ(LTDC_IRQn);
 //  /* USER CODE BEGIN LTDC_MspInit 1 */
-//////////////////////////////////////
+//////////////////////////////////////////
 //  /* USER CODE END LTDC_MspInit 1 */
 //  }
 //}
@@ -385,7 +385,7 @@ void MX_DMA2D_Init(void) {
 //  if(ltdcHandle->Instance==LTDC)
 //  {
 //  /* USER CODE BEGIN LTDC_MspDeInit 0 */
-//////////////////////////////////////
+//////////////////////////////////////////
 //  /* USER CODE END LTDC_MspDeInit 0 */
 //    /* Peripheral clock disable */
 //    __HAL_RCC_LTDC_CLK_DISABLE();
@@ -458,6 +458,8 @@ static void HAL_FMC_MspInit(void) {
 	 PF4   ------> FMC_A4
 	 PF5   ------> FMC_A5
 	 PC0   ------> FMC_SDNWE
+	 PC2   ------> FMC_SDNE0
+	 PC3   ------> FMC_SDCKE0
 	 PF11   ------> FMC_SDNRAS
 	 PF12   ------> FMC_A6
 	 PF13   ------> FMC_A7
@@ -485,8 +487,6 @@ static void HAL_FMC_MspInit(void) {
 	 PD0   ------> FMC_D2
 	 PD1   ------> FMC_D3
 	 PG15   ------> FMC_SDNCAS
-	 PB5   ------> FMC_SDCKE1
-	 PB6   ------> FMC_SDNE1
 	 PE0   ------> FMC_NBL0
 	 PE1   ------> FMC_NBL1
 	 */
@@ -498,7 +498,7 @@ static void HAL_FMC_MspInit(void) {
 	GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
 	HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
-	GPIO_InitStruct.Pin = GPIO_PIN_0;
+	GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_2 | GPIO_PIN_3;
 	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -526,13 +526,6 @@ static void HAL_FMC_MspInit(void) {
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
 	HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
-
-	GPIO_InitStruct.Pin = GPIO_PIN_5 | GPIO_PIN_6;
-	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 	/* USER CODE BEGIN FMC_MspInit 1 */
 	/* USER CODE END FMC_MspInit 1 */
@@ -569,6 +562,8 @@ static void HAL_FMC_MspDeInit(void) {
 	 PF4   ------> FMC_A4
 	 PF5   ------> FMC_A5
 	 PC0   ------> FMC_SDNWE
+	 PC2   ------> FMC_SDNE0
+	 PC3   ------> FMC_SDCKE0
 	 PF11   ------> FMC_SDNRAS
 	 PF12   ------> FMC_A6
 	 PF13   ------> FMC_A7
@@ -596,8 +591,6 @@ static void HAL_FMC_MspDeInit(void) {
 	 PD0   ------> FMC_D2
 	 PD1   ------> FMC_D3
 	 PG15   ------> FMC_SDNCAS
-	 PB5   ------> FMC_SDCKE1
-	 PB6   ------> FMC_SDNE1
 	 PE0   ------> FMC_NBL0
 	 PE1   ------> FMC_NBL1
 	 */
@@ -605,7 +598,7 @@ static void HAL_FMC_MspDeInit(void) {
 			GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14
 					| GPIO_PIN_15);
 
-	HAL_GPIO_DeInit(GPIOC, GPIO_PIN_0);
+	HAL_GPIO_DeInit(GPIOC, GPIO_PIN_0 | GPIO_PIN_2 | GPIO_PIN_3);
 
 	HAL_GPIO_DeInit(GPIOG, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_8 | GPIO_PIN_15);
 
@@ -614,8 +607,6 @@ static void HAL_FMC_MspDeInit(void) {
 					| GPIO_PIN_1);
 
 	HAL_GPIO_DeInit(GPIOD, GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_14 | GPIO_PIN_15 | GPIO_PIN_0 | GPIO_PIN_1);
-
-	HAL_GPIO_DeInit(GPIOB, GPIO_PIN_5 | GPIO_PIN_6);
 
 	/* USER CODE BEGIN FMC_MspDeInit 1 */
 	/* USER CODE END FMC_MspDeInit 1 */
@@ -630,18 +621,18 @@ void HAL_SDRAM_MspDeInit(SDRAM_HandleTypeDef *hsdram) {
 
 	/* USER CODE END SDRAM_MspDeInit 1 */
 }
-//
+
 //void HAL_DMA2D_MspInit(DMA2D_HandleTypeDef* dma2dHandle)
 //{
 //  if(dma2dHandle->Instance==DMA2D)
 //  {
 //  /* USER CODE BEGIN DMA2D_MspInit 0 */
-//////////////////////////////////////
+//////////////////////////////////////////
 //  /* USER CODE END DMA2D_MspInit 0 */
 //    /* Enable Peripheral clock */
 //    __HAL_RCC_DMA2D_CLK_ENABLE();
 //  /* USER CODE BEGIN DMA2D_MspInit 1 */
-//////////////////////////////////////
+//////////////////////////////////////////
 //  /* USER CODE END DMA2D_MspInit 1 */
 //  }
 //}
@@ -651,12 +642,12 @@ void HAL_SDRAM_MspDeInit(SDRAM_HandleTypeDef *hsdram) {
 //  if(dma2dHandle->Instance==DMA2D)
 //  {
 //  /* USER CODE BEGIN DMA2D_MspDeInit 0 */
-//////////////////////////////////////
+//////////////////////////////////////////
 //  /* USER CODE END DMA2D_MspDeInit 0 */
 //    /* Peripheral clock disable */
 //    __HAL_RCC_DMA2D_CLK_DISABLE();
 //  /* USER CODE BEGIN DMA2D_MspDeInit 1 */
-//////////////////////////////////////
+//////////////////////////////////////////
 //  /* USER CODE END DMA2D_MspDeInit 1 */
 //  }
 //}
