@@ -22,7 +22,5 @@
 // Function prototype
 void BSP_Led_Write(uint8_t number, uint8_t state);
 void BSP_Led_Toggle(uint8_t number);
-void Get_RTC(char *dateTime);
-void Set_RTC(char *dateTime);
 
 #endif /* CONFIG_H_ */

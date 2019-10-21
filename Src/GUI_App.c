@@ -46,6 +46,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "_config.h"
+#include "_swv.h"
 #include "cmsis_os.h"
 #include "GUI_App.h"
 #include "GUI.h"
@@ -82,6 +84,8 @@ void GRAPHICS_MainTask(void) {
 	GUI_SelectLayer(1);
 	GUI_SetBkColor(GUI_TRANSPARENT);
 	GUI_Clear();
+
+	SWV_SendStrLn("Run");
 
 	GUI_SelectLayer(0);
 #if (HMI_Left == 1)
@@ -323,17 +327,17 @@ void Set_Left_Jarum(uint8_t deg, uint16_t x, uint16_t y, uint16_t r, uint16_t h,
 
 void Set_Left_Trip(char mode) {
 	uint16_t x = 131, y = 86;
-//	static char mod = 'C';
+	//	static char mod = 'C';
 
-//	if(mode != mod){
+	//	if(mode != mod){
 	GUI_RECT pRect_Left_Trip = { x, y, x + bmHMI_Left_Trip_A.XSize, y + bmHMI_Left_Trip_A.YSize };
 	if (mode == 'A') {
 		Set_Indikator(&bmHMI_Left, &pRect_Left_Trip, &bmHMI_Left_Trip_A, x, y, 1, 254);
 	} else {
 		Set_Indikator(&bmHMI_Left, &pRect_Left_Trip, &bmHMI_Left_Trip_B, x, y, 1, 254);
 	}
-//		mod = mode;
-//	}
+	//		mod = mode;
+	//	}
 }
 #else
 
