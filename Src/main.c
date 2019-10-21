@@ -24,6 +24,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "_guiapp.h"
 #include "_config.h"
 /* USER CODE END Includes */
 
@@ -91,7 +92,6 @@ int main(void) {
 	SystemClock_Config();
 
 	/* USER CODE BEGIN SysInit */
-
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
@@ -163,11 +163,11 @@ void SystemClock_Config(void) {
 	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
 	RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = { 0 };
 
-	/** Configure the main internal regulator output voltage 
+	/** Configure the main internal regulator output voltage
 	 */
 	__HAL_RCC_PWR_CLK_ENABLE();
 	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-	/** Initializes the CPU, AHB and APB busses clocks 
+	/** Initializes the CPU, AHB and APB busses clocks
 	 */
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
 	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
@@ -180,12 +180,12 @@ void SystemClock_Config(void) {
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
 		Error_Handler();
 	}
-	/** Activate the Over-Drive mode 
+	/** Activate the Over-Drive mode
 	 */
 	if (HAL_PWREx_EnableOverDrive() != HAL_OK) {
 		Error_Handler();
 	}
-	/** Initializes the CPU, AHB and APB busses clocks 
+	/** Initializes the CPU, AHB and APB busses clocks
 	 */
 	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
@@ -238,20 +238,40 @@ static void MX_GPIO_Init(void) {
 	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 
 	/* GPIO Ports Clock Enable */
+	__HAL_RCC_GPIOE_CLK_ENABLE();
+	__HAL_RCC_GPIOC_CLK_ENABLE();
 	__HAL_RCC_GPIOF_CLK_ENABLE();
 	__HAL_RCC_GPIOH_CLK_ENABLE();
-	__HAL_RCC_GPIOC_CLK_ENABLE();
 	__HAL_RCC_GPIOA_CLK_ENABLE();
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 	__HAL_RCC_GPIOG_CLK_ENABLE();
-	__HAL_RCC_GPIOE_CLK_ENABLE();
 	__HAL_RCC_GPIOD_CLK_ENABLE();
 
 	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(GPIOG, LD3_Pin | LD4_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOE, RIGHT_LD1_Pin | RIGHT_LD2_Pin, GPIO_PIN_RESET);
 
-	/*Configure GPIO pins : LD3_Pin LD4_Pin */
-	GPIO_InitStruct.Pin = LD3_Pin | LD4_Pin;
+	/*Configure GPIO pin Output Level */
+	HAL_GPIO_WritePin(LEFT_BACKLIGHT_GPIO_Port, LEFT_BACKLIGHT_Pin, GPIO_PIN_RESET);
+
+	/*Configure GPIO pin Output Level */
+	HAL_GPIO_WritePin(GPIOG, LEFT_LD1_Pin | LEFT_LD2_Pin, GPIO_PIN_RESET);
+
+	/*Configure GPIO pins : RIGHT_LD1_Pin RIGHT_LD2_Pin */
+	GPIO_InitStruct.Pin = RIGHT_LD1_Pin | RIGHT_LD2_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+	/*Configure GPIO pin : LEFT_BACKLIGHT_Pin */
+	GPIO_InitStruct.Pin = LEFT_BACKLIGHT_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(LEFT_BACKLIGHT_GPIO_Port, &GPIO_InitStruct);
+
+	/*Configure GPIO pins : LEFT_LD1_Pin LEFT_LD2_Pin */
+	GPIO_InitStruct.Pin = LEFT_LD1_Pin | LEFT_LD2_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -271,8 +291,10 @@ static void MX_GPIO_Init(void) {
 /* USER CODE END Header_StartLcdTask */
 void StartLcdTask(void const *argument) {
 	/* Graphic application */
-	GRAPHICS_MainTask();
+	//  GRAPHICS_MainTask();
 	/* USER CODE BEGIN 5 */
+	HAL_GPIO_WritePin(LEFT_BACKLIGHT_GPIO_Port, LEFT_BACKLIGHT_Pin, GPIO_PIN_SET);
+	GUI_MainTask();
 	/* Infinite loop */
 	for (;;) {
 		osDelay(1);
@@ -291,7 +313,7 @@ void StartCanTask(void const *argument) {
 	/* USER CODE BEGIN StartCanTask */
 	/* Infinite loop */
 	for (;;) {
-//		BSP_Led_Toggle(2);
+		//		BSP_Led_Toggle(2);
 		osDelay(500);
 	}
 	/* USER CODE END StartCanTask */
@@ -308,7 +330,7 @@ void StartSerialTask(void const *argument) {
 	/* USER CODE BEGIN StartSerialTask */
 	/* Infinite loop */
 	for (;;) {
-//		BSP_Led_Toggle(1);
+		//		BSP_Led_Toggle(1);
 		osDelay(250);
 	}
 	/* USER CODE END StartSerialTask */
@@ -347,18 +369,18 @@ void Error_Handler(void) {
 
 #ifdef  USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
 void assert_failed(uint8_t *file, uint32_t line)
-{ 
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
+{
+	/* USER CODE BEGIN 6 */
+	/* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
+	/* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
 

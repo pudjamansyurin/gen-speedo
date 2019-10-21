@@ -9,16 +9,16 @@
 
 void BSP_Led_Write(uint8_t number, uint8_t state) {
 	if (number == 1) {
-		HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, state);
+		HAL_GPIO_WritePin(LEFT_LD1_GPIO_Port, LEFT_LD1_Pin, state);
 	} else {
-		HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin, state);
+		HAL_GPIO_WritePin(LEFT_LD2_GPIO_Port, LEFT_LD2_Pin, state);
 	}
 }
 
 void BSP_Led_Toggle(uint8_t number) {
 	if (number == 1) {
-		HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
+		HAL_GPIO_TogglePin(LEFT_LD1_GPIO_Port, LEFT_LD1_Pin);
 	} else {
-		HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
+		HAL_GPIO_TogglePin(LEFT_LD2_GPIO_Port, LEFT_LD2_Pin);
 	}
 }

@@ -61,10 +61,16 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LD3_Pin GPIO_PIN_13
-#define LD3_GPIO_Port GPIOG
-#define LD4_Pin GPIO_PIN_14
-#define LD4_GPIO_Port GPIOG
+#define RIGHT_LD1_Pin GPIO_PIN_2
+#define RIGHT_LD1_GPIO_Port GPIOE
+#define RIGHT_LD2_Pin GPIO_PIN_3
+#define RIGHT_LD2_GPIO_Port GPIOE
+#define LEFT_BACKLIGHT_Pin GPIO_PIN_14
+#define LEFT_BACKLIGHT_GPIO_Port GPIOC
+#define LEFT_LD1_Pin GPIO_PIN_2
+#define LEFT_LD1_GPIO_Port GPIOG
+#define LEFT_LD2_Pin GPIO_PIN_3
+#define LEFT_LD2_GPIO_Port GPIOG
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

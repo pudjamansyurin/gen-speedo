@@ -281,7 +281,7 @@ void MX_DMA2D_Init(void) {
 //  if(ltdcHandle->Instance==LTDC)
 //  {
 //  /* USER CODE BEGIN LTDC_MspInit 0 */
-////////////////////////
+//////////////////////////////
 //  /* USER CODE END LTDC_MspInit 0 */
 //    /* Enable Peripheral clock */
 //    __HAL_RCC_LTDC_CLK_ENABLE();
@@ -375,7 +375,7 @@ void MX_DMA2D_Init(void) {
 //    HAL_NVIC_SetPriority(LTDC_IRQn, 5, 0);
 //    HAL_NVIC_EnableIRQ(LTDC_IRQn);
 //  /* USER CODE BEGIN LTDC_MspInit 1 */
-//////////////////////////////////////////
+////////////////////////////////////////////////
 //  /* USER CODE END LTDC_MspInit 1 */
 //  }
 //}
@@ -385,7 +385,7 @@ void MX_DMA2D_Init(void) {
 //  if(ltdcHandle->Instance==LTDC)
 //  {
 //  /* USER CODE BEGIN LTDC_MspDeInit 0 */
-//////////////////////////////////////////
+////////////////////////////////////////////////
 //  /* USER CODE END LTDC_MspDeInit 0 */
 //    /* Peripheral clock disable */
 //    __HAL_RCC_LTDC_CLK_DISABLE();
@@ -621,18 +621,18 @@ void HAL_SDRAM_MspDeInit(SDRAM_HandleTypeDef *hsdram) {
 
 	/* USER CODE END SDRAM_MspDeInit 1 */
 }
-
+//
 //void HAL_DMA2D_MspInit(DMA2D_HandleTypeDef* dma2dHandle)
 //{
 //  if(dma2dHandle->Instance==DMA2D)
 //  {
 //  /* USER CODE BEGIN DMA2D_MspInit 0 */
-//////////////////////////////////////////
+////////////////////////////////////////////////
 //  /* USER CODE END DMA2D_MspInit 0 */
 //    /* Enable Peripheral clock */
 //    __HAL_RCC_DMA2D_CLK_ENABLE();
 //  /* USER CODE BEGIN DMA2D_MspInit 1 */
-//////////////////////////////////////////
+////////////////////////////////////////////////
 //  /* USER CODE END DMA2D_MspInit 1 */
 //  }
 //}
@@ -642,12 +642,12 @@ void HAL_SDRAM_MspDeInit(SDRAM_HandleTypeDef *hsdram) {
 //  if(dma2dHandle->Instance==DMA2D)
 //  {
 //  /* USER CODE BEGIN DMA2D_MspDeInit 0 */
-//////////////////////////////////////////
+////////////////////////////////////////////////
 //  /* USER CODE END DMA2D_MspDeInit 0 */
 //    /* Peripheral clock disable */
 //    __HAL_RCC_DMA2D_CLK_DISABLE();
 //  /* USER CODE BEGIN DMA2D_MspDeInit 1 */
-//////////////////////////////////////////
+////////////////////////////////////////////////
 //  /* USER CODE END DMA2D_MspDeInit 1 */
 //  }
 //}
