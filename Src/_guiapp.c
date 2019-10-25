@@ -5,8 +5,6 @@
  *      Author: Puja
  */
 
-#define HMI_Left 0
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "_guiapp.h"
@@ -15,7 +13,7 @@
 #include <stdio.h>				// for: sprintf()
 #include <string.h>				// for: strlen()
 #include <math.h>					// for: sin(), cos()
-#if (HMI_Left == 1)
+#if USE_HMI_LEFT
 #include "HMI_Left.c"
 #else
 #include "HMI_Right.c"
@@ -25,7 +23,7 @@
 float D2R(uint16_t deg);
 void Set_Indikator(GUI_CONST_STORAGE GUI_BITMAP *bg, GUI_RECT *pRect, GUI_CONST_STORAGE GUI_BITMAP *fg, uint16_t x, uint16_t y,
 		uint8_t status, uint8_t alpha);
-#if (HMI_Left == 1)
+#if USE_HMI_LEFT
 void Set_Left_Sein(uint8_t status, uint32_t *tick);
 void Set_Left_Temp(uint8_t status);
 void Set_Left_Lamp(uint8_t status);
@@ -47,7 +45,7 @@ void GUI_MainTask(void) {
 	GUI_Clear();
 
 	GUI_SelectLayer(0);
-#if (HMI_Left == 1)
+#if USE_HMI_LEFT
 	GUI_DrawBitmap(&bmHMI_Left, 0, 0);
 	const GUI_POINT aPoints[] = { { 300, 66 }, { 257, 66 }, { 230, 39 }, { 144, 39 }, { 87, 66 }, { 39, 175 }, { 55, 205 }, { 215, 205 }, {
 			250, 153 }, { 300, 153 } };
@@ -69,7 +67,7 @@ void GUI_MainTask(void) {
 	// start of circular booting animation
 	uint16_t k;
 	GUI_SetColor(GUI_TRANSPARENT);
-#if (HMI_Left == 1)
+#if USE_HMI_LEFT
 	for (k = 0; k <= 20; k++) {
 		GUI_FillRect(320 - 40 - k, 120 - 1, 320 - 40, 170);
 		GUI_Delay(20);
@@ -103,7 +101,7 @@ void GUI_MainTask(void) {
 	// end of booting animation
 
 	GUI_SelectLayer(0);
-#if (HMI_Left == 1)
+#if USE_HMI_LEFT
 	GUI_DrawBitmap(&bmHMI_Left, 0, 0);
 	GUI_RECT pRect_SubTrip = { 159, 84, 159 + 64, 84 + 24 };
 	GUI_RECT pRect_TotalTrip = { 159, 107, 159 + 64, 107 + 24 };
@@ -133,7 +131,7 @@ void GUI_MainTask(void) {
 	uint32_t tick = osKernelSysTick();
 	while (1) {
 
-#if (HMI_Left == 1)
+#if USE_HMI_LEFT
 		Set_Left_Sein(1, &tick);
 		Set_Left_Temp((i / 20) % 2);
 		Set_Left_Lamp((i / 15) % 2);
@@ -208,13 +206,13 @@ void Set_Indikator(GUI_CONST_STORAGE GUI_BITMAP *bg, GUI_RECT *pRect, GUI_CONST_
 	}
 }
 
-#if (HMI_Left == 1)
+#if USE_HMI_LEFT
 
 void Set_Left_Sein(uint8_t status, uint32_t *tick) {
 	uint16_t x = 277, y = 82;
 	static uint8_t stat = 2, toggle = 1;
 
-	GUI_RECT pRect_Left_Sein = {x, y, x + bmHMI_Left_Sein.XSize, y + bmHMI_Left_Sein.YSize};
+	GUI_RECT pRect_Left_Sein = { x, y, x + bmHMI_Left_Sein.XSize, y + bmHMI_Left_Sein.YSize };
 	if (status == 1) {
 		if ((osKernelSysTick() - *tick) >= osKernelSysTickMicroSec(500*1000)) {
 			Set_Indikator(&bmHMI_Left, &pRect_Left_Sein, &bmHMI_Left_Sein, x, y, toggle, 200);
@@ -234,7 +232,7 @@ void Set_Left_Temp(uint8_t status) {
 	static uint8_t stat = 2;
 
 	if (status != stat) {
-		GUI_RECT pRect_Left_Temp = {x, y, x + bmHMI_Left_Temp.XSize, y + bmHMI_Left_Temp.YSize};
+		GUI_RECT pRect_Left_Temp = { x, y, x + bmHMI_Left_Temp.XSize, y + bmHMI_Left_Temp.YSize };
 		Set_Indikator(&bmHMI_Left, &pRect_Left_Temp, &bmHMI_Left_Temp, x, y, status, 200);
 		stat = status;
 	}
@@ -245,7 +243,7 @@ void Set_Left_Lamp(uint8_t status) {
 	static uint8_t stat = 2;
 
 	if (status != stat) {
-		GUI_RECT pRect_Left_Lamp = {x, y, x + bmHMI_Left_Lamp.XSize, y + bmHMI_Left_Lamp.YSize};
+		GUI_RECT pRect_Left_Lamp = { x, y, x + bmHMI_Left_Lamp.XSize, y + bmHMI_Left_Lamp.YSize };
 		Set_Indikator(&bmHMI_Left, &pRect_Left_Lamp, &bmHMI_Left_Lamp, x, y, status, 200);
 		stat = status;
 	}
@@ -253,9 +251,9 @@ void Set_Left_Lamp(uint8_t status) {
 
 void Set_Left_Jarum(uint8_t deg, uint16_t x, uint16_t y, uint16_t r, uint16_t h, uint8_t max) {
 	GUI_POINT aPoints_Jarum[] = {
-		{	(x + r) + (((h / 2) + 1) * cos(D2R(deg + 270))), (y + (h / 2) + 1) + (((h / 2) + 1) * sin(D2R(deg + 270)))}, //atas
-		{	(x + r) + (r * cos(D2R(deg + 180))), (y + (h / 2) + 1) + (r * sin(D2R(deg + 180)))}, //ujung
-		{	(x + r) + (((h / 2) + 1) * cos(D2R(deg + 90))), (y + (h / 2) + 1) + (((h / 2) + 1) * sin(D2R(deg + 90)))}  //bawah
+			{ (x + r) + (((h / 2) + 1) * cos(D2R(deg + 270))), (y + (h / 2) + 1) + (((h / 2) + 1) * sin(D2R(deg + 270))) }, //atas
+			{ (x + r) + (r * cos(D2R(deg + 180))), (y + (h / 2) + 1) + (r * sin(D2R(deg + 180))) }, //ujung
+			{ (x + r) + (((h / 2) + 1) * cos(D2R(deg + 90))), (y + (h / 2) + 1) + (((h / 2) + 1) * sin(D2R(deg + 90))) }  //bawah
 	};
 	GUI_SetColor(GUI_RED);
 	GUI_AA_SetFactor(6);
@@ -271,7 +269,7 @@ void Set_Left_Trip(char mode) {
 	//	static char mod = 'C';
 
 	//	if(mode != mod){
-	GUI_RECT pRect_Left_Trip = {x, y, x + bmHMI_Left_Trip_A.XSize, y + bmHMI_Left_Trip_A.YSize};
+	GUI_RECT pRect_Left_Trip = { x, y, x + bmHMI_Left_Trip_A.XSize, y + bmHMI_Left_Trip_A.YSize };
 	if (mode == 'A') {
 		Set_Indikator(&bmHMI_Left, &pRect_Left_Trip, &bmHMI_Left_Trip_A, x, y, 1, 254);
 	} else {

@@ -11,6 +11,7 @@
 #include "main.h"
 #include <stdlib.h>				// for: itoa()
 #include <stdio.h>				// for: sprintf()
+#include "_guiapp.h"
 #include "_swv.h"
 
 // macro to manipulate bit
@@ -22,5 +23,6 @@
 // Function prototype
 void BSP_Led_Write(uint8_t number, uint8_t state);
 void BSP_Led_Toggle(uint8_t number);
+void BSP_Set_Backlight(uint8_t state);
 
 #endif /* CONFIG_H_ */

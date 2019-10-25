@@ -8,6 +8,8 @@
 #ifndef GUIAPP_H_
 #define GUIAPP_H_
 
+#define USE_HMI_LEFT 					1
+
 void GUI_MainTask(void);
 
 #endif /* GUIAPP_H_ */

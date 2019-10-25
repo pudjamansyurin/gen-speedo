@@ -7,7 +7,7 @@
 
 #include "_swv.h"
 
-//extern osMutexId SwvMutexHandle;
+extern osMutexId SwvMutexHandle;
 
 void SWV_SendChar(char ch) {
 #if SWV_DEBUG
@@ -20,7 +20,7 @@ void SWV_SendChar(char ch) {
 }
 
 void SWV_SendInt(int32_t num) {
-//	osMutexWait(SwvMutexHandle, osWaitForever);
+	osMutexWait(SwvMutexHandle, osWaitForever);
 
 	char str[10]; // 10 chars max for INT32_MAX
 	int i = 0;
@@ -34,11 +34,11 @@ void SWV_SendInt(int32_t num) {
 	for (i--; i >= 0; i--)
 		SWV_SendChar(str[i]);
 
-//	osMutexRelease(SwvMutexHandle);
+	osMutexRelease(SwvMutexHandle);
 }
 
 void SWV_SendInt0(int32_t num) {
-//	osMutexWait(SwvMutexHandle, osWaitForever);
+	osMutexWait(SwvMutexHandle, osWaitForever);
 
 	char str[10]; // 10 chars max for INT32_MAX
 	int i = 0;
@@ -54,71 +54,71 @@ void SWV_SendInt0(int32_t num) {
 	for (i--; i >= 0; i--)
 		SWV_SendChar(str[i]);
 
-//	osMutexRelease(SwvMutexHandle);
+	osMutexRelease(SwvMutexHandle);
 }
 
 void SWV_SendHex8(uint16_t num) {
-//	osMutexWait(SwvMutexHandle, osWaitForever);
+	osMutexWait(SwvMutexHandle, osWaitForever);
 
 	SWV_SendChar(HEX_CHARS[(num >> 4) % 0x10]);
 	SWV_SendChar(HEX_CHARS[(num & 0x0f) % 0x10]);
 
-//	osMutexRelease(SwvMutexHandle);
+	osMutexRelease(SwvMutexHandle);
 }
 
 void SWV_SendHex16(uint16_t num) {
-//	osMutexWait(SwvMutexHandle, osWaitForever);
+	osMutexWait(SwvMutexHandle, osWaitForever);
 
 	uint8_t i;
 	for (i = 12; i > 0; i -= 4)
 		SWV_SendChar(HEX_CHARS[(num >> i) % 0x10]);
 	SWV_SendChar(HEX_CHARS[(num & 0x0f) % 0x10]);
 
-//	osMutexRelease(SwvMutexHandle);
+	osMutexRelease(SwvMutexHandle);
 }
 
 void SWV_SendHex32(uint32_t num) {
-//	osMutexWait(SwvMutexHandle, osWaitForever);
+	osMutexWait(SwvMutexHandle, osWaitForever);
 
 	uint8_t i;
 	for (i = 28; i > 0; i -= 4)
 		SWV_SendChar(HEX_CHARS[(num >> i) % 0x10]);
 	SWV_SendChar(HEX_CHARS[(num & 0x0f) % 0x10]);
 
-//	osMutexRelease(SwvMutexHandle);
+	osMutexRelease(SwvMutexHandle);
 }
 
 void SWV_SendStr(char *str) {
-//	osMutexWait(SwvMutexHandle, osWaitForever);
+	osMutexWait(SwvMutexHandle, osWaitForever);
 
 	while (*str)
 		SWV_SendChar(*str++);
 
-//	osMutexRelease(SwvMutexHandle);
+	osMutexRelease(SwvMutexHandle);
 }
 
 void SWV_SendStrLn(char *str) {
-//	osMutexWait(SwvMutexHandle, osWaitForever);
+	osMutexWait(SwvMutexHandle, osWaitForever);
 
 	while (*str)
 		SWV_SendChar(*str++);
 	SWV_SendChar('\n');
 
-//	osMutexRelease(SwvMutexHandle);
+	osMutexRelease(SwvMutexHandle);
 }
 
 void SWV_SendBuf(char *buf, uint16_t bufsize) {
-//	osMutexWait(SwvMutexHandle, osWaitForever);
+	osMutexWait(SwvMutexHandle, osWaitForever);
 
 	uint16_t i;
 	for (i = 0; i < bufsize; i++)
 		SWV_SendChar(*buf++);
 
-//	osMutexRelease(SwvMutexHandle);
+	osMutexRelease(SwvMutexHandle);
 }
 
 void SWV_SendBufPrintable(char *buf, uint16_t bufsize, char subst) {
-//	osMutexWait(SwvMutexHandle, osWaitForever);
+	osMutexWait(SwvMutexHandle, osWaitForever);
 
 	uint16_t i;
 	char ch;
@@ -127,11 +127,11 @@ void SWV_SendBufPrintable(char *buf, uint16_t bufsize, char subst) {
 		SWV_SendChar(ch > 32 ? ch : subst);
 	}
 
-//	osMutexRelease(SwvMutexHandle);
+	osMutexRelease(SwvMutexHandle);
 }
 
 void SWV_SendBufHex(char *buf, uint16_t bufsize) {
-//	osMutexWait(SwvMutexHandle, osWaitForever);
+	osMutexWait(SwvMutexHandle, osWaitForever);
 
 	uint16_t i;
 	char ch;
@@ -141,11 +141,11 @@ void SWV_SendBufHex(char *buf, uint16_t bufsize) {
 		SWV_SendChar(HEX_CHARS[(ch & 0x0f) % 0x10]);
 	}
 
-//	osMutexRelease(SwvMutexHandle);
+	osMutexRelease(SwvMutexHandle);
 }
 
 void SWV_SendBufHexFancy(char *buf, uint16_t bufsize, uint8_t column_width, char subst) {
-//	osMutexWait(SwvMutexHandle, osWaitForever);
+	osMutexWait(SwvMutexHandle, osWaitForever);
 
 	uint16_t i = 0, len, pos;
 	char buffer[column_width];
@@ -179,5 +179,5 @@ void SWV_SendBufHexFancy(char *buf, uint16_t bufsize, uint8_t column_width, char
 		i += len;
 	}
 
-//	osMutexRelease(SwvMutexHandle);
+	osMutexRelease(SwvMutexHandle);
 }

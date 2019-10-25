@@ -26,6 +26,8 @@
 /* USER CODE BEGIN Includes */
 #include "_guiapp.h"
 #include "_config.h"
+#include "_canbus.h"
+#include "_database.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,12 +46,18 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+CAN_HandleTypeDef hcan2;
+
 CRC_HandleTypeDef hcrc;
 
-osThreadId lcdTaskHandle;
-osThreadId canTaskHandle;
-osThreadId serialTaskHandle;
+osThreadId LcdTaskHandle;
+osThreadId CanRxTaskHandle;
+osThreadId SerialTaskHandle;
+osTimerId Timer500Handle;
+osMutexId CanTxMutexHandle;
+osMutexId SwvMutexHandle;
 /* USER CODE BEGIN PV */
+osMailQId canRxMailHandle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -59,9 +67,11 @@ static void MX_CRC_Init(void);
 extern void GRAPHICS_HW_Init(void);
 extern void GRAPHICS_Init(void);
 extern void GRAPHICS_MainTask(void);
+static void MX_CAN2_Init(void);
 void StartLcdTask(void const *argument);
-void StartCanTask(void const *argument);
+void StartCanRxTask(void const *argument);
 void StartSerialTask(void const *argument);
+void CallbackTimer500(void const *argument);
 
 /* USER CODE BEGIN PFP */
 /* USER CODE END PFP */
@@ -97,6 +107,7 @@ int main(void) {
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
 	MX_CRC_Init();
+	MX_CAN2_Init();
 	/* USER CODE BEGIN 2 */
 	/* USER CODE END 2 */
 
@@ -106,6 +117,15 @@ int main(void) {
 	/* Initialise the graphical stack engine */
 	GRAPHICS_Init();
 
+	/* Create the mutex(es) */
+	/* definition and creation of CanTxMutex */
+	osMutexDef(CanTxMutex);
+	CanTxMutexHandle = osMutexCreate(osMutex(CanTxMutex));
+
+	/* definition and creation of SwvMutex */
+	osMutexDef(SwvMutex);
+	SwvMutexHandle = osMutexCreate(osMutex(SwvMutex));
+
 	/* USER CODE BEGIN RTOS_MUTEX */
 	/* add mutexes, ... */
 	/* USER CODE END RTOS_MUTEX */
@@ -114,26 +134,34 @@ int main(void) {
 	/* add semaphores, ... */
 	/* USER CODE END RTOS_SEMAPHORES */
 
+	/* Create the timer(s) */
+	/* definition and creation of Timer500 */
+	osTimerDef(Timer500, CallbackTimer500);
+	Timer500Handle = osTimerCreate(osTimer(Timer500), osTimerPeriodic, NULL);
+
 	/* USER CODE BEGIN RTOS_TIMERS */
 	/* start timers, add new ones, ... */
+	osTimerStart(Timer500Handle, 500);
 	/* USER CODE END RTOS_TIMERS */
 
 	/* USER CODE BEGIN RTOS_QUEUES */
 	/* add queues, ... */
+	osMailQDef(canRxMail, 10, CAN_Rx);
+	canRxMailHandle = osMailCreate(osMailQ(canRxMail), NULL);
 	/* USER CODE END RTOS_QUEUES */
 
 	/* Create the thread(s) */
-	/* definition and creation of lcdTask */
-	osThreadDef(lcdTask, StartLcdTask, osPriorityNormal, 0, 256);
-	lcdTaskHandle = osThreadCreate(osThread(lcdTask), NULL);
+	/* definition and creation of LcdTask */
+	osThreadDef(LcdTask, StartLcdTask, osPriorityNormal, 0, 256);
+	LcdTaskHandle = osThreadCreate(osThread(LcdTask), NULL);
 
-	/* definition and creation of canTask */
-	osThreadDef(canTask, StartCanTask, osPriorityNormal, 0, 128);
-	canTaskHandle = osThreadCreate(osThread(canTask), NULL);
+	/* definition and creation of CanRxTask */
+	osThreadDef(CanRxTask, StartCanRxTask, osPriorityNormal, 0, 128);
+	CanRxTaskHandle = osThreadCreate(osThread(CanRxTask), NULL);
 
-	/* definition and creation of serialTask */
-	osThreadDef(serialTask, StartSerialTask, osPriorityNormal, 0, 128);
-	serialTaskHandle = osThreadCreate(osThread(serialTask), NULL);
+	/* definition and creation of SerialTask */
+	osThreadDef(SerialTask, StartSerialTask, osPriorityNormal, 0, 128);
+	SerialTaskHandle = osThreadCreate(osThread(SerialTask), NULL);
 
 	/* USER CODE BEGIN RTOS_THREADS */
 	/* add threads, ... */
@@ -163,11 +191,11 @@ void SystemClock_Config(void) {
 	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
 	RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = { 0 };
 
-	/** Configure the main internal regulator output voltage
+	/** Configure the main internal regulator output voltage 
 	 */
 	__HAL_RCC_PWR_CLK_ENABLE();
 	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-	/** Initializes the CPU, AHB and APB busses clocks
+	/** Initializes the CPU, AHB and APB busses clocks 
 	 */
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
 	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
@@ -180,12 +208,12 @@ void SystemClock_Config(void) {
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
 		Error_Handler();
 	}
-	/** Activate the Over-Drive mode
+	/** Activate the Over-Drive mode 
 	 */
 	if (HAL_PWREx_EnableOverDrive() != HAL_OK) {
 		Error_Handler();
 	}
-	/** Initializes the CPU, AHB and APB busses clocks
+	/** Initializes the CPU, AHB and APB busses clocks 
 	 */
 	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
@@ -203,6 +231,41 @@ void SystemClock_Config(void) {
 	if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {
 		Error_Handler();
 	}
+}
+
+/**
+ * @brief CAN2 Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_CAN2_Init(void) {
+
+	/* USER CODE BEGIN CAN2_Init 0 */
+
+	/* USER CODE END CAN2_Init 0 */
+
+	/* USER CODE BEGIN CAN2_Init 1 */
+
+	/* USER CODE END CAN2_Init 1 */
+	hcan2.Instance = CAN2;
+	hcan2.Init.Prescaler = 6;
+	hcan2.Init.Mode = CAN_MODE_SILENT_LOOPBACK;
+	hcan2.Init.SyncJumpWidth = CAN_SJW_1TQ;
+	hcan2.Init.TimeSeg1 = CAN_BS1_12TQ;
+	hcan2.Init.TimeSeg2 = CAN_BS2_2TQ;
+	hcan2.Init.TimeTriggeredMode = DISABLE;
+	hcan2.Init.AutoBusOff = ENABLE;
+	hcan2.Init.AutoWakeUp = DISABLE;
+	hcan2.Init.AutoRetransmission = DISABLE;
+	hcan2.Init.ReceiveFifoLocked = DISABLE;
+	hcan2.Init.TransmitFifoPriority = DISABLE;
+	if (HAL_CAN_Init(&hcan2) != HAL_OK) {
+		Error_Handler();
+	}
+	/* USER CODE BEGIN CAN2_Init 2 */
+
+	/* USER CODE END CAN2_Init 2 */
+
 }
 
 /**
@@ -248,30 +311,30 @@ static void MX_GPIO_Init(void) {
 	__HAL_RCC_GPIOD_CLK_ENABLE();
 
 	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(GPIOE, RIGHT_LD1_Pin | RIGHT_LD2_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOE, LEFT_LD1_Pin | LEFT_LD2_Pin, GPIO_PIN_RESET);
 
 	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(LEFT_BACKLIGHT_GPIO_Port, LEFT_BACKLIGHT_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(RIGHT_BACKLIGHT_GPIO_Port, RIGHT_BACKLIGHT_Pin, GPIO_PIN_RESET);
 
 	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(GPIOG, LEFT_LD1_Pin | LEFT_LD2_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOG, RIGHT_LD1_Pin | RIGHT_LD2_Pin, GPIO_PIN_RESET);
 
-	/*Configure GPIO pins : RIGHT_LD1_Pin RIGHT_LD2_Pin */
-	GPIO_InitStruct.Pin = RIGHT_LD1_Pin | RIGHT_LD2_Pin;
+	/*Configure GPIO pins : LEFT_LD1_Pin LEFT_LD2_Pin */
+	GPIO_InitStruct.Pin = LEFT_LD1_Pin | LEFT_LD2_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-	/*Configure GPIO pin : LEFT_BACKLIGHT_Pin */
-	GPIO_InitStruct.Pin = LEFT_BACKLIGHT_Pin;
+	/*Configure GPIO pin : RIGHT_BACKLIGHT_Pin */
+	GPIO_InitStruct.Pin = RIGHT_BACKLIGHT_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(LEFT_BACKLIGHT_GPIO_Port, &GPIO_InitStruct);
+	HAL_GPIO_Init(RIGHT_BACKLIGHT_GPIO_Port, &GPIO_InitStruct);
 
-	/*Configure GPIO pins : LEFT_LD1_Pin LEFT_LD2_Pin */
-	GPIO_InitStruct.Pin = LEFT_LD1_Pin | LEFT_LD2_Pin;
+	/*Configure GPIO pins : RIGHT_LD1_Pin RIGHT_LD2_Pin */
+	GPIO_InitStruct.Pin = RIGHT_LD1_Pin | RIGHT_LD2_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -293,7 +356,11 @@ void StartLcdTask(void const *argument) {
 	/* Graphic application */
 	//  GRAPHICS_MainTask();
 	/* USER CODE BEGIN 5 */
-	HAL_GPIO_WritePin(LEFT_BACKLIGHT_GPIO_Port, LEFT_BACKLIGHT_Pin, GPIO_PIN_SET);
+	// Turn on backlight
+	if (!USE_HMI_LEFT) {
+		BSP_Set_Backlight(1);
+	}
+	// run main task
 	GUI_MainTask();
 	/* Infinite loop */
 	for (;;) {
@@ -302,21 +369,51 @@ void StartLcdTask(void const *argument) {
 	/* USER CODE END 5 */
 }
 
-/* USER CODE BEGIN Header_StartCanTask */
+/* USER CODE BEGIN Header_StartCanRxTask */
 /**
- * @brief Function implementing the canTask thread.
+ * @brief Function implementing the CanRxTask thread.
  * @param argument: Not used
  * @retval None
  */
-/* USER CODE END Header_StartCanTask */
-void StartCanTask(void const *argument) {
-	/* USER CODE BEGIN StartCanTask */
+/* USER CODE END Header_StartCanRxTask */
+void StartCanRxTask(void const *argument) {
+	/* USER CODE BEGIN StartCanRxTask */
+	CAN_Rx *RxCan;
+	osEvent evt;
+	uint8_t i;
+
+	//	extern uint8_t DB_MCU_Speed;
 	/* Infinite loop */
 	for (;;) {
-		//		BSP_Led_Toggle(2);
-		osDelay(500);
+		evt = osMailGet(canRxMailHandle, osWaitForever);
+		if (evt.status == osEventMail) {
+			RxCan = evt.value.p;
+
+			//			// handle message
+			//			switch (RxCan->RxHeader.StdId) {
+			//				case CAN_ADDR_MCU_DUMMY:
+			//					// convert RPM to Speed
+			//					DB_MCU_Speed = ((RxCan->RxData[1] << 8) | (RxCan->RxData[0])) * MCU_SPEED_MAX / MCU_RPM_MAX;
+			//					// set volume
+			//					osMessagePut(AudioVolQueueHandle, DB_MCU_Speed, osWaitForever);
+			//					break;
+			//				default:
+			//					break;
+			//			}
+
+			// show this message
+			SWV_SendStr("ID: ");
+			SWV_SendHex32(RxCan->RxHeader.StdId);
+			SWV_SendStr(", Data: ");
+			for (i = 0; i < RxCan->RxHeader.DLC; i++) {
+				SWV_SendHex8(RxCan->RxData[i]);
+			}
+			SWV_SendStrLn("");
+
+			osMailFree(canRxMailHandle, RxCan);
+		}
 	}
-	/* USER CODE END StartCanTask */
+	/* USER CODE END StartCanRxTask */
 }
 
 /* USER CODE BEGIN Header_StartSerialTask */
@@ -330,10 +427,39 @@ void StartSerialTask(void const *argument) {
 	/* USER CODE BEGIN StartSerialTask */
 	/* Infinite loop */
 	for (;;) {
-		//		BSP_Led_Toggle(1);
+		SWV_SendStrLn("Serial Task Running");
+
+		BSP_Led_Toggle(1);
 		osDelay(250);
 	}
 	/* USER CODE END StartSerialTask */
+}
+
+/* CallbackTimer500 function */
+void CallbackTimer500(void const *argument) {
+	/* USER CODE BEGIN CallbackTimer500 */
+
+	CANBUS_HMI_Heartbeat();
+
+	//	// pool can
+	//	CAN_Rx RxCan;
+	//	uint8_t i;
+	//	if (HAL_CAN_GetRxFifoFillLevel(&hcan2, CAN_RX_FIFO0)) {
+	//		if (HAL_CAN_GetRxMessage(&hcan2, CAN_RX_FIFO0, &(RxCan.RxHeader), RxCan.RxData) == HAL_OK) {
+	//
+	//			// show this message
+	//			SWV_SendStr("ID: ");
+	//			SWV_SendHex32(RxCan.RxHeader.StdId);
+	//			SWV_SendStr(", Data: ");
+	//			for (i = 0; i < RxCan.RxHeader.DLC; i++) {
+	//				SWV_SendHex8(RxCan.RxData[i]);
+	//			}
+	//			SWV_SendStrLn("");
+	//		}
+	//	}
+
+	BSP_Led_Toggle(2);
+	/* USER CODE END CallbackTimer500 */
 }
 
 /**
@@ -363,7 +489,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 void Error_Handler(void) {
 	/* USER CODE BEGIN Error_Handler_Debug */
 	/* User can add his own implementation to report the HAL error return state */
-
+	while (1) {
+		// error state
+	}
 	/* USER CODE END Error_Handler_Debug */
 }
 
@@ -376,7 +504,7 @@ void Error_Handler(void) {
  * @retval None
  */
 void assert_failed(uint8_t *file, uint32_t line)
-{
+{ 
 	/* USER CODE BEGIN 6 */
 	/* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
