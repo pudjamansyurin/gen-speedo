@@ -24,10 +24,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "limits.h"
 #include "_guiapp.h"
 #include "_config.h"
-#include "_canbus.h"
 #include "_database.h"
+#if (!USE_HMI_LEFT)
+#include "_canbus.h"
+#endif
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,7 +60,6 @@ osTimerId Timer500Handle;
 osMutexId CanTxMutexHandle;
 osMutexId SwvMutexHandle;
 /* USER CODE BEGIN PV */
-osMailQId canRxMailHandle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -109,6 +111,9 @@ int main(void) {
 	MX_CRC_Init();
 	MX_CAN2_Init();
 	/* USER CODE BEGIN 2 */
+#if (!USE_HMI_LEFT)
+	CAN_Init();
+#endif
 	/* USER CODE END 2 */
 
 	/* Initialise the graphical hardware */
@@ -128,6 +133,9 @@ int main(void) {
 
 	/* USER CODE BEGIN RTOS_MUTEX */
 	/* add mutexes, ... */
+#if (USE_HMI_LEFT)
+	osMutexDelete(CanTxMutexHandle);
+#endif
 	/* USER CODE END RTOS_MUTEX */
 
 	/* USER CODE BEGIN RTOS_SEMAPHORES */
@@ -141,13 +149,13 @@ int main(void) {
 
 	/* USER CODE BEGIN RTOS_TIMERS */
 	/* start timers, add new ones, ... */
+#if (!USE_HMI_LEFT)
 	osTimerStart(Timer500Handle, 500);
+#endif
 	/* USER CODE END RTOS_TIMERS */
 
 	/* USER CODE BEGIN RTOS_QUEUES */
 	/* add queues, ... */
-	osMailQDef(canRxMail, 10, CAN_Rx);
-	canRxMailHandle = osMailCreate(osMailQ(canRxMail), NULL);
 	/* USER CODE END RTOS_QUEUES */
 
 	/* Create the thread(s) */
@@ -165,6 +173,9 @@ int main(void) {
 
 	/* USER CODE BEGIN RTOS_THREADS */
 	/* add threads, ... */
+#if (USE_HMI_LEFT)
+	osThreadTerminate(CanRxTaskHandle);
+#endif
 	/* USER CODE END RTOS_THREADS */
 
 	/* Start scheduler */
@@ -191,11 +202,11 @@ void SystemClock_Config(void) {
 	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
 	RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = { 0 };
 
-	/** Configure the main internal regulator output voltage 
+	/** Configure the main internal regulator output voltage
 	 */
 	__HAL_RCC_PWR_CLK_ENABLE();
 	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-	/** Initializes the CPU, AHB and APB busses clocks 
+	/** Initializes the CPU, AHB and APB busses clocks
 	 */
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
 	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
@@ -208,12 +219,12 @@ void SystemClock_Config(void) {
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
 		Error_Handler();
 	}
-	/** Activate the Over-Drive mode 
+	/** Activate the Over-Drive mode
 	 */
 	if (HAL_PWREx_EnableOverDrive() != HAL_OK) {
 		Error_Handler();
 	}
-	/** Initializes the CPU, AHB and APB busses clocks 
+	/** Initializes the CPU, AHB and APB busses clocks
 	 */
 	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
@@ -245,11 +256,11 @@ static void MX_CAN2_Init(void) {
 	/* USER CODE END CAN2_Init 0 */
 
 	/* USER CODE BEGIN CAN2_Init 1 */
-
+#if (!USE_HMI_LEFT)
 	/* USER CODE END CAN2_Init 1 */
 	hcan2.Instance = CAN2;
 	hcan2.Init.Prescaler = 6;
-	hcan2.Init.Mode = CAN_MODE_SILENT_LOOPBACK;
+	hcan2.Init.Mode = CAN_MODE_NORMAL;
 	hcan2.Init.SyncJumpWidth = CAN_SJW_1TQ;
 	hcan2.Init.TimeSeg1 = CAN_BS1_12TQ;
 	hcan2.Init.TimeSeg2 = CAN_BS2_2TQ;
@@ -263,7 +274,7 @@ static void MX_CAN2_Init(void) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN CAN2_Init 2 */
-
+#endif
 	/* USER CODE END CAN2_Init 2 */
 
 }
@@ -357,9 +368,9 @@ void StartLcdTask(void const *argument) {
 	//  GRAPHICS_MainTask();
 	/* USER CODE BEGIN 5 */
 	// Turn on backlight
-	if (!USE_HMI_LEFT) {
-		BSP_Set_Backlight(1);
-	}
+#if (!USE_HMI_LEFT)
+	BSP_Set_Backlight(1);
+#endif
 	// run main task
 	GUI_MainTask();
 	/* Infinite loop */
@@ -375,20 +386,20 @@ void StartLcdTask(void const *argument) {
  * @param argument: Not used
  * @retval None
  */
+
 /* USER CODE END Header_StartCanRxTask */
 void StartCanRxTask(void const *argument) {
 	/* USER CODE BEGIN StartCanRxTask */
-	CAN_Rx *RxCan;
-	osEvent evt;
+#if (!USE_HMI_LEFT)
+	extern CAN_Rx RxCan;
 	uint8_t i;
-
-	//	extern uint8_t DB_MCU_Speed;
+	uint32_t ulNotifiedValue;
 	/* Infinite loop */
 	for (;;) {
-		evt = osMailGet(canRxMailHandle, osWaitForever);
-		if (evt.status == osEventMail) {
-			RxCan = evt.value.p;
-
+		// check if has new can message
+		xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, portMAX_DELAY);
+		// proceed event
+		if ((ulNotifiedValue & EVENT_CAN_RX_IT)) {
 			//			// handle message
 			//			switch (RxCan->RxHeader.StdId) {
 			//				case CAN_ADDR_MCU_DUMMY:
@@ -403,16 +414,15 @@ void StartCanRxTask(void const *argument) {
 
 			// show this message
 			SWV_SendStr("ID: ");
-			SWV_SendHex32(RxCan->RxHeader.StdId);
+			SWV_SendHex32(RxCan.RxHeader.StdId);
 			SWV_SendStr(", Data: ");
-			for (i = 0; i < RxCan->RxHeader.DLC; i++) {
-				SWV_SendHex8(RxCan->RxData[i]);
+			for (i = 0; i < RxCan.RxHeader.DLC; i++) {
+				SWV_SendHex8(RxCan.RxData[i]);
 			}
 			SWV_SendStrLn("");
-
-			osMailFree(canRxMailHandle, RxCan);
 		}
 	}
+#endif
 	/* USER CODE END StartCanRxTask */
 }
 
@@ -438,27 +448,10 @@ void StartSerialTask(void const *argument) {
 /* CallbackTimer500 function */
 void CallbackTimer500(void const *argument) {
 	/* USER CODE BEGIN CallbackTimer500 */
-
+#if (!USE_HMI_LEFT)
 	CANBUS_HMI_Heartbeat();
-
-	//	// pool can
-	//	CAN_Rx RxCan;
-	//	uint8_t i;
-	//	if (HAL_CAN_GetRxFifoFillLevel(&hcan2, CAN_RX_FIFO0)) {
-	//		if (HAL_CAN_GetRxMessage(&hcan2, CAN_RX_FIFO0, &(RxCan.RxHeader), RxCan.RxData) == HAL_OK) {
-	//
-	//			// show this message
-	//			SWV_SendStr("ID: ");
-	//			SWV_SendHex32(RxCan.RxHeader.StdId);
-	//			SWV_SendStr(", Data: ");
-	//			for (i = 0; i < RxCan.RxHeader.DLC; i++) {
-	//				SWV_SendHex8(RxCan.RxData[i]);
-	//			}
-	//			SWV_SendStrLn("");
-	//		}
-	//	}
-
 	BSP_Led_Toggle(2);
+#endif
 	/* USER CODE END CallbackTimer500 */
 }
 
@@ -504,7 +497,7 @@ void Error_Handler(void) {
  * @retval None
  */
 void assert_failed(uint8_t *file, uint32_t line)
-{ 
+{
 	/* USER CODE BEGIN 6 */
 	/* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */

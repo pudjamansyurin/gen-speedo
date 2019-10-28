@@ -7,18 +7,19 @@
 
 #include "_can.h"
 
-extern osMailQId canRxMailHandle;
+extern osThreadId CanRxTaskHandle;
 extern osMutexId CanTxMutexHandle;
 extern CAN_HandleTypeDef hcan2;
 CAN_HandleTypeDef *CanHandle = &hcan2;
+CAN_Rx RxCan;
 
 void CAN_Init(void) {
 	CAN_FilterTypeDef sFilterConfig;
 
 	/* Configure the CAN Filter */
-	sFilterConfig.FilterBank = 15;
+	sFilterConfig.FilterBank = 0;
 	// give all filter to CAN2
-	sFilterConfig.SlaveStartFilterBank = 15;
+	sFilterConfig.SlaveStartFilterBank = 0;
 	// set filter to mask mode (not id_list mode)
 	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
 	// set 32-bit scale configuration
@@ -74,12 +75,6 @@ uint8_t CAN_Write(CAN_Tx *TxCan) {
 	/* Start the Transmission process */
 	status = HAL_CAN_AddTxMessage(CanHandle, &(TxCan->TxHeader), (uint8_t*) &(TxCan->TxData), &TxMailbox);
 
-	if (status != HAL_OK) {
-		SWV_SendStrLn("HAL_CAN_AddTxMessage FAIL");
-	} else {
-		SWV_SendStrLn("HAL_CAN_AddTxMessage OK");
-	}
-
 	osMutexRelease(CanTxMutexHandle);
 	return (status == HAL_OK);
 }
@@ -97,22 +92,15 @@ uint8_t CAN_Read(CAN_Rx *RxCan) {
 }
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
-	CAN_Rx *RxCan;
+	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
-	SWV_SendStrLn("HAL_CAN_RxFifo0MsgPendingCallback");
-	// Allocate memory
-	RxCan = osMailAlloc(canRxMailHandle, 0);
-	// check memory allocation result
-	if (RxCan != NULL) {
-		// read rx fifo
-		if (CAN_Read(RxCan)) {
-			// Send Message
-			if (osMailPut(canRxMailHandle, RxCan) != osOK) {
-				osMailFree(canRxMailHandle, RxCan);
-			}
-		} else {
-			osMailFree(canRxMailHandle, RxCan);
+	// read rx fifo
+	if (CAN_Read(&RxCan)) {
+		// signal only when RTOS started
+		if (osKernelRunning()) {
+			xTaskNotifyFromISR(CanRxTaskHandle, EVENT_CAN_RX_IT, eSetBits, &xHigherPriorityTaskWoken);
 		}
 	}
-}
 
+	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+}

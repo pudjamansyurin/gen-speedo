@@ -184,11 +184,9 @@ uint8_t CANBUS_BMS_Dummy(void) {
 uint8_t CANBUS_HMI_Heartbeat(void) {
 	CAN_Tx TxCan;
 
-	// set message
-	TxCan.TxData[0] = 0xAA;
-
 	// set default header
 	CAN_Set_Tx_Header(&(TxCan.TxHeader), CAN_ADDR_HMI_DUMMY, 1);
+	TxCan.TxHeader.RTR = CAN_RTR_REMOTE;
 
 	// send message
 	return CAN_Write(&TxCan);

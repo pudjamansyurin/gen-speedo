@@ -8,6 +8,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "_guiapp.h"
+#include "_config.h"
 #include "cmsis_os.h"
 #include "GUI.h"
 #include <stdio.h>				// for: sprintf()
