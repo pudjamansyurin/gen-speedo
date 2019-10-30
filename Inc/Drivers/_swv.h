@@ -12,7 +12,7 @@
 #include "string.h"
 #include "cmsis_os.h"
 
-#define SWV_DEBUG 			0
+#define SWV_DEBUG 			1
 #define HEX_CHARS      "0123456789ABCDEF"
 
 void SWV_SendChar(char ch);

@@ -7,6 +7,8 @@
 
 #include "_canbus.h"
 
+extern CAN_Rx RxCan;
+
 // ==================================== ECU =========================================
 #if (CAN_NODE & CAN_NODE_ECU)
 uint8_t CANBUS_ECU_Switch(void) {
@@ -191,4 +193,86 @@ uint8_t CANBUS_HMI_Heartbeat(void) {
 	// send message
 	return CAN_Write(&TxCan);
 }
+
+/* ------------------------------------ READER ------------------------------------- */
+void CANBUS_ECU_Switch_Read(void) {
+	extern status_t DB_HMI_Status;
+	extern uint8_t DB_ECU_Speed;
+	extern uint32_t DB_ECU_Odometer;
+
+	// read message
+	DB_HMI_Status.abs = RxCan.RxData[0] & 0x01;
+	DB_HMI_Status.mirror = (RxCan.RxData[0] >> 1) & 0x01;
+	DB_HMI_Status.lamp = (RxCan.RxData[0] >> 2) & 0x01;
+	DB_HMI_Status.warning = (RxCan.RxData[0] >> 3) & 0x01;
+	DB_HMI_Status.temperature = (RxCan.RxData[0] >> 4) & 0x01;
+	DB_HMI_Status.finger = (RxCan.RxData[0] >> 5) & 0x01;
+	DB_HMI_Status.keyless = (RxCan.RxData[0] >> 6) & 0x01;
+	DB_HMI_Status.daylight = (RxCan.RxData[0] >> 7) & 0x01;
+	DB_HMI_Status.sein_left = RxCan.RxData[1] & 0x01;
+	DB_HMI_Status.sein_right = (RxCan.RxData[1] >> 1) & 0x01;
+	// speed
+	DB_ECU_Speed = RxCan.RxData[2];
+	// odometer
+	DB_ECU_Odometer = (RxCan.RxData[7] << 24) | (RxCan.RxData[6] << 16) | (RxCan.RxData[5] << 8) | RxCan.RxData[4];
+}
+
+void CANBUS_ECU_RTC_Read(void) {
+	extern timestamp_t DB_ECU_TimeStamp;
+
+	// read message
+	DB_ECU_TimeStamp.time.Seconds = RxCan.RxData[0];
+	DB_ECU_TimeStamp.time.Minutes = RxCan.RxData[1];
+	DB_ECU_TimeStamp.time.Hours = RxCan.RxData[2];
+	DB_ECU_TimeStamp.date.Date = RxCan.RxData[3];
+	DB_ECU_TimeStamp.date.Month = RxCan.RxData[4];
+	DB_ECU_TimeStamp.date.Year = RxCan.RxData[5];
+	DB_ECU_TimeStamp.date.WeekDay = RxCan.RxData[7];
+}
+
+void CANBUS_ECU_Select_Set_Read(void) {
+	extern modes_t DB_HMI_Mode;
+
+	// read message
+	DB_HMI_Mode.mode_drive = RxCan.RxData[0] & 0x03;
+	DB_HMI_Mode.mode_trip = (RxCan.RxData[0] >> 2) & 0x01;
+	DB_HMI_Mode.mode_report = (RxCan.RxData[0] >> 3) & 0x01;
+	DB_HMI_Mode.mode = (RxCan.RxData[0] >> 4) & 0x01;
+
+	if (DB_HMI_Mode.mode_report == SWITCH_MODE_REPORT_RANGE) {
+		DB_HMI_Mode.mode_report_value = RxCan.RxData[1];
+	} else {
+		DB_HMI_Mode.mode_report_value = RxCan.RxData[2];
+	}
+}
+
+void CANBUS_ECU_Trip_Mode_Read(void) {
+	extern modes_t DB_HMI_Mode;
+
+	// read message
+	if (DB_HMI_Mode.mode_trip == SWITCH_MODE_TRIP_A) {
+		DB_HMI_Mode.mode_trip_value = (RxCan.RxData[3] << 24) | (RxCan.RxData[2] << 16) | (RxCan.RxData[1] << 8) | RxCan.RxData[0];
+	} else {
+		DB_HMI_Mode.mode_trip_value = (RxCan.RxData[7] << 24) | (RxCan.RxData[6] << 16) | (RxCan.RxData[5] << 8) | RxCan.RxData[4];
+	}
+}
+
+void CANBUS_MCU_Dummy_Read(void) {
+	extern uint16_t DB_MCU_RPM;
+	extern uint8_t DB_MCU_Temperature;
+
+	// read message
+	DB_MCU_RPM = (RxCan.RxData[1] << 8) | RxCan.RxData[0];
+	DB_MCU_Temperature = RxCan.RxData[2];
+}
+
+void CANBUS_BMS_Dummy_Read(void) {
+	extern uint8_t DB_BMS_SoC;
+	extern uint8_t DB_BMS_Temperature;
+
+	// read message
+	DB_BMS_SoC = RxCan.RxData[0];
+	DB_BMS_Temperature = RxCan.RxData[1];
+}
 #endif
+

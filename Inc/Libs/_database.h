@@ -11,15 +11,6 @@
 #include "main.h"
 #include "_config.h"
 
-// exti list
-#define IDX_KEY_SELECT 							0
-#define IDX_KEY_SET 								1
-#define IDX_KEY_SEIN_LEFT 					2
-#define IDX_KEY_SEIN_RIGHT 					3
-#define IDX_KEY_LAMP			 					4
-#define IDX_KEY_ABS				 					5
-#define IDX_KEY_MIRRORING 					6
-
 // enum list
 typedef enum {
 	SWITCH_MODE_DRIVE = 0, SWITCH_MODE_TRIP = 1, SWITCH_MODE_REPORT = 2, SWITCH_MODE_MAX = 2
@@ -37,26 +28,32 @@ typedef enum {
 	SWITCH_MODE_REPORT_RANGE = 0, SWITCH_MODE_REPORT_EFFICIENCY = 1, SWITCH_MODE_REPORT_MAX = 1
 } switch_mode_report_t;
 
-// object list
+// struct list
 typedef struct {
 	switch_mode_t mode;
-	uint8_t mode_sub[SWITCH_MODE_MAX + 1];
-	uint8_t mode_sub_max[SWITCH_MODE_MAX + 1];
-	uint8_t mode_sub_report[SWITCH_MODE_REPORT_MAX + 1];
-	uint32_t mode_sub_trip[SWITCH_MODE_TRIP_MAX + 1];
-} switcher_t;
+	switch_mode_drive_t mode_drive;
+	switch_mode_trip_t mode_trip;
+	uint32_t mode_trip_value;
+	switch_mode_report_t mode_report;
+	uint8_t mode_report_value;
+} modes_t;
 
 typedef struct {
-	char *event;
-	uint16_t pin;
-	GPIO_TypeDef *port;
-	uint8_t state;
-} switch_t;
+	RTC_DateTypeDef date;
+	RTC_TimeTypeDef time;
+} timestamp_t;
 
 typedef struct {
-	uint32_t start;
-	uint8_t running;
-	uint8_t time;
-} switch_timer_t;
+	uint8_t abs;
+	uint8_t mirror;
+	uint8_t lamp;
+	uint8_t warning;
+	uint8_t temperature;
+	uint8_t finger;
+	uint8_t keyless;
+	uint8_t daylight;
+	uint8_t sein_left;
+	uint8_t sein_right;
+} status_t;
 
 #endif /* DATABASE_H_ */

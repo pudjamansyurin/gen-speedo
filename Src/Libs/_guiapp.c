@@ -7,13 +7,14 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "_guiapp.h"
-#include "_config.h"
 #include "cmsis_os.h"
 #include "GUI.h"
 #include <stdio.h>				// for: sprintf()
 #include <string.h>				// for: strlen()
 #include <math.h>					// for: sin(), cos()
+#include "_guiapp.h"
+#include "_config.h"
+#include "_database.h"
 #if USE_HMI_LEFT
 #include "HMI_Left.c"
 #else
@@ -40,7 +41,27 @@ void Set_Right_Abs(uint8_t status);
 void GUI_MainTask(void) {
 	/* USER CODE BEGIN GUI_MainTask */
 	char str[20];
+	uint16_t k;
+	uint32_t i = 0, tick;
 
+	extern modes_t DB_HMI_Mode;
+	extern status_t DB_HMI_Status;
+#if USE_HMI_LEFT
+	uint16_t x = 58, y = 161, r = 123, h = 7;
+	uint8_t max = 112;
+	extern uint16_t DB_MCU_RPM;
+	extern uint32_t DB_ECU_Odometer;
+#else
+	char Drive_Mode[4] = { 'E', 'S', 'C', 'P' };
+	char Timestamp_Days[7][4] = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+	char Timestamp_Months[12][4] = { "Jan", "Peb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nop", "Des" };
+	extern uint8_t DB_ECU_Speed;
+	extern timestamp_t DB_ECU_TimeStamp;
+	extern uint8_t DB_MCU_Temperature;
+	extern uint8_t DB_BMS_SoC;
+#endif
+
+	// Start executing thing
 	GUI_SelectLayer(1);
 	GUI_SetBkColor(GUI_TRANSPARENT);
 	GUI_Clear();
@@ -48,15 +69,47 @@ void GUI_MainTask(void) {
 	GUI_SelectLayer(0);
 #if USE_HMI_LEFT
 	GUI_DrawBitmap(&bmHMI_Left, 0, 0);
-	const GUI_POINT aPoints[] = { { 300, 66 }, { 257, 66 }, { 230, 39 }, { 144, 39 }, { 87, 66 }, { 39, 175 }, { 55, 205 }, { 215, 205 }, {
-			250, 153 }, { 300, 153 } };
+	// @formatter:off
+	const GUI_POINT aPoints[] = {
+			{ 300, 66 },
+			{ 257, 66 },
+			{ 230, 39 },
+			{ 144, 39 },
+			{ 87, 66 },
+			{ 39, 175 },
+			{ 55, 205 },
+			{ 215, 205 },
+			{	250, 153 },
+			{ 300, 153 }
+	};
+	// @formatter:on
 #else
 	GUI_DrawBitmap(&bmHMI_Right, 0, 0);
-	const GUI_POINT aPoints[] = { { LCD_GetXSize() - 1 - 300, 66 }, { LCD_GetXSize() - 1 - 257, 66 }, { LCD_GetXSize() - 1 - 230, 39 }, {
-			LCD_GetXSize() - 1 - 144, 39 }, { LCD_GetXSize() - 1 - 87, 66 }, { LCD_GetXSize() - 1 - 87, 66 }, { 273, 135 }, { 275, 140 }, {
-			LCD_GetXSize() - 1 - 39, 175 }, { LCD_GetXSize() - 1 - 55, 205 }, { 150, 205 }, { 175, 180 }, { 170, 145 }, { 150, 128 },
-			{ 120, 128 }, { 100, 150 }, { 100, 180 }, { 120, 205 }, { LCD_GetXSize() - 1 - 215, 205 }, { LCD_GetXSize() - 1 - 250, 153 }, {
-					LCD_GetXSize() - 1 - 300, 153 } };
+	// @formatter:off
+	const GUI_POINT aPoints[] = {
+			{ LCD_GetXSize() - 1 - 300, 66 },
+			{ LCD_GetXSize() - 1 - 257, 66 },
+			{ LCD_GetXSize() - 1 - 230, 39 },
+			{	LCD_GetXSize() - 1 - 144, 39 },
+			{ LCD_GetXSize() - 1 - 87, 66 },
+			{ LCD_GetXSize() - 1 - 87, 66 },
+			{ 273, 135 },
+			{ 275, 140 },
+			{	LCD_GetXSize() - 1 - 39, 175 },
+			{ LCD_GetXSize() - 1 - 55, 205 },
+			{ 150, 205 },
+			{ 175, 180 },
+			{ 170, 145 },
+			{ 150, 128 },
+			{ 120, 128 },
+			{ 100, 150 },
+			{ 100, 180 },
+			{ 120, 205 },
+			{ LCD_GetXSize() - 1 - 215, 205 },
+			{ LCD_GetXSize() - 1 - 250, 153 },
+			{	LCD_GetXSize() - 1 - 300, 153 }
+	};
+	// @formatter:on
 #endif
 	// overlay for first booting
 	GUI_SetColor(GUI_BLACK);
@@ -66,7 +119,6 @@ void GUI_MainTask(void) {
 	GUI_SetBkColor(GUI_BLACK);
 	GUI_Clear();
 	// start of circular booting animation
-	uint16_t k;
 	GUI_SetColor(GUI_TRANSPARENT);
 #if USE_HMI_LEFT
 	for (k = 0; k <= 20; k++) {
@@ -82,10 +134,6 @@ void GUI_MainTask(void) {
 		GUI_Delay(20);
 	}
 #else
-	//	for(k = 0; k <= 360; k++){
-	//		GUI_DrawPie(139, 165, 33, 180, 180+k, 0);
-	//		GUI_Delay(2);
-	//	}
 	for (k = 0; k <= 20; k++) {
 		GUI_FillRect(40, 120 - 1, 40 + k, 170);
 		GUI_Delay(20);
@@ -108,8 +156,6 @@ void GUI_MainTask(void) {
 	GUI_RECT pRect_TotalTrip = { 159, 107, 159 + 64, 107 + 24 };
 
 	GUI_SelectLayer(1);
-	uint16_t x = 58, y = 161, r = 123, h = 7;
-	uint8_t max = 112;
 	GUI_MEMDEV_Handle hMem = GUI_MEMDEV_Create(x, y - r, x + r + (r * cos(D2R(max + 180))) + 5 - (x), y + h + 5 - (y - r));
 #else
 	GUI_DrawBitmap(&bmHMI_Right, 0, 0);
@@ -119,7 +165,6 @@ void GUI_MainTask(void) {
 	GUI_RECT pRect_Temp = { 178, 132, 178 + 32, 132 + 22 };
 	GUI_RECT pRect_Datetime = { 65, 48, 65 + 150, 48 + 16 };
 	GUI_RECT pRect_Drive = { 126, 145, 126 + 26, 145 + 40 };
-	char Drive_Mode[4] = { 'E', 'S', 'C', 'P' };
 #endif
 	GUI_Delay(500);
 
@@ -128,8 +173,7 @@ void GUI_MainTask(void) {
 	GUI_Clear();
 	GUI_SetBkColor(GUI_BLACK);
 
-	uint32_t i = 0;
-	uint32_t tick = osKernelSysTick();
+	tick = osKernelSysTick();
 	while (1) {
 
 #if USE_HMI_LEFT
@@ -156,33 +200,36 @@ void GUI_MainTask(void) {
 		GUI_MEMDEV_CopyToLCD(hMem);
 
 #else
-		Set_Right_Sein(1, &tick);
-		Set_Right_Warning((i / 600) % 2);
-		Set_Right_Abs((i / 900) % 2);
+		Set_Right_Sein(DB_HMI_Status.sein_right, &tick);
+		Set_Right_Warning(DB_HMI_Status.warning);
+		Set_Right_Abs(DB_HMI_Status.abs);
 
+		GUI_SetColor(0xFFC0C0C0);
 		GUI_SetFont(&GUI_FontSquare721_BT60);
-		sprintf(str, "%lu", i);
+		sprintf(str, "%03u", DB_ECU_Speed);
 		GUI_DispStringInRectWrap(str, &pRect_Speed, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
 		GUI_SetFont(&GUI_FontSquare721_BT31);
-		sprintf(str, "%lu", i / 20);
+		sprintf(str, "%02u", DB_BMS_SoC);
 		GUI_DispStringInRectWrap(str, &pRect_Battery, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
 		GUI_SetFont(&GUI_FontSquare721_BT17);
-		sprintf(str, "%lu", i / 30);
+		sprintf(str, "%02u", 0);
 		GUI_DispStringInRectWrap(str, &pRect_Range, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
 		GUI_SetFont(&GUI_FontSquare721_BT30);
-		sprintf(str, "%lu", i / 40);
+		sprintf(str, "%02u", DB_MCU_Temperature);
 		GUI_DispStringInRectWrap(str, &pRect_Temp, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
 		GUI_SetFont(&GUI_FontSquare721_BT16);
-		GUI_DispStringInRectWrap("Wed, Oct 10  15:18", &pRect_Datetime, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+		sprintf(str, "%3s, %3s %02d  %02d:%02d", Timestamp_Days[DB_ECU_TimeStamp.date.WeekDay - 1],
+				Timestamp_Months[DB_ECU_TimeStamp.date.Month - 1], DB_ECU_TimeStamp.date.Date, DB_ECU_TimeStamp.time.Hours,
+				DB_ECU_TimeStamp.time.Minutes);
+		GUI_DispStringInRectWrap(str, &pRect_Datetime, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
 		GUI_SetFont(&GUI_FontSquare721_Cn_BT62);
-		sprintf(str, "%c", Drive_Mode[(i / 500) % 4]);
+		sprintf(str, "%c", Drive_Mode[DB_HMI_Mode.mode_drive]);
 		GUI_DispStringInRectWrap(str, &pRect_Drive, GUI_TA_VCENTER | GUI_TA_HCENTER, GUI_WRAPMODE_NONE);
-
 #endif
 
 		i++;
@@ -211,7 +258,7 @@ void Set_Indikator(GUI_CONST_STORAGE GUI_BITMAP *bg, GUI_RECT *pRect, GUI_CONST_
 
 void Set_Left_Sein(uint8_t status, uint32_t *tick) {
 	uint16_t x = 277, y = 82;
-	static uint8_t stat = 2, toggle = 1;
+	static uint8_t stat = 0, toggle = 1;
 
 	GUI_RECT pRect_Left_Sein = { x, y, x + bmHMI_Left_Sein.XSize, y + bmHMI_Left_Sein.YSize };
 	if (status == 1) {
@@ -220,10 +267,11 @@ void Set_Left_Sein(uint8_t status, uint32_t *tick) {
 			toggle = !toggle;
 			*tick = osKernelSysTick();
 		}
+		stat = 1;
 	} else {
-		if (status != stat) {
+		if (stat) {
 			Set_Indikator(&bmHMI_Left, &pRect_Left_Sein, &bmHMI_Left_Sein, x, y, 0, 200);
-			stat = status;
+			stat = 0;
 		}
 	}
 }
@@ -283,7 +331,7 @@ void Set_Left_Trip(char mode) {
 
 void Set_Right_Sein(uint8_t status, uint32_t *tick) {
 	uint16_t x = 20, y = 82;
-	static uint8_t stat = 2, toggle = 1;
+	static uint8_t stat = 0, toggle = 1;
 
 	GUI_RECT pRect_Right_Sein = { x, y, x + bmHMI_Right_Sein.XSize, y + bmHMI_Right_Sein.YSize };
 	if (status == 1) {
@@ -292,10 +340,11 @@ void Set_Right_Sein(uint8_t status, uint32_t *tick) {
 			toggle = !toggle;
 			*tick = osKernelSysTick();
 		}
+		stat = 1;
 	} else {
-		if (status != stat) {
+		if (stat) {
 			Set_Indikator(&bmHMI_Right, &pRect_Right_Sein, &bmHMI_Right_Sein, x, y, 0, 200);
-			stat = status;
+			stat = 0;
 		}
 	}
 }
