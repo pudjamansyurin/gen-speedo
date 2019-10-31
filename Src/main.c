@@ -28,9 +28,7 @@
 #include "_guiapp.h"
 #include "_config.h"
 #include "_database.h"
-#if (!USE_HMI_LEFT)
 #include "_canbus.h"
-#endif
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -118,9 +116,7 @@ int main(void) {
 	MX_CAN2_Init();
 	MX_USART1_UART_Init();
 	/* USER CODE BEGIN 2 */
-#if (!USE_HMI_LEFT)
 	CAN_Init();
-#endif
 	/* USER CODE END 2 */
 
 	/* Initialise the graphical hardware */
@@ -140,9 +136,6 @@ int main(void) {
 
 	/* USER CODE BEGIN RTOS_MUTEX */
 	/* add mutexes, ... */
-#if (USE_HMI_LEFT)
-	osMutexDelete(CanTxMutexHandle);
-#endif
 	/* USER CODE END RTOS_MUTEX */
 
 	/* USER CODE BEGIN RTOS_SEMAPHORES */
@@ -156,9 +149,7 @@ int main(void) {
 
 	/* USER CODE BEGIN RTOS_TIMERS */
 	/* start timers, add new ones, ... */
-#if (!USE_HMI_LEFT)
 	osTimerStart(Timer500Handle, 500);
-#endif
 	/* USER CODE END RTOS_TIMERS */
 
 	/* USER CODE BEGIN RTOS_QUEUES */
@@ -180,9 +171,6 @@ int main(void) {
 
 	/* USER CODE BEGIN RTOS_THREADS */
 	/* add threads, ... */
-#if (USE_HMI_LEFT)
-	osThreadTerminate(CanRxTaskHandle);
-#endif
 	/* USER CODE END RTOS_THREADS */
 
 	/* Start scheduler */
@@ -265,7 +253,6 @@ static void MX_CAN2_Init(void) {
 	/* USER CODE END CAN2_Init 0 */
 
 	/* USER CODE BEGIN CAN2_Init 1 */
-#if (!USE_HMI_LEFT)
 	/* USER CODE END CAN2_Init 1 */
 	hcan2.Instance = CAN2;
 	hcan2.Init.Prescaler = 6;
@@ -283,7 +270,6 @@ static void MX_CAN2_Init(void) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN CAN2_Init 2 */
-#endif
 	/* USER CODE END CAN2_Init 2 */
 
 }
@@ -488,7 +474,6 @@ void StartLcdTask(void const *argument) {
 /* USER CODE END Header_StartCanRxTask */
 void StartCanRxTask(void const *argument) {
 	/* USER CODE BEGIN StartCanRxTask */
-#if (!USE_HMI_LEFT)
 	extern CAN_Rx RxCan;
 	uint32_t ulNotifiedValue;
 	/* Infinite loop */
@@ -522,7 +507,6 @@ void StartCanRxTask(void const *argument) {
 			}
 		}
 	}
-#endif
 	/* USER CODE END StartCanRxTask */
 }
 
@@ -548,10 +532,8 @@ void StartSerialTask(void const *argument) {
 /* CallbackTimer500 function */
 void CallbackTimer500(void const *argument) {
 	/* USER CODE BEGIN CallbackTimer500 */
-#if (!USE_HMI_LEFT)
 	CANBUS_HMI_Heartbeat();
 	BSP_Led_Toggle(2);
-#endif
 	/* USER CODE END CallbackTimer500 */
 }
 
