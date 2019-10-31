@@ -174,6 +174,7 @@ void GUI_MainTask(void) {
 	GUI_SetBkColor(GUI_BLACK);
 
 	tick = osKernelSysTick();
+
 	while (1) {
 
 #if USE_HMI_LEFT
@@ -214,7 +215,7 @@ void GUI_MainTask(void) {
 		GUI_DispStringInRectWrap(str, &pRect_Battery, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
 		GUI_SetFont(&GUI_FontSquare721_BT17);
-		sprintf(str, "%02u", 0);
+		sprintf(str, "%02u", DB_HMI_Mode.mode_report_value);
 		GUI_DispStringInRectWrap(str, &pRect_Range, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
 		GUI_SetFont(&GUI_FontSquare721_BT30);

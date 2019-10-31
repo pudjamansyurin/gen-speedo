@@ -490,7 +490,6 @@ void StartCanRxTask(void const *argument) {
 	/* USER CODE BEGIN StartCanRxTask */
 #if (!USE_HMI_LEFT)
 	extern CAN_Rx RxCan;
-	uint8_t i;
 	uint32_t ulNotifiedValue;
 	/* Infinite loop */
 	for (;;) {
@@ -521,15 +520,6 @@ void StartCanRxTask(void const *argument) {
 				default:
 					break;
 			}
-
-			//			// show this message
-			//			SWV_SendStr("ID: ");
-			//			SWV_SendHex32(RxCan.RxHeader.StdId);
-			//			SWV_SendStr(", Data: ");
-			//			for (i = 0; i < RxCan.RxHeader.DLC; i++) {
-			//				SWV_SendHex8(RxCan.RxData[i]);
-			//			}
-			//			SWV_SendStrLn("");
 		}
 	}
 #endif
