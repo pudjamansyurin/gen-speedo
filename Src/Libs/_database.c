@@ -21,7 +21,7 @@ status_t DB_HMI_Status;
 uint32_t DB_ECU_Odometer = 0;
 timestamp_t DB_ECU_TimeStamp;
 uint8_t DB_ECU_Speed = 0;
-uint16_t DB_MCU_RPM = 0;
+uint32_t DB_MCU_RPM = 0;
 uint8_t DB_MCU_Temperature = 0;
 uint8_t DB_BMS_SoC = 0;
 uint8_t DB_BMS_Temperature = 0;

@@ -476,6 +476,7 @@ void StartCanRxTask(void const *argument) {
 	/* USER CODE BEGIN StartCanRxTask */
 	extern CAN_Rx RxCan;
 	uint32_t ulNotifiedValue;
+	uint8_t i;
 	/* Infinite loop */
 	for (;;) {
 		// check if has new can message
@@ -484,27 +485,36 @@ void StartCanRxTask(void const *argument) {
 		if ((ulNotifiedValue & EVENT_CAN_RX_IT)) {
 			// handle message
 			switch (RxCan.RxHeader.StdId) {
-				case CAN_ADDR_ECU_SWITCH:
-					CANBUS_ECU_Switch_Read();
-					break;
-				case CAN_ADDR_ECU_RTC:
-					CANBUS_ECU_RTC_Read();
-					break;
-				case CAN_ADDR_ECU_SELECT_SET:
-					CANBUS_ECU_Select_Set_Read();
-					break;
-				case CAN_ADDR_ECU_TRIP_MODE:
-					CANBUS_ECU_Trip_Mode_Read();
-					break;
-				case CAN_ADDR_MCU_DUMMY:
-					CANBUS_MCU_Dummy_Read();
-					break;
-				case CAN_ADDR_BMS_DUMMY:
-					CANBUS_BMS_Dummy_Read();
-					break;
-				default:
-					break;
+			case CAN_ADDR_ECU_SWITCH:
+				CANBUS_ECU_Switch_Read();
+				break;
+			case CAN_ADDR_ECU_RTC:
+				CANBUS_ECU_RTC_Read();
+				break;
+			case CAN_ADDR_ECU_SELECT_SET:
+				CANBUS_ECU_Select_Set_Read();
+				break;
+			case CAN_ADDR_ECU_TRIP_MODE:
+				CANBUS_ECU_Trip_Mode_Read();
+				break;
+			case CAN_ADDR_MCU_DUMMY:
+				CANBUS_MCU_Dummy_Read();
+				break;
+			case CAN_ADDR_BMS_DUMMY:
+				CANBUS_BMS_Dummy_Read();
+				break;
+			default:
+				break;
 			}
+
+			// show this message
+			SWV_SendStr("ID: ");
+			SWV_SendHex32(RxCan.RxHeader.StdId);
+			SWV_SendStr(", Data: ");
+			for (i = 0; i < RxCan.RxHeader.DLC; i++) {
+				SWV_SendHex8(RxCan.RxData[i]);
+			}
+			SWV_SendStrLn("");
 		}
 	}
 	/* USER CODE END StartCanRxTask */

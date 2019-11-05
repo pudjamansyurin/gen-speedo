@@ -251,19 +251,21 @@ void CANBUS_ECU_Trip_Mode_Read(void) {
 
 	// read message
 	if (DB_HMI_Mode.mode_trip == SWITCH_MODE_TRIP_A) {
-		DB_HMI_Mode.mode_trip_value = (RxCan.RxData[3] << 24) | (RxCan.RxData[2] << 16) | (RxCan.RxData[1] << 8) | RxCan.RxData[0];
+		DB_HMI_Mode.mode_trip_value = (RxCan.RxData[3] << 24) | (RxCan.RxData[2] << 16) | (RxCan.RxData[1] << 8)
+				| RxCan.RxData[0];
 	} else {
-		DB_HMI_Mode.mode_trip_value = (RxCan.RxData[7] << 24) | (RxCan.RxData[6] << 16) | (RxCan.RxData[5] << 8) | RxCan.RxData[4];
+		DB_HMI_Mode.mode_trip_value = (RxCan.RxData[7] << 24) | (RxCan.RxData[6] << 16) | (RxCan.RxData[5] << 8)
+				| RxCan.RxData[4];
 	}
 }
 
 void CANBUS_MCU_Dummy_Read(void) {
-	extern uint16_t DB_MCU_RPM;
+	extern uint32_t DB_MCU_RPM;
 	extern uint8_t DB_MCU_Temperature;
 
 	// read message
-	DB_MCU_RPM = (RxCan.RxData[1] << 8) | RxCan.RxData[0];
-	DB_MCU_Temperature = RxCan.RxData[2];
+	DB_MCU_RPM = (RxCan.RxData[3] << 24 | RxCan.RxData[2] << 16 | RxCan.RxData[1] << 8 | RxCan.RxData[0]);
+	DB_MCU_Temperature = RxCan.RxData[4];
 }
 
 void CANBUS_BMS_Dummy_Read(void) {

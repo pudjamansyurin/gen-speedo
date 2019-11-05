@@ -14,6 +14,7 @@
 #include <math.h>					// for: sin(), cos()
 #include "_guiapp.h"
 #include "_config.h"
+#include "_canbus.h"
 #include "_database.h"
 #if USE_HMI_LEFT
 #include "HMI_Left.c"
@@ -23,14 +24,14 @@
 
 /* Functions prototypes --------------------------------------------------------*/
 float D2R(uint16_t deg);
-void Set_Indikator(GUI_CONST_STORAGE GUI_BITMAP *bg, GUI_RECT *pRect, GUI_CONST_STORAGE GUI_BITMAP *fg, uint16_t x, uint16_t y,
-		uint8_t status, uint8_t alpha);
+void Set_Indikator(GUI_CONST_STORAGE GUI_BITMAP *bg, GUI_RECT *pRect, GUI_CONST_STORAGE GUI_BITMAP *fg, uint16_t x,
+		uint16_t y, uint8_t status, uint8_t alpha);
 #if USE_HMI_LEFT
 void Set_Left_Sein(uint8_t status, uint32_t *tick);
 void Set_Left_Temp(uint8_t status);
 void Set_Left_Lamp(uint8_t status);
 void Set_Left_Jarum(uint8_t deg, uint16_t x, uint16_t y, uint16_t r, uint16_t h, uint8_t max);
-void Set_Left_Trip(char mode);
+void Set_Left_Trip(switch_mode_trip_t mode_trip);
 #else
 void Set_Right_Sein(uint8_t status, uint32_t *tick);
 void Set_Right_Warning(uint8_t status);
@@ -49,7 +50,7 @@ void GUI_MainTask(void) {
 #if USE_HMI_LEFT
 	uint16_t x = 58, y = 161, r = 123, h = 7;
 	uint8_t max = 112;
-	extern uint16_t DB_MCU_RPM;
+	extern uint32_t DB_MCU_RPM;
 	extern uint32_t DB_ECU_Odometer;
 #else
 	char Drive_Mode[4] = { 'E', 'S', 'C', 'P' };
@@ -156,7 +157,8 @@ void GUI_MainTask(void) {
 	GUI_RECT pRect_TotalTrip = { 159, 107, 159 + 64, 107 + 24 };
 
 	GUI_SelectLayer(1);
-	GUI_MEMDEV_Handle hMem = GUI_MEMDEV_Create(x, y - r, x + r + (r * cos(D2R(max + 180))) + 5 - (x), y + h + 5 - (y - r));
+	GUI_MEMDEV_Handle hMem = GUI_MEMDEV_Create(x, y - r, x + r + (r * cos(D2R(max + 180))) + 5 - (x),
+			y + h + 5 - (y - r));
 #else
 	GUI_DrawBitmap(&bmHMI_Right, 0, 0);
 	GUI_RECT pRect_Speed = { 85, 79, 85 + 100, 79 + 41 };
@@ -178,24 +180,25 @@ void GUI_MainTask(void) {
 	while (1) {
 
 #if USE_HMI_LEFT
-		Set_Left_Sein(1, &tick);
-		Set_Left_Temp((i / 20) % 2);
-		Set_Left_Lamp((i / 15) % 2);
+		Set_Left_Sein(DB_HMI_Status.sein_left, &tick);
+		Set_Left_Temp(DB_HMI_Status.temperature);
+		Set_Left_Lamp(DB_HMI_Status.lamp);
 
 		GUI_MEMDEV_Select(hMem);
 		GUI_DrawBitmapEx(&bmHMI_Left, x, y - r, x, y - r, 1000, 1000);
 
 		GUI_SetColor(0xFFC0C0C0);
 		GUI_SetFont(&GUI_FontSquare721_BT23);
-		sprintf(str, "%lu", i);
+		sprintf(str, "%05u", (unsigned int) DB_HMI_Mode.mode_trip_value);
 		GUI_DispStringInRectWrap(str, &pRect_SubTrip, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
 		GUI_SetFont(&GUI_FontSquare721_BT23);
-		sprintf(str, "%lu", i * 90);
+		sprintf(str, "%05u", (unsigned int) DB_ECU_Odometer);
 		GUI_DispStringInRectWrap(str, &pRect_TotalTrip, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
-		Set_Left_Trip('A');
-		Set_Left_Jarum(i - (i / max * max), x, y, r, h, max);
+		Set_Left_Trip(DB_HMI_Mode.mode_trip);
+		Set_Left_Jarum(DB_MCU_RPM * max / MCU_RPM_MAX, x, y, r, h, max);
+
 		// Print result to LCD
 		GUI_MEMDEV_Select(0);
 		GUI_MEMDEV_CopyToLCD(hMem);
@@ -243,8 +246,8 @@ float D2R(uint16_t deg) {
 	return deg * M_PI / 180.0;
 }
 
-void Set_Indikator(GUI_CONST_STORAGE GUI_BITMAP *bg, GUI_RECT *pRect, GUI_CONST_STORAGE GUI_BITMAP *fg, uint16_t x, uint16_t y,
-		uint8_t status, uint8_t alpha) {
+void Set_Indikator(GUI_CONST_STORAGE GUI_BITMAP *bg, GUI_RECT *pRect, GUI_CONST_STORAGE GUI_BITMAP *fg, uint16_t x,
+		uint16_t y, uint8_t status, uint8_t alpha) {
 	GUI_SetClipRect(pRect);
 	GUI_DrawBitmapEx(bg, x, y, x, y, 1000, 1000);
 	GUI_SetClipRect(NULL);
@@ -300,10 +303,10 @@ void Set_Left_Lamp(uint8_t status) {
 }
 
 void Set_Left_Jarum(uint8_t deg, uint16_t x, uint16_t y, uint16_t r, uint16_t h, uint8_t max) {
-	GUI_POINT aPoints_Jarum[] = {
-			{ (x + r) + (((h / 2) + 1) * cos(D2R(deg + 270))), (y + (h / 2) + 1) + (((h / 2) + 1) * sin(D2R(deg + 270))) }, //atas
+	GUI_POINT aPoints_Jarum[] = { { (x + r) + (((h / 2) + 1) * cos(D2R(deg + 270))), (y + (h / 2) + 1)
+			+ (((h / 2) + 1) * sin(D2R(deg + 270))) }, //atas
 			{ (x + r) + (r * cos(D2R(deg + 180))), (y + (h / 2) + 1) + (r * sin(D2R(deg + 180))) }, //ujung
-			{ (x + r) + (((h / 2) + 1) * cos(D2R(deg + 90))), (y + (h / 2) + 1) + (((h / 2) + 1) * sin(D2R(deg + 90))) }  //bawah
+			{ (x + r) + (((h / 2) + 1) * cos(D2R(deg + 90))), (y + (h / 2) + 1) + (((h / 2) + 1) * sin(D2R(deg + 90))) } //bawah
 	};
 	GUI_SetColor(GUI_RED);
 	GUI_AA_SetFactor(6);
@@ -314,19 +317,15 @@ void Set_Left_Jarum(uint8_t deg, uint16_t x, uint16_t y, uint16_t r, uint16_t h,
 	GUI_AA_SetFactor(1);
 }
 
-void Set_Left_Trip(char mode) {
+void Set_Left_Trip(switch_mode_trip_t mode_trip) {
 	uint16_t x = 131, y = 86;
-	//	static char mod = 'C';
+	GUI_CONST_STORAGE GUI_BITMAP *pAssets;
 
-	//	if(mode != mod){
+	// decide the asset
+	pAssets = (mode_trip == SWITCH_MODE_TRIP_A ? &bmHMI_Left_Trip_A : &bmHMI_Left_Trip_B);
+
 	GUI_RECT pRect_Left_Trip = { x, y, x + bmHMI_Left_Trip_A.XSize, y + bmHMI_Left_Trip_A.YSize };
-	if (mode == 'A') {
-		Set_Indikator(&bmHMI_Left, &pRect_Left_Trip, &bmHMI_Left_Trip_A, x, y, 1, 254);
-	} else {
-		Set_Indikator(&bmHMI_Left, &pRect_Left_Trip, &bmHMI_Left_Trip_B, x, y, 1, 254);
-	}
-	//		mod = mode;
-	//	}
+	Set_Indikator(&bmHMI_Left, &pRect_Left_Trip, pAssets, x, y, 1, 254);
 }
 #else
 
