@@ -1,0 +1,51 @@
+\hypertarget{__can_8h}{}\doxysection{Inc/\+Drivers/\+\_\+can.h File Reference}
+\label{__can_8h}\index{Inc/Drivers/\_can.h@{Inc/Drivers/\_can.h}}
+{\ttfamily \#include \char`\"{}main.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}cmsis\+\_\+os.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}\+\_\+config.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}\+\_\+database.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structCAN__Tx}{C\+A\+N\+\_\+\+Tx}}
+\item 
+struct \mbox{\hyperlink{structCAN__Rx}{C\+A\+N\+\_\+\+Rx}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{__can_8h_a0505a1f9b26b55293dc199f45e7bb0ec}{C\+A\+N\+\_\+\+Init}} (void)
+\item 
+void \mbox{\hyperlink{__can_8h_a68967f57e4e181ccc7f0e38695853586}{C\+A\+N\+\_\+\+Set\+\_\+\+Tx\+\_\+\+Header}} (C\+A\+N\+\_\+\+Tx\+Header\+Type\+Def $\ast$Tx\+Header, uint32\+\_\+t Std\+Id, uint32\+\_\+t D\+LC)
+\item 
+uint8\+\_\+t \mbox{\hyperlink{__can_8h_acd5a4b6640b403d187aa306e88660d9a}{C\+A\+N\+\_\+\+Write}} (\mbox{\hyperlink{structCAN__Tx}{C\+A\+N\+\_\+\+Tx}} $\ast$Tx\+Can)
+\item 
+uint8\+\_\+t \mbox{\hyperlink{__can_8h_a777a251c326079078018bd045004c915}{C\+A\+N\+\_\+\+Read}} (\mbox{\hyperlink{structCAN__Rx}{C\+A\+N\+\_\+\+Rx}} $\ast$\mbox{\hyperlink{__canbus_8c_a989c82b179341bc92b74f969210d827d}{Rx\+Can}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{__can_8h_a0505a1f9b26b55293dc199f45e7bb0ec}\label{__can_8h_a0505a1f9b26b55293dc199f45e7bb0ec}} 
+\index{\_can.h@{\_can.h}!CAN\_Init@{CAN\_Init}}
+\index{CAN\_Init@{CAN\_Init}!\_can.h@{\_can.h}}
+\doxysubsubsection{\texorpdfstring{CAN\_Init()}{CAN\_Init()}}
+{\footnotesize\ttfamily void C\+A\+N\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__can_8h_a777a251c326079078018bd045004c915}\label{__can_8h_a777a251c326079078018bd045004c915}} 
+\index{\_can.h@{\_can.h}!CAN\_Read@{CAN\_Read}}
+\index{CAN\_Read@{CAN\_Read}!\_can.h@{\_can.h}}
+\doxysubsubsection{\texorpdfstring{CAN\_Read()}{CAN\_Read()}}
+{\footnotesize\ttfamily uint8\+\_\+t C\+A\+N\+\_\+\+Read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structCAN__Rx}{C\+A\+N\+\_\+\+Rx}} $\ast$}]{Rx\+Can }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__can_8h_a68967f57e4e181ccc7f0e38695853586}\label{__can_8h_a68967f57e4e181ccc7f0e38695853586}} 
+\index{\_can.h@{\_can.h}!CAN\_Set\_Tx\_Header@{CAN\_Set\_Tx\_Header}}
+\index{CAN\_Set\_Tx\_Header@{CAN\_Set\_Tx\_Header}!\_can.h@{\_can.h}}
+\doxysubsubsection{\texorpdfstring{CAN\_Set\_Tx\_Header()}{CAN\_Set\_Tx\_Header()}}
+{\footnotesize\ttfamily void C\+A\+N\+\_\+\+Set\+\_\+\+Tx\+\_\+\+Header (\begin{DoxyParamCaption}\item[{C\+A\+N\+\_\+\+Tx\+Header\+Type\+Def $\ast$}]{Tx\+Header,  }\item[{uint32\+\_\+t}]{Std\+Id,  }\item[{uint32\+\_\+t}]{D\+LC }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__can_8h_acd5a4b6640b403d187aa306e88660d9a}\label{__can_8h_acd5a4b6640b403d187aa306e88660d9a}} 
+\index{\_can.h@{\_can.h}!CAN\_Write@{CAN\_Write}}
+\index{CAN\_Write@{CAN\_Write}!\_can.h@{\_can.h}}
+\doxysubsubsection{\texorpdfstring{CAN\_Write()}{CAN\_Write()}}
+{\footnotesize\ttfamily uint8\+\_\+t C\+A\+N\+\_\+\+Write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structCAN__Tx}{C\+A\+N\+\_\+\+Tx}} $\ast$}]{Tx\+Can }\end{DoxyParamCaption})}
+

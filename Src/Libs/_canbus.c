@@ -1,8 +1,9 @@
-/*
- * _canbus.c
- *
- *  Created on: Oct 11, 2019
- *      Author: Puja
+/**
+ *  \file _canbus.c
+ *	\brief CAN bridge
+ *	\details This file handle abstraction layer beetween application and can.c file
+ *  \date Oct 11, 2019
+ *  \author Puja
  */
 
 #include "_canbus.h"

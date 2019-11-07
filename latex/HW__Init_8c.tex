@@ -1,0 +1,114 @@
+\hypertarget{HW__Init_8c}{}\doxysection{Src/\+H\+W\+\_\+\+Init.c File Reference}
+\label{HW__Init_8c}\index{Src/HW\_Init.c@{Src/HW\_Init.c}}
+
+
+This file implements the hardware configuration for the G\+UI library.  
+
+
+{\ttfamily \#include \char`\"{}H\+W\+\_\+\+Init.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__HARDWARE_gabc1f890aab54c0fb4e137a46abce08ee}{R\+E\+F\+R\+E\+S\+H\+\_\+\+C\+O\+U\+NT}}~1386
+\item 
+\#define \mbox{\hyperlink{group__HARDWARE_ga16ba60f030cd56f8b4c8cf72b9e6e827}{S\+D\+R\+A\+M\+\_\+\+T\+I\+M\+E\+O\+UT}}~((uint32\+\_\+t)0x\+F\+F\+FF)
+\item 
+\#define \mbox{\hyperlink{group__HARDWARE_ga61068cf2e3c483f373eae24f1b5c3443}{S\+D\+R\+A\+M\+\_\+\+M\+O\+D\+E\+R\+E\+G\+\_\+\+B\+U\+R\+S\+T\+\_\+\+L\+E\+N\+G\+T\+H\+\_\+1}}~((uint16\+\_\+t)0x0000)
+\item 
+\#define \mbox{\hyperlink{group__HARDWARE_ga9fc6a3f577d4d42a513126d72bfaf404}{S\+D\+R\+A\+M\+\_\+\+M\+O\+D\+E\+R\+E\+G\+\_\+\+B\+U\+R\+S\+T\+\_\+\+L\+E\+N\+G\+T\+H\+\_\+2}}~((uint16\+\_\+t)0x0001)
+\item 
+\#define \mbox{\hyperlink{group__HARDWARE_gad7260e42b0f446bcca111ed1c2460fcf}{S\+D\+R\+A\+M\+\_\+\+M\+O\+D\+E\+R\+E\+G\+\_\+\+B\+U\+R\+S\+T\+\_\+\+L\+E\+N\+G\+T\+H\+\_\+4}}~((uint16\+\_\+t)0x0002)
+\item 
+\#define \mbox{\hyperlink{group__HARDWARE_ga8099aeb08148f1a3496f1b85c321c735}{S\+D\+R\+A\+M\+\_\+\+M\+O\+D\+E\+R\+E\+G\+\_\+\+B\+U\+R\+S\+T\+\_\+\+L\+E\+N\+G\+T\+H\+\_\+8}}~((uint16\+\_\+t)0x0004)
+\item 
+\#define \mbox{\hyperlink{group__HARDWARE_gaa2c532f3d1462c38d1abf5e080363acc}{S\+D\+R\+A\+M\+\_\+\+M\+O\+D\+E\+R\+E\+G\+\_\+\+B\+U\+R\+S\+T\+\_\+\+T\+Y\+P\+E\+\_\+\+S\+E\+Q\+U\+E\+N\+T\+I\+AL}}~((uint16\+\_\+t)0x0000)
+\item 
+\#define \mbox{\hyperlink{group__HARDWARE_gaa874d1e0e48162b82282fe56334160c5}{S\+D\+R\+A\+M\+\_\+\+M\+O\+D\+E\+R\+E\+G\+\_\+\+B\+U\+R\+S\+T\+\_\+\+T\+Y\+P\+E\+\_\+\+I\+N\+T\+E\+R\+L\+E\+A\+V\+ED}}~((uint16\+\_\+t)0x0008)
+\item 
+\#define \mbox{\hyperlink{group__HARDWARE_ga91a6525b91764c093fa2f96ef20b9b40}{S\+D\+R\+A\+M\+\_\+\+M\+O\+D\+E\+R\+E\+G\+\_\+\+C\+A\+S\+\_\+\+L\+A\+T\+E\+N\+C\+Y\+\_\+2}}~((uint16\+\_\+t)0x0020)
+\item 
+\#define \mbox{\hyperlink{group__HARDWARE_ga214d69a120da2d812bdae62420965884}{S\+D\+R\+A\+M\+\_\+\+M\+O\+D\+E\+R\+E\+G\+\_\+\+C\+A\+S\+\_\+\+L\+A\+T\+E\+N\+C\+Y\+\_\+3}}~((uint16\+\_\+t)0x0030)
+\item 
+\#define \mbox{\hyperlink{group__HARDWARE_ga0565961aa69d688c27e2d9e32e3a80e0}{S\+D\+R\+A\+M\+\_\+\+M\+O\+D\+E\+R\+E\+G\+\_\+\+O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+S\+T\+A\+N\+D\+A\+RD}}~((uint16\+\_\+t)0x0000)
+\item 
+\#define \mbox{\hyperlink{group__HARDWARE_ga58d6b913fe75b3ba070fca979144d13f}{S\+D\+R\+A\+M\+\_\+\+M\+O\+D\+E\+R\+E\+G\+\_\+\+W\+R\+I\+T\+E\+B\+U\+R\+S\+T\+\_\+\+M\+O\+D\+E\+\_\+\+P\+R\+O\+G\+R\+A\+M\+M\+ED}}~((uint16\+\_\+t)0x0000)
+\item 
+\#define \mbox{\hyperlink{group__HARDWARE_ga54dc88e23250d2904be75f94cfdf699f}{S\+D\+R\+A\+M\+\_\+\+M\+O\+D\+E\+R\+E\+G\+\_\+\+W\+R\+I\+T\+E\+B\+U\+R\+S\+T\+\_\+\+M\+O\+D\+E\+\_\+\+S\+I\+N\+G\+LE}}~((uint16\+\_\+t)0x0200)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__HARDWARE_ga4f3576f47b76568662a5488c9095c038}{M\+X\+\_\+\+L\+C\+D\+\_\+\+Init}} (void)
+\begin{DoxyCompactList}\small\item\em Initialize the L\+CD Controller. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__HARDWARE_ga936ce86e5942959eae5a834612ecffaa}{M\+X\+\_\+\+F\+M\+C\+\_\+\+Init}} (void)
+\begin{DoxyCompactList}\small\item\em Initializes L\+CD IO. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__HARDWARE_ga6d0a5cb51945286cc6ca648a1652f843}{M\+X\+\_\+\+S\+D\+R\+A\+M\+\_\+\+Init\+Ex}} (void)
+\begin{DoxyCompactList}\small\item\em Programs the S\+D\+R\+AM device. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__HARDWARE_gae02e69179afb0942f984575901489c3e}{M\+X\+\_\+\+D\+M\+A2\+D\+\_\+\+Init}} (void)
+\item 
+\mbox{\hyperlink{group__HARDWARE_ga0160fcee734f115ee84131a8006023ff}{if}} (\mbox{\hyperlink{group__HARDWARE_ga0db65eea09a8cd112ac76cdf718b4af2}{F\+M\+C\+\_\+\+Initialized}})
+\item 
+\mbox{\hyperlink{group__HARDWARE_gace1f923e1e227acd56f26ae10aaece32}{\+\_\+\+\_\+\+H\+A\+L\+\_\+\+R\+C\+C\+\_\+\+F\+M\+C\+\_\+\+C\+L\+K\+\_\+\+E\+N\+A\+B\+LE}} ()
+\item 
+\mbox{\hyperlink{group__HARDWARE_ga3d999155c60fbcc952fadc5f28d24aca}{H\+A\+L\+\_\+\+G\+P\+I\+O\+\_\+\+Init}} (G\+P\+I\+OF, \&\mbox{\hyperlink{group__HARDWARE_ga591ddc56da281d4cfd518f035c174289}{G\+P\+I\+O\+\_\+\+Init\+Struct}})
+\item 
+\mbox{\hyperlink{group__HARDWARE_gae1cf04641d937e2c65c8cb2db2f4c692}{H\+A\+L\+\_\+\+G\+P\+I\+O\+\_\+\+Init}} (G\+P\+I\+OC, \&\mbox{\hyperlink{group__HARDWARE_ga591ddc56da281d4cfd518f035c174289}{G\+P\+I\+O\+\_\+\+Init\+Struct}})
+\item 
+\mbox{\hyperlink{group__HARDWARE_ga6072f23be1e1dbddfbb272729c1be436}{H\+A\+L\+\_\+\+G\+P\+I\+O\+\_\+\+Init}} (G\+P\+I\+OG, \&\mbox{\hyperlink{group__HARDWARE_ga591ddc56da281d4cfd518f035c174289}{G\+P\+I\+O\+\_\+\+Init\+Struct}})
+\item 
+\mbox{\hyperlink{group__HARDWARE_gab4a901784336bbc0b2ee20bcb1e8d57b}{H\+A\+L\+\_\+\+G\+P\+I\+O\+\_\+\+Init}} (G\+P\+I\+OE, \&\mbox{\hyperlink{group__HARDWARE_ga591ddc56da281d4cfd518f035c174289}{G\+P\+I\+O\+\_\+\+Init\+Struct}})
+\item 
+\mbox{\hyperlink{group__HARDWARE_ga5ed1af945314f900233a04ddcba0c0ef}{H\+A\+L\+\_\+\+G\+P\+I\+O\+\_\+\+Init}} (G\+P\+I\+OD, \&\mbox{\hyperlink{group__HARDWARE_ga591ddc56da281d4cfd518f035c174289}{G\+P\+I\+O\+\_\+\+Init\+Struct}})
+\item 
+void \mbox{\hyperlink{group__HARDWARE_ga8dc600b9ef6e5b3b1455840b86c25792}{H\+A\+L\+\_\+\+S\+D\+R\+A\+M\+\_\+\+Msp\+Init}} (S\+D\+R\+A\+M\+\_\+\+Handle\+Type\+Def $\ast$hsdram)
+\item 
+void \mbox{\hyperlink{group__HARDWARE_ga8dc783011a4823088d2b8ce43f1c31d8}{H\+A\+L\+\_\+\+S\+D\+R\+A\+M\+\_\+\+Msp\+De\+Init}} (S\+D\+R\+A\+M\+\_\+\+Handle\+Type\+Def $\ast$hsdram)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+L\+T\+D\+C\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{group__HARDWARE_ga9ede3a77755ec81a9be03423cb915b05}{hltdc}}
+\item 
+D\+M\+A2\+D\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{group__HARDWARE_ga6d27e904c93cdaca4f39c5a9c3829edf}{hdma2d}}
+\item 
+S\+D\+R\+A\+M\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{group__HARDWARE_ga6085f55189e4b7aa7b7e2673ff620418}{hsdram1}}
+\item 
+G\+P\+I\+O\+\_\+\+Init\+Type\+Def \mbox{\hyperlink{group__HARDWARE_ga591ddc56da281d4cfd518f035c174289}{G\+P\+I\+O\+\_\+\+Init\+Struct}} = \{ 0 \}
+\item 
+\mbox{\hyperlink{group__HARDWARE_ga0db65eea09a8cd112ac76cdf718b4af2}{F\+M\+C\+\_\+\+Initialized}} = 1
+\item 
+\mbox{\hyperlink{group__HARDWARE_ga591ddc56da281d4cfd518f035c174289}{G\+P\+I\+O\+\_\+\+Init\+Struct}} \mbox{\hyperlink{group__HARDWARE_ga5b6bf5093662cd9952e30a4783d18959}{Pin}}
+\item 
+\mbox{\hyperlink{group__HARDWARE_ga591ddc56da281d4cfd518f035c174289}{G\+P\+I\+O\+\_\+\+Init\+Struct}} \mbox{\hyperlink{group__HARDWARE_gab78c892ae58a2f260aad94ea4565adfb}{Mode}} = G\+P\+I\+O\+\_\+\+M\+O\+D\+E\+\_\+\+A\+F\+\_\+\+PP
+\item 
+\mbox{\hyperlink{group__HARDWARE_ga591ddc56da281d4cfd518f035c174289}{G\+P\+I\+O\+\_\+\+Init\+Struct}} \mbox{\hyperlink{group__HARDWARE_ga6ac782f2de19b0234f006e5c78df52ae}{Pull}} = G\+P\+I\+O\+\_\+\+N\+O\+P\+U\+LL
+\item 
+\mbox{\hyperlink{group__HARDWARE_ga591ddc56da281d4cfd518f035c174289}{G\+P\+I\+O\+\_\+\+Init\+Struct}} \mbox{\hyperlink{group__HARDWARE_ga1ef49683c298b4812b5b9e33e3997b1a}{Speed}} = G\+P\+I\+O\+\_\+\+S\+P\+E\+E\+D\+\_\+\+F\+R\+E\+Q\+\_\+\+V\+E\+R\+Y\+\_\+\+H\+I\+GH
+\item 
+\mbox{\hyperlink{group__HARDWARE_ga591ddc56da281d4cfd518f035c174289}{G\+P\+I\+O\+\_\+\+Init\+Struct}} \mbox{\hyperlink{group__HARDWARE_ga4fc7ccbf67bdde7c1b311c35399ff936}{Alternate}} = G\+P\+I\+O\+\_\+\+A\+F12\+\_\+\+F\+MC
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file implements the hardware configuration for the G\+UI library. 
+
+\begin{DoxyAuthor}{Author}
+M\+CD Application Team 
+\end{DoxyAuthor}
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+\doxysubsubsection*{\begin{center}\copyright{} Copyright (c) 2018 S\+T\+Microelectronics International N.\+V. All rights reserved.\end{center} }
+
+Redistribution and use in source and binary forms, with or without modification, are permitted, provided that the following conditions are met\+:
+
+
+\begin{DoxyEnumerate}
+\item Redistribution of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+\item Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+\item Neither the name of S\+T\+Microelectronics nor the names of other contributors to this software may be used to endorse or promote products derived from this software without specific written permission.
+\item This software, including modifications and/or derivative works of this software, must execute solely and exclusively on microcontroller or microprocessor devices manufactured by or for S\+T\+Microelectronics.
+\item Redistribution and use of this software other than as permitted under this license is void and will automatically terminate your rights under this license.
+\end{DoxyEnumerate}
+
+T\+H\+IS S\+O\+F\+T\+W\+A\+RE IS P\+R\+O\+V\+I\+D\+ED BY S\+T\+M\+I\+C\+R\+O\+E\+L\+E\+C\+T\+R\+O\+N\+I\+CS A\+ND C\+O\+N\+T\+R\+I\+B\+U\+T\+O\+RS \char`\"{}\+A\+S I\+S\char`\"{} A\+ND A\+NY E\+X\+P\+R\+E\+SS, I\+M\+P\+L\+I\+ED OR S\+T\+A\+T\+U\+T\+O\+RY W\+A\+R\+R\+A\+N\+T\+I\+ES, I\+N\+C\+L\+U\+D\+I\+NG, B\+UT N\+OT L\+I\+M\+I\+T\+ED TO, T\+HE I\+M\+P\+L\+I\+ED W\+A\+R\+R\+A\+N\+T\+I\+ES OF M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY, F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE A\+ND N\+O\+N-\/\+I\+N\+F\+R\+I\+N\+G\+E\+M\+E\+NT OF T\+H\+I\+RD P\+A\+R\+TY I\+N\+T\+E\+L\+L\+E\+C\+T\+U\+AL P\+R\+O\+P\+E\+R\+TY R\+I\+G\+H\+TS A\+RE D\+I\+S\+C\+L\+A\+I\+M\+ED TO T\+HE F\+U\+L\+L\+E\+ST E\+X\+T\+E\+NT P\+E\+R\+M\+I\+T\+T\+ED BY L\+AW. IN NO E\+V\+E\+NT S\+H\+A\+LL S\+T\+M\+I\+C\+R\+O\+E\+L\+E\+C\+T\+R\+O\+N\+I\+CS OR C\+O\+N\+T\+R\+I\+B\+U\+T\+O\+RS BE L\+I\+A\+B\+LE F\+OR A\+NY D\+I\+R\+E\+CT, I\+N\+D\+I\+R\+E\+CT, I\+N\+C\+I\+D\+E\+N\+T\+AL, S\+P\+E\+C\+I\+AL, E\+X\+E\+M\+P\+L\+A\+RY, OR C\+O\+N\+S\+E\+Q\+U\+E\+N\+T\+I\+AL D\+A\+M\+A\+G\+ES (I\+N\+C\+L\+U\+D\+I\+NG, B\+UT N\+OT L\+I\+M\+I\+T\+ED TO, P\+R\+O\+C\+U\+R\+E\+M\+E\+NT OF S\+U\+B\+S\+T\+I\+T\+U\+TE G\+O\+O\+DS OR S\+E\+R\+V\+I\+C\+ES; L\+O\+SS OF U\+SE, D\+A\+TA, OR P\+R\+O\+F\+I\+TS; OR B\+U\+S\+I\+N\+E\+SS I\+N\+T\+E\+R\+R\+U\+P\+T\+I\+ON) H\+O\+W\+E\+V\+ER C\+A\+U\+S\+ED A\+ND ON A\+NY T\+H\+E\+O\+RY OF L\+I\+A\+B\+I\+L\+I\+TY, W\+H\+E\+T\+H\+ER IN C\+O\+N\+T\+R\+A\+CT, S\+T\+R\+I\+CT L\+I\+A\+B\+I\+L\+I\+TY, OR T\+O\+RT (I\+N\+C\+L\+U\+D\+I\+NG N\+E\+G\+L\+I\+G\+E\+N\+CE OR O\+T\+H\+E\+R\+W\+I\+SE) A\+R\+I\+S\+I\+NG IN A\+NY W\+AY O\+UT OF T\+HE U\+SE OF T\+H\+IS S\+O\+F\+T\+W\+A\+RE, E\+V\+EN IF A\+D\+V\+I\+S\+ED OF T\+HE P\+O\+S\+S\+I\+B\+I\+L\+I\+TY OF S\+U\+CH D\+A\+M\+A\+GE. 

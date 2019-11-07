@@ -1,0 +1,328 @@
+\hypertarget{FreeRTOSConfig_8h}{}\doxysection{Inc/\+Free\+R\+T\+O\+S\+Config.h File Reference}
+\label{FreeRTOSConfig_8h}\index{Inc/FreeRTOSConfig.h@{Inc/FreeRTOSConfig.h}}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_adde83486022745409c40605922b0bdd6}{config\+U\+S\+E\+\_\+\+P\+R\+E\+E\+M\+P\+T\+I\+ON}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a1d6797a53b62d501b095f964036a7ac4}{config\+S\+U\+P\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+A\+L\+L\+O\+C\+A\+T\+I\+ON}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_afa3f8d6510699d972c9af08fa41f66dc}{config\+S\+U\+P\+P\+O\+R\+T\+\_\+\+D\+Y\+N\+A\+M\+I\+C\+\_\+\+A\+L\+L\+O\+C\+A\+T\+I\+ON}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_ac637ae45863c19fa2e919db0ed49301f}{config\+U\+S\+E\+\_\+\+I\+D\+L\+E\+\_\+\+H\+O\+OK}}~0
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a23c5922c077106fad3f70b54d9071466}{config\+U\+S\+E\+\_\+\+T\+I\+C\+K\+\_\+\+H\+O\+OK}}~0
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_aa68082df879e6fc96bcb9b26513639e7}{config\+C\+P\+U\+\_\+\+C\+L\+O\+C\+K\+\_\+\+HZ}}~( \mbox{\hyperlink{group__STM32F4xx__System__Private__Variables_gaa3cd3e43291e81e795d642b79b6088e6}{System\+Core\+Clock}} )
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a2f0258dd1e3b877e5bc013be54c2db6a}{config\+T\+I\+C\+K\+\_\+\+R\+A\+T\+E\+\_\+\+HZ}}~((Tick\+Type\+\_\+t)1000)
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a9a78f5ac61e6cb172dadf2a51f11db38}{config\+M\+A\+X\+\_\+\+P\+R\+I\+O\+R\+I\+T\+I\+ES}}~( 7 )
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a6c534a6cf8a00528fe0be42083484f9a}{config\+M\+I\+N\+I\+M\+A\+L\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE}}~((uint16\+\_\+t)128)
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a9f213227674effff0122a75d94d87938}{config\+T\+O\+T\+A\+L\+\_\+\+H\+E\+A\+P\+\_\+\+S\+I\+ZE}}~((size\+\_\+t)22360)
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_ac388dc4041aab6997348828eb27fc1a8}{config\+M\+A\+X\+\_\+\+T\+A\+S\+K\+\_\+\+N\+A\+M\+E\+\_\+\+L\+EN}}~( 16 )
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_aac311ed9b9e5ae4d2d9648b33a24acce}{config\+U\+S\+E\+\_\+16\+\_\+\+B\+I\+T\+\_\+\+T\+I\+C\+KS}}~0
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a543bf3c79008974cc1d36bab51d94fbf}{config\+U\+S\+E\+\_\+\+M\+U\+T\+E\+X\+ES}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_aa4b5138c4e42a180f0abd4f2455f90fb}{config\+Q\+U\+E\+U\+E\+\_\+\+R\+E\+G\+I\+S\+T\+R\+Y\+\_\+\+S\+I\+ZE}}~8
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a9fe02d866cb1c4fbaa0c3de79f53d42d}{config\+U\+S\+E\+\_\+\+R\+E\+C\+U\+R\+S\+I\+V\+E\+\_\+\+M\+U\+T\+E\+X\+ES}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a55778995203c57369d2fbfb10224943d}{config\+U\+S\+E\+\_\+\+C\+O\+U\+N\+T\+I\+N\+G\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+ES}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_aebb8c3a87d591f60f974772be0ee798d}{config\+U\+S\+E\+\_\+\+P\+O\+R\+T\+\_\+\+O\+P\+T\+I\+M\+I\+S\+E\+D\+\_\+\+T\+A\+S\+K\+\_\+\+S\+E\+L\+E\+C\+T\+I\+ON}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a57990715eb06402474b8b47e1d562616}{config\+U\+S\+E\+\_\+\+C\+O\+\_\+\+R\+O\+U\+T\+I\+N\+ES}}~0
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_ae8f3fd645e6e78dfeb8a6e874af6195a}{config\+M\+A\+X\+\_\+\+C\+O\+\_\+\+R\+O\+U\+T\+I\+N\+E\+\_\+\+P\+R\+I\+O\+R\+I\+T\+I\+ES}}~( 2 )
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_ac342ae309b0c53828d2ecad3e6de355b}{config\+U\+S\+E\+\_\+\+T\+I\+M\+E\+RS}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a05c75ff9029ba3f0ab5bde9196f1e873}{config\+T\+I\+M\+E\+R\+\_\+\+T\+A\+S\+K\+\_\+\+P\+R\+I\+O\+R\+I\+TY}}~( 6 )
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_abb9aa0f31c1f3b14a15083a3c6120918}{config\+T\+I\+M\+E\+R\+\_\+\+Q\+U\+E\+U\+E\+\_\+\+L\+E\+N\+G\+TH}}~10
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_aed7c7ebcdee603583a55e8ce04e55841}{config\+T\+I\+M\+E\+R\+\_\+\+T\+A\+S\+K\+\_\+\+S\+T\+A\+C\+K\+\_\+\+D\+E\+P\+TH}}~128
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_ad6858ac8aaf726007fd19752956ef1bd}{I\+N\+C\+L\+U\+D\+E\+\_\+v\+Task\+Priority\+Set}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a1279eb797355460aeeec06aa524e91df}{I\+N\+C\+L\+U\+D\+E\+\_\+ux\+Task\+Priority\+Get}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a5ae1434fdf995108dc749ff9329f53bd}{I\+N\+C\+L\+U\+D\+E\+\_\+v\+Task\+Delete}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a7ee138825e57f243c8ee5fd4207b9e26}{I\+N\+C\+L\+U\+D\+E\+\_\+v\+Task\+Clean\+Up\+Resources}}~0
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_aef8fbb97819ad3d962f334ac298206d1}{I\+N\+C\+L\+U\+D\+E\+\_\+v\+Task\+Suspend}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_ae8459bfd5b428319bb10de9f504a53aa}{I\+N\+C\+L\+U\+D\+E\+\_\+v\+Task\+Delay\+Until}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a24361a6eb816a965f1ee4e2e08e364f8}{I\+N\+C\+L\+U\+D\+E\+\_\+v\+Task\+Delay}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a9ed60ede556830584e6bfd4a3ab4f9de}{I\+N\+C\+L\+U\+D\+E\+\_\+x\+Task\+Get\+Scheduler\+State}}~1
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a5796db11ec6f9aa38d017d2ac393c5ba}{config\+P\+R\+I\+O\+\_\+\+B\+I\+TS}}~4
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a10da20f180ec9bd131b0052a802dbc39}{config\+L\+I\+B\+R\+A\+R\+Y\+\_\+\+L\+O\+W\+E\+S\+T\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+T\+\_\+\+P\+R\+I\+O\+R\+I\+TY}}~15
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a2254bd235d882be3061bcad0b1e8be98}{config\+L\+I\+B\+R\+A\+R\+Y\+\_\+\+M\+A\+X\+\_\+\+S\+Y\+S\+C\+A\+L\+L\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+T\+\_\+\+P\+R\+I\+O\+R\+I\+TY}}~5
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_ac42cff506ad61d4174fa23e952e3225e}{config\+K\+E\+R\+N\+E\+L\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+T\+\_\+\+P\+R\+I\+O\+R\+I\+TY}}~( \mbox{\hyperlink{FreeRTOSConfig_8h_a10da20f180ec9bd131b0052a802dbc39}{config\+L\+I\+B\+R\+A\+R\+Y\+\_\+\+L\+O\+W\+E\+S\+T\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+T\+\_\+\+P\+R\+I\+O\+R\+I\+TY}} $<$$<$ (8 -\/ \mbox{\hyperlink{FreeRTOSConfig_8h_a5796db11ec6f9aa38d017d2ac393c5ba}{config\+P\+R\+I\+O\+\_\+\+B\+I\+TS}}) )
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a54bfc31c410ee452577a25a4552c3704}{config\+M\+A\+X\+\_\+\+S\+Y\+S\+C\+A\+L\+L\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+T\+\_\+\+P\+R\+I\+O\+R\+I\+TY}}~( \mbox{\hyperlink{FreeRTOSConfig_8h_a2254bd235d882be3061bcad0b1e8be98}{config\+L\+I\+B\+R\+A\+R\+Y\+\_\+\+M\+A\+X\+\_\+\+S\+Y\+S\+C\+A\+L\+L\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+T\+\_\+\+P\+R\+I\+O\+R\+I\+TY}} $<$$<$ (8 -\/ \mbox{\hyperlink{FreeRTOSConfig_8h_a5796db11ec6f9aa38d017d2ac393c5ba}{config\+P\+R\+I\+O\+\_\+\+B\+I\+TS}}) )
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a228c70cd48927d6ab730ed1a6dfbe35f}{config\+A\+S\+S\+E\+RT}}(x)~\mbox{\hyperlink{group__HARDWARE_ga0160fcee734f115ee84131a8006023ff}{if}} ((x) == 0) \{task\+D\+I\+S\+A\+B\+L\+E\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+TS(); for( ;; );\}
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_ad43047b3ea0a146673e30637488bf754}{v\+Port\+S\+V\+C\+Handler}}~S\+V\+C\+\_\+\+Handler
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_a6f30022da7d797dd31f1b8a11cae9a35}{x\+Port\+Pend\+S\+V\+Handler}}~Pend\+S\+V\+\_\+\+Handler
+\item 
+\#define \mbox{\hyperlink{FreeRTOSConfig_8h_ae42e6318b5d564e44f97f8c765859448}{x\+Port\+Sys\+Tick\+Handler}}~Sys\+Tick\+\_\+\+Handler
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a228c70cd48927d6ab730ed1a6dfbe35f}\label{FreeRTOSConfig_8h_a228c70cd48927d6ab730ed1a6dfbe35f}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configASSERT@{configASSERT}}
+\index{configASSERT@{configASSERT}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configASSERT}{configASSERT}}
+{\footnotesize\ttfamily \#define config\+A\+S\+S\+E\+RT(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~\mbox{\hyperlink{group__HARDWARE_ga0160fcee734f115ee84131a8006023ff}{if}} ((x) == 0) \{task\+D\+I\+S\+A\+B\+L\+E\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+TS(); for( ;; );\}}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_aa68082df879e6fc96bcb9b26513639e7}\label{FreeRTOSConfig_8h_aa68082df879e6fc96bcb9b26513639e7}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configCPU\_CLOCK\_HZ@{configCPU\_CLOCK\_HZ}}
+\index{configCPU\_CLOCK\_HZ@{configCPU\_CLOCK\_HZ}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configCPU\_CLOCK\_HZ}{configCPU\_CLOCK\_HZ}}
+{\footnotesize\ttfamily \#define config\+C\+P\+U\+\_\+\+C\+L\+O\+C\+K\+\_\+\+HZ~( \mbox{\hyperlink{group__STM32F4xx__System__Private__Variables_gaa3cd3e43291e81e795d642b79b6088e6}{System\+Core\+Clock}} )}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_ac42cff506ad61d4174fa23e952e3225e}\label{FreeRTOSConfig_8h_ac42cff506ad61d4174fa23e952e3225e}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configKERNEL\_INTERRUPT\_PRIORITY@{configKERNEL\_INTERRUPT\_PRIORITY}}
+\index{configKERNEL\_INTERRUPT\_PRIORITY@{configKERNEL\_INTERRUPT\_PRIORITY}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configKERNEL\_INTERRUPT\_PRIORITY}{configKERNEL\_INTERRUPT\_PRIORITY}}
+{\footnotesize\ttfamily \#define config\+K\+E\+R\+N\+E\+L\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+T\+\_\+\+P\+R\+I\+O\+R\+I\+TY~( \mbox{\hyperlink{FreeRTOSConfig_8h_a10da20f180ec9bd131b0052a802dbc39}{config\+L\+I\+B\+R\+A\+R\+Y\+\_\+\+L\+O\+W\+E\+S\+T\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+T\+\_\+\+P\+R\+I\+O\+R\+I\+TY}} $<$$<$ (8 -\/ \mbox{\hyperlink{FreeRTOSConfig_8h_a5796db11ec6f9aa38d017d2ac393c5ba}{config\+P\+R\+I\+O\+\_\+\+B\+I\+TS}}) )}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a10da20f180ec9bd131b0052a802dbc39}\label{FreeRTOSConfig_8h_a10da20f180ec9bd131b0052a802dbc39}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configLIBRARY\_LOWEST\_INTERRUPT\_PRIORITY@{configLIBRARY\_LOWEST\_INTERRUPT\_PRIORITY}}
+\index{configLIBRARY\_LOWEST\_INTERRUPT\_PRIORITY@{configLIBRARY\_LOWEST\_INTERRUPT\_PRIORITY}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configLIBRARY\_LOWEST\_INTERRUPT\_PRIORITY}{configLIBRARY\_LOWEST\_INTERRUPT\_PRIORITY}}
+{\footnotesize\ttfamily \#define config\+L\+I\+B\+R\+A\+R\+Y\+\_\+\+L\+O\+W\+E\+S\+T\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+T\+\_\+\+P\+R\+I\+O\+R\+I\+TY~15}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a2254bd235d882be3061bcad0b1e8be98}\label{FreeRTOSConfig_8h_a2254bd235d882be3061bcad0b1e8be98}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configLIBRARY\_MAX\_SYSCALL\_INTERRUPT\_PRIORITY@{configLIBRARY\_MAX\_SYSCALL\_INTERRUPT\_PRIORITY}}
+\index{configLIBRARY\_MAX\_SYSCALL\_INTERRUPT\_PRIORITY@{configLIBRARY\_MAX\_SYSCALL\_INTERRUPT\_PRIORITY}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configLIBRARY\_MAX\_SYSCALL\_INTERRUPT\_PRIORITY}{configLIBRARY\_MAX\_SYSCALL\_INTERRUPT\_PRIORITY}}
+{\footnotesize\ttfamily \#define config\+L\+I\+B\+R\+A\+R\+Y\+\_\+\+M\+A\+X\+\_\+\+S\+Y\+S\+C\+A\+L\+L\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+T\+\_\+\+P\+R\+I\+O\+R\+I\+TY~5}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_ae8f3fd645e6e78dfeb8a6e874af6195a}\label{FreeRTOSConfig_8h_ae8f3fd645e6e78dfeb8a6e874af6195a}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configMAX\_CO\_ROUTINE\_PRIORITIES@{configMAX\_CO\_ROUTINE\_PRIORITIES}}
+\index{configMAX\_CO\_ROUTINE\_PRIORITIES@{configMAX\_CO\_ROUTINE\_PRIORITIES}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configMAX\_CO\_ROUTINE\_PRIORITIES}{configMAX\_CO\_ROUTINE\_PRIORITIES}}
+{\footnotesize\ttfamily \#define config\+M\+A\+X\+\_\+\+C\+O\+\_\+\+R\+O\+U\+T\+I\+N\+E\+\_\+\+P\+R\+I\+O\+R\+I\+T\+I\+ES~( 2 )}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a9a78f5ac61e6cb172dadf2a51f11db38}\label{FreeRTOSConfig_8h_a9a78f5ac61e6cb172dadf2a51f11db38}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configMAX\_PRIORITIES@{configMAX\_PRIORITIES}}
+\index{configMAX\_PRIORITIES@{configMAX\_PRIORITIES}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configMAX\_PRIORITIES}{configMAX\_PRIORITIES}}
+{\footnotesize\ttfamily \#define config\+M\+A\+X\+\_\+\+P\+R\+I\+O\+R\+I\+T\+I\+ES~( 7 )}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a54bfc31c410ee452577a25a4552c3704}\label{FreeRTOSConfig_8h_a54bfc31c410ee452577a25a4552c3704}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configMAX\_SYSCALL\_INTERRUPT\_PRIORITY@{configMAX\_SYSCALL\_INTERRUPT\_PRIORITY}}
+\index{configMAX\_SYSCALL\_INTERRUPT\_PRIORITY@{configMAX\_SYSCALL\_INTERRUPT\_PRIORITY}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configMAX\_SYSCALL\_INTERRUPT\_PRIORITY}{configMAX\_SYSCALL\_INTERRUPT\_PRIORITY}}
+{\footnotesize\ttfamily \#define config\+M\+A\+X\+\_\+\+S\+Y\+S\+C\+A\+L\+L\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+T\+\_\+\+P\+R\+I\+O\+R\+I\+TY~( \mbox{\hyperlink{FreeRTOSConfig_8h_a2254bd235d882be3061bcad0b1e8be98}{config\+L\+I\+B\+R\+A\+R\+Y\+\_\+\+M\+A\+X\+\_\+\+S\+Y\+S\+C\+A\+L\+L\+\_\+\+I\+N\+T\+E\+R\+R\+U\+P\+T\+\_\+\+P\+R\+I\+O\+R\+I\+TY}} $<$$<$ (8 -\/ \mbox{\hyperlink{FreeRTOSConfig_8h_a5796db11ec6f9aa38d017d2ac393c5ba}{config\+P\+R\+I\+O\+\_\+\+B\+I\+TS}}) )}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_ac388dc4041aab6997348828eb27fc1a8}\label{FreeRTOSConfig_8h_ac388dc4041aab6997348828eb27fc1a8}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configMAX\_TASK\_NAME\_LEN@{configMAX\_TASK\_NAME\_LEN}}
+\index{configMAX\_TASK\_NAME\_LEN@{configMAX\_TASK\_NAME\_LEN}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configMAX\_TASK\_NAME\_LEN}{configMAX\_TASK\_NAME\_LEN}}
+{\footnotesize\ttfamily \#define config\+M\+A\+X\+\_\+\+T\+A\+S\+K\+\_\+\+N\+A\+M\+E\+\_\+\+L\+EN~( 16 )}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a6c534a6cf8a00528fe0be42083484f9a}\label{FreeRTOSConfig_8h_a6c534a6cf8a00528fe0be42083484f9a}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configMINIMAL\_STACK\_SIZE@{configMINIMAL\_STACK\_SIZE}}
+\index{configMINIMAL\_STACK\_SIZE@{configMINIMAL\_STACK\_SIZE}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configMINIMAL\_STACK\_SIZE}{configMINIMAL\_STACK\_SIZE}}
+{\footnotesize\ttfamily \#define config\+M\+I\+N\+I\+M\+A\+L\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE~((uint16\+\_\+t)128)}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a5796db11ec6f9aa38d017d2ac393c5ba}\label{FreeRTOSConfig_8h_a5796db11ec6f9aa38d017d2ac393c5ba}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configPRIO\_BITS@{configPRIO\_BITS}}
+\index{configPRIO\_BITS@{configPRIO\_BITS}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configPRIO\_BITS}{configPRIO\_BITS}}
+{\footnotesize\ttfamily \#define config\+P\+R\+I\+O\+\_\+\+B\+I\+TS~4}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_aa4b5138c4e42a180f0abd4f2455f90fb}\label{FreeRTOSConfig_8h_aa4b5138c4e42a180f0abd4f2455f90fb}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configQUEUE\_REGISTRY\_SIZE@{configQUEUE\_REGISTRY\_SIZE}}
+\index{configQUEUE\_REGISTRY\_SIZE@{configQUEUE\_REGISTRY\_SIZE}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configQUEUE\_REGISTRY\_SIZE}{configQUEUE\_REGISTRY\_SIZE}}
+{\footnotesize\ttfamily \#define config\+Q\+U\+E\+U\+E\+\_\+\+R\+E\+G\+I\+S\+T\+R\+Y\+\_\+\+S\+I\+ZE~8}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_afa3f8d6510699d972c9af08fa41f66dc}\label{FreeRTOSConfig_8h_afa3f8d6510699d972c9af08fa41f66dc}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configSUPPORT\_DYNAMIC\_ALLOCATION@{configSUPPORT\_DYNAMIC\_ALLOCATION}}
+\index{configSUPPORT\_DYNAMIC\_ALLOCATION@{configSUPPORT\_DYNAMIC\_ALLOCATION}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configSUPPORT\_DYNAMIC\_ALLOCATION}{configSUPPORT\_DYNAMIC\_ALLOCATION}}
+{\footnotesize\ttfamily \#define config\+S\+U\+P\+P\+O\+R\+T\+\_\+\+D\+Y\+N\+A\+M\+I\+C\+\_\+\+A\+L\+L\+O\+C\+A\+T\+I\+ON~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a1d6797a53b62d501b095f964036a7ac4}\label{FreeRTOSConfig_8h_a1d6797a53b62d501b095f964036a7ac4}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configSUPPORT\_STATIC\_ALLOCATION@{configSUPPORT\_STATIC\_ALLOCATION}}
+\index{configSUPPORT\_STATIC\_ALLOCATION@{configSUPPORT\_STATIC\_ALLOCATION}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configSUPPORT\_STATIC\_ALLOCATION}{configSUPPORT\_STATIC\_ALLOCATION}}
+{\footnotesize\ttfamily \#define config\+S\+U\+P\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+A\+L\+L\+O\+C\+A\+T\+I\+ON~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a2f0258dd1e3b877e5bc013be54c2db6a}\label{FreeRTOSConfig_8h_a2f0258dd1e3b877e5bc013be54c2db6a}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configTICK\_RATE\_HZ@{configTICK\_RATE\_HZ}}
+\index{configTICK\_RATE\_HZ@{configTICK\_RATE\_HZ}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configTICK\_RATE\_HZ}{configTICK\_RATE\_HZ}}
+{\footnotesize\ttfamily \#define config\+T\+I\+C\+K\+\_\+\+R\+A\+T\+E\+\_\+\+HZ~((Tick\+Type\+\_\+t)1000)}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_abb9aa0f31c1f3b14a15083a3c6120918}\label{FreeRTOSConfig_8h_abb9aa0f31c1f3b14a15083a3c6120918}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configTIMER\_QUEUE\_LENGTH@{configTIMER\_QUEUE\_LENGTH}}
+\index{configTIMER\_QUEUE\_LENGTH@{configTIMER\_QUEUE\_LENGTH}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configTIMER\_QUEUE\_LENGTH}{configTIMER\_QUEUE\_LENGTH}}
+{\footnotesize\ttfamily \#define config\+T\+I\+M\+E\+R\+\_\+\+Q\+U\+E\+U\+E\+\_\+\+L\+E\+N\+G\+TH~10}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a05c75ff9029ba3f0ab5bde9196f1e873}\label{FreeRTOSConfig_8h_a05c75ff9029ba3f0ab5bde9196f1e873}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configTIMER\_TASK\_PRIORITY@{configTIMER\_TASK\_PRIORITY}}
+\index{configTIMER\_TASK\_PRIORITY@{configTIMER\_TASK\_PRIORITY}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configTIMER\_TASK\_PRIORITY}{configTIMER\_TASK\_PRIORITY}}
+{\footnotesize\ttfamily \#define config\+T\+I\+M\+E\+R\+\_\+\+T\+A\+S\+K\+\_\+\+P\+R\+I\+O\+R\+I\+TY~( 6 )}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_aed7c7ebcdee603583a55e8ce04e55841}\label{FreeRTOSConfig_8h_aed7c7ebcdee603583a55e8ce04e55841}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configTIMER\_TASK\_STACK\_DEPTH@{configTIMER\_TASK\_STACK\_DEPTH}}
+\index{configTIMER\_TASK\_STACK\_DEPTH@{configTIMER\_TASK\_STACK\_DEPTH}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configTIMER\_TASK\_STACK\_DEPTH}{configTIMER\_TASK\_STACK\_DEPTH}}
+{\footnotesize\ttfamily \#define config\+T\+I\+M\+E\+R\+\_\+\+T\+A\+S\+K\+\_\+\+S\+T\+A\+C\+K\+\_\+\+D\+E\+P\+TH~128}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a9f213227674effff0122a75d94d87938}\label{FreeRTOSConfig_8h_a9f213227674effff0122a75d94d87938}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configTOTAL\_HEAP\_SIZE@{configTOTAL\_HEAP\_SIZE}}
+\index{configTOTAL\_HEAP\_SIZE@{configTOTAL\_HEAP\_SIZE}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configTOTAL\_HEAP\_SIZE}{configTOTAL\_HEAP\_SIZE}}
+{\footnotesize\ttfamily \#define config\+T\+O\+T\+A\+L\+\_\+\+H\+E\+A\+P\+\_\+\+S\+I\+ZE~((size\+\_\+t)22360)}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_aac311ed9b9e5ae4d2d9648b33a24acce}\label{FreeRTOSConfig_8h_aac311ed9b9e5ae4d2d9648b33a24acce}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configUSE\_16\_BIT\_TICKS@{configUSE\_16\_BIT\_TICKS}}
+\index{configUSE\_16\_BIT\_TICKS@{configUSE\_16\_BIT\_TICKS}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configUSE\_16\_BIT\_TICKS}{configUSE\_16\_BIT\_TICKS}}
+{\footnotesize\ttfamily \#define config\+U\+S\+E\+\_\+16\+\_\+\+B\+I\+T\+\_\+\+T\+I\+C\+KS~0}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a57990715eb06402474b8b47e1d562616}\label{FreeRTOSConfig_8h_a57990715eb06402474b8b47e1d562616}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configUSE\_CO\_ROUTINES@{configUSE\_CO\_ROUTINES}}
+\index{configUSE\_CO\_ROUTINES@{configUSE\_CO\_ROUTINES}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configUSE\_CO\_ROUTINES}{configUSE\_CO\_ROUTINES}}
+{\footnotesize\ttfamily \#define config\+U\+S\+E\+\_\+\+C\+O\+\_\+\+R\+O\+U\+T\+I\+N\+ES~0}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a55778995203c57369d2fbfb10224943d}\label{FreeRTOSConfig_8h_a55778995203c57369d2fbfb10224943d}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configUSE\_COUNTING\_SEMAPHORES@{configUSE\_COUNTING\_SEMAPHORES}}
+\index{configUSE\_COUNTING\_SEMAPHORES@{configUSE\_COUNTING\_SEMAPHORES}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configUSE\_COUNTING\_SEMAPHORES}{configUSE\_COUNTING\_SEMAPHORES}}
+{\footnotesize\ttfamily \#define config\+U\+S\+E\+\_\+\+C\+O\+U\+N\+T\+I\+N\+G\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+ES~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_ac637ae45863c19fa2e919db0ed49301f}\label{FreeRTOSConfig_8h_ac637ae45863c19fa2e919db0ed49301f}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configUSE\_IDLE\_HOOK@{configUSE\_IDLE\_HOOK}}
+\index{configUSE\_IDLE\_HOOK@{configUSE\_IDLE\_HOOK}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configUSE\_IDLE\_HOOK}{configUSE\_IDLE\_HOOK}}
+{\footnotesize\ttfamily \#define config\+U\+S\+E\+\_\+\+I\+D\+L\+E\+\_\+\+H\+O\+OK~0}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a543bf3c79008974cc1d36bab51d94fbf}\label{FreeRTOSConfig_8h_a543bf3c79008974cc1d36bab51d94fbf}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configUSE\_MUTEXES@{configUSE\_MUTEXES}}
+\index{configUSE\_MUTEXES@{configUSE\_MUTEXES}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configUSE\_MUTEXES}{configUSE\_MUTEXES}}
+{\footnotesize\ttfamily \#define config\+U\+S\+E\+\_\+\+M\+U\+T\+E\+X\+ES~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_aebb8c3a87d591f60f974772be0ee798d}\label{FreeRTOSConfig_8h_aebb8c3a87d591f60f974772be0ee798d}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configUSE\_PORT\_OPTIMISED\_TASK\_SELECTION@{configUSE\_PORT\_OPTIMISED\_TASK\_SELECTION}}
+\index{configUSE\_PORT\_OPTIMISED\_TASK\_SELECTION@{configUSE\_PORT\_OPTIMISED\_TASK\_SELECTION}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configUSE\_PORT\_OPTIMISED\_TASK\_SELECTION}{configUSE\_PORT\_OPTIMISED\_TASK\_SELECTION}}
+{\footnotesize\ttfamily \#define config\+U\+S\+E\+\_\+\+P\+O\+R\+T\+\_\+\+O\+P\+T\+I\+M\+I\+S\+E\+D\+\_\+\+T\+A\+S\+K\+\_\+\+S\+E\+L\+E\+C\+T\+I\+ON~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_adde83486022745409c40605922b0bdd6}\label{FreeRTOSConfig_8h_adde83486022745409c40605922b0bdd6}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configUSE\_PREEMPTION@{configUSE\_PREEMPTION}}
+\index{configUSE\_PREEMPTION@{configUSE\_PREEMPTION}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configUSE\_PREEMPTION}{configUSE\_PREEMPTION}}
+{\footnotesize\ttfamily \#define config\+U\+S\+E\+\_\+\+P\+R\+E\+E\+M\+P\+T\+I\+ON~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a9fe02d866cb1c4fbaa0c3de79f53d42d}\label{FreeRTOSConfig_8h_a9fe02d866cb1c4fbaa0c3de79f53d42d}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configUSE\_RECURSIVE\_MUTEXES@{configUSE\_RECURSIVE\_MUTEXES}}
+\index{configUSE\_RECURSIVE\_MUTEXES@{configUSE\_RECURSIVE\_MUTEXES}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configUSE\_RECURSIVE\_MUTEXES}{configUSE\_RECURSIVE\_MUTEXES}}
+{\footnotesize\ttfamily \#define config\+U\+S\+E\+\_\+\+R\+E\+C\+U\+R\+S\+I\+V\+E\+\_\+\+M\+U\+T\+E\+X\+ES~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a23c5922c077106fad3f70b54d9071466}\label{FreeRTOSConfig_8h_a23c5922c077106fad3f70b54d9071466}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configUSE\_TICK\_HOOK@{configUSE\_TICK\_HOOK}}
+\index{configUSE\_TICK\_HOOK@{configUSE\_TICK\_HOOK}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configUSE\_TICK\_HOOK}{configUSE\_TICK\_HOOK}}
+{\footnotesize\ttfamily \#define config\+U\+S\+E\+\_\+\+T\+I\+C\+K\+\_\+\+H\+O\+OK~0}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_ac342ae309b0c53828d2ecad3e6de355b}\label{FreeRTOSConfig_8h_ac342ae309b0c53828d2ecad3e6de355b}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!configUSE\_TIMERS@{configUSE\_TIMERS}}
+\index{configUSE\_TIMERS@{configUSE\_TIMERS}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{configUSE\_TIMERS}{configUSE\_TIMERS}}
+{\footnotesize\ttfamily \#define config\+U\+S\+E\+\_\+\+T\+I\+M\+E\+RS~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a1279eb797355460aeeec06aa524e91df}\label{FreeRTOSConfig_8h_a1279eb797355460aeeec06aa524e91df}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!INCLUDE\_uxTaskPriorityGet@{INCLUDE\_uxTaskPriorityGet}}
+\index{INCLUDE\_uxTaskPriorityGet@{INCLUDE\_uxTaskPriorityGet}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{INCLUDE\_uxTaskPriorityGet}{INCLUDE\_uxTaskPriorityGet}}
+{\footnotesize\ttfamily \#define I\+N\+C\+L\+U\+D\+E\+\_\+ux\+Task\+Priority\+Get~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a7ee138825e57f243c8ee5fd4207b9e26}\label{FreeRTOSConfig_8h_a7ee138825e57f243c8ee5fd4207b9e26}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!INCLUDE\_vTaskCleanUpResources@{INCLUDE\_vTaskCleanUpResources}}
+\index{INCLUDE\_vTaskCleanUpResources@{INCLUDE\_vTaskCleanUpResources}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{INCLUDE\_vTaskCleanUpResources}{INCLUDE\_vTaskCleanUpResources}}
+{\footnotesize\ttfamily \#define I\+N\+C\+L\+U\+D\+E\+\_\+v\+Task\+Clean\+Up\+Resources~0}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a24361a6eb816a965f1ee4e2e08e364f8}\label{FreeRTOSConfig_8h_a24361a6eb816a965f1ee4e2e08e364f8}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!INCLUDE\_vTaskDelay@{INCLUDE\_vTaskDelay}}
+\index{INCLUDE\_vTaskDelay@{INCLUDE\_vTaskDelay}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{INCLUDE\_vTaskDelay}{INCLUDE\_vTaskDelay}}
+{\footnotesize\ttfamily \#define I\+N\+C\+L\+U\+D\+E\+\_\+v\+Task\+Delay~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_ae8459bfd5b428319bb10de9f504a53aa}\label{FreeRTOSConfig_8h_ae8459bfd5b428319bb10de9f504a53aa}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!INCLUDE\_vTaskDelayUntil@{INCLUDE\_vTaskDelayUntil}}
+\index{INCLUDE\_vTaskDelayUntil@{INCLUDE\_vTaskDelayUntil}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{INCLUDE\_vTaskDelayUntil}{INCLUDE\_vTaskDelayUntil}}
+{\footnotesize\ttfamily \#define I\+N\+C\+L\+U\+D\+E\+\_\+v\+Task\+Delay\+Until~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a5ae1434fdf995108dc749ff9329f53bd}\label{FreeRTOSConfig_8h_a5ae1434fdf995108dc749ff9329f53bd}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!INCLUDE\_vTaskDelete@{INCLUDE\_vTaskDelete}}
+\index{INCLUDE\_vTaskDelete@{INCLUDE\_vTaskDelete}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{INCLUDE\_vTaskDelete}{INCLUDE\_vTaskDelete}}
+{\footnotesize\ttfamily \#define I\+N\+C\+L\+U\+D\+E\+\_\+v\+Task\+Delete~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_ad6858ac8aaf726007fd19752956ef1bd}\label{FreeRTOSConfig_8h_ad6858ac8aaf726007fd19752956ef1bd}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!INCLUDE\_vTaskPrioritySet@{INCLUDE\_vTaskPrioritySet}}
+\index{INCLUDE\_vTaskPrioritySet@{INCLUDE\_vTaskPrioritySet}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{INCLUDE\_vTaskPrioritySet}{INCLUDE\_vTaskPrioritySet}}
+{\footnotesize\ttfamily \#define I\+N\+C\+L\+U\+D\+E\+\_\+v\+Task\+Priority\+Set~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_aef8fbb97819ad3d962f334ac298206d1}\label{FreeRTOSConfig_8h_aef8fbb97819ad3d962f334ac298206d1}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!INCLUDE\_vTaskSuspend@{INCLUDE\_vTaskSuspend}}
+\index{INCLUDE\_vTaskSuspend@{INCLUDE\_vTaskSuspend}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{INCLUDE\_vTaskSuspend}{INCLUDE\_vTaskSuspend}}
+{\footnotesize\ttfamily \#define I\+N\+C\+L\+U\+D\+E\+\_\+v\+Task\+Suspend~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a9ed60ede556830584e6bfd4a3ab4f9de}\label{FreeRTOSConfig_8h_a9ed60ede556830584e6bfd4a3ab4f9de}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!INCLUDE\_xTaskGetSchedulerState@{INCLUDE\_xTaskGetSchedulerState}}
+\index{INCLUDE\_xTaskGetSchedulerState@{INCLUDE\_xTaskGetSchedulerState}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{INCLUDE\_xTaskGetSchedulerState}{INCLUDE\_xTaskGetSchedulerState}}
+{\footnotesize\ttfamily \#define I\+N\+C\+L\+U\+D\+E\+\_\+x\+Task\+Get\+Scheduler\+State~1}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_ad43047b3ea0a146673e30637488bf754}\label{FreeRTOSConfig_8h_ad43047b3ea0a146673e30637488bf754}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!vPortSVCHandler@{vPortSVCHandler}}
+\index{vPortSVCHandler@{vPortSVCHandler}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{vPortSVCHandler}{vPortSVCHandler}}
+{\footnotesize\ttfamily \#define v\+Port\+S\+V\+C\+Handler~S\+V\+C\+\_\+\+Handler}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_a6f30022da7d797dd31f1b8a11cae9a35}\label{FreeRTOSConfig_8h_a6f30022da7d797dd31f1b8a11cae9a35}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!xPortPendSVHandler@{xPortPendSVHandler}}
+\index{xPortPendSVHandler@{xPortPendSVHandler}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{xPortPendSVHandler}{xPortPendSVHandler}}
+{\footnotesize\ttfamily \#define x\+Port\+Pend\+S\+V\+Handler~Pend\+S\+V\+\_\+\+Handler}
+
+\mbox{\Hypertarget{FreeRTOSConfig_8h_ae42e6318b5d564e44f97f8c765859448}\label{FreeRTOSConfig_8h_ae42e6318b5d564e44f97f8c765859448}} 
+\index{FreeRTOSConfig.h@{FreeRTOSConfig.h}!xPortSysTickHandler@{xPortSysTickHandler}}
+\index{xPortSysTickHandler@{xPortSysTickHandler}!FreeRTOSConfig.h@{FreeRTOSConfig.h}}
+\doxysubsubsection{\texorpdfstring{xPortSysTickHandler}{xPortSysTickHandler}}
+{\footnotesize\ttfamily \#define x\+Port\+Sys\+Tick\+Handler~Sys\+Tick\+\_\+\+Handler}
+

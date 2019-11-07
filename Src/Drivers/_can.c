@@ -52,6 +52,12 @@ void CAN_Init(void) {
 	}
 }
 
+/**
+ * Function to set global TxHeader variable.
+ * @param TxHeader
+ * @param StdId
+ * @param DLC
+ */
 void CAN_Set_Tx_Header(CAN_TxHeaderTypeDef *TxHeader, uint32_t StdId, uint32_t DLC) {
 	/* Configure Global Transmission process */
 	TxHeader->RTR = CAN_RTR_DATA;

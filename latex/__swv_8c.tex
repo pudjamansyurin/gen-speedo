@@ -1,0 +1,119 @@
+\hypertarget{__swv_8c}{}\doxysection{Src/\+Drivers/\+\_\+swv.c File Reference}
+\label{__swv_8c}\index{Src/Drivers/\_swv.c@{Src/Drivers/\_swv.c}}
+{\ttfamily \#include \char`\"{}\+\_\+swv.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{__swv_8c_a80690185a56f0c44fa49ae57beb24bac}{S\+W\+V\+\_\+\+Send\+Char}} (char ch)
+\item 
+void \mbox{\hyperlink{__swv_8c_aab53512cffdea651e8a72e5258973ce2}{S\+W\+V\+\_\+\+Send\+Int}} (int32\+\_\+t num)
+\item 
+void \mbox{\hyperlink{__swv_8c_a442c9d802741805f524c59e0ec8ac620}{S\+W\+V\+\_\+\+Send\+Int0}} (int32\+\_\+t num)
+\item 
+void \mbox{\hyperlink{__swv_8c_ad89eca6e583fbb2ca6cf92802a6a7878}{S\+W\+V\+\_\+\+Send\+Hex8}} (uint16\+\_\+t num)
+\item 
+void \mbox{\hyperlink{__swv_8c_a5a8bf9297c2995b2bf4f2924f182e038}{S\+W\+V\+\_\+\+Send\+Hex16}} (uint16\+\_\+t num)
+\item 
+void \mbox{\hyperlink{__swv_8c_a2a957ae657dcf65391e4a0f11a2c7952}{S\+W\+V\+\_\+\+Send\+Hex32}} (uint32\+\_\+t num)
+\item 
+void \mbox{\hyperlink{__swv_8c_a374fd6514d8e7c67ce0729092e7eed78}{S\+W\+V\+\_\+\+Send\+Str}} (char $\ast$str)
+\item 
+void \mbox{\hyperlink{__swv_8c_a4afe534e854e3f217bba5dc5c3c9466b}{S\+W\+V\+\_\+\+Send\+Str\+Ln}} (char $\ast$str)
+\item 
+void \mbox{\hyperlink{__swv_8c_a8317d1fc3b1650ed0fdd5eb5c4f274cb}{S\+W\+V\+\_\+\+Send\+Buf}} (char $\ast$buf, uint16\+\_\+t bufsize)
+\item 
+void \mbox{\hyperlink{__swv_8c_aa84397047b22d07beca607230e646035}{S\+W\+V\+\_\+\+Send\+Buf\+Printable}} (char $\ast$buf, uint16\+\_\+t bufsize, char subst)
+\item 
+void \mbox{\hyperlink{__swv_8c_a90b7dc3ab9e79f10ce0ea9b91545440e}{S\+W\+V\+\_\+\+Send\+Buf\+Hex}} (char $\ast$buf, uint16\+\_\+t bufsize)
+\item 
+void \mbox{\hyperlink{__swv_8c_ae1ffc729d3acdda15977230cc83b8829}{S\+W\+V\+\_\+\+Send\+Buf\+Hex\+Fancy}} (char $\ast$buf, uint16\+\_\+t bufsize, uint8\+\_\+t column\+\_\+width, char subst)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+os\+Mutex\+Id \mbox{\hyperlink{__swv_8c_a5650410e45cd84b84319fe906cf1b4e9}{Swv\+Mutex\+Handle}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{__swv_8c_a8317d1fc3b1650ed0fdd5eb5c4f274cb}\label{__swv_8c_a8317d1fc3b1650ed0fdd5eb5c4f274cb}} 
+\index{\_swv.c@{\_swv.c}!SWV\_SendBuf@{SWV\_SendBuf}}
+\index{SWV\_SendBuf@{SWV\_SendBuf}!\_swv.c@{\_swv.c}}
+\doxysubsubsection{\texorpdfstring{SWV\_SendBuf()}{SWV\_SendBuf()}}
+{\footnotesize\ttfamily void S\+W\+V\+\_\+\+Send\+Buf (\begin{DoxyParamCaption}\item[{char $\ast$}]{buf,  }\item[{uint16\+\_\+t}]{bufsize }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__swv_8c_a90b7dc3ab9e79f10ce0ea9b91545440e}\label{__swv_8c_a90b7dc3ab9e79f10ce0ea9b91545440e}} 
+\index{\_swv.c@{\_swv.c}!SWV\_SendBufHex@{SWV\_SendBufHex}}
+\index{SWV\_SendBufHex@{SWV\_SendBufHex}!\_swv.c@{\_swv.c}}
+\doxysubsubsection{\texorpdfstring{SWV\_SendBufHex()}{SWV\_SendBufHex()}}
+{\footnotesize\ttfamily void S\+W\+V\+\_\+\+Send\+Buf\+Hex (\begin{DoxyParamCaption}\item[{char $\ast$}]{buf,  }\item[{uint16\+\_\+t}]{bufsize }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__swv_8c_ae1ffc729d3acdda15977230cc83b8829}\label{__swv_8c_ae1ffc729d3acdda15977230cc83b8829}} 
+\index{\_swv.c@{\_swv.c}!SWV\_SendBufHexFancy@{SWV\_SendBufHexFancy}}
+\index{SWV\_SendBufHexFancy@{SWV\_SendBufHexFancy}!\_swv.c@{\_swv.c}}
+\doxysubsubsection{\texorpdfstring{SWV\_SendBufHexFancy()}{SWV\_SendBufHexFancy()}}
+{\footnotesize\ttfamily void S\+W\+V\+\_\+\+Send\+Buf\+Hex\+Fancy (\begin{DoxyParamCaption}\item[{char $\ast$}]{buf,  }\item[{uint16\+\_\+t}]{bufsize,  }\item[{uint8\+\_\+t}]{column\+\_\+width,  }\item[{char}]{subst }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__swv_8c_aa84397047b22d07beca607230e646035}\label{__swv_8c_aa84397047b22d07beca607230e646035}} 
+\index{\_swv.c@{\_swv.c}!SWV\_SendBufPrintable@{SWV\_SendBufPrintable}}
+\index{SWV\_SendBufPrintable@{SWV\_SendBufPrintable}!\_swv.c@{\_swv.c}}
+\doxysubsubsection{\texorpdfstring{SWV\_SendBufPrintable()}{SWV\_SendBufPrintable()}}
+{\footnotesize\ttfamily void S\+W\+V\+\_\+\+Send\+Buf\+Printable (\begin{DoxyParamCaption}\item[{char $\ast$}]{buf,  }\item[{uint16\+\_\+t}]{bufsize,  }\item[{char}]{subst }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__swv_8c_a80690185a56f0c44fa49ae57beb24bac}\label{__swv_8c_a80690185a56f0c44fa49ae57beb24bac}} 
+\index{\_swv.c@{\_swv.c}!SWV\_SendChar@{SWV\_SendChar}}
+\index{SWV\_SendChar@{SWV\_SendChar}!\_swv.c@{\_swv.c}}
+\doxysubsubsection{\texorpdfstring{SWV\_SendChar()}{SWV\_SendChar()}}
+{\footnotesize\ttfamily void S\+W\+V\+\_\+\+Send\+Char (\begin{DoxyParamCaption}\item[{char}]{ch }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__swv_8c_a5a8bf9297c2995b2bf4f2924f182e038}\label{__swv_8c_a5a8bf9297c2995b2bf4f2924f182e038}} 
+\index{\_swv.c@{\_swv.c}!SWV\_SendHex16@{SWV\_SendHex16}}
+\index{SWV\_SendHex16@{SWV\_SendHex16}!\_swv.c@{\_swv.c}}
+\doxysubsubsection{\texorpdfstring{SWV\_SendHex16()}{SWV\_SendHex16()}}
+{\footnotesize\ttfamily void S\+W\+V\+\_\+\+Send\+Hex16 (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{num }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__swv_8c_a2a957ae657dcf65391e4a0f11a2c7952}\label{__swv_8c_a2a957ae657dcf65391e4a0f11a2c7952}} 
+\index{\_swv.c@{\_swv.c}!SWV\_SendHex32@{SWV\_SendHex32}}
+\index{SWV\_SendHex32@{SWV\_SendHex32}!\_swv.c@{\_swv.c}}
+\doxysubsubsection{\texorpdfstring{SWV\_SendHex32()}{SWV\_SendHex32()}}
+{\footnotesize\ttfamily void S\+W\+V\+\_\+\+Send\+Hex32 (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{num }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__swv_8c_ad89eca6e583fbb2ca6cf92802a6a7878}\label{__swv_8c_ad89eca6e583fbb2ca6cf92802a6a7878}} 
+\index{\_swv.c@{\_swv.c}!SWV\_SendHex8@{SWV\_SendHex8}}
+\index{SWV\_SendHex8@{SWV\_SendHex8}!\_swv.c@{\_swv.c}}
+\doxysubsubsection{\texorpdfstring{SWV\_SendHex8()}{SWV\_SendHex8()}}
+{\footnotesize\ttfamily void S\+W\+V\+\_\+\+Send\+Hex8 (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{num }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__swv_8c_aab53512cffdea651e8a72e5258973ce2}\label{__swv_8c_aab53512cffdea651e8a72e5258973ce2}} 
+\index{\_swv.c@{\_swv.c}!SWV\_SendInt@{SWV\_SendInt}}
+\index{SWV\_SendInt@{SWV\_SendInt}!\_swv.c@{\_swv.c}}
+\doxysubsubsection{\texorpdfstring{SWV\_SendInt()}{SWV\_SendInt()}}
+{\footnotesize\ttfamily void S\+W\+V\+\_\+\+Send\+Int (\begin{DoxyParamCaption}\item[{int32\+\_\+t}]{num }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__swv_8c_a442c9d802741805f524c59e0ec8ac620}\label{__swv_8c_a442c9d802741805f524c59e0ec8ac620}} 
+\index{\_swv.c@{\_swv.c}!SWV\_SendInt0@{SWV\_SendInt0}}
+\index{SWV\_SendInt0@{SWV\_SendInt0}!\_swv.c@{\_swv.c}}
+\doxysubsubsection{\texorpdfstring{SWV\_SendInt0()}{SWV\_SendInt0()}}
+{\footnotesize\ttfamily void S\+W\+V\+\_\+\+Send\+Int0 (\begin{DoxyParamCaption}\item[{int32\+\_\+t}]{num }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__swv_8c_a374fd6514d8e7c67ce0729092e7eed78}\label{__swv_8c_a374fd6514d8e7c67ce0729092e7eed78}} 
+\index{\_swv.c@{\_swv.c}!SWV\_SendStr@{SWV\_SendStr}}
+\index{SWV\_SendStr@{SWV\_SendStr}!\_swv.c@{\_swv.c}}
+\doxysubsubsection{\texorpdfstring{SWV\_SendStr()}{SWV\_SendStr()}}
+{\footnotesize\ttfamily void S\+W\+V\+\_\+\+Send\+Str (\begin{DoxyParamCaption}\item[{char $\ast$}]{str }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{__swv_8c_a4afe534e854e3f217bba5dc5c3c9466b}\label{__swv_8c_a4afe534e854e3f217bba5dc5c3c9466b}} 
+\index{\_swv.c@{\_swv.c}!SWV\_SendStrLn@{SWV\_SendStrLn}}
+\index{SWV\_SendStrLn@{SWV\_SendStrLn}!\_swv.c@{\_swv.c}}
+\doxysubsubsection{\texorpdfstring{SWV\_SendStrLn()}{SWV\_SendStrLn()}}
+{\footnotesize\ttfamily void S\+W\+V\+\_\+\+Send\+Str\+Ln (\begin{DoxyParamCaption}\item[{char $\ast$}]{str }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{__swv_8c_a5650410e45cd84b84319fe906cf1b4e9}\label{__swv_8c_a5650410e45cd84b84319fe906cf1b4e9}} 
+\index{\_swv.c@{\_swv.c}!SwvMutexHandle@{SwvMutexHandle}}
+\index{SwvMutexHandle@{SwvMutexHandle}!\_swv.c@{\_swv.c}}
+\doxysubsubsection{\texorpdfstring{SwvMutexHandle}{SwvMutexHandle}}
+{\footnotesize\ttfamily os\+Mutex\+Id Swv\+Mutex\+Handle}
+

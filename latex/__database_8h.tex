@@ -1,0 +1,136 @@
+\hypertarget{__database_8h}{}\doxysection{Inc/\+Libs/\+\_\+database.h File Reference}
+\label{__database_8h}\index{Inc/Libs/\_database.h@{Inc/Libs/\_database.h}}
+{\ttfamily \#include \char`\"{}main.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}\+\_\+config.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmodes__t}{modes\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structtimestamp__t}{timestamp\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structstatus__t}{status\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4}{switch\+\_\+mode\+\_\+t}} \{ \mbox{\hyperlink{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4a5cd3d34d21a53117b61639c17be75ed3}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+D\+R\+I\+VE}} = 0, 
+\mbox{\hyperlink{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4a14d247e1baa40255eb4d09bf0daf6ac2}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+T\+R\+IP}} = 1, 
+\mbox{\hyperlink{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4a541483f671f0caae2574a4ae1e2d3839}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+R\+E\+P\+O\+RT}} = 2, 
+\mbox{\hyperlink{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4a54cb64a8297234e959f26db645c6f75a}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+M\+AX}} = 2
+ \}
+\item 
+enum \mbox{\hyperlink{__database_8h_a0083379e4056bbce20d209a9745523d7}{switch\+\_\+mode\+\_\+drive\+\_\+t}} \{ \newline
+\mbox{\hyperlink{__database_8h_a0083379e4056bbce20d209a9745523d7aa4591635c2bd4de95992ef1bada318f3}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+D\+R\+I\+V\+E\+\_\+E}} = 0, 
+\mbox{\hyperlink{__database_8h_a0083379e4056bbce20d209a9745523d7a284135d2f1eeab0bbb8bde3b067c2071}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+D\+R\+I\+V\+E\+\_\+S}} = 1, 
+\mbox{\hyperlink{__database_8h_a0083379e4056bbce20d209a9745523d7aba1a58e17b4bb841efd06b61b1bec6e8}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+D\+R\+I\+V\+E\+\_\+C}} = 2, 
+\mbox{\hyperlink{__database_8h_a0083379e4056bbce20d209a9745523d7a1c5b51dc291af9c68a8b6e9b53d312c2}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+D\+R\+I\+V\+E\+\_\+P}} = 3, 
+\newline
+\mbox{\hyperlink{__database_8h_a0083379e4056bbce20d209a9745523d7ac4956ae67d418b763d4d93be63f88120}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+D\+R\+I\+V\+E\+\_\+\+M\+AX}} = 3
+ \}
+\item 
+enum \mbox{\hyperlink{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9}{switch\+\_\+mode\+\_\+trip\+\_\+t}} \{ \mbox{\hyperlink{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9a852cdb648a886445b43513ef27574008}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+T\+R\+I\+P\+\_\+A}} = 0, 
+\mbox{\hyperlink{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9a82bc42da56cfefee88aee6f8417a111e}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+T\+R\+I\+P\+\_\+B}} = 1, 
+\mbox{\hyperlink{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9aeaed65b79ee1cc40ad444ffb006d760a}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+T\+R\+I\+P\+\_\+\+M\+AX}} = 1
+ \}
+\item 
+enum \mbox{\hyperlink{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334}{switch\+\_\+mode\+\_\+report\+\_\+t}} \{ \mbox{\hyperlink{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334abb71c3023faf68241ea6e5aa50d4d42d}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+R\+E\+P\+O\+R\+T\+\_\+\+R\+A\+N\+GE}} = 0, 
+\mbox{\hyperlink{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334a634edf71567d206840175cc343182a22}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+R\+E\+P\+O\+R\+T\+\_\+\+E\+F\+F\+I\+C\+I\+E\+N\+CY}} = 1, 
+\mbox{\hyperlink{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334a3b926fda4628c1739ae672db14bb04e1}{S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+R\+E\+P\+O\+R\+T\+\_\+\+M\+AX}} = 1
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{__database_8h_a0083379e4056bbce20d209a9745523d7}\label{__database_8h_a0083379e4056bbce20d209a9745523d7}} 
+\index{\_database.h@{\_database.h}!switch\_mode\_drive\_t@{switch\_mode\_drive\_t}}
+\index{switch\_mode\_drive\_t@{switch\_mode\_drive\_t}!\_database.h@{\_database.h}}
+\doxysubsubsection{\texorpdfstring{switch\_mode\_drive\_t}{switch\_mode\_drive\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{__database_8h_a0083379e4056bbce20d209a9745523d7}{switch\+\_\+mode\+\_\+drive\+\_\+t}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_DRIVE\_E@{SWITCH\_MODE\_DRIVE\_E}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_DRIVE\_E@{SWITCH\_MODE\_DRIVE\_E}}}\mbox{\Hypertarget{__database_8h_a0083379e4056bbce20d209a9745523d7aa4591635c2bd4de95992ef1bada318f3}\label{__database_8h_a0083379e4056bbce20d209a9745523d7aa4591635c2bd4de95992ef1bada318f3}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+D\+R\+I\+V\+E\+\_\+E&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_DRIVE\_S@{SWITCH\_MODE\_DRIVE\_S}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_DRIVE\_S@{SWITCH\_MODE\_DRIVE\_S}}}\mbox{\Hypertarget{__database_8h_a0083379e4056bbce20d209a9745523d7a284135d2f1eeab0bbb8bde3b067c2071}\label{__database_8h_a0083379e4056bbce20d209a9745523d7a284135d2f1eeab0bbb8bde3b067c2071}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+D\+R\+I\+V\+E\+\_\+S&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_DRIVE\_C@{SWITCH\_MODE\_DRIVE\_C}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_DRIVE\_C@{SWITCH\_MODE\_DRIVE\_C}}}\mbox{\Hypertarget{__database_8h_a0083379e4056bbce20d209a9745523d7aba1a58e17b4bb841efd06b61b1bec6e8}\label{__database_8h_a0083379e4056bbce20d209a9745523d7aba1a58e17b4bb841efd06b61b1bec6e8}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+D\+R\+I\+V\+E\+\_\+C&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_DRIVE\_P@{SWITCH\_MODE\_DRIVE\_P}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_DRIVE\_P@{SWITCH\_MODE\_DRIVE\_P}}}\mbox{\Hypertarget{__database_8h_a0083379e4056bbce20d209a9745523d7a1c5b51dc291af9c68a8b6e9b53d312c2}\label{__database_8h_a0083379e4056bbce20d209a9745523d7a1c5b51dc291af9c68a8b6e9b53d312c2}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+D\+R\+I\+V\+E\+\_\+P&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_DRIVE\_MAX@{SWITCH\_MODE\_DRIVE\_MAX}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_DRIVE\_MAX@{SWITCH\_MODE\_DRIVE\_MAX}}}\mbox{\Hypertarget{__database_8h_a0083379e4056bbce20d209a9745523d7ac4956ae67d418b763d4d93be63f88120}\label{__database_8h_a0083379e4056bbce20d209a9745523d7ac4956ae67d418b763d4d93be63f88120}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+D\+R\+I\+V\+E\+\_\+\+M\+AX&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334}\label{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334}} 
+\index{\_database.h@{\_database.h}!switch\_mode\_report\_t@{switch\_mode\_report\_t}}
+\index{switch\_mode\_report\_t@{switch\_mode\_report\_t}!\_database.h@{\_database.h}}
+\doxysubsubsection{\texorpdfstring{switch\_mode\_report\_t}{switch\_mode\_report\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334}{switch\+\_\+mode\+\_\+report\+\_\+t}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_REPORT\_RANGE@{SWITCH\_MODE\_REPORT\_RANGE}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_REPORT\_RANGE@{SWITCH\_MODE\_REPORT\_RANGE}}}\mbox{\Hypertarget{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334abb71c3023faf68241ea6e5aa50d4d42d}\label{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334abb71c3023faf68241ea6e5aa50d4d42d}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+R\+E\+P\+O\+R\+T\+\_\+\+R\+A\+N\+GE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_REPORT\_EFFICIENCY@{SWITCH\_MODE\_REPORT\_EFFICIENCY}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_REPORT\_EFFICIENCY@{SWITCH\_MODE\_REPORT\_EFFICIENCY}}}\mbox{\Hypertarget{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334a634edf71567d206840175cc343182a22}\label{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334a634edf71567d206840175cc343182a22}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+R\+E\+P\+O\+R\+T\+\_\+\+E\+F\+F\+I\+C\+I\+E\+N\+CY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_REPORT\_MAX@{SWITCH\_MODE\_REPORT\_MAX}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_REPORT\_MAX@{SWITCH\_MODE\_REPORT\_MAX}}}\mbox{\Hypertarget{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334a3b926fda4628c1739ae672db14bb04e1}\label{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334a3b926fda4628c1739ae672db14bb04e1}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+R\+E\+P\+O\+R\+T\+\_\+\+M\+AX&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4}\label{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4}} 
+\index{\_database.h@{\_database.h}!switch\_mode\_t@{switch\_mode\_t}}
+\index{switch\_mode\_t@{switch\_mode\_t}!\_database.h@{\_database.h}}
+\doxysubsubsection{\texorpdfstring{switch\_mode\_t}{switch\_mode\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4}{switch\+\_\+mode\+\_\+t}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_DRIVE@{SWITCH\_MODE\_DRIVE}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_DRIVE@{SWITCH\_MODE\_DRIVE}}}\mbox{\Hypertarget{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4a5cd3d34d21a53117b61639c17be75ed3}\label{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4a5cd3d34d21a53117b61639c17be75ed3}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+D\+R\+I\+VE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_TRIP@{SWITCH\_MODE\_TRIP}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_TRIP@{SWITCH\_MODE\_TRIP}}}\mbox{\Hypertarget{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4a14d247e1baa40255eb4d09bf0daf6ac2}\label{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4a14d247e1baa40255eb4d09bf0daf6ac2}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+T\+R\+IP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_REPORT@{SWITCH\_MODE\_REPORT}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_REPORT@{SWITCH\_MODE\_REPORT}}}\mbox{\Hypertarget{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4a541483f671f0caae2574a4ae1e2d3839}\label{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4a541483f671f0caae2574a4ae1e2d3839}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+R\+E\+P\+O\+RT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_MAX@{SWITCH\_MODE\_MAX}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_MAX@{SWITCH\_MODE\_MAX}}}\mbox{\Hypertarget{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4a54cb64a8297234e959f26db645c6f75a}\label{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4a54cb64a8297234e959f26db645c6f75a}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+M\+AX&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9}\label{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9}} 
+\index{\_database.h@{\_database.h}!switch\_mode\_trip\_t@{switch\_mode\_trip\_t}}
+\index{switch\_mode\_trip\_t@{switch\_mode\_trip\_t}!\_database.h@{\_database.h}}
+\doxysubsubsection{\texorpdfstring{switch\_mode\_trip\_t}{switch\_mode\_trip\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9}{switch\+\_\+mode\+\_\+trip\+\_\+t}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_TRIP\_A@{SWITCH\_MODE\_TRIP\_A}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_TRIP\_A@{SWITCH\_MODE\_TRIP\_A}}}\mbox{\Hypertarget{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9a852cdb648a886445b43513ef27574008}\label{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9a852cdb648a886445b43513ef27574008}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+T\+R\+I\+P\+\_\+A&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_TRIP\_B@{SWITCH\_MODE\_TRIP\_B}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_TRIP\_B@{SWITCH\_MODE\_TRIP\_B}}}\mbox{\Hypertarget{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9a82bc42da56cfefee88aee6f8417a111e}\label{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9a82bc42da56cfefee88aee6f8417a111e}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+T\+R\+I\+P\+\_\+B&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH\_MODE\_TRIP\_MAX@{SWITCH\_MODE\_TRIP\_MAX}!\_database.h@{\_database.h}}\index{\_database.h@{\_database.h}!SWITCH\_MODE\_TRIP\_MAX@{SWITCH\_MODE\_TRIP\_MAX}}}\mbox{\Hypertarget{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9aeaed65b79ee1cc40ad444ffb006d760a}\label{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9aeaed65b79ee1cc40ad444ffb006d760a}} 
+S\+W\+I\+T\+C\+H\+\_\+\+M\+O\+D\+E\+\_\+\+T\+R\+I\+P\+\_\+\+M\+AX&\\
+\hline
+
+\end{DoxyEnumFields}

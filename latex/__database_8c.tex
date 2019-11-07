@@ -1,0 +1,93 @@
+\hypertarget{__database_8c}{}\doxysection{Src/\+Libs/\+\_\+database.c File Reference}
+\label{__database_8c}\index{Src/Libs/\_database.c@{Src/Libs/\_database.c}}
+{\ttfamily \#include \char`\"{}\+\_\+database.\+h\char`\"{}}\newline
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structmodes__t}{modes\+\_\+t}} \mbox{\hyperlink{__database_8c_a0aea51a302f9a772b46eba25e3131b2b}{D\+B\+\_\+\+H\+M\+I\+\_\+\+Mode}}
+\item 
+\mbox{\hyperlink{structstatus__t}{status\+\_\+t}} \mbox{\hyperlink{__database_8c_ab96a52c9cdb79ce30b1e0092ba2545d9}{D\+B\+\_\+\+H\+M\+I\+\_\+\+Status}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{__database_8c_aac365dec5cbee97bf577b38823e26f7c}{D\+B\+\_\+\+E\+C\+U\+\_\+\+Odometer}} = 0
+\item 
+\mbox{\hyperlink{structtimestamp__t}{timestamp\+\_\+t}} \mbox{\hyperlink{__database_8c_afbcad1be161f9ebcfc62ecce8bd190de}{D\+B\+\_\+\+E\+C\+U\+\_\+\+Time\+Stamp}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{__database_8c_abc40caaa1a8bbf8f11a3dbb442a4705c}{D\+B\+\_\+\+E\+C\+U\+\_\+\+Speed}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{__database_8c_a2d463093b8dfed2153b0ecd7beb37956}{D\+B\+\_\+\+M\+C\+U\+\_\+\+R\+PM}} = 0
+\item 
+uint8\+\_\+t \mbox{\hyperlink{__database_8c_a47efd44ebe85be5585cb799de7ce59af}{D\+B\+\_\+\+M\+C\+U\+\_\+\+Temperature}} = 0
+\item 
+uint8\+\_\+t \mbox{\hyperlink{__database_8c_ab75e974ddf511b556b7d70faf75cffb6}{D\+B\+\_\+\+B\+M\+S\+\_\+\+SoC}} = 0
+\item 
+uint8\+\_\+t \mbox{\hyperlink{__database_8c_a37daf97512d381bd4d610c323ff63d3a}{D\+B\+\_\+\+B\+M\+S\+\_\+\+Temperature}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{__database_8c_ab75e974ddf511b556b7d70faf75cffb6}\label{__database_8c_ab75e974ddf511b556b7d70faf75cffb6}} 
+\index{\_database.c@{\_database.c}!DB\_BMS\_SoC@{DB\_BMS\_SoC}}
+\index{DB\_BMS\_SoC@{DB\_BMS\_SoC}!\_database.c@{\_database.c}}
+\doxysubsubsection{\texorpdfstring{DB\_BMS\_SoC}{DB\_BMS\_SoC}}
+{\footnotesize\ttfamily uint8\+\_\+t D\+B\+\_\+\+B\+M\+S\+\_\+\+SoC = 0}
+
+\mbox{\Hypertarget{__database_8c_a37daf97512d381bd4d610c323ff63d3a}\label{__database_8c_a37daf97512d381bd4d610c323ff63d3a}} 
+\index{\_database.c@{\_database.c}!DB\_BMS\_Temperature@{DB\_BMS\_Temperature}}
+\index{DB\_BMS\_Temperature@{DB\_BMS\_Temperature}!\_database.c@{\_database.c}}
+\doxysubsubsection{\texorpdfstring{DB\_BMS\_Temperature}{DB\_BMS\_Temperature}}
+{\footnotesize\ttfamily uint8\+\_\+t D\+B\+\_\+\+B\+M\+S\+\_\+\+Temperature = 0}
+
+\mbox{\Hypertarget{__database_8c_aac365dec5cbee97bf577b38823e26f7c}\label{__database_8c_aac365dec5cbee97bf577b38823e26f7c}} 
+\index{\_database.c@{\_database.c}!DB\_ECU\_Odometer@{DB\_ECU\_Odometer}}
+\index{DB\_ECU\_Odometer@{DB\_ECU\_Odometer}!\_database.c@{\_database.c}}
+\doxysubsubsection{\texorpdfstring{DB\_ECU\_Odometer}{DB\_ECU\_Odometer}}
+{\footnotesize\ttfamily uint32\+\_\+t D\+B\+\_\+\+E\+C\+U\+\_\+\+Odometer = 0}
+
+\mbox{\Hypertarget{__database_8c_abc40caaa1a8bbf8f11a3dbb442a4705c}\label{__database_8c_abc40caaa1a8bbf8f11a3dbb442a4705c}} 
+\index{\_database.c@{\_database.c}!DB\_ECU\_Speed@{DB\_ECU\_Speed}}
+\index{DB\_ECU\_Speed@{DB\_ECU\_Speed}!\_database.c@{\_database.c}}
+\doxysubsubsection{\texorpdfstring{DB\_ECU\_Speed}{DB\_ECU\_Speed}}
+{\footnotesize\ttfamily uint8\+\_\+t D\+B\+\_\+\+E\+C\+U\+\_\+\+Speed = 0}
+
+\mbox{\Hypertarget{__database_8c_afbcad1be161f9ebcfc62ecce8bd190de}\label{__database_8c_afbcad1be161f9ebcfc62ecce8bd190de}} 
+\index{\_database.c@{\_database.c}!DB\_ECU\_TimeStamp@{DB\_ECU\_TimeStamp}}
+\index{DB\_ECU\_TimeStamp@{DB\_ECU\_TimeStamp}!\_database.c@{\_database.c}}
+\doxysubsubsection{\texorpdfstring{DB\_ECU\_TimeStamp}{DB\_ECU\_TimeStamp}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structtimestamp__t}{timestamp\+\_\+t}} D\+B\+\_\+\+E\+C\+U\+\_\+\+Time\+Stamp}
+
+\mbox{\Hypertarget{__database_8c_a0aea51a302f9a772b46eba25e3131b2b}\label{__database_8c_a0aea51a302f9a772b46eba25e3131b2b}} 
+\index{\_database.c@{\_database.c}!DB\_HMI\_Mode@{DB\_HMI\_Mode}}
+\index{DB\_HMI\_Mode@{DB\_HMI\_Mode}!\_database.c@{\_database.c}}
+\doxysubsubsection{\texorpdfstring{DB\_HMI\_Mode}{DB\_HMI\_Mode}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmodes__t}{modes\+\_\+t}} D\+B\+\_\+\+H\+M\+I\+\_\+\+Mode}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{        \mbox{\hyperlink{__database_8h_aba9e63a250c16f20a14bc062eae5f1e4a14d247e1baa40255eb4d09bf0daf6ac2}{SWITCH\_MODE\_TRIP}},}
+\DoxyCodeLine{        \mbox{\hyperlink{__database_8h_a0083379e4056bbce20d209a9745523d7aa4591635c2bd4de95992ef1bada318f3}{SWITCH\_MODE\_DRIVE\_E}},}
+\DoxyCodeLine{        \mbox{\hyperlink{__database_8h_a10226f43b8cdf4370e34e70dc19c8ee9a852cdb648a886445b43513ef27574008}{SWITCH\_MODE\_TRIP\_A}},}
+\DoxyCodeLine{        0,}
+\DoxyCodeLine{        \mbox{\hyperlink{__database_8h_aa1aff68ccfb12fc88fa7ea27cda11334abb71c3023faf68241ea6e5aa50d4d42d}{SWITCH\_MODE\_REPORT\_RANGE}},}
+\DoxyCodeLine{        0}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{__database_8c_ab96a52c9cdb79ce30b1e0092ba2545d9}\label{__database_8c_ab96a52c9cdb79ce30b1e0092ba2545d9}} 
+\index{\_database.c@{\_database.c}!DB\_HMI\_Status@{DB\_HMI\_Status}}
+\index{DB\_HMI\_Status@{DB\_HMI\_Status}!\_database.c@{\_database.c}}
+\doxysubsubsection{\texorpdfstring{DB\_HMI\_Status}{DB\_HMI\_Status}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structstatus__t}{status\+\_\+t}} D\+B\+\_\+\+H\+M\+I\+\_\+\+Status}
+
+\mbox{\Hypertarget{__database_8c_a2d463093b8dfed2153b0ecd7beb37956}\label{__database_8c_a2d463093b8dfed2153b0ecd7beb37956}} 
+\index{\_database.c@{\_database.c}!DB\_MCU\_RPM@{DB\_MCU\_RPM}}
+\index{DB\_MCU\_RPM@{DB\_MCU\_RPM}!\_database.c@{\_database.c}}
+\doxysubsubsection{\texorpdfstring{DB\_MCU\_RPM}{DB\_MCU\_RPM}}
+{\footnotesize\ttfamily uint32\+\_\+t D\+B\+\_\+\+M\+C\+U\+\_\+\+R\+PM = 0}
+
+\mbox{\Hypertarget{__database_8c_a47efd44ebe85be5585cb799de7ce59af}\label{__database_8c_a47efd44ebe85be5585cb799de7ce59af}} 
+\index{\_database.c@{\_database.c}!DB\_MCU\_Temperature@{DB\_MCU\_Temperature}}
+\index{DB\_MCU\_Temperature@{DB\_MCU\_Temperature}!\_database.c@{\_database.c}}
+\doxysubsubsection{\texorpdfstring{DB\_MCU\_Temperature}{DB\_MCU\_Temperature}}
+{\footnotesize\ttfamily uint8\+\_\+t D\+B\+\_\+\+M\+C\+U\+\_\+\+Temperature = 0}
+

@@ -1,0 +1,492 @@
+\hypertarget{group__LCD}{}\doxysection{C\+O\+N\+F\+I\+G\+U\+R\+A\+T\+I\+ON}
+\label{group__LCD}\index{CONFIGURATION@{CONFIGURATION}}
+
+
+This file contains the L\+CD Configuration.  
+
+
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__LCD_gaa8639a381ce654fe7538c80acb102d2e}{R\+O\+T\+A\+T\+I\+O\+N\+\_\+0}}~0
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga23d72628932fbd7a1a4b88d2c37a81cb}{R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+CW}}~1
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga15c86e3308b6738f03fead3420668759}{R\+O\+T\+A\+T\+I\+O\+N\+\_\+180}}~2
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga8d0da952976575e86c86104888af18fa}{R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+C\+CW}}~3
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga0818908e87d790a5ec1bae1e74967e93}{C\+M\+S\+\_\+\+A\+R\+G\+B8888}}~1
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga68838e92cfadc3efe50284a93a51b140}{C\+M\+S\+\_\+\+R\+G\+B888}}~2
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga92555bb82a147bb2ba0e1db73810b9f4}{C\+M\+S\+\_\+\+R\+G\+B565}}~3
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga4dec1b527c200bf8cbcc791cef45d221}{C\+M\+S\+\_\+\+A\+R\+G\+B1555}}~4
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga94163384c6ec3cbb3fb0ac9ab66d3854}{C\+M\+S\+\_\+\+A\+R\+G\+B4444}}~5
+\item 
+\#define \mbox{\hyperlink{group__LCD_gaafa79b648c8d2d01616ef3798e1c614e}{C\+M\+S\+\_\+\+L8}}~6
+\item 
+\#define \mbox{\hyperlink{group__LCD_gaea947820830a734cee0298f65377f905}{C\+M\+S\+\_\+\+A\+L44}}~7
+\item 
+\#define \mbox{\hyperlink{group__LCD_gacbd1b3e2b5cf58e743643ce23b208599}{C\+M\+S\+\_\+\+A\+L88}}~8
+\item 
+\#define \mbox{\hyperlink{group__LCD_gabe352559f1c9456902c1f050a4295137}{X\+S\+I\+Z\+E\+\_\+\+P\+H\+YS}}~320
+\item 
+\#define \mbox{\hyperlink{group__LCD_gabec014b696bb4cd0163e1083ac5d69d9}{Y\+S\+I\+Z\+E\+\_\+\+P\+H\+YS}}~240
+\item 
+\#define \mbox{\hyperlink{group__LCD_gaac028f4c15ac7f78a44be5db76cfbec7}{N\+U\+M\+\_\+\+B\+U\+F\+F\+E\+RS}}~2
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga592af3f14bceecdfb9335d53a0880250}{N\+U\+M\+\_\+\+V\+S\+C\+R\+E\+E\+NS}}~1
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga6c2a9fe240f2af705cdb63b404d474d1}{G\+U\+I\+\_\+\+N\+U\+M\+\_\+\+L\+A\+Y\+E\+RS}}~2
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga06e8db3ceace21ac410803047c97aa7c}{C\+O\+L\+O\+R\+\_\+\+M\+O\+D\+E\+\_\+0}}~\mbox{\hyperlink{group__LCD_ga92555bb82a147bb2ba0e1db73810b9f4}{C\+M\+S\+\_\+\+R\+G\+B565}}
+\item 
+\#define \mbox{\hyperlink{group__LCD_gaada9b143c10940af858c01077af9a4eb}{O\+R\+I\+E\+N\+T\+A\+T\+I\+O\+N\+\_\+0}}~\mbox{\hyperlink{group__LCD_gaa8639a381ce654fe7538c80acb102d2e}{R\+O\+T\+A\+T\+I\+O\+N\+\_\+0}}
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga57af6918c2a4fa8624318f44eae9919e}{C\+O\+L\+O\+R\+\_\+\+M\+O\+D\+E\+\_\+1}}~\mbox{\hyperlink{group__LCD_ga4dec1b527c200bf8cbcc791cef45d221}{C\+M\+S\+\_\+\+A\+R\+G\+B1555}}
+\item 
+\#define \mbox{\hyperlink{group__LCD_gaedb0695b0cac3a2792cdbf883211d09d}{O\+R\+I\+E\+N\+T\+A\+T\+I\+O\+N\+\_\+1}}~\mbox{\hyperlink{group__LCD_gaa8639a381ce654fe7538c80acb102d2e}{R\+O\+T\+A\+T\+I\+O\+N\+\_\+0}}
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga82e5944e77a0c9d7234dc4b8ac4eaade}{B\+K\+\_\+\+C\+O\+L\+OR}}~G\+U\+I\+\_\+\+D\+A\+R\+K\+B\+L\+UE
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga8eb454cd383584bc44664a1437a2e6c2}{C\+O\+L\+O\+R\+\_\+\+C\+O\+N\+V\+E\+R\+S\+I\+O\+N\+\_\+0}}~G\+U\+I\+C\+C\+\_\+\+M565
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga99ec8e9dae4e9ff3441106e337eab0e8}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+D\+R\+I\+V\+E\+R\+\_\+0}}~G\+U\+I\+D\+R\+V\+\_\+\+L\+I\+N\+\_\+16
+\item 
+\#define \mbox{\hyperlink{group__LCD_gad54c15ad8dbdaabe222a7c5886e78039}{C\+O\+L\+O\+R\+\_\+\+C\+O\+N\+V\+E\+R\+S\+I\+O\+N\+\_\+1}}~G\+U\+I\+C\+C\+\_\+\+M1555I
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga2793449eda1776a0015a0bf31575e671}{D\+I\+S\+P\+L\+A\+Y\+\_\+\+D\+R\+I\+V\+E\+R\+\_\+1}}~G\+U\+I\+D\+R\+V\+\_\+\+L\+I\+N\+\_\+16
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga49ab552aefc744aee806e10bfe757f06}{L\+C\+D\+\_\+\+L\+A\+Y\+E\+R0\+\_\+\+F\+R\+A\+M\+E\+\_\+\+B\+U\+F\+F\+ER}}~((uint32\+\_\+t)0x\+C0000000)
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga0c04cffc272a1595042feb8c3d2c53a0}{L\+C\+D\+\_\+\+L\+A\+Y\+E\+R1\+\_\+\+F\+R\+A\+M\+E\+\_\+\+B\+U\+F\+F\+ER}}~((uint32\+\_\+t)0x\+C0400000)
+\item 
+\#define \mbox{\hyperlink{group__LCD_ga7d58befe379bae2eafa5dc8bb27a9b85}{D\+E\+F\+I\+N\+E\+\_\+\+D\+M\+A2\+D\+\_\+\+C\+O\+L\+O\+R\+C\+O\+N\+V\+E\+R\+S\+I\+ON}}(P\+F\+IX,  P\+I\+X\+E\+L\+F\+O\+R\+M\+AT)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__LCD_ga415c62d50d87fdf22159d72bdd317d58}{D\+M\+A2\+D\+\_\+\+I\+R\+Q\+Handler}} (void)
+\begin{DoxyCompactList}\small\item\em D\+M\+A2D interrupt handler. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__LCD_ga800f40a24d9158980c41bfd38116a11d}{H\+A\+L\+\_\+\+D\+M\+A2\+D\+\_\+\+Msp\+Init}} (D\+M\+A2\+D\+\_\+\+Handle\+Type\+Def $\ast$\mbox{\hyperlink{group__HARDWARE_ga6d27e904c93cdaca4f39c5a9c3829edf}{hdma2d}})
+\begin{DoxyCompactList}\small\item\em D\+M2D Msp initialisation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__LCD_ga309d2e3ed0c3bfcc6a54d4311a87c782}{H\+A\+L\+\_\+\+D\+M\+A2\+D\+\_\+\+Msp\+De\+Init}} (D\+M\+A2\+D\+\_\+\+Handle\+Type\+Def $\ast$\mbox{\hyperlink{group__HARDWARE_ga6d27e904c93cdaca4f39c5a9c3829edf}{hdma2d}})
+\begin{DoxyCompactList}\small\item\em D\+M2D Msp de-\/initialisation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__LCD_gaec94820edb05fd65f4f4cfc078b2566a}{H\+A\+L\+\_\+\+L\+T\+D\+C\+\_\+\+Msp\+Init}} (L\+T\+D\+C\+\_\+\+Handle\+Type\+Def $\ast$\mbox{\hyperlink{group__HARDWARE_ga9ede3a77755ec81a9be03423cb915b05}{hltdc}})
+\begin{DoxyCompactList}\small\item\em L\+T\+DC Msp initialisation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__LCD_ga3da1d812ca5783e37f6cb91ac5507a81}{H\+A\+L\+\_\+\+L\+T\+D\+C\+\_\+\+Msp\+De\+Init}} (L\+T\+D\+C\+\_\+\+Handle\+Type\+Def $\ast$\mbox{\hyperlink{group__HARDWARE_ga9ede3a77755ec81a9be03423cb915b05}{hltdc}})
+\begin{DoxyCompactList}\small\item\em L\+T\+DC Msp de-\/initialisation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__LCD_ga6f2a8c2793fd68a92c1fba83adaf1c6b}{H\+A\+L\+\_\+\+L\+T\+D\+C\+\_\+\+Line\+Even\+Callback}} (L\+T\+D\+C\+\_\+\+Handle\+Type\+Def $\ast$\mbox{\hyperlink{group__HARDWARE_ga9ede3a77755ec81a9be03423cb915b05}{hltdc}})
+\begin{DoxyCompactList}\small\item\em End of frame interrupt for managing multiple buffering. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{group__LCD_ga8951132ef4744adf65c34aa40070e00e}{L\+C\+D\+\_\+\+X\+\_\+\+Display\+Driver}} (unsigned Layer\+Index, unsigned Cmd, void $\ast$p\+Data)
+\begin{DoxyCompactList}\small\item\em Function is called by the display driver for several purposes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__LCD_ga069c87c91fb695b444d3bc209f2f1047}{L\+C\+D\+\_\+\+X\+\_\+\+Config}} (void)
+\begin{DoxyCompactList}\small\item\em Called during the initialization process in order to set up the display driver configuration. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__LCD_ga1d4f8628f8e1f4b2306218f2d2cfc53d}{G\+R\+A\+P\+H\+I\+C\+S\+\_\+\+H\+W\+\_\+\+Init}} (void)
+\item 
+void \mbox{\hyperlink{group__LCD_ga02fadea382c4e759d2c75bfaa7522075}{G\+R\+A\+P\+H\+I\+C\+S\+\_\+\+Init}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+L\+T\+D\+C\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{group__LCD_ga9ede3a77755ec81a9be03423cb915b05}{hltdc}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file contains the L\+CD Configuration. 
+
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+\doxysubsubsection*{\begin{center}\copyright{} Copyright (c) 2017 S\+T\+Microelectronics International N.\+V. All rights reserved.\end{center} }
+
+Redistribution and use in source and binary forms, with or without modification, are permitted, provided that the following conditions are met\+:
+
+
+\begin{DoxyEnumerate}
+\item Redistribution of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+\item Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+\item Neither the name of S\+T\+Microelectronics nor the names of other contributors to this software may be used to endorse or promote products derived from this software without specific written permission.
+\item This software, including modifications and/or derivative works of this software, must execute solely and exclusively on microcontroller or microprocessor devices manufactured by or for S\+T\+Microelectronics.
+\item Redistribution and use of this software other than as permitted under this license is void and will automatically terminate your rights under this license.
+\end{DoxyEnumerate}
+
+T\+H\+IS S\+O\+F\+T\+W\+A\+RE IS P\+R\+O\+V\+I\+D\+ED BY S\+T\+M\+I\+C\+R\+O\+E\+L\+E\+C\+T\+R\+O\+N\+I\+CS A\+ND C\+O\+N\+T\+R\+I\+B\+U\+T\+O\+RS \char`\"{}\+A\+S I\+S\char`\"{} A\+ND A\+NY E\+X\+P\+R\+E\+SS, I\+M\+P\+L\+I\+ED OR S\+T\+A\+T\+U\+T\+O\+RY W\+A\+R\+R\+A\+N\+T\+I\+ES, I\+N\+C\+L\+U\+D\+I\+NG, B\+UT N\+OT L\+I\+M\+I\+T\+ED TO, T\+HE I\+M\+P\+L\+I\+ED W\+A\+R\+R\+A\+N\+T\+I\+ES OF M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY, F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE A\+ND N\+O\+N-\/\+I\+N\+F\+R\+I\+N\+G\+E\+M\+E\+NT OF T\+H\+I\+RD P\+A\+R\+TY I\+N\+T\+E\+L\+L\+E\+C\+T\+U\+AL P\+R\+O\+P\+E\+R\+TY R\+I\+G\+H\+TS A\+RE D\+I\+S\+C\+L\+A\+I\+M\+ED TO T\+HE F\+U\+L\+L\+E\+ST E\+X\+T\+E\+NT P\+E\+R\+M\+I\+T\+T\+ED BY L\+AW. IN NO E\+V\+E\+NT S\+H\+A\+LL S\+T\+M\+I\+C\+R\+O\+E\+L\+E\+C\+T\+R\+O\+N\+I\+CS OR C\+O\+N\+T\+R\+I\+B\+U\+T\+O\+RS BE L\+I\+A\+B\+LE F\+OR A\+NY D\+I\+R\+E\+CT, I\+N\+D\+I\+R\+E\+CT, I\+N\+C\+I\+D\+E\+N\+T\+AL, S\+P\+E\+C\+I\+AL, E\+X\+E\+M\+P\+L\+A\+RY, OR C\+O\+N\+S\+E\+Q\+U\+E\+N\+T\+I\+AL D\+A\+M\+A\+G\+ES (I\+N\+C\+L\+U\+D\+I\+NG, B\+UT N\+OT L\+I\+M\+I\+T\+ED TO, P\+R\+O\+C\+U\+R\+E\+M\+E\+NT OF S\+U\+B\+S\+T\+I\+T\+U\+TE G\+O\+O\+DS OR S\+E\+R\+V\+I\+C\+ES; L\+O\+SS OF U\+SE, D\+A\+TA, OR P\+R\+O\+F\+I\+TS; OR B\+U\+S\+I\+N\+E\+SS I\+N\+T\+E\+R\+R\+U\+P\+T\+I\+ON) H\+O\+W\+E\+V\+ER C\+A\+U\+S\+ED A\+ND ON A\+NY T\+H\+E\+O\+RY OF L\+I\+A\+B\+I\+L\+I\+TY, W\+H\+E\+T\+H\+ER IN C\+O\+N\+T\+R\+A\+CT, S\+T\+R\+I\+CT L\+I\+A\+B\+I\+L\+I\+TY, OR T\+O\+RT (I\+N\+C\+L\+U\+D\+I\+NG N\+E\+G\+L\+I\+G\+E\+N\+CE OR O\+T\+H\+E\+R\+W\+I\+SE) A\+R\+I\+S\+I\+NG IN A\+NY W\+AY O\+UT OF T\+HE U\+SE OF T\+H\+IS S\+O\+F\+T\+W\+A\+RE, E\+V\+EN IF A\+D\+V\+I\+S\+ED OF T\+HE P\+O\+S\+S\+I\+B\+I\+L\+I\+TY OF S\+U\+CH D\+A\+M\+A\+GE. 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{group__LCD_ga82e5944e77a0c9d7234dc4b8ac4eaade}\label{group__LCD_ga82e5944e77a0c9d7234dc4b8ac4eaade}} 
+\index{CONFIGURATION@{CONFIGURATION}!BK\_COLOR@{BK\_COLOR}}
+\index{BK\_COLOR@{BK\_COLOR}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{BK\_COLOR}{BK\_COLOR}}
+{\footnotesize\ttfamily \#define B\+K\+\_\+\+C\+O\+L\+OR~G\+U\+I\+\_\+\+D\+A\+R\+K\+B\+L\+UE}
+
+\mbox{\Hypertarget{group__LCD_gaea947820830a734cee0298f65377f905}\label{group__LCD_gaea947820830a734cee0298f65377f905}} 
+\index{CONFIGURATION@{CONFIGURATION}!CMS\_AL44@{CMS\_AL44}}
+\index{CMS\_AL44@{CMS\_AL44}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{CMS\_AL44}{CMS\_AL44}}
+{\footnotesize\ttfamily \#define C\+M\+S\+\_\+\+A\+L44~7}
+
+\mbox{\Hypertarget{group__LCD_gacbd1b3e2b5cf58e743643ce23b208599}\label{group__LCD_gacbd1b3e2b5cf58e743643ce23b208599}} 
+\index{CONFIGURATION@{CONFIGURATION}!CMS\_AL88@{CMS\_AL88}}
+\index{CMS\_AL88@{CMS\_AL88}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{CMS\_AL88}{CMS\_AL88}}
+{\footnotesize\ttfamily \#define C\+M\+S\+\_\+\+A\+L88~8}
+
+\mbox{\Hypertarget{group__LCD_ga4dec1b527c200bf8cbcc791cef45d221}\label{group__LCD_ga4dec1b527c200bf8cbcc791cef45d221}} 
+\index{CONFIGURATION@{CONFIGURATION}!CMS\_ARGB1555@{CMS\_ARGB1555}}
+\index{CMS\_ARGB1555@{CMS\_ARGB1555}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{CMS\_ARGB1555}{CMS\_ARGB1555}}
+{\footnotesize\ttfamily \#define C\+M\+S\+\_\+\+A\+R\+G\+B1555~4}
+
+\mbox{\Hypertarget{group__LCD_ga94163384c6ec3cbb3fb0ac9ab66d3854}\label{group__LCD_ga94163384c6ec3cbb3fb0ac9ab66d3854}} 
+\index{CONFIGURATION@{CONFIGURATION}!CMS\_ARGB4444@{CMS\_ARGB4444}}
+\index{CMS\_ARGB4444@{CMS\_ARGB4444}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{CMS\_ARGB4444}{CMS\_ARGB4444}}
+{\footnotesize\ttfamily \#define C\+M\+S\+\_\+\+A\+R\+G\+B4444~5}
+
+\mbox{\Hypertarget{group__LCD_ga0818908e87d790a5ec1bae1e74967e93}\label{group__LCD_ga0818908e87d790a5ec1bae1e74967e93}} 
+\index{CONFIGURATION@{CONFIGURATION}!CMS\_ARGB8888@{CMS\_ARGB8888}}
+\index{CMS\_ARGB8888@{CMS\_ARGB8888}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{CMS\_ARGB8888}{CMS\_ARGB8888}}
+{\footnotesize\ttfamily \#define C\+M\+S\+\_\+\+A\+R\+G\+B8888~1}
+
+\mbox{\Hypertarget{group__LCD_gaafa79b648c8d2d01616ef3798e1c614e}\label{group__LCD_gaafa79b648c8d2d01616ef3798e1c614e}} 
+\index{CONFIGURATION@{CONFIGURATION}!CMS\_L8@{CMS\_L8}}
+\index{CMS\_L8@{CMS\_L8}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{CMS\_L8}{CMS\_L8}}
+{\footnotesize\ttfamily \#define C\+M\+S\+\_\+\+L8~6}
+
+\mbox{\Hypertarget{group__LCD_ga92555bb82a147bb2ba0e1db73810b9f4}\label{group__LCD_ga92555bb82a147bb2ba0e1db73810b9f4}} 
+\index{CONFIGURATION@{CONFIGURATION}!CMS\_RGB565@{CMS\_RGB565}}
+\index{CMS\_RGB565@{CMS\_RGB565}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{CMS\_RGB565}{CMS\_RGB565}}
+{\footnotesize\ttfamily \#define C\+M\+S\+\_\+\+R\+G\+B565~3}
+
+\mbox{\Hypertarget{group__LCD_ga68838e92cfadc3efe50284a93a51b140}\label{group__LCD_ga68838e92cfadc3efe50284a93a51b140}} 
+\index{CONFIGURATION@{CONFIGURATION}!CMS\_RGB888@{CMS\_RGB888}}
+\index{CMS\_RGB888@{CMS\_RGB888}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{CMS\_RGB888}{CMS\_RGB888}}
+{\footnotesize\ttfamily \#define C\+M\+S\+\_\+\+R\+G\+B888~2}
+
+\mbox{\Hypertarget{group__LCD_ga8eb454cd383584bc44664a1437a2e6c2}\label{group__LCD_ga8eb454cd383584bc44664a1437a2e6c2}} 
+\index{CONFIGURATION@{CONFIGURATION}!COLOR\_CONVERSION\_0@{COLOR\_CONVERSION\_0}}
+\index{COLOR\_CONVERSION\_0@{COLOR\_CONVERSION\_0}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{COLOR\_CONVERSION\_0}{COLOR\_CONVERSION\_0}}
+{\footnotesize\ttfamily \#define C\+O\+L\+O\+R\+\_\+\+C\+O\+N\+V\+E\+R\+S\+I\+O\+N\+\_\+0~G\+U\+I\+C\+C\+\_\+\+M565}
+
+\mbox{\Hypertarget{group__LCD_gad54c15ad8dbdaabe222a7c5886e78039}\label{group__LCD_gad54c15ad8dbdaabe222a7c5886e78039}} 
+\index{CONFIGURATION@{CONFIGURATION}!COLOR\_CONVERSION\_1@{COLOR\_CONVERSION\_1}}
+\index{COLOR\_CONVERSION\_1@{COLOR\_CONVERSION\_1}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{COLOR\_CONVERSION\_1}{COLOR\_CONVERSION\_1}}
+{\footnotesize\ttfamily \#define C\+O\+L\+O\+R\+\_\+\+C\+O\+N\+V\+E\+R\+S\+I\+O\+N\+\_\+1~G\+U\+I\+C\+C\+\_\+\+M1555I}
+
+\mbox{\Hypertarget{group__LCD_ga06e8db3ceace21ac410803047c97aa7c}\label{group__LCD_ga06e8db3ceace21ac410803047c97aa7c}} 
+\index{CONFIGURATION@{CONFIGURATION}!COLOR\_MODE\_0@{COLOR\_MODE\_0}}
+\index{COLOR\_MODE\_0@{COLOR\_MODE\_0}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{COLOR\_MODE\_0}{COLOR\_MODE\_0}}
+{\footnotesize\ttfamily \#define C\+O\+L\+O\+R\+\_\+\+M\+O\+D\+E\+\_\+0~\mbox{\hyperlink{group__LCD_ga92555bb82a147bb2ba0e1db73810b9f4}{C\+M\+S\+\_\+\+R\+G\+B565}}}
+
+\mbox{\Hypertarget{group__LCD_ga57af6918c2a4fa8624318f44eae9919e}\label{group__LCD_ga57af6918c2a4fa8624318f44eae9919e}} 
+\index{CONFIGURATION@{CONFIGURATION}!COLOR\_MODE\_1@{COLOR\_MODE\_1}}
+\index{COLOR\_MODE\_1@{COLOR\_MODE\_1}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{COLOR\_MODE\_1}{COLOR\_MODE\_1}}
+{\footnotesize\ttfamily \#define C\+O\+L\+O\+R\+\_\+\+M\+O\+D\+E\+\_\+1~\mbox{\hyperlink{group__LCD_ga4dec1b527c200bf8cbcc791cef45d221}{C\+M\+S\+\_\+\+A\+R\+G\+B1555}}}
+
+\mbox{\Hypertarget{group__LCD_ga7d58befe379bae2eafa5dc8bb27a9b85}\label{group__LCD_ga7d58befe379bae2eafa5dc8bb27a9b85}} 
+\index{CONFIGURATION@{CONFIGURATION}!DEFINE\_DMA2D\_COLORCONVERSION@{DEFINE\_DMA2D\_COLORCONVERSION}}
+\index{DEFINE\_DMA2D\_COLORCONVERSION@{DEFINE\_DMA2D\_COLORCONVERSION}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{DEFINE\_DMA2D\_COLORCONVERSION}{DEFINE\_DMA2D\_COLORCONVERSION}}
+{\footnotesize\ttfamily \#define D\+E\+F\+I\+N\+E\+\_\+\+D\+M\+A2\+D\+\_\+\+C\+O\+L\+O\+R\+C\+O\+N\+V\+E\+R\+S\+I\+ON(\begin{DoxyParamCaption}\item[{}]{P\+F\+IX,  }\item[{}]{P\+I\+X\+E\+L\+F\+O\+R\+M\+AT }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{static} \textcolor{keywordtype}{void} \_Color2IndexBulk\_\#\#PFIX\#\#\_DMA2D(LCD\_COLOR * pColor, \textcolor{keywordtype}{void} * pIndex, U32 NumItems, U8 SizeOfIndex) \{ \(\backslash\)}
+\DoxyCodeLine{    \_DMA\_Color2IndexBulk(pColor, pIndex, NumItems, SizeOfIndex, PIXELFORMAT);                                    \(\backslash\)}
+\DoxyCodeLine{\}                                                                                                              \(\backslash\)}
+\DoxyCodeLine{static \textcolor{keywordtype}{void} \_Index2ColorBulk\_\#\#PFIX\#\#\_DMA2D(\textcolor{keywordtype}{void} * pIndex, LCD\_COLOR * pColor, U32 NumItems, U8 SizeOfIndex) \{ \(\backslash\)}
+\DoxyCodeLine{    \_DMA\_Index2ColorBulk(pIndex, pColor, NumItems, SizeOfIndex, PIXELFORMAT);                                    \(\backslash\)}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{group__LCD_ga99ec8e9dae4e9ff3441106e337eab0e8}\label{group__LCD_ga99ec8e9dae4e9ff3441106e337eab0e8}} 
+\index{CONFIGURATION@{CONFIGURATION}!DISPLAY\_DRIVER\_0@{DISPLAY\_DRIVER\_0}}
+\index{DISPLAY\_DRIVER\_0@{DISPLAY\_DRIVER\_0}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{DISPLAY\_DRIVER\_0}{DISPLAY\_DRIVER\_0}}
+{\footnotesize\ttfamily \#define D\+I\+S\+P\+L\+A\+Y\+\_\+\+D\+R\+I\+V\+E\+R\+\_\+0~G\+U\+I\+D\+R\+V\+\_\+\+L\+I\+N\+\_\+16}
+
+\mbox{\Hypertarget{group__LCD_ga2793449eda1776a0015a0bf31575e671}\label{group__LCD_ga2793449eda1776a0015a0bf31575e671}} 
+\index{CONFIGURATION@{CONFIGURATION}!DISPLAY\_DRIVER\_1@{DISPLAY\_DRIVER\_1}}
+\index{DISPLAY\_DRIVER\_1@{DISPLAY\_DRIVER\_1}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{DISPLAY\_DRIVER\_1}{DISPLAY\_DRIVER\_1}}
+{\footnotesize\ttfamily \#define D\+I\+S\+P\+L\+A\+Y\+\_\+\+D\+R\+I\+V\+E\+R\+\_\+1~G\+U\+I\+D\+R\+V\+\_\+\+L\+I\+N\+\_\+16}
+
+\mbox{\Hypertarget{group__LCD_ga6c2a9fe240f2af705cdb63b404d474d1}\label{group__LCD_ga6c2a9fe240f2af705cdb63b404d474d1}} 
+\index{CONFIGURATION@{CONFIGURATION}!GUI\_NUM\_LAYERS@{GUI\_NUM\_LAYERS}}
+\index{GUI\_NUM\_LAYERS@{GUI\_NUM\_LAYERS}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{GUI\_NUM\_LAYERS}{GUI\_NUM\_LAYERS}}
+{\footnotesize\ttfamily \#define G\+U\+I\+\_\+\+N\+U\+M\+\_\+\+L\+A\+Y\+E\+RS~2}
+
+\mbox{\Hypertarget{group__LCD_ga49ab552aefc744aee806e10bfe757f06}\label{group__LCD_ga49ab552aefc744aee806e10bfe757f06}} 
+\index{CONFIGURATION@{CONFIGURATION}!LCD\_LAYER0\_FRAME\_BUFFER@{LCD\_LAYER0\_FRAME\_BUFFER}}
+\index{LCD\_LAYER0\_FRAME\_BUFFER@{LCD\_LAYER0\_FRAME\_BUFFER}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{LCD\_LAYER0\_FRAME\_BUFFER}{LCD\_LAYER0\_FRAME\_BUFFER}}
+{\footnotesize\ttfamily \#define L\+C\+D\+\_\+\+L\+A\+Y\+E\+R0\+\_\+\+F\+R\+A\+M\+E\+\_\+\+B\+U\+F\+F\+ER~((uint32\+\_\+t)0x\+C0000000)}
+
+\mbox{\Hypertarget{group__LCD_ga0c04cffc272a1595042feb8c3d2c53a0}\label{group__LCD_ga0c04cffc272a1595042feb8c3d2c53a0}} 
+\index{CONFIGURATION@{CONFIGURATION}!LCD\_LAYER1\_FRAME\_BUFFER@{LCD\_LAYER1\_FRAME\_BUFFER}}
+\index{LCD\_LAYER1\_FRAME\_BUFFER@{LCD\_LAYER1\_FRAME\_BUFFER}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{LCD\_LAYER1\_FRAME\_BUFFER}{LCD\_LAYER1\_FRAME\_BUFFER}}
+{\footnotesize\ttfamily \#define L\+C\+D\+\_\+\+L\+A\+Y\+E\+R1\+\_\+\+F\+R\+A\+M\+E\+\_\+\+B\+U\+F\+F\+ER~((uint32\+\_\+t)0x\+C0400000)}
+
+\mbox{\Hypertarget{group__LCD_gaac028f4c15ac7f78a44be5db76cfbec7}\label{group__LCD_gaac028f4c15ac7f78a44be5db76cfbec7}} 
+\index{CONFIGURATION@{CONFIGURATION}!NUM\_BUFFERS@{NUM\_BUFFERS}}
+\index{NUM\_BUFFERS@{NUM\_BUFFERS}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{NUM\_BUFFERS}{NUM\_BUFFERS}}
+{\footnotesize\ttfamily \#define N\+U\+M\+\_\+\+B\+U\+F\+F\+E\+RS~2}
+
+\mbox{\Hypertarget{group__LCD_ga592af3f14bceecdfb9335d53a0880250}\label{group__LCD_ga592af3f14bceecdfb9335d53a0880250}} 
+\index{CONFIGURATION@{CONFIGURATION}!NUM\_VSCREENS@{NUM\_VSCREENS}}
+\index{NUM\_VSCREENS@{NUM\_VSCREENS}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{NUM\_VSCREENS}{NUM\_VSCREENS}}
+{\footnotesize\ttfamily \#define N\+U\+M\+\_\+\+V\+S\+C\+R\+E\+E\+NS~1}
+
+\mbox{\Hypertarget{group__LCD_gaada9b143c10940af858c01077af9a4eb}\label{group__LCD_gaada9b143c10940af858c01077af9a4eb}} 
+\index{CONFIGURATION@{CONFIGURATION}!ORIENTATION\_0@{ORIENTATION\_0}}
+\index{ORIENTATION\_0@{ORIENTATION\_0}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{ORIENTATION\_0}{ORIENTATION\_0}}
+{\footnotesize\ttfamily \#define O\+R\+I\+E\+N\+T\+A\+T\+I\+O\+N\+\_\+0~\mbox{\hyperlink{group__LCD_gaa8639a381ce654fe7538c80acb102d2e}{R\+O\+T\+A\+T\+I\+O\+N\+\_\+0}}}
+
+\mbox{\Hypertarget{group__LCD_gaedb0695b0cac3a2792cdbf883211d09d}\label{group__LCD_gaedb0695b0cac3a2792cdbf883211d09d}} 
+\index{CONFIGURATION@{CONFIGURATION}!ORIENTATION\_1@{ORIENTATION\_1}}
+\index{ORIENTATION\_1@{ORIENTATION\_1}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{ORIENTATION\_1}{ORIENTATION\_1}}
+{\footnotesize\ttfamily \#define O\+R\+I\+E\+N\+T\+A\+T\+I\+O\+N\+\_\+1~\mbox{\hyperlink{group__LCD_gaa8639a381ce654fe7538c80acb102d2e}{R\+O\+T\+A\+T\+I\+O\+N\+\_\+0}}}
+
+\mbox{\Hypertarget{group__LCD_gaa8639a381ce654fe7538c80acb102d2e}\label{group__LCD_gaa8639a381ce654fe7538c80acb102d2e}} 
+\index{CONFIGURATION@{CONFIGURATION}!ROTATION\_0@{ROTATION\_0}}
+\index{ROTATION\_0@{ROTATION\_0}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{ROTATION\_0}{ROTATION\_0}}
+{\footnotesize\ttfamily \#define R\+O\+T\+A\+T\+I\+O\+N\+\_\+0~0}
+
+\mbox{\Hypertarget{group__LCD_ga15c86e3308b6738f03fead3420668759}\label{group__LCD_ga15c86e3308b6738f03fead3420668759}} 
+\index{CONFIGURATION@{CONFIGURATION}!ROTATION\_180@{ROTATION\_180}}
+\index{ROTATION\_180@{ROTATION\_180}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{ROTATION\_180}{ROTATION\_180}}
+{\footnotesize\ttfamily \#define R\+O\+T\+A\+T\+I\+O\+N\+\_\+180~2}
+
+\mbox{\Hypertarget{group__LCD_ga8d0da952976575e86c86104888af18fa}\label{group__LCD_ga8d0da952976575e86c86104888af18fa}} 
+\index{CONFIGURATION@{CONFIGURATION}!ROTATION\_CCW@{ROTATION\_CCW}}
+\index{ROTATION\_CCW@{ROTATION\_CCW}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{ROTATION\_CCW}{ROTATION\_CCW}}
+{\footnotesize\ttfamily \#define R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+C\+CW~3}
+
+\mbox{\Hypertarget{group__LCD_ga23d72628932fbd7a1a4b88d2c37a81cb}\label{group__LCD_ga23d72628932fbd7a1a4b88d2c37a81cb}} 
+\index{CONFIGURATION@{CONFIGURATION}!ROTATION\_CW@{ROTATION\_CW}}
+\index{ROTATION\_CW@{ROTATION\_CW}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{ROTATION\_CW}{ROTATION\_CW}}
+{\footnotesize\ttfamily \#define R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+CW~1}
+
+\mbox{\Hypertarget{group__LCD_gabe352559f1c9456902c1f050a4295137}\label{group__LCD_gabe352559f1c9456902c1f050a4295137}} 
+\index{CONFIGURATION@{CONFIGURATION}!XSIZE\_PHYS@{XSIZE\_PHYS}}
+\index{XSIZE\_PHYS@{XSIZE\_PHYS}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{XSIZE\_PHYS}{XSIZE\_PHYS}}
+{\footnotesize\ttfamily \#define X\+S\+I\+Z\+E\+\_\+\+P\+H\+YS~320}
+
+\mbox{\Hypertarget{group__LCD_gabec014b696bb4cd0163e1083ac5d69d9}\label{group__LCD_gabec014b696bb4cd0163e1083ac5d69d9}} 
+\index{CONFIGURATION@{CONFIGURATION}!YSIZE\_PHYS@{YSIZE\_PHYS}}
+\index{YSIZE\_PHYS@{YSIZE\_PHYS}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{YSIZE\_PHYS}{YSIZE\_PHYS}}
+{\footnotesize\ttfamily \#define Y\+S\+I\+Z\+E\+\_\+\+P\+H\+YS~240}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group__LCD_ga415c62d50d87fdf22159d72bdd317d58}\label{group__LCD_ga415c62d50d87fdf22159d72bdd317d58}} 
+\index{CONFIGURATION@{CONFIGURATION}!DMA2D\_IRQHandler@{DMA2D\_IRQHandler}}
+\index{DMA2D\_IRQHandler@{DMA2D\_IRQHandler}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{DMA2D\_IRQHandler()}{DMA2D\_IRQHandler()}}
+{\footnotesize\ttfamily void D\+M\+A2\+D\+\_\+\+I\+R\+Q\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+D\+M\+A2D interrupt handler. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{group__LCD_ga1d4f8628f8e1f4b2306218f2d2cfc53d}\label{group__LCD_ga1d4f8628f8e1f4b2306218f2d2cfc53d}} 
+\index{CONFIGURATION@{CONFIGURATION}!GRAPHICS\_HW\_Init@{GRAPHICS\_HW\_Init}}
+\index{GRAPHICS\_HW\_Init@{GRAPHICS\_HW\_Init}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{GRAPHICS\_HW\_Init()}{GRAPHICS\_HW\_Init()}}
+{\footnotesize\ttfamily void G\+R\+A\+P\+H\+I\+C\+S\+\_\+\+H\+W\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{group__LCD_ga02fadea382c4e759d2c75bfaa7522075}\label{group__LCD_ga02fadea382c4e759d2c75bfaa7522075}} 
+\index{CONFIGURATION@{CONFIGURATION}!GRAPHICS\_Init@{GRAPHICS\_Init}}
+\index{GRAPHICS\_Init@{GRAPHICS\_Init}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{GRAPHICS\_Init()}{GRAPHICS\_Init()}}
+{\footnotesize\ttfamily void G\+R\+A\+P\+H\+I\+C\+S\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{group__LCD_ga309d2e3ed0c3bfcc6a54d4311a87c782}\label{group__LCD_ga309d2e3ed0c3bfcc6a54d4311a87c782}} 
+\index{CONFIGURATION@{CONFIGURATION}!HAL\_DMA2D\_MspDeInit@{HAL\_DMA2D\_MspDeInit}}
+\index{HAL\_DMA2D\_MspDeInit@{HAL\_DMA2D\_MspDeInit}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{HAL\_DMA2D\_MspDeInit()}{HAL\_DMA2D\_MspDeInit()}}
+{\footnotesize\ttfamily void H\+A\+L\+\_\+\+D\+M\+A2\+D\+\_\+\+Msp\+De\+Init (\begin{DoxyParamCaption}\item[{D\+M\+A2\+D\+\_\+\+Handle\+Type\+Def $\ast$}]{hdma2d }\end{DoxyParamCaption})}
+
+
+
+D\+M2D Msp de-\/initialisation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hdma2d} & D\+M2D handle \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{group__LCD_ga800f40a24d9158980c41bfd38116a11d}\label{group__LCD_ga800f40a24d9158980c41bfd38116a11d}} 
+\index{CONFIGURATION@{CONFIGURATION}!HAL\_DMA2D\_MspInit@{HAL\_DMA2D\_MspInit}}
+\index{HAL\_DMA2D\_MspInit@{HAL\_DMA2D\_MspInit}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{HAL\_DMA2D\_MspInit()}{HAL\_DMA2D\_MspInit()}}
+{\footnotesize\ttfamily void H\+A\+L\+\_\+\+D\+M\+A2\+D\+\_\+\+Msp\+Init (\begin{DoxyParamCaption}\item[{D\+M\+A2\+D\+\_\+\+Handle\+Type\+Def $\ast$}]{hdma2d }\end{DoxyParamCaption})}
+
+
+
+D\+M2D Msp initialisation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hdma2d} & D\+M2D handle \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{group__LCD_ga6f2a8c2793fd68a92c1fba83adaf1c6b}\label{group__LCD_ga6f2a8c2793fd68a92c1fba83adaf1c6b}} 
+\index{CONFIGURATION@{CONFIGURATION}!HAL\_LTDC\_LineEvenCallback@{HAL\_LTDC\_LineEvenCallback}}
+\index{HAL\_LTDC\_LineEvenCallback@{HAL\_LTDC\_LineEvenCallback}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{HAL\_LTDC\_LineEvenCallback()}{HAL\_LTDC\_LineEvenCallback()}}
+{\footnotesize\ttfamily void H\+A\+L\+\_\+\+L\+T\+D\+C\+\_\+\+Line\+Even\+Callback (\begin{DoxyParamCaption}\item[{L\+T\+D\+C\+\_\+\+Handle\+Type\+Def $\ast$}]{hltdc }\end{DoxyParamCaption})}
+
+
+
+End of frame interrupt for managing multiple buffering. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hltdc} & ltdc handle \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{group__LCD_ga3da1d812ca5783e37f6cb91ac5507a81}\label{group__LCD_ga3da1d812ca5783e37f6cb91ac5507a81}} 
+\index{CONFIGURATION@{CONFIGURATION}!HAL\_LTDC\_MspDeInit@{HAL\_LTDC\_MspDeInit}}
+\index{HAL\_LTDC\_MspDeInit@{HAL\_LTDC\_MspDeInit}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{HAL\_LTDC\_MspDeInit()}{HAL\_LTDC\_MspDeInit()}}
+{\footnotesize\ttfamily void H\+A\+L\+\_\+\+L\+T\+D\+C\+\_\+\+Msp\+De\+Init (\begin{DoxyParamCaption}\item[{L\+T\+D\+C\+\_\+\+Handle\+Type\+Def $\ast$}]{hltdc }\end{DoxyParamCaption})}
+
+
+
+L\+T\+DC Msp de-\/initialisation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hltdc} & L\+T\+DC handle \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{group__LCD_gaec94820edb05fd65f4f4cfc078b2566a}\label{group__LCD_gaec94820edb05fd65f4f4cfc078b2566a}} 
+\index{CONFIGURATION@{CONFIGURATION}!HAL\_LTDC\_MspInit@{HAL\_LTDC\_MspInit}}
+\index{HAL\_LTDC\_MspInit@{HAL\_LTDC\_MspInit}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{HAL\_LTDC\_MspInit()}{HAL\_LTDC\_MspInit()}}
+{\footnotesize\ttfamily void H\+A\+L\+\_\+\+L\+T\+D\+C\+\_\+\+Msp\+Init (\begin{DoxyParamCaption}\item[{L\+T\+D\+C\+\_\+\+Handle\+Type\+Def $\ast$}]{hltdc }\end{DoxyParamCaption})}
+
+
+
+L\+T\+DC Msp initialisation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hltdc} & L\+T\+DC handle \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{group__LCD_ga069c87c91fb695b444d3bc209f2f1047}\label{group__LCD_ga069c87c91fb695b444d3bc209f2f1047}} 
+\index{CONFIGURATION@{CONFIGURATION}!LCD\_X\_Config@{LCD\_X\_Config}}
+\index{LCD\_X\_Config@{LCD\_X\_Config}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{LCD\_X\_Config()}{LCD\_X\_Config()}}
+{\footnotesize\ttfamily void L\+C\+D\+\_\+\+X\+\_\+\+Config (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Called during the initialization process in order to set up the display driver configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{group__LCD_ga8951132ef4744adf65c34aa40070e00e}\label{group__LCD_ga8951132ef4744adf65c34aa40070e00e}} 
+\index{CONFIGURATION@{CONFIGURATION}!LCD\_X\_DisplayDriver@{LCD\_X\_DisplayDriver}}
+\index{LCD\_X\_DisplayDriver@{LCD\_X\_DisplayDriver}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{LCD\_X\_DisplayDriver()}{LCD\_X\_DisplayDriver()}}
+{\footnotesize\ttfamily int L\+C\+D\+\_\+\+X\+\_\+\+Display\+Driver (\begin{DoxyParamCaption}\item[{unsigned}]{Layer\+Index,  }\item[{unsigned}]{Cmd,  }\item[{void $\ast$}]{p\+Data }\end{DoxyParamCaption})}
+
+
+
+Function is called by the display driver for several purposes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Layer\+Index} & Index of layer to be configured \\
+\hline
+{\em Cmd} & \+: Commands \\
+\hline
+{\em p\+Data} & \+: Pointer to a L\+C\+D\+\_\+\+X\+\_\+\+D\+A\+TA structure \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em int} & \\
+\hline
+\end{DoxyRetVals}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{group__LCD_ga9ede3a77755ec81a9be03423cb915b05}\label{group__LCD_ga9ede3a77755ec81a9be03423cb915b05}} 
+\index{CONFIGURATION@{CONFIGURATION}!hltdc@{hltdc}}
+\index{hltdc@{hltdc}!CONFIGURATION@{CONFIGURATION}}
+\doxysubsubsection{\texorpdfstring{hltdc}{hltdc}}
+{\footnotesize\ttfamily L\+T\+D\+C\+\_\+\+Handle\+Type\+Def hltdc}
+
