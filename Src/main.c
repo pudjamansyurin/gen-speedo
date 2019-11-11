@@ -58,7 +58,7 @@ UART_HandleTypeDef huart1;
 osThreadId LcdTaskHandle;
 osThreadId CanRxTaskHandle;
 osThreadId SerialTaskHandle;
-osTimerId Timer500Handle;
+osTimerId TimerCANHandle;
 osMutexId CanTxMutexHandle;
 osMutexId SwvMutexHandle;
 /* USER CODE BEGIN PV */
@@ -77,7 +77,7 @@ static void MX_USART1_UART_Init(void);
 void StartLcdTask(void const *argument);
 void StartCanRxTask(void const *argument);
 void StartSerialTask(void const *argument);
-void CallbackTimer500(void const *argument);
+void CallbackTimerCAN(void const *argument);
 
 /* USER CODE BEGIN PFP */
 /* USER CODE END PFP */
@@ -143,13 +143,13 @@ int main(void) {
 	/* USER CODE END RTOS_SEMAPHORES */
 
 	/* Create the timer(s) */
-	/* definition and creation of Timer500 */
-	osTimerDef(Timer500, CallbackTimer500);
-	Timer500Handle = osTimerCreate(osTimer(Timer500), osTimerPeriodic, NULL);
+	/* definition and creation of TimerCAN */
+	osTimerDef(TimerCAN, CallbackTimerCAN);
+	TimerCANHandle = osTimerCreate(osTimer(TimerCAN), osTimerPeriodic, NULL);
 
 	/* USER CODE BEGIN RTOS_TIMERS */
 	/* start timers, add new ones, ... */
-	osTimerStart(Timer500Handle, 500);
+	osTimerStart(TimerCANHandle, 500);
 	/* USER CODE END RTOS_TIMERS */
 
 	/* USER CODE BEGIN RTOS_QUEUES */
@@ -166,7 +166,7 @@ int main(void) {
 	CanRxTaskHandle = osThreadCreate(osThread(CanRxTask), NULL);
 
 	/* definition and creation of SerialTask */
-	osThreadDef(SerialTask, StartSerialTask, osPriorityNormal, 0, 128);
+	osThreadDef(SerialTask, StartSerialTask, osPriorityBelowNormal, 0, 128);
 	SerialTaskHandle = osThreadCreate(osThread(SerialTask), NULL);
 
 	/* USER CODE BEGIN RTOS_THREADS */
@@ -450,7 +450,7 @@ static void MX_GPIO_Init(void) {
 /* USER CODE END Header_StartLcdTask */
 void StartLcdTask(void const *argument) {
 	/* Graphic application */
-	//  GRAPHICS_MainTask();
+	//	GRAPHICS_MainTask();
 	/* USER CODE BEGIN 5 */
 	// Turn on backlight
 #if (!USE_HMI_LEFT)
@@ -477,7 +477,6 @@ void StartCanRxTask(void const *argument) {
 	/* USER CODE BEGIN StartCanRxTask */
 	extern CAN_Rx RxCan;
 	uint32_t ulNotifiedValue;
-	uint8_t i;
 	/* Infinite loop */
 	for (;;) {
 		// check if has new can message
@@ -508,14 +507,17 @@ void StartCanRxTask(void const *argument) {
 				break;
 			}
 
-			// show this message
-			SWV_SendStr("ID: ");
-			SWV_SendHex32(RxCan.RxHeader.StdId);
-			SWV_SendStr(", Data: ");
-			for (i = 0; i < RxCan.RxHeader.DLC; i++) {
-				SWV_SendHex8(RxCan.RxData[i]);
-			}
-			SWV_SendStrLn("");
+			// unblock the GUI thread
+			xTaskNotify(LcdTaskHandle, 0x00, eSetBits);
+
+			//			// show this message
+			//			SWV_SendStr("ID: ");
+			//			SWV_SendHex32(RxCan.RxHeader.StdId);
+			//			SWV_SendStr(", Data: ");
+			//			for (i = 0; i < RxCan.RxHeader.DLC; i++) {
+			//				SWV_SendHex8(RxCan.RxData[i]);
+			//			}
+			//			SWV_SendStrLn("");
 		}
 	}
 	/* USER CODE END StartCanRxTask */
@@ -540,12 +542,13 @@ void StartSerialTask(void const *argument) {
 	/* USER CODE END StartSerialTask */
 }
 
-/* CallbackTimer500 function */
-void CallbackTimer500(void const *argument) {
-	/* USER CODE BEGIN CallbackTimer500 */
+/* CallbackTimerCAN function */
+void CallbackTimerCAN(void const *argument) {
+	/* USER CODE BEGIN CallbackTimerCAN */
 	CANBUS_HMI_Heartbeat();
+
 	BSP_Led_Toggle(2);
-	/* USER CODE END CallbackTimer500 */
+	/* USER CODE END CallbackTimerCAN */
 }
 
 /**

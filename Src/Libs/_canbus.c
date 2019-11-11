@@ -198,7 +198,6 @@ uint8_t CANBUS_HMI_Heartbeat(void) {
 /* ------------------------------------ READER ------------------------------------- */
 void CANBUS_ECU_Switch_Read(void) {
 	extern status_t DB_HMI_Status;
-	extern uint8_t DB_ECU_Speed;
 	extern uint32_t DB_ECU_Odometer;
 
 	// read message
@@ -212,8 +211,7 @@ void CANBUS_ECU_Switch_Read(void) {
 	DB_HMI_Status.daylight = (RxCan.RxData[0] >> 7) & 0x01;
 	DB_HMI_Status.sein_left = RxCan.RxData[1] & 0x01;
 	DB_HMI_Status.sein_right = (RxCan.RxData[1] >> 1) & 0x01;
-	// speed
-	DB_ECU_Speed = RxCan.RxData[2];
+
 	// odometer
 	DB_ECU_Odometer = (RxCan.RxData[7] << 24) | (RxCan.RxData[6] << 16) | (RxCan.RxData[5] << 8) | RxCan.RxData[4];
 }
@@ -262,11 +260,15 @@ void CANBUS_ECU_Trip_Mode_Read(void) {
 
 void CANBUS_MCU_Dummy_Read(void) {
 	extern uint32_t DB_MCU_RPM;
+	extern uint8_t DB_ECU_Speed;
 	extern uint8_t DB_MCU_Temperature;
 
 	// read message
 	DB_MCU_RPM = (RxCan.RxData[3] << 24 | RxCan.RxData[2] << 16 | RxCan.RxData[1] << 8 | RxCan.RxData[0]);
 	DB_MCU_Temperature = RxCan.RxData[4];
+
+	// convert RPM to Speed
+	DB_ECU_Speed = DB_MCU_RPM * MCU_SPEED_MAX / MCU_RPM_MAX;
 }
 
 void CANBUS_BMS_Dummy_Read(void) {
