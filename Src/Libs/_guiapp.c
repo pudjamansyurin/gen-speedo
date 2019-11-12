@@ -28,25 +28,31 @@ float D2R(uint16_t deg);
 void Set_Indikator(GUI_CONST_STORAGE GUI_BITMAP *bg, GUI_RECT *pRect, GUI_CONST_STORAGE GUI_BITMAP *fg, uint16_t x,
 		uint16_t y, uint8_t status, uint8_t alpha);
 #if USE_HMI_LEFT
-void Set_Left_Sein(uint8_t status, uint32_t *tick);
+void Set_Left_Sein(status_t HMI_Status, uint32_t *tick);
+void Set_Left_Sein_CAN(uint8_t status);
 void Set_Left_Temp(uint8_t status);
 void Set_Left_Lamp(uint8_t status);
 void Set_Left_Jarum(uint8_t deg, uint16_t x, uint16_t y, uint16_t r, uint16_t h, uint8_t max);
 void Set_Left_Trip(switch_mode_trip_t mode_trip);
 #else
-void Set_Right_Sein(uint8_t status, uint32_t *tick);
+void Set_Right_Sein(status_t HMI_Status, uint32_t *tick);
+void Set_Right_Sein_CAN(uint8_t status);
 void Set_Right_Warning(uint8_t status);
 void Set_Right_Abs(uint8_t status);
 #endif
 
 /* Main task ------------------------------------------------------------------*/
+extern UART_HandleTypeDef huart1;
+extern uint8_t UART_TX_Buffer[1];
+extern uint8_t HAZARD_TOGGLE;
+
 void GUI_MainTask(void) {
 	/* USER CODE BEGIN GUI_MainTask */
 	char str[20];
 	uint8_t init = 1;
 	uint16_t k;
-	uint32_t tick;
 	uint32_t ulNotifiedValue;
+	//	uint32_t tick;
 
 	extern modes_t DB_HMI_Mode;
 	extern status_t DB_HMI_Status;
@@ -186,26 +192,57 @@ void GUI_MainTask(void) {
 	GUI_Clear();
 	GUI_SetBkColor(GUI_BLACK);
 
-	tick = osKernelSysTick();
+	//	tick = osKernelSysTick();
 
 	while (1) {
-		// check if has new can message
-		xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, portMAX_DELAY);
+		if (!init) {
+			// check if has new can message
+			xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, portMAX_DELAY);
+		}
 
 #if USE_HMI_LEFT
+
+		//		// Sein Left
+		//		if (DB_HMI_Status_Old.sein_left != DB_HMI_Status.sein_left) {
+		//			DB_HMI_Status_Old.sein_left = DB_HMI_Status.sein_left;
+		//
+		//			if (DB_HMI_Status.sein_left) {
+		//				// only sync LCD when hazard
+		//				if (DB_HMI_Status.sein_right) {
+		//					// reset buffer
+		//					UART_RX_Buffer[0] = CMD_RESET_BUFFER;
+		//					// wait command from right LCD
+		//					do {
+		//						HAL_UART_Receive(&huart1, UART_RX_Buffer, 1, 10);
+		//						;
+		//					} while (UART_RX_Buffer[0] != CMD_LEFT_SEIN_ON);
+		//					// send ACK
+		//					UART_TX_Buffer[0] = CMD_LEFT_SEIN_ON_ACK;
+		//					while (HAL_UART_Transmit(&huart1, UART_TX_Buffer, 1, 10) != HAL_OK)
+		//						;
+		//				}
+		//				BSP_Led_Toggle(1);
+		//				// set start time
+		//				tick = osKernelSysTick();
+		//			}
+		//		}
+
 		// Sein Left
-		Set_Left_Sein(DB_HMI_Status.sein_left, &tick);
+		if (DB_HMI_Status_Old.sein_left != DB_HMI_Status.sein_left) {
+			DB_HMI_Status_Old.sein_left = DB_HMI_Status.sein_left;
+			Set_Left_Sein_CAN(DB_HMI_Status.sein_left);
+		}
 
 		// Temperature Indicator
 		if (init || DB_HMI_Status_Old.temperature != DB_HMI_Status.temperature) {
-			Set_Left_Temp(DB_HMI_Status.temperature);
 			DB_HMI_Status_Old.temperature = DB_HMI_Status.temperature;
+			Set_Left_Temp(DB_HMI_Status.temperature);
 		}
 
 		// Lamp
 		if (init || DB_HMI_Status_Old.lamp != DB_HMI_Status.lamp) {
-			Set_Left_Lamp(DB_HMI_Status.lamp);
 			DB_HMI_Status_Old.lamp = DB_HMI_Status.lamp;
+			Set_Left_Lamp(DB_HMI_Status.lamp);
 		}
 
 		if (init || DB_HMI_Mode_Old.mode_trip != DB_HMI_Mode.mode_trip
@@ -220,42 +257,65 @@ void GUI_MainTask(void) {
 			GUI_DrawBitmapEx(&bmHMI_Left, x, y - r, x, y - r, 1000, 1000);
 
 			// Mode Trip
-			Set_Left_Trip(DB_HMI_Mode.mode_trip);
 			DB_HMI_Mode_Old.mode_trip = DB_HMI_Mode.mode_trip;
+			Set_Left_Trip(DB_HMI_Mode.mode_trip);
 
 			// Mode Trip Value
+			DB_HMI_Mode_Old.mode_trip_value = DB_HMI_Mode.mode_trip_value;
 			GUI_SetFont(&GUI_FontSquare721_BT23);
 			sprintf(str, "%05u", (unsigned int) DB_HMI_Mode.mode_trip_value);
 			GUI_DispStringInRectWrap(str, &pRect_SubTrip, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
-			DB_HMI_Mode_Old.mode_trip_value = DB_HMI_Mode.mode_trip_value;
 
 			// Odometer
+			DB_ECU_Odometer_Old = DB_ECU_Odometer;
 			GUI_SetFont(&GUI_FontSquare721_BT23);
 			sprintf(str, "%05u", (unsigned int) DB_ECU_Odometer);
 			GUI_DispStringInRectWrap(str, &pRect_TotalTrip, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
-			DB_ECU_Odometer_Old = DB_ECU_Odometer;
 
 			// RPM Needle
-			Set_Left_Jarum(DB_MCU_RPM <= MCU_RPM_MAX ? DB_MCU_RPM * max / MCU_RPM_MAX : max, x, y, r, h, max);
 			DB_MCU_RPM_Old = DB_MCU_RPM;
+			Set_Left_Jarum(DB_MCU_RPM <= MCU_RPM_MAX ? DB_MCU_RPM * max / MCU_RPM_MAX : max, x, y, r, h, max);
 
 			// Print result to LCD
 			GUI_MEMDEV_Select(0);
 			GUI_MEMDEV_CopyToLCD(hMem);
 		}
+
 #else
+
+		//		// Sein Right
+		//		if (DB_HMI_Status_Old.sein_right != DB_HMI_Status.sein_right) {
+		//			DB_HMI_Status_Old.sein_right = DB_HMI_Status.sein_right;
+		//
+		//			if (DB_HMI_Status.sein_right) {
+		//				// only sync LCD when hazard
+		//				if (DB_HMI_Status.sein_left) {
+		//					// reset buffer
+		//					// UART_RX_Buffer[0] = CMD_RESET_BUFFER;
+		//					// inform left LCD & wait ACK
+		//					UART_TX_Buffer[0] = CMD_LEFT_SEIN_ON;
+		//					HAL_UART_Transmit(&huart1, UART_TX_Buffer, 1, 10);
+		//				}
+		//				// set start time
+		//				tick = osKernelSysTick();
+		//			}
+		//		}
+
 		// Sein Right
-		Set_Right_Sein(DB_HMI_Status.sein_right, &tick);
+		if (DB_HMI_Status_Old.sein_right != DB_HMI_Status.sein_right) {
+			DB_HMI_Status_Old.sein_right = DB_HMI_Status.sein_right;
+			Set_Right_Sein_CAN(DB_HMI_Status.sein_right);
+		}
 
 		// Warning
 		if (init || DB_HMI_Status_Old.warning != DB_HMI_Status.warning) {
-			Set_Right_Warning(DB_HMI_Status.warning);
 			DB_HMI_Status_Old.warning = DB_HMI_Status.warning;
+			Set_Right_Warning(DB_HMI_Status.warning);
 		}
 		// ABS
 		if (init || DB_HMI_Status_Old.abs != DB_HMI_Status.abs) {
-			Set_Right_Abs(DB_HMI_Status.abs);
 			DB_HMI_Status_Old.abs = DB_HMI_Status.abs;
+			Set_Right_Abs(DB_HMI_Status.abs);
 		}
 
 		// Set Color
@@ -263,57 +323,64 @@ void GUI_MainTask(void) {
 
 		// Speed
 		if (init || DB_ECU_Speed_Old != DB_ECU_Speed) {
+			DB_ECU_Speed_Old = DB_ECU_Speed;
+
 			GUI_SetFont(&GUI_FontSquare721_BT60);
 			sprintf(str, "%03u", DB_ECU_Speed);
 			GUI_DispStringInRectWrap(str, &pRect_Speed, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
-			DB_ECU_Speed = DB_ECU_Speed_Old;
 		}
 
 		// Battery Percentage
 		if (init || DB_BMS_SoC_Old != DB_BMS_SoC) {
+			DB_BMS_SoC_Old = DB_BMS_SoC;
+
 			GUI_SetFont(&GUI_FontSquare721_BT31);
 			sprintf(str, "%02u", DB_BMS_SoC);
 			GUI_DispStringInRectWrap(str, &pRect_Battery, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
-			DB_BMS_SoC_Old = DB_BMS_SoC;
 		}
 
 		// FIXME: i am should be glue with mode_report index
 		// Mode Report
 		if (init || DB_HMI_Mode_Old.mode_report_value != DB_HMI_Mode.mode_report_value) {
+			DB_HMI_Mode_Old.mode_report_value = DB_HMI_Mode.mode_report_value;
+
 			GUI_SetFont(&GUI_FontSquare721_BT17);
 			sprintf(str, "%02u", DB_HMI_Mode.mode_report_value);
 			GUI_DispStringInRectWrap(str, &pRect_Range, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
-			DB_HMI_Mode_Old.mode_report_value == DB_HMI_Mode.mode_report_value;
 		}
 
 		// Temperature
 		if (init || DB_MCU_Temperature_Old != DB_MCU_Temperature) {
+			DB_MCU_Temperature_Old = DB_MCU_Temperature;
+
 			GUI_SetFont(&GUI_FontSquare721_BT30);
 			sprintf(str, "%02u", DB_MCU_Temperature);
 			GUI_DispStringInRectWrap(str, &pRect_Temp, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
-			DB_MCU_Temperature_Old = DB_MCU_Temperature;
 		}
 
 		// Datetime
 		if (init || DB_ECU_TimeStamp_Old.time.Minutes != DB_ECU_TimeStamp.time.Minutes) {
+			DB_ECU_TimeStamp_Old.time.Minutes = DB_ECU_TimeStamp.time.Minutes;
+
 			GUI_SetFont(&GUI_FontSquare721_BT16);
 			sprintf(str, "%3s, %3s %02d  %02d:%02d", Timestamp_Days[DB_ECU_TimeStamp.date.WeekDay - 1],
 					Timestamp_Months[DB_ECU_TimeStamp.date.Month - 1], DB_ECU_TimeStamp.date.Date, DB_ECU_TimeStamp.time.Hours,
 					DB_ECU_TimeStamp.time.Minutes);
 			GUI_DispStringInRectWrap(str, &pRect_Datetime, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
-			DB_ECU_TimeStamp_Old.time.Minutes = DB_ECU_TimeStamp.time.Minutes;
 		}
 
 		// Mode Drive
 		if (init || DB_HMI_Mode_Old.mode_drive != DB_HMI_Mode.mode_drive) {
+			DB_HMI_Mode_Old.mode_drive = DB_HMI_Mode.mode_drive;
+
 			GUI_SetFont(&GUI_FontSquare721_Cn_BT62);
 			sprintf(str, "%c", Drive_Mode[DB_HMI_Mode.mode_drive]);
 			GUI_DispStringInRectWrap(str, &pRect_Drive, GUI_TA_VCENTER | GUI_TA_HCENTER, GUI_WRAPMODE_NONE);
-			DB_HMI_Mode_Old.mode_drive = DB_HMI_Mode.mode_drive;
 		}
 #endif
 
 		init = 0;
+		//		GUI_Delay(1);
 	}
 	/* USER CODE END GUI_MainTask */
 }
@@ -336,13 +403,20 @@ void Set_Indikator(GUI_CONST_STORAGE GUI_BITMAP *bg, GUI_RECT *pRect, GUI_CONST_
 
 #if USE_HMI_LEFT
 
-void Set_Left_Sein(uint8_t status, uint32_t *tick) {
+void Set_Left_Sein(status_t HMI_Status, uint32_t *tick) {
 	uint16_t x = 277, y = 82;
-	static uint8_t stat = 0, toggle = 1;
+	static uint8_t stat = 0, toggle = 0;
 
 	GUI_RECT pRect_Left_Sein = { x, y, x + bmHMI_Left_Sein.XSize, y + bmHMI_Left_Sein.YSize };
-	if (status == 1) {
-		if ((osKernelSysTick() - *tick) >= osKernelSysTickMicroSec(500*1000)) {
+	if (HMI_Status.sein_left) {
+		// handle hazard
+		//		if (HMI_Status.sein_right) {
+		//			if (toggle != HAZARD_TOGGLE) {
+		//				Set_Indikator(&bmHMI_Left, &pRect_Left_Sein, &bmHMI_Left_Sein, x, y, toggle, 200);
+		//				toggle = HAZARD_TOGGLE;
+		//			}
+		//		} else
+		if (!stat || (osKernelSysTick() - *tick) >= osKernelSysTickMicroSec(500*1000)) {
 			Set_Indikator(&bmHMI_Left, &pRect_Left_Sein, &bmHMI_Left_Sein, x, y, toggle, 200);
 			toggle = !toggle;
 			*tick = osKernelSysTick();
@@ -354,6 +428,13 @@ void Set_Left_Sein(uint8_t status, uint32_t *tick) {
 			stat = 0;
 		}
 	}
+}
+
+void Set_Left_Sein_CAN(uint8_t status) {
+	uint16_t x = 277, y = 82;
+
+	GUI_RECT pRect_Left_Sein = { x, y, x + bmHMI_Left_Sein.XSize, y + bmHMI_Left_Sein.YSize };
+	Set_Indikator(&bmHMI_Left, &pRect_Left_Sein, &bmHMI_Left_Sein, x, y, status, 200);
 }
 
 void Set_Left_Temp(uint8_t status) {
@@ -403,15 +484,21 @@ void Set_Left_Trip(switch_mode_trip_t mode_trip) {
 	GUI_RECT pRect_Left_Trip = { x, y, x + bmHMI_Left_Trip_A.XSize, y + bmHMI_Left_Trip_A.YSize };
 	Set_Indikator(&bmHMI_Left, &pRect_Left_Trip, pAssets, x, y, 1, 254);
 }
+
 #else
 
-void Set_Right_Sein(uint8_t status, uint32_t *tick) {
+void Set_Right_Sein(status_t HMI_Status, uint32_t *tick) {
 	uint16_t x = 20, y = 82;
 	static uint8_t stat = 0, toggle = 1;
 
 	GUI_RECT pRect_Right_Sein = { x, y, x + bmHMI_Right_Sein.XSize, y + bmHMI_Right_Sein.YSize };
-	if (status == 1) {
-		if ((osKernelSysTick() - *tick) >= osKernelSysTickMicroSec(500 * 1000)) {
+	if (HMI_Status.sein_right) {
+		if (!stat || (osKernelSysTick() - *tick) >= osKernelSysTickMicroSec(500 * 1000)) {
+			//			// handle hazard
+			//			if (HMI_Status.sein_left) {
+			//				HAL_UART_Transmit(&huart1, &toggle, 1, 10);
+			//			}
+			// toggle indicator
 			Set_Indikator(&bmHMI_Right, &pRect_Right_Sein, &bmHMI_Right_Sein, x, y, toggle, 200);
 			toggle = !toggle;
 			*tick = osKernelSysTick();
@@ -423,6 +510,13 @@ void Set_Right_Sein(uint8_t status, uint32_t *tick) {
 			stat = 0;
 		}
 	}
+}
+
+void Set_Right_Sein_CAN(uint8_t status) {
+	uint16_t x = 20, y = 82;
+
+	GUI_RECT pRect_Right_Sein = { x, y, x + bmHMI_Right_Sein.XSize, y + bmHMI_Right_Sein.YSize };
+	Set_Indikator(&bmHMI_Right, &pRect_Right_Sein, &bmHMI_Right_Sein, x, y, status, 200);
 }
 
 void Set_Right_Warning(uint8_t status) {

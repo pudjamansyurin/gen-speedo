@@ -62,6 +62,8 @@ osTimerId TimerCANHandle;
 osMutexId CanTxMutexHandle;
 osMutexId SwvMutexHandle;
 /* USER CODE BEGIN PV */
+char UART_TX_Buffer[1];
+uint8_t HAZARD_TOGGLE;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -438,7 +440,19 @@ static void MX_GPIO_Init(void) {
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+	//	// clear buffer to handle overrun
+	//	__HAL_UART_FLUSH_DRREGISTER(huart);
+	//
+	//	if (huart->Instance == USART1) {
+	//#if USE_HMI_LEFT
+	//		BSP_Led_Toggle(1);
+	//		HAL_UART_Receive_IT(&huart1, &HAZARD_TOGGLE, 1);
+	//#else
+	//
+	//#endif
+	//	}
+}
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartLcdTask */
@@ -455,6 +469,8 @@ void StartLcdTask(void const *argument) {
 	// Turn on backlight
 #if (!USE_HMI_LEFT)
 	BSP_Set_Backlight(1);
+#else
+	//	HAL_UART_Receive_IT(&huart1, &HAZARD_TOGGLE, 1);
 #endif
 	// run main task
 	GUI_MainTask();
@@ -481,6 +497,7 @@ void StartCanRxTask(void const *argument) {
 	for (;;) {
 		// check if has new can message
 		xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, portMAX_DELAY);
+
 		// proceed event
 		if ((ulNotifiedValue & EVENT_CAN_RX_IT)) {
 			// handle message
@@ -507,8 +524,8 @@ void StartCanRxTask(void const *argument) {
 				break;
 			}
 
-			// unblock the GUI thread
-			xTaskNotify(LcdTaskHandle, 0x00, eSetBits);
+			// notify gui thread
+			xTaskNotify(LcdTaskHandle, 0x01, eSetBits);
 
 			//			// show this message
 			//			SWV_SendStr("ID: ");
@@ -536,7 +553,6 @@ void StartSerialTask(void const *argument) {
 	for (;;) {
 		SWV_SendStrLn("Serial Task Running");
 
-		BSP_Led_Toggle(1);
 		osDelay(250);
 	}
 	/* USER CODE END StartSerialTask */

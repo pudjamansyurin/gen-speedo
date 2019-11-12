@@ -14,7 +14,7 @@
 #include "_guiapp.h"
 #include "_swv.h"
 
-#define USE_HMI_LEFT 							1
+#define USE_HMI_LEFT 							0
 
 // macro to manipulate bit
 #define SetBit(x) 								(1 << x)
@@ -23,7 +23,12 @@
 #define ToggleBitOf(var, x) 			(number ^= 1 << x)
 
 // list event
-#define EVENT_CAN_RX_IT							SetBit(0)
+#define EVENT_CAN_RX_IT						SetBit(0)
+
+// internal USART LCD protocol
+#define CMD_RESET_BUFFER						'X'
+#define CMD_LEFT_SEIN_ON						'A'
+#define CMD_LEFT_SEIN_ON_ACK				'B'
 
 // Function prototype
 void BSP_Led_Write(uint8_t number, uint8_t state);
