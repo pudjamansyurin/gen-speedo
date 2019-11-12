@@ -43,6 +43,7 @@ void Set_Right_Abs(uint8_t status);
 void GUI_MainTask(void) {
 	/* USER CODE BEGIN GUI_MainTask */
 	char str[20];
+	uint8_t init = 1;
 	uint16_t k;
 	uint32_t tick;
 	uint32_t ulNotifiedValue;
@@ -196,18 +197,18 @@ void GUI_MainTask(void) {
 		Set_Left_Sein(DB_HMI_Status.sein_left, &tick);
 
 		// Temperature Indicator
-		if (DB_HMI_Status_Old.temperature != DB_HMI_Status.temperature) {
+		if (init || DB_HMI_Status_Old.temperature != DB_HMI_Status.temperature) {
 			Set_Left_Temp(DB_HMI_Status.temperature);
 			DB_HMI_Status_Old.temperature = DB_HMI_Status.temperature;
 		}
 
 		// Lamp
-		if (DB_HMI_Status_Old.lamp != DB_HMI_Status.lamp) {
+		if (init || DB_HMI_Status_Old.lamp != DB_HMI_Status.lamp) {
 			Set_Left_Lamp(DB_HMI_Status.lamp);
 			DB_HMI_Status_Old.lamp = DB_HMI_Status.lamp;
 		}
 
-		if (DB_HMI_Mode_Old.mode_trip != DB_HMI_Mode.mode_trip
+		if (init || DB_HMI_Mode_Old.mode_trip != DB_HMI_Mode.mode_trip
 				|| DB_HMI_Mode_Old.mode_trip_value != DB_HMI_Mode.mode_trip_value || DB_ECU_Odometer_Old != DB_ECU_Odometer
 				|| DB_MCU_RPM_Old != DB_MCU_RPM) {
 
@@ -241,20 +242,18 @@ void GUI_MainTask(void) {
 			// Print result to LCD
 			GUI_MEMDEV_Select(0);
 			GUI_MEMDEV_CopyToLCD(hMem);
-
 		}
-
 #else
 		// Sein Right
 		Set_Right_Sein(DB_HMI_Status.sein_right, &tick);
 
 		// Warning
-		if (DB_HMI_Status_Old.warning != DB_HMI_Status.warning) {
+		if (init || DB_HMI_Status_Old.warning != DB_HMI_Status.warning) {
 			Set_Right_Warning(DB_HMI_Status.warning);
 			DB_HMI_Status_Old.warning = DB_HMI_Status.warning;
 		}
 		// ABS
-		if (DB_HMI_Status_Old.abs != DB_HMI_Status.abs) {
+		if (init || DB_HMI_Status_Old.abs != DB_HMI_Status.abs) {
 			Set_Right_Abs(DB_HMI_Status.abs);
 			DB_HMI_Status_Old.abs = DB_HMI_Status.abs;
 		}
@@ -263,7 +262,7 @@ void GUI_MainTask(void) {
 		GUI_SetColor(0xFFC0C0C0);
 
 		// Speed
-		if (DB_ECU_Speed_Old != DB_ECU_Speed) {
+		if (init || DB_ECU_Speed_Old != DB_ECU_Speed) {
 			GUI_SetFont(&GUI_FontSquare721_BT60);
 			sprintf(str, "%03u", DB_ECU_Speed);
 			GUI_DispStringInRectWrap(str, &pRect_Speed, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
@@ -271,16 +270,16 @@ void GUI_MainTask(void) {
 		}
 
 		// Battery Percentage
-		if (DB_BMS_SoC_Old != DB_BMS_SoC) {
+		if (init || DB_BMS_SoC_Old != DB_BMS_SoC) {
 			GUI_SetFont(&GUI_FontSquare721_BT31);
 			sprintf(str, "%02u", DB_BMS_SoC);
 			GUI_DispStringInRectWrap(str, &pRect_Battery, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 			DB_BMS_SoC_Old = DB_BMS_SoC;
 		}
 
-		// FIXME: i am shoul be glue with mode_report index
+		// FIXME: i am should be glue with mode_report index
 		// Mode Report
-		if (DB_HMI_Mode_Old.mode_report_value != DB_HMI_Mode.mode_report_value) {
+		if (init || DB_HMI_Mode_Old.mode_report_value != DB_HMI_Mode.mode_report_value) {
 			GUI_SetFont(&GUI_FontSquare721_BT17);
 			sprintf(str, "%02u", DB_HMI_Mode.mode_report_value);
 			GUI_DispStringInRectWrap(str, &pRect_Range, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
@@ -288,7 +287,7 @@ void GUI_MainTask(void) {
 		}
 
 		// Temperature
-		if (DB_MCU_Temperature_Old != DB_MCU_Temperature) {
+		if (init || DB_MCU_Temperature_Old != DB_MCU_Temperature) {
 			GUI_SetFont(&GUI_FontSquare721_BT30);
 			sprintf(str, "%02u", DB_MCU_Temperature);
 			GUI_DispStringInRectWrap(str, &pRect_Temp, GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
@@ -296,7 +295,7 @@ void GUI_MainTask(void) {
 		}
 
 		// Datetime
-		if (DB_ECU_TimeStamp_Old.time.Minutes != DB_ECU_TimeStamp.time.Minutes) {
+		if (init || DB_ECU_TimeStamp_Old.time.Minutes != DB_ECU_TimeStamp.time.Minutes) {
 			GUI_SetFont(&GUI_FontSquare721_BT16);
 			sprintf(str, "%3s, %3s %02d  %02d:%02d", Timestamp_Days[DB_ECU_TimeStamp.date.WeekDay - 1],
 					Timestamp_Months[DB_ECU_TimeStamp.date.Month - 1], DB_ECU_TimeStamp.date.Date, DB_ECU_TimeStamp.time.Hours,
@@ -306,13 +305,15 @@ void GUI_MainTask(void) {
 		}
 
 		// Mode Drive
-		if (DB_HMI_Mode_Old.mode_drive != DB_HMI_Mode.mode_drive) {
+		if (init || DB_HMI_Mode_Old.mode_drive != DB_HMI_Mode.mode_drive) {
 			GUI_SetFont(&GUI_FontSquare721_Cn_BT62);
 			sprintf(str, "%c", Drive_Mode[DB_HMI_Mode.mode_drive]);
 			GUI_DispStringInRectWrap(str, &pRect_Drive, GUI_TA_VCENTER | GUI_TA_HCENTER, GUI_WRAPMODE_NONE);
 			DB_HMI_Mode_Old.mode_drive = DB_HMI_Mode.mode_drive;
 		}
 #endif
+
+		init = 0;
 	}
 	/* USER CODE END GUI_MainTask */
 }
