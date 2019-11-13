@@ -11,10 +11,11 @@
 #include "main.h"
 #include <stdlib.h>				// for: itoa()
 #include <stdio.h>				// for: sprintf()
+#include <math.h>					// for: M_PI
 #include "_guiapp.h"
 #include "_swv.h"
 
-#define USE_HMI_LEFT 							0
+#define USE_HMI_LEFT 							1
 
 // macro to manipulate bit
 #define SetBit(x) 								(1 << x)
@@ -34,5 +35,6 @@
 void BSP_Led_Write(uint8_t number, uint8_t state);
 void BSP_Led_Toggle(uint8_t number);
 void BSP_Set_Backlight(uint8_t state);
+float D2R(uint16_t deg);
 
 #endif /* CONFIG_H_ */

@@ -13,7 +13,7 @@
 *                                                                    *
 **********************************************************************
 *                                                                    *
-* Source file: HMI_Left_Temp                                         *
+* Source file: HMI_Right_Temp                                        *
 * Dimensions:  20 * 17                                               *
 * NumColors:   32bpp: 16777216 + 256                                 *
 *                                                                    *
@@ -28,9 +28,9 @@
   #define GUI_CONST_STORAGE const
 #endif
 
-extern GUI_CONST_STORAGE GUI_BITMAP bmHMI_Left_Temp;
+extern GUI_CONST_STORAGE GUI_BITMAP bmHMI_Right_Temp;
 
-static GUI_CONST_STORAGE unsigned long _acHMI_Left_Temp[] = {
+static GUI_CONST_STORAGE unsigned long _acHMI_Right_Temp[] = {
   0xFF008588, 0xFF008487, 0xFF008487, 0xFF008487, 0xFF008487, 0xFF008487, 0xFF008487, 0xFF008487, 0xFF008183, 0xF400909A, 0xDE00CEF8, 0xFF00CCF5, 0xFF00D1FB, 0xFF00D0F9, 0xFF00D0F8, 0xFF00D0F8, 0xFF00D0F8, 0xFF00D0F8, 0xFF00D0F8, 0xFF00D0F8,
   0xFF00C6EC, 0xFF00CAF2, 0xFF00CAF2, 0xFF00CAF2, 0xFF00CAF2, 0xFF00CAF2, 0xFF00CAF2, 0xFF00CAF2, 0xFF00CAF2, 0xA700CBF4, 0x2400D1FD, 0xEA00D1FB, 0xF100D1FB, 0xF900D0F9, 0xFF00D0F8, 0xFF00D0F8, 0xFF00D0F8, 0xFF00D0F8, 0xFF00D0F8, 0xFF00D0F8,
   0xFF00C3E6, 0xFF00D2FD, 0xFF00D3FE, 0xFF00D3FF, 0xFF00D3FF, 0xFF00D3FF, 0xFF00D3FF, 0xFF00D3FF, 0xFF00D3FF, 0xA200D3FE, 0x0000D1FD, 0x1D00D1FD, 0x1D00D1FD, 0x9E00D1FC, 0xFF00D1FC, 0xFF00D1FC, 0xFF00D1FC, 0xFF00D1FC, 0xFF00D1FC, 0xFF00D1FC,
@@ -50,12 +50,12 @@ static GUI_CONST_STORAGE unsigned long _acHMI_Left_Temp[] = {
   0xFF00CBF3, 0xFF00D1FA, 0xFF00CFFC, 0xF400D0FD, 0xF300D1FD, 0xFF00D0FB, 0xFF00C7F0, 0xFF00CEFA, 0xFF00C1DC, 0xF900D0FB, 0xF000D1FE, 0xFF00D0FB, 0xFF00CAED, 0xFF00ACC0, 0xFF00C8EA, 0xFF00D1FB, 0xF000D1FE, 0xFC00CEFA, 0xFF00BAE4, 0xFF00829E
 };
 
-GUI_CONST_STORAGE GUI_BITMAP bmHMI_Left_Temp = {
+GUI_CONST_STORAGE GUI_BITMAP bmHMI_Right_Temp = {
   20, // xSize
   17, // ySize
   80, // BytesPerLine
   32, // BitsPerPixel
-  (unsigned char *)_acHMI_Left_Temp,  // Pointer to picture data
+  (unsigned char *)_acHMI_Right_Temp,  // Pointer to picture data
   NULL,  // Pointer to palette
   GUI_DRAW_BMP8888
 };

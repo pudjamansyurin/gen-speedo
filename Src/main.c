@@ -62,8 +62,6 @@ osTimerId TimerCANHandle;
 osMutexId CanTxMutexHandle;
 osMutexId SwvMutexHandle;
 /* USER CODE BEGIN PV */
-char UART_TX_Buffer[1];
-uint8_t HAZARD_TOGGLE;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -440,19 +438,6 @@ static void MX_GPIO_Init(void) {
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-	//	// clear buffer to handle overrun
-	//	__HAL_UART_FLUSH_DRREGISTER(huart);
-	//
-	//	if (huart->Instance == USART1) {
-	//#if USE_HMI_LEFT
-	//		BSP_Led_Toggle(1);
-	//		HAL_UART_Receive_IT(&huart1, &HAZARD_TOGGLE, 1);
-	//#else
-	//
-	//#endif
-	//	}
-}
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartLcdTask */
@@ -466,11 +451,9 @@ void StartLcdTask(void const *argument) {
 	/* Graphic application */
 	//	GRAPHICS_MainTask();
 	/* USER CODE BEGIN 5 */
-	// Turn on backlight
-#if (!USE_HMI_LEFT)
+#if !USE_HMI_LEFT
+	// Control backlight
 	BSP_Set_Backlight(1);
-#else
-	//	HAL_UART_Receive_IT(&huart1, &HAZARD_TOGGLE, 1);
 #endif
 	// run main task
 	GUI_MainTask();
@@ -504,6 +487,12 @@ void StartCanRxTask(void const *argument) {
 			switch (RxCan.RxHeader.StdId) {
 			case CAN_ADDR_ECU_SWITCH:
 				CANBUS_ECU_Switch_Read();
+				//#if !USE_HMI_LEFT
+				//				// FIXME enable me on deploy
+				//				// Control backlight
+				//				extern status_t DB_HMI_Status;
+				//				BSP_Set_Backlight(DB_HMI_Status.daylight);
+				//#endif
 				break;
 			case CAN_ADDR_ECU_RTC:
 				CANBUS_ECU_RTC_Read();
