@@ -77,12 +77,12 @@ void GUI_MainTask(void) {
 			x + r + (r * cos(D2R(max + 180))) + 5 - (x) + 25,
 			y + h + 5 - (y - r));
 #else
-	const GUI_RECT pRect_Speed = { 85, 79, 85 + 100, 79 + 41 };
-	const GUI_RECT pRect_Battery = { 227, 164, 227 + 35, 164 + 28 };
-	const GUI_RECT pRect_Range = { 235, 188, 235 + 20, 188 + 15 };
-	const GUI_RECT pRect_Temp = { 178, 132, 178 + 32, 132 + 22 };
-	const GUI_RECT pRect_Datetime = { 65, 48, 65 + 150, 48 + 16 };
-	const GUI_RECT pRect_Drive = { 126, 145, 126 + 26, 145 + 40 };
+	GUI_RECT pRect_Speed = { 85, 79, 85 + 100, 79 + 41 };
+	GUI_RECT pRect_Battery = { 227, 164, 227 + 35, 164 + 28 };
+	GUI_RECT pRect_Range = { 235, 188, 235 + 20, 188 + 15 };
+	GUI_RECT pRect_Temp = { 178, 132, 178 + 32, 132 + 22 };
+	GUI_RECT pRect_Datetime = { 65, 48, 65 + 150, 48 + 16 };
+	GUI_RECT pRect_Drive = { 126, 145, 126 + 26, 145 + 40 };
 
 	const char Drive_Mode[4] = { 'E', 'S', 'P' };
 	const char Timestamp_Days[7][4] = {
