@@ -23,7 +23,8 @@ typedef enum {
 	SWITCH_MODE_DRIVE_E = 0,
 	SWITCH_MODE_DRIVE_S = 1,
 	SWITCH_MODE_DRIVE_P = 2,
-	SWITCH_MODE_DRIVE_MAX = 2
+	SWITCH_MODE_DRIVE_R = 3,
+	SWITCH_MODE_DRIVE_MAX = 3
 } switch_mode_drive_t;
 
 typedef enum {

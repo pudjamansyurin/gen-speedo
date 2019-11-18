@@ -80,24 +80,13 @@ void GUI_MainTask(void) {
 	GUI_RECT pRect_Speed = { 85, 79, 85 + 100, 79 + 41 };
 	GUI_RECT pRect_Battery = { 227, 164, 227 + 35, 164 + 28 };
 	GUI_RECT pRect_Range = { 235, 188, 235 + 20, 188 + 15 };
-	GUI_RECT pRect_Temp = { 178, 132, 178 + 32, 132 + 22 };
-	GUI_RECT pRect_Datetime = { 65, 48, 65 + 150, 48 + 16 };
 	GUI_RECT pRect_Drive = { 126, 145, 126 + 26, 145 + 40 };
 
-	const char Drive_Mode[4] = { 'E', 'S', 'P' };
-	const char Timestamp_Days[7][4] = {
-			"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
-	const char Timestamp_Months[12][4] = {
-			"Jan", "Peb", "Mar", "Apr", "May",
-			"Jun", "Jul", "Aug", "Sep", "Oct", "Nop", "Des" };
+	const char Drive_Mode[4] = { 'E', 'S', 'P', 'R' };
 
 	extern uint8_t DB_ECU_Speed;
-	extern timestamp_t DB_ECU_TimeStamp;
-	extern uint8_t DB_MCU_Temperature;
 	extern uint8_t DB_BMS_SoC;
 	uint8_t DB_ECU_Speed_Old;
-	timestamp_t DB_ECU_TimeStamp_Old;
-	uint8_t DB_MCU_Temperature_Old;
 	uint8_t DB_BMS_SoC_Old;
 	// background
 	GUI_CONST_STORAGE GUI_BITMAP *Background = &bmHMI_Right;
@@ -249,6 +238,19 @@ void GUI_MainTask(void) {
 			GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 		}
 
+		// Mode Drive
+		if (init || DB_HMI_Mode_Old.mode_drive != DB_HMI_Mode.mode_drive) {
+			DB_HMI_Mode_Old.mode_drive = DB_HMI_Mode.mode_drive;
+			// if reverse, change color
+			if (DB_HMI_Mode.mode_drive == SWITCH_MODE_DRIVE_R) {
+				GUI_SetColor(0xFFFF8000);
+			}
+			GUI_SetFont(&GUI_FontSquare721_Cn_BT62);
+			sprintf(str, "%c", Drive_Mode[DB_HMI_Mode.mode_drive]);
+			GUI_DispStringInRectWrap(str, &pRect_Drive,
+			GUI_TA_VCENTER | GUI_TA_HCENTER, GUI_WRAPMODE_NONE);
+		}
+
 		// FIXME: i am should be glue with mode_report index
 		// Mode Report
 		if (init
@@ -259,41 +261,6 @@ void GUI_MainTask(void) {
 			sprintf(str, "%02u", DB_HMI_Mode.mode_report_value);
 			GUI_DispStringInRectWrap(str, &pRect_Range, GUI_TA_VCENTER | GUI_TA_RIGHT,
 					GUI_WRAPMODE_NONE);
-		}
-
-		// Temperature
-		if (init || DB_MCU_Temperature_Old != DB_MCU_Temperature) {
-			DB_MCU_Temperature_Old = DB_MCU_Temperature;
-
-			GUI_SetFont(&GUI_FontSquare721_BT30);
-			sprintf(str, "%02u", DB_MCU_Temperature);
-			GUI_DispStringInRectWrap(str, &pRect_Temp, GUI_TA_VCENTER | GUI_TA_RIGHT,
-					GUI_WRAPMODE_NONE);
-		}
-
-		// Datetime
-		if (init
-				|| DB_ECU_TimeStamp_Old.time.Minutes != DB_ECU_TimeStamp.time.Minutes) {
-			DB_ECU_TimeStamp_Old.time.Minutes = DB_ECU_TimeStamp.time.Minutes;
-
-			GUI_SetFont(&GUI_FontSquare721_BT16);
-			sprintf(str, "%3s, %3s %02d  %02d:%02d",
-					Timestamp_Days[DB_ECU_TimeStamp.date.WeekDay - 1],
-					Timestamp_Months[DB_ECU_TimeStamp.date.Month - 1],
-					DB_ECU_TimeStamp.date.Date, DB_ECU_TimeStamp.time.Hours,
-					DB_ECU_TimeStamp.time.Minutes);
-			GUI_DispStringInRectWrap(str, &pRect_Datetime,
-			GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
-		}
-
-		// Mode Drive
-		if (init || DB_HMI_Mode_Old.mode_drive != DB_HMI_Mode.mode_drive) {
-			DB_HMI_Mode_Old.mode_drive = DB_HMI_Mode.mode_drive;
-
-			GUI_SetFont(&GUI_FontSquare721_Cn_BT62);
-			sprintf(str, "%c", Drive_Mode[DB_HMI_Mode.mode_drive]);
-			GUI_DispStringInRectWrap(str, &pRect_Drive,
-			GUI_TA_VCENTER | GUI_TA_HCENTER, GUI_WRAPMODE_NONE);
 		}
 #endif
 
@@ -415,23 +382,23 @@ GUI_CONST_STORAGE GUI_BITMAP *fg, uint16_t x, uint16_t y, uint8_t status,
 #if USE_HMI_LEFT
 
 void Set_Left_Sein(uint8_t status) {
-	Set_Indicator(&bmHMI_Left, &bmHMI_Left_Sein, 277, 82, status, 200);
+	Set_Indicator(&bmHMI_Left, &bmHMI_Left_Sein, 275, 84, status, 200);
 }
 
 void Set_Left_Finger(uint8_t status) {
-	Set_Indicator(&bmHMI_Left, &bmHMI_Left_Finger, 294, 125, status, 200);
+	Set_Indicator(&bmHMI_Left, &bmHMI_Left_Finger, 293, 127, status, 200);
 }
 
 void Set_Left_Mirror(uint8_t status) {
-	Set_Indicator(&bmHMI_Left, &bmHMI_Left_Mirror, 261, 127, status, 200);
+	Set_Indicator(&bmHMI_Left, &bmHMI_Left_Mirror, 261, 129, status, 200);
 }
 
 void Set_Left_Keyless(uint8_t status) {
-	Set_Indicator(&bmHMI_Left, &bmHMI_Left_Keyless, 228, 131, status, 200);
+	Set_Indicator(&bmHMI_Left, &bmHMI_Left_Keyless, 228, 133, status, 200);
 }
 
 void Set_Left_Trip(switch_mode_trip_t mode_trip) {
-	const uint16_t x = 131, y = 86;
+	const uint16_t x = 129, y = 89;
 	GUI_CONST_STORAGE GUI_BITMAP *pImage;
 
 	// decide the image
@@ -473,23 +440,23 @@ void Set_Left_Jarum(uint8_t deg, uint16_t x, uint16_t y, uint16_t r, uint16_t h,
 #else
 
 void Set_Right_Sein(uint8_t status) {
-	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Sein, 20, 82, status, 200);
+	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Sein, 20, 83, status, 200);
 }
 
 void Set_Right_Temp(uint8_t status) {
-	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Temp, 33, 131, status, 200);
+	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Temp, 32, 131, status, 200);
 }
 
 void Set_Right_Lamp(uint8_t status) {
-	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Lamp, 203, 72, status, 200);
+	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Lamp, 190, 136, status, 200);
 }
 
 void Set_Right_Warning(uint8_t status) {
-	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Warning, 3, 130, status, 200);
+	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Warning, 2, 130, status, 200);
 }
 
 void Set_Right_Abs(uint8_t status) {
-	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Abs, 64, 135, status, 200);
+	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Abs, 63, 135, status, 200);
 }
 #endif
 /*************************** End of file ****************************/
