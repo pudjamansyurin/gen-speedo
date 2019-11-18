@@ -15,7 +15,7 @@
 #include "_guiapp.h"
 #include "_swv.h"
 
-#define USE_HMI_LEFT 							1
+#define USE_HMI_LEFT 							0
 
 // macro to manipulate bit
 #define SetBit(x) 								(1 << x)

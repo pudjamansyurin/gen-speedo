@@ -26,6 +26,8 @@
 #include "HMI_Right_Temp.c"
 #include "HMI_Right_Lamp.c"
 #include "HMI_Right_Sein.c"
+#include "Square721_BT10.c"
+#include "Square721_BT14.c"
 #include "Square721_BT16.c"
 #include "Square721_BT17.c"
 #include "Square721_BT30.c"

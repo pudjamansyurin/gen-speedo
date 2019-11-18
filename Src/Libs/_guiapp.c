@@ -79,10 +79,14 @@ void GUI_MainTask(void) {
 #else
 	GUI_RECT pRect_Speed = { 85, 79, 85 + 100, 79 + 41 };
 	GUI_RECT pRect_Battery = { 227, 164, 227 + 35, 164 + 28 };
-	GUI_RECT pRect_Range = { 235, 188, 235 + 20, 188 + 15 };
+	GUI_RECT pRect_Report_Mode = { 174, 189, 174 + 50, 189 + 16 };
+	GUI_RECT pRect_Report_Value = { 228, 188, 228 + 20, 188 + 15 };
+	GUI_RECT pRect_Report_Unit = { 251, 192, 251 + 28, 192 + 10 };
 	GUI_RECT pRect_Drive = { 126, 145, 126 + 26, 145 + 40 };
 
 	const char Drive_Mode[4] = { 'E', 'S', 'P', 'R' };
+	const char Report_Mode[2][8] = { "Range", "Average" };
+	const char Report_Unit[2][6] = { "KM", "KM/KW" };
 
 	extern uint8_t DB_ECU_Speed;
 	extern uint8_t DB_BMS_SoC;
@@ -177,7 +181,7 @@ void GUI_MainTask(void) {
 			DB_MCU_RPM_Old = DB_MCU_RPM;
 			Set_Left_Jarum(
 					DB_MCU_RPM <= MCU_RPM_MAX ? DB_MCU_RPM * max / MCU_RPM_MAX : max, x,
-					y, r, h, max);
+							y, r, h, max);
 
 			// Print result to LCD
 			GUI_MEMDEV_Select(0);
@@ -253,15 +257,33 @@ void GUI_MainTask(void) {
 
 		// FIXME: i am should be glue with mode_report index
 		// Mode Report
-		if (init
-				|| DB_HMI_Mode_Old.mode_report_value != DB_HMI_Mode.mode_report_value) {
-			DB_HMI_Mode_Old.mode_report_value = DB_HMI_Mode.mode_report_value;
+		//		if (init
+		//				|| DB_HMI_Mode_Old.mode_report_value != DB_HMI_Mode.mode_report_value) {
+		//			DB_HMI_Mode_Old.mode_report_value = DB_HMI_Mode.mode_report_value;
 
-			GUI_SetFont(&GUI_FontSquare721_BT17);
-			sprintf(str, "%02u", DB_HMI_Mode.mode_report_value);
-			GUI_DispStringInRectWrap(str, &pRect_Range, GUI_TA_VCENTER | GUI_TA_RIGHT,
-					GUI_WRAPMODE_NONE);
-		}
+		// clear text position
+		GUI_ClearRect(pRect_Report_Mode.x0, pRect_Report_Mode.y0, pRect_Report_Mode.x1,
+				pRect_Report_Mode.y1);
+		// fill text position
+		GUI_SetFont(&GUI_FontSquare721_BT14);
+		sprintf(str, "%s", Report_Mode[DB_HMI_Mode.mode_report]);
+		GUI_DispStringInRectWrap(str, &pRect_Report_Mode, GUI_TA_VCENTER | GUI_TA_RIGHT,
+				GUI_WRAPMODE_NONE);
+
+		// clear text position
+		GUI_ClearRect(pRect_Report_Unit.x0, pRect_Report_Unit.y0, pRect_Report_Unit.x1,
+				pRect_Report_Unit.y1);
+		// fill text position
+		GUI_SetFont(&GUI_FontSquare721_BT10);
+		sprintf(str, "%s", Report_Unit[DB_HMI_Mode.mode_report]);
+		GUI_DispStringInRectWrap(str, &pRect_Report_Unit, GUI_TA_BOTTOM | GUI_TA_LEFT,
+				GUI_WRAPMODE_NONE);
+
+		GUI_SetFont(&GUI_FontSquare721_BT17);
+		sprintf(str, "%02u", DB_HMI_Mode.mode_report_value);
+		GUI_DispStringInRectWrap(str, &pRect_Report_Value, GUI_TA_BOTTOM | GUI_TA_RIGHT,
+				GUI_WRAPMODE_NONE);
+		//		}
 #endif
 
 		init = 0;
