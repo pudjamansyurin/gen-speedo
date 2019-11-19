@@ -27,15 +27,13 @@
 void Run_Boot_Animation(void);
 void Set_Boot_Overlay(void);
 void Set_Indicator( GUI_CONST_STORAGE GUI_BITMAP *bg,
-GUI_CONST_STORAGE GUI_BITMAP *fg, uint16_t x, uint16_t y, uint8_t status,
-		uint8_t alpha);
+GUI_CONST_STORAGE GUI_BITMAP *fg, uint16_t x, uint16_t y, uint8_t status, uint8_t alpha);
 #if USE_HMI_LEFT
 void Set_Left_Sein(uint8_t status);
 void Set_Left_Finger(uint8_t status);
 void Set_Left_Mirror(uint8_t status);
 void Set_Left_Keyless(uint8_t status);
-void Set_Left_Jarum(uint8_t deg, uint16_t x, uint16_t y, uint16_t r, uint16_t h,
-		uint8_t max);
+void Set_Left_Jarum(uint8_t deg, uint16_t x, uint16_t y, uint16_t r, uint16_t h, uint8_t max);
 void Set_Left_Trip(switch_mode_trip_t mode_trip);
 #else
 void Set_Right_Sein(uint8_t status);
@@ -60,8 +58,8 @@ void GUI_MainTask(void) {
 #if USE_HMI_LEFT
 	const uint16_t x = 58, y = 161, r = 123, h = 7;
 	const uint8_t max = 112;
-	GUI_RECT pRect_SubTrip = { 159, 84, 159 + 64, 84 + 24 };
-	GUI_RECT pRect_TotalTrip = { 159, 107, 159 + 64, 107 + 24 };
+	GUI_RECT pRect_SubTrip = { 159, 83, 159 + 64, 83 + 24 };
+	GUI_RECT pRect_TotalTrip = { 159, 106, 159 + 64, 106 + 24 };
 
 	extern uint32_t DB_MCU_RPM;
 	extern uint32_t DB_ECU_Odometer;
@@ -71,18 +69,15 @@ void GUI_MainTask(void) {
 	GUI_CONST_STORAGE GUI_BITMAP *Background = &bmHMI_Left;
 	// create MEMDEV on layer 1
 	GUI_SelectLayer(1);
-	GUI_MEMDEV_Handle hMem = GUI_MEMDEV_Create(
-			x,
-			y - r,
-			x + r + (r * cos(D2R(max + 180))) + 5 - (x) + 25,
-			y + h + 5 - (y - r));
+	GUI_MEMDEV_Handle hMem = GUI_MEMDEV_Create(x, y - r, x + r + (r * cos(D2R(max + 180))) + 5 - (x) + 25, y + h + 5 - (y - r));
 #else
-	GUI_RECT pRect_Speed = { 85, 79, 85 + 100, 79 + 41 };
+	int8_t RM_XO = -10, RM_YO = 2;
+	GUI_RECT pRect_Speed = { 85, 79, 85 + 100, 79 + 50 };
 	GUI_RECT pRect_Battery = { 227, 164, 227 + 35, 164 + 28 };
-	GUI_RECT pRect_Report_Mode = { 174, 189, 174 + 50, 189 + 16 };
-	GUI_RECT pRect_Report_Value = { 228, 188, 228 + 20, 188 + 15 };
-	GUI_RECT pRect_Report_Unit = { 251, 192, 251 + 28, 192 + 10 };
 	GUI_RECT pRect_Drive = { 126, 145, 126 + 26, 145 + 40 };
+	GUI_RECT pRect_Report_Mode = { 174 + RM_XO, 189 + RM_YO, 174 + 50 + RM_XO, 189 + 13 + RM_YO };
+	GUI_RECT pRect_Report_Value = { 228 + RM_XO, 188 + RM_YO, 228 + 20 + RM_XO, 188 + 15 + RM_YO };
+	GUI_RECT pRect_Report_Unit = { 251 + RM_XO, 192 + RM_YO, 251 + 28 + RM_XO, 192 + 10 + RM_YO };
 
 	const char Drive_Mode[4] = { 'E', 'S', 'P', 'R' };
 	const char Report_Mode[2][8] = { "Range", "Average" };
@@ -141,10 +136,8 @@ void GUI_MainTask(void) {
 
 		// Others
 		if (init || DB_HMI_Mode_Old.mode_trip != DB_HMI_Mode.mode_trip
-				|| DB_HMI_Mode_Old.mode_trip_value != DB_HMI_Mode.mode_trip_value
-				|| DB_ECU_Odometer_Old != DB_ECU_Odometer
-				|| DB_MCU_RPM_Old != DB_MCU_RPM
-				|| DB_HMI_Status_Old.keyless != DB_HMI_Status.keyless) {
+				|| DB_HMI_Mode_Old.mode_trip_value != DB_HMI_Mode.mode_trip_value || DB_ECU_Odometer_Old != DB_ECU_Odometer
+				|| DB_MCU_RPM_Old != DB_MCU_RPM || DB_HMI_Status_Old.keyless != DB_HMI_Status.keyless) {
 
 			// Set Color
 			GUI_SetColor(0xFFC0C0C0);
@@ -161,17 +154,14 @@ void GUI_MainTask(void) {
 			DB_HMI_Mode_Old.mode_trip_value = DB_HMI_Mode.mode_trip_value;
 			GUI_SetFont(&GUI_FontSquare721_BT23);
 			sprintf(str, "%05u", (unsigned int) DB_HMI_Mode.mode_trip_value);
-			GUI_DispStringInRectWrap(
-					str, &pRect_SubTrip,
-					GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+			GUI_DispStringInRectWrap(str, &pRect_SubTrip,
+			GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
 			// Odometer
 			DB_ECU_Odometer_Old = DB_ECU_Odometer;
 			GUI_SetFont(&GUI_FontSquare721_BT23);
 			sprintf(str, "%05u", (unsigned int) DB_ECU_Odometer);
-			GUI_DispStringInRectWrap(
-					str, &pRect_TotalTrip, GUI_TA_VCENTER | GUI_TA_RIGHT,
-					GUI_WRAPMODE_NONE);
+			GUI_DispStringInRectWrap(str, &pRect_TotalTrip, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
 			// Keyless
 			DB_HMI_Status_Old.keyless = DB_HMI_Status.keyless;
@@ -179,9 +169,7 @@ void GUI_MainTask(void) {
 
 			// RPM Needle
 			DB_MCU_RPM_Old = DB_MCU_RPM;
-			Set_Left_Jarum(
-					DB_MCU_RPM <= MCU_RPM_MAX ? DB_MCU_RPM * max / MCU_RPM_MAX : max, x,
-							y, r, h, max);
+			Set_Left_Jarum(DB_MCU_RPM <= MCU_RPM_MAX ? DB_MCU_RPM * max / MCU_RPM_MAX : max, x, y, r, h, max);
 
 			// Print result to LCD
 			GUI_MEMDEV_Select(0);
@@ -228,8 +216,7 @@ void GUI_MainTask(void) {
 
 			GUI_SetFont(&GUI_FontSquare721_BT60);
 			sprintf(str, "%03u", DB_ECU_Speed);
-			GUI_DispStringInRectWrap(str, &pRect_Speed, GUI_TA_VCENTER | GUI_TA_RIGHT,
-					GUI_WRAPMODE_NONE);
+			GUI_DispStringInRectWrap(str, &pRect_Speed, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 		}
 
 		// Battery Percentage
@@ -239,7 +226,35 @@ void GUI_MainTask(void) {
 			GUI_SetFont(&GUI_FontSquare721_BT31);
 			sprintf(str, "%02u", DB_BMS_SoC);
 			GUI_DispStringInRectWrap(str, &pRect_Battery,
-			GUI_TA_VCENTER | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+			GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+		}
+
+		// Mode Report & Unit
+		if (init || DB_HMI_Mode_Old.mode_report != DB_HMI_Mode.mode_report) {
+			DB_HMI_Mode_Old.mode_report = DB_HMI_Mode.mode_report;
+
+			// clear text position
+			GUI_ClearRect(pRect_Report_Mode.x0, pRect_Report_Mode.y0, pRect_Report_Mode.x1, pRect_Report_Mode.y1);
+			// fill text position
+			GUI_SetFont(&GUI_FontSquare721_BT14);
+			sprintf(str, "%s", Report_Mode[DB_HMI_Mode.mode_report]);
+			GUI_DispStringInRectWrap(str, &pRect_Report_Mode, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+
+			// clear text position
+			GUI_ClearRect(pRect_Report_Unit.x0, pRect_Report_Unit.y0, pRect_Report_Unit.x1, pRect_Report_Unit.y1);
+			// fill text position
+			GUI_SetFont(&GUI_FontSquare721_BT10);
+			sprintf(str, "%s", Report_Unit[DB_HMI_Mode.mode_report]);
+			GUI_DispStringInRectWrap(str, &pRect_Report_Unit, GUI_TA_BOTTOM | GUI_TA_LEFT, GUI_WRAPMODE_NONE);
+		}
+
+		// Mode Report Value
+		if (init || DB_HMI_Mode_Old.mode_report_value != DB_HMI_Mode.mode_report_value) {
+			DB_HMI_Mode_Old.mode_report_value = DB_HMI_Mode.mode_report_value;
+
+			GUI_SetFont(&GUI_FontSquare721_BT17);
+			sprintf(str, "%02u", DB_HMI_Mode.mode_report_value);
+			GUI_DispStringInRectWrap(str, &pRect_Report_Value, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 		}
 
 		// Mode Drive
@@ -254,36 +269,6 @@ void GUI_MainTask(void) {
 			GUI_DispStringInRectWrap(str, &pRect_Drive,
 			GUI_TA_VCENTER | GUI_TA_HCENTER, GUI_WRAPMODE_NONE);
 		}
-
-		// FIXME: i am should be glue with mode_report index
-		// Mode Report
-		//		if (init
-		//				|| DB_HMI_Mode_Old.mode_report_value != DB_HMI_Mode.mode_report_value) {
-		//			DB_HMI_Mode_Old.mode_report_value = DB_HMI_Mode.mode_report_value;
-
-		// clear text position
-		GUI_ClearRect(pRect_Report_Mode.x0, pRect_Report_Mode.y0, pRect_Report_Mode.x1,
-				pRect_Report_Mode.y1);
-		// fill text position
-		GUI_SetFont(&GUI_FontSquare721_BT14);
-		sprintf(str, "%s", Report_Mode[DB_HMI_Mode.mode_report]);
-		GUI_DispStringInRectWrap(str, &pRect_Report_Mode, GUI_TA_VCENTER | GUI_TA_RIGHT,
-				GUI_WRAPMODE_NONE);
-
-		// clear text position
-		GUI_ClearRect(pRect_Report_Unit.x0, pRect_Report_Unit.y0, pRect_Report_Unit.x1,
-				pRect_Report_Unit.y1);
-		// fill text position
-		GUI_SetFont(&GUI_FontSquare721_BT10);
-		sprintf(str, "%s", Report_Unit[DB_HMI_Mode.mode_report]);
-		GUI_DispStringInRectWrap(str, &pRect_Report_Unit, GUI_TA_BOTTOM | GUI_TA_LEFT,
-				GUI_WRAPMODE_NONE);
-
-		GUI_SetFont(&GUI_FontSquare721_BT17);
-		sprintf(str, "%02u", DB_HMI_Mode.mode_report_value);
-		GUI_DispStringInRectWrap(str, &pRect_Report_Value, GUI_TA_BOTTOM | GUI_TA_RIGHT,
-				GUI_WRAPMODE_NONE);
-		//		}
 #endif
 
 		init = 0;
@@ -340,43 +325,15 @@ void Set_Boot_Overlay(void) {
 	GUI_SelectLayer(0);
 #if USE_HMI_LEFT
 	GUI_DrawBitmap(&bmHMI_Left, 0, 0);
-	const GUI_POINT aPoints[] = {
-			{ 300, 66 },
-			{ 257, 66 },
-			{ 230, 39 },
-			{ 144, 39 },
-			{ 87, 66 },
-			{ 39, 175 },
-			{ 55, 205 },
-			{ 215, 205 },
-			{ 250, 153 },
-			{ 300, 153 }
-	};
+	const GUI_POINT aPoints[] = { { 300, 66 }, { 257, 66 }, { 230, 39 }, { 144, 39 }, { 87, 66 }, { 39, 175 }, { 55, 205 }, { 215,
+			205 }, { 250, 153 }, { 300, 153 } };
 #else
 	GUI_DrawBitmap(&bmHMI_Right, 0, 0);
-	const GUI_POINT aPoints[] = {
-			{ LCD_GetXSize() - 1 - 300, 66 },
-			{ LCD_GetXSize() - 1 - 257, 66 },
-			{ LCD_GetXSize() - 1 - 230, 39 },
-			{ LCD_GetXSize() - 1 - 144, 39 },
-			{ LCD_GetXSize() - 1 - 87, 66 },
-			{ LCD_GetXSize() - 1 - 87, 66 },
-			{ 273, 135 },
-			{ 275, 140 },
-			{ LCD_GetXSize() - 1 - 39, 175 },
-			{ LCD_GetXSize() - 1 - 55, 205 },
-			{ 150, 205 },
-			{ 175, 180 },
-			{ 170, 145 },
-			{ 150, 128 },
-			{ 120, 128 },
-			{ 100, 150 },
-			{ 100, 180 },
-			{ 120, 205 },
-			{ LCD_GetXSize() - 1 - 215, 205 },
-			{ LCD_GetXSize() - 1 - 250, 153 },
-			{ LCD_GetXSize() - 1 - 300, 153 }
-	};
+	const GUI_POINT aPoints[] = { { LCD_GetXSize() - 1 - 300, 66 }, { LCD_GetXSize() - 1 - 257, 66 },
+			{ LCD_GetXSize() - 1 - 230, 39 }, { LCD_GetXSize() - 1 - 144, 39 }, { LCD_GetXSize() - 1 - 87, 66 }, { LCD_GetXSize() - 1
+					- 87, 66 }, { 273, 135 }, { 275, 140 }, { LCD_GetXSize() - 1 - 39, 175 }, { LCD_GetXSize() - 1 - 55, 205 },
+			{ 150, 205 }, { 175, 180 }, { 170, 145 }, { 150, 128 }, { 120, 128 }, { 100, 150 }, { 100, 180 }, { 120, 205 }, {
+					LCD_GetXSize() - 1 - 215, 205 }, { LCD_GetXSize() - 1 - 250, 153 }, { LCD_GetXSize() - 1 - 300, 153 } };
 #endif
 	// overlay for first booting
 	GUI_SetColor(GUI_BLACK);
@@ -384,8 +341,7 @@ void Set_Boot_Overlay(void) {
 }
 
 void Set_Indicator(GUI_CONST_STORAGE GUI_BITMAP *bg,
-GUI_CONST_STORAGE GUI_BITMAP *fg, uint16_t x, uint16_t y, uint8_t status,
-		uint8_t alpha) {
+GUI_CONST_STORAGE GUI_BITMAP *fg, uint16_t x, uint16_t y, uint8_t status, uint8_t alpha) {
 
 	GUI_RECT pRect = { x, y, x + fg->XSize, y + fg->YSize };
 
@@ -433,21 +389,11 @@ void Set_Left_Trip(switch_mode_trip_t mode_trip) {
 	Set_Indicator(&bmHMI_Left, pImage, x, y, 1, 254);
 }
 
-void Set_Left_Jarum(uint8_t deg, uint16_t x, uint16_t y, uint16_t r, uint16_t h,
-		uint8_t max) {
-	GUI_POINT aPoints_Jarum[] = {
-			{
-					(x + r) + (((h / 2) + 1) * cos(D2R(deg + 270))),
-					(y + (h / 2) + 1) + (((h / 2) + 1) * sin(D2R(deg + 270)))
-			}, //atas
-			{
-					(x + r) + (r * cos(D2R(deg + 180))),
-					(y + (h / 2) + 1) + (r * sin(D2R(deg + 180)))
-			}, //ujung
-			{
-					(x + r) + (((h / 2) + 1) * cos(D2R(deg + 90))),
-					(y + (h / 2) + 1) + (((h / 2) + 1) * sin(D2R(deg + 90)))
-			} //bawah
+void Set_Left_Jarum(uint8_t deg, uint16_t x, uint16_t y, uint16_t r, uint16_t h, uint8_t max) {
+	GUI_POINT aPoints_Jarum[] = { { (x + r) + (((h / 2) + 1) * cos(D2R(deg + 270))), (y + (h / 2) + 1)
+			+ (((h / 2) + 1) * sin(D2R(deg + 270))) }, //atas
+			{ (x + r) + (r * cos(D2R(deg + 180))), (y + (h / 2) + 1) + (r * sin(D2R(deg + 180))) }, //ujung
+			{ (x + r) + (((h / 2) + 1) * cos(D2R(deg + 90))), (y + (h / 2) + 1) + (((h / 2) + 1) * sin(D2R(deg + 90))) } //bawah
 	};
 
 	GUI_SetColor(GUI_RED);

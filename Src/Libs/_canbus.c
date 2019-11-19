@@ -83,7 +83,7 @@ uint8_t CANBUS_ECU_Select_Set(void) {
 	TxCan.TxData[0] |= DB_HMI_Switcher.mode << 4;
 
 	TxCan.TxData[1] = DB_HMI_Switcher.mode_sub_report[SWITCH_MODE_REPORT_RANGE];
-	TxCan.TxData[2] = DB_HMI_Switcher.mode_sub_report[SWITCH_MODE_REPORT_EFFICIENCY];
+	TxCan.TxData[2] = DB_HMI_Switcher.mode_sub_report[SWITCH_MODE_REPORT_AVERAGE];
 
 	// dummy algorithm
 	if (!DB_HMI_Switcher.mode_sub_report[SWITCH_MODE_REPORT_RANGE]) {
@@ -92,10 +92,10 @@ uint8_t CANBUS_ECU_Select_Set(void) {
 		DB_HMI_Switcher.mode_sub_report[SWITCH_MODE_REPORT_RANGE]--;
 	}
 
-	if (DB_HMI_Switcher.mode_sub_report[SWITCH_MODE_REPORT_EFFICIENCY] >= 255) {
-		DB_HMI_Switcher.mode_sub_report[SWITCH_MODE_REPORT_EFFICIENCY] = 0;
+	if (DB_HMI_Switcher.mode_sub_report[SWITCH_MODE_REPORT_AVERAGE] >= 255) {
+		DB_HMI_Switcher.mode_sub_report[SWITCH_MODE_REPORT_AVERAGE] = 0;
 	} else {
-		DB_HMI_Switcher.mode_sub_report[SWITCH_MODE_REPORT_EFFICIENCY]++;
+		DB_HMI_Switcher.mode_sub_report[SWITCH_MODE_REPORT_AVERAGE]++;
 	}
 
 	// set default header
@@ -219,8 +219,7 @@ void CANBUS_ECU_Switch_Read(void) {
 	DB_ECU_Signal = RxCan.RxData[2];
 
 	// odometer
-	DB_ECU_Odometer = (RxCan.RxData[7] << 24) | (RxCan.RxData[6] << 16) | (RxCan.RxData[5] << 8)
-			| RxCan.RxData[4];
+	DB_ECU_Odometer = (RxCan.RxData[7] << 24) | (RxCan.RxData[6] << 16) | (RxCan.RxData[5] << 8) | RxCan.RxData[4];
 }
 
 void CANBUS_ECU_RTC_Read(void) {
@@ -240,15 +239,10 @@ void CANBUS_ECU_Select_Set_Read(void) {
 	extern modes_t DB_HMI_Mode;
 
 	// read message
-	// check reverse mode
-	if ((RxCan.RxData[0] >> 2) & 0x01) {
-		DB_HMI_Mode.mode_drive = SWITCH_MODE_DRIVE_R;
-	} else {
-		DB_HMI_Mode.mode_drive = RxCan.RxData[0] & 0x03;
-	}
-	DB_HMI_Mode.mode_trip = (RxCan.RxData[0] >> 3) & 0x01;
-	DB_HMI_Mode.mode_report = (RxCan.RxData[0] >> 4) & 0x01;
-	DB_HMI_Mode.mode = (RxCan.RxData[0] >> 5) & 0x01;
+	DB_HMI_Mode.mode_drive = RxCan.RxData[0] & 0x03;
+	DB_HMI_Mode.mode_trip = (RxCan.RxData[0] >> 2) & 0x01;
+	DB_HMI_Mode.mode_report = (RxCan.RxData[0] >> 3) & 0x01;
+	DB_HMI_Mode.mode = (RxCan.RxData[0] >> 4) & 0x03;
 
 	if (DB_HMI_Mode.mode_report == SWITCH_MODE_REPORT_RANGE) {
 		DB_HMI_Mode.mode_report_value = RxCan.RxData[1];
@@ -262,13 +256,9 @@ void CANBUS_ECU_Trip_Mode_Read(void) {
 
 	// read message
 	if (DB_HMI_Mode.mode_trip == SWITCH_MODE_TRIP_A) {
-		DB_HMI_Mode.mode_trip_value = (RxCan.RxData[3] << 24) | (RxCan.RxData[2] << 16)
-				| (RxCan.RxData[1] << 8)
-				| RxCan.RxData[0];
+		DB_HMI_Mode.mode_trip_value = (RxCan.RxData[3] << 24) | (RxCan.RxData[2] << 16) | (RxCan.RxData[1] << 8) | RxCan.RxData[0];
 	} else {
-		DB_HMI_Mode.mode_trip_value = (RxCan.RxData[7] << 24) | (RxCan.RxData[6] << 16)
-				| (RxCan.RxData[5] << 8)
-				| RxCan.RxData[4];
+		DB_HMI_Mode.mode_trip_value = (RxCan.RxData[7] << 24) | (RxCan.RxData[6] << 16) | (RxCan.RxData[5] << 8) | RxCan.RxData[4];
 	}
 }
 
@@ -278,8 +268,7 @@ void CANBUS_MCU_Dummy_Read(void) {
 	extern uint8_t DB_MCU_Temperature;
 
 	// read message
-	DB_MCU_RPM = (RxCan.RxData[3] << 24 | RxCan.RxData[2] << 16 | RxCan.RxData[1] << 8
-			| RxCan.RxData[0]);
+	DB_MCU_RPM = (RxCan.RxData[3] << 24 | RxCan.RxData[2] << 16 | RxCan.RxData[1] << 8 | RxCan.RxData[0]);
 	DB_MCU_Temperature = RxCan.RxData[4];
 
 	// convert RPM to Speed
