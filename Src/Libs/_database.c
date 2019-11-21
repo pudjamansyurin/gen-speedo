@@ -10,6 +10,7 @@
 // @formatter:off
 modes_t DB_HMI_Mode = {
 		SWITCH_MODE_TRIP,
+		0,
 		SWITCH_MODE_DRIVE_E,
 		SWITCH_MODE_TRIP_A,
 		0,

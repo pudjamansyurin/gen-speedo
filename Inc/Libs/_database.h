@@ -13,24 +13,39 @@
 
 // enum list
 typedef enum {
-	SWITCH_MODE_DRIVE = 0, SWITCH_MODE_TRIP = 1, SWITCH_MODE_REPORT = 2, SWITCH_MODE_MAX = 2
+	SWITCH_MODE_DRIVE = 0,
+	SWITCH_MODE_TRIP = 1,
+	SWITCH_MODE_REPORT = 2,
+	SWITCH_MODE_MAX = 2
 } switch_mode_t;
 
 typedef enum {
-	SWITCH_MODE_DRIVE_E = 0, SWITCH_MODE_DRIVE_S = 1, SWITCH_MODE_DRIVE_P = 2, SWITCH_MODE_DRIVE_R = 3, SWITCH_MODE_DRIVE_MAX = 2
+	SWITCH_MODE_DRIVE_NONE = -1,
+	SWITCH_MODE_DRIVE_E = 0,
+	SWITCH_MODE_DRIVE_S = 1,
+	SWITCH_MODE_DRIVE_P = 2,
+	SWITCH_MODE_DRIVE_MAX = 2,
+	SWITCH_MODE_DRIVE_R = 3,
 } switch_mode_drive_t;
 
 typedef enum {
-	SWITCH_MODE_TRIP_A = 0, SWITCH_MODE_TRIP_B = 1, SWITCH_MODE_TRIP_MAX = 1
+	SWITCH_MODE_TRIP_NONE = -1,
+	SWITCH_MODE_TRIP_A = 0,
+	SWITCH_MODE_TRIP_B = 1,
+	SWITCH_MODE_TRIP_MAX = 1,
 } switch_mode_trip_t;
 
 typedef enum {
-	SWITCH_MODE_REPORT_RANGE = 0, SWITCH_MODE_REPORT_AVERAGE = 1, SWITCH_MODE_REPORT_MAX = 1
+	SWITCH_MODE_REPORT_NONE = -1,
+	SWITCH_MODE_REPORT_RANGE = 0,
+	SWITCH_MODE_REPORT_AVERAGE = 1,
+	SWITCH_MODE_REPORT_MAX = 1,
 } switch_mode_report_t;
 
 // struct list
 typedef struct {
 	switch_mode_t mode;
+	uint8_t hide;
 	switch_mode_drive_t mode_drive;
 	switch_mode_trip_t mode_trip;
 	uint32_t mode_trip_value;

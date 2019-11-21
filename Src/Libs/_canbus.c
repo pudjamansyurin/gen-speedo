@@ -243,7 +243,28 @@ void CANBUS_ECU_Select_Set_Read(void) {
 	DB_HMI_Mode.mode_trip = (RxCan.RxData[0] >> 2) & 0x01;
 	DB_HMI_Mode.mode_report = (RxCan.RxData[0] >> 3) & 0x01;
 	DB_HMI_Mode.mode = (RxCan.RxData[0] >> 4) & 0x03;
+	DB_HMI_Mode.hide = (RxCan.RxData[0] >> 6) & 0x01;
 
+	// mode hide manipulator
+	if (DB_HMI_Mode.hide) {
+		switch (DB_HMI_Mode.mode) {
+		case SWITCH_MODE_DRIVE:
+			if (DB_HMI_Mode.mode_drive != SWITCH_MODE_DRIVE_R) {
+				DB_HMI_Mode.mode_drive = SWITCH_MODE_DRIVE_NONE;
+			}
+			break;
+		case SWITCH_MODE_TRIP:
+			DB_HMI_Mode.mode_trip = SWITCH_MODE_TRIP_NONE;
+			break;
+		case SWITCH_MODE_REPORT:
+			DB_HMI_Mode.mode_report = SWITCH_MODE_REPORT_NONE;
+			break;
+		default:
+			break;
+		}
+	}
+
+	// decide report value according to mode
 	if (DB_HMI_Mode.mode_report == SWITCH_MODE_REPORT_RANGE) {
 		DB_HMI_Mode.mode_report_value = RxCan.RxData[1];
 	} else {

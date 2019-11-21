@@ -71,13 +71,14 @@ void GUI_MainTask(void) {
 	GUI_SelectLayer(1);
 	GUI_MEMDEV_Handle hMem = GUI_MEMDEV_Create(x, y - r, x + r + (r * cos(D2R(max + 180))) + 5 - (x) + 25, y + h + 5 - (y - r));
 #else
-	int8_t RM_XO = -10, RM_YO = 2;
-	GUI_RECT pRect_Speed = { 85, 79, 85 + 100, 79 + 50 };
+	int8_t RM_XO = -10;
+	GUI_RECT pRect_Speed = { 83, 79, 85 + 102, 79 + 50 };
 	GUI_RECT pRect_Battery = { 227, 164, 227 + 35, 164 + 28 };
+	GUI_RECT pRect_Signal = { 124, 50, 124 + 64, 50 + 10 };
 	GUI_RECT pRect_Drive = { 126, 145, 126 + 26, 145 + 40 };
-	GUI_RECT pRect_Report_Mode = { 174 + RM_XO, 189 + RM_YO, 174 + 50 + RM_XO, 189 + 13 + RM_YO };
-	GUI_RECT pRect_Report_Value = { 228 + RM_XO, 188 + RM_YO, 228 + 20 + RM_XO, 188 + 15 + RM_YO };
-	GUI_RECT pRect_Report_Unit = { 251 + RM_XO, 192 + RM_YO, 251 + 28 + RM_XO, 192 + 10 + RM_YO };
+	GUI_RECT pRect_Report_Mode = { 174 + RM_XO, 191, 174 + 50 + RM_XO, 191 + 13 };
+	GUI_RECT pRect_Report_Value = { 228 + RM_XO, 190, 228 + 20 + RM_XO, 190 + 15 };
+	GUI_RECT pRect_Report_Unit = { 251 + RM_XO, 194, 251 + 28 + RM_XO, 194 + 10 };
 
 	const char Drive_Mode[4] = { 'E', 'S', 'P', 'R' };
 	const char Report_Mode[2][8] = { "Range", "Average" };
@@ -85,8 +86,10 @@ void GUI_MainTask(void) {
 
 	extern uint8_t DB_ECU_Speed;
 	extern uint8_t DB_BMS_SoC;
+	extern uint8_t DB_ECU_Signal;
 	uint8_t DB_ECU_Speed_Old;
 	uint8_t DB_BMS_SoC_Old;
+	uint8_t DB_ECU_Signal_Old;
 	// background
 	GUI_CONST_STORAGE GUI_BITMAP *Background = &bmHMI_Right;
 #endif
@@ -147,15 +150,19 @@ void GUI_MainTask(void) {
 			GUI_DrawBitmapEx(&bmHMI_Left, x, y - r, x, y - r, 1000, 1000);
 
 			// Mode Trip
-			DB_HMI_Mode_Old.mode_trip = DB_HMI_Mode.mode_trip;
-			Set_Left_Trip(DB_HMI_Mode.mode_trip);
-
-			// Mode Trip Value
-			DB_HMI_Mode_Old.mode_trip_value = DB_HMI_Mode.mode_trip_value;
-			GUI_SetFont(&GUI_FontSquare721_BT23);
-			sprintf(str, "%05u", (unsigned int) DB_HMI_Mode.mode_trip_value);
-			GUI_DispStringInRectWrap(str, &pRect_SubTrip,
-			GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+			{
+				DB_HMI_Mode_Old.mode_trip = DB_HMI_Mode.mode_trip;
+				if (DB_HMI_Mode.mode_trip != SWITCH_MODE_TRIP_NONE) {
+					// Mode Label
+					Set_Left_Trip(DB_HMI_Mode.mode_trip);
+					// Mode Trip Value
+					DB_HMI_Mode_Old.mode_trip_value = DB_HMI_Mode.mode_trip_value;
+					GUI_SetFont(&GUI_FontSquare721_BT23);
+					sprintf(str, "%05u", (unsigned int) DB_HMI_Mode.mode_trip_value);
+					GUI_DispStringInRectWrap(str, &pRect_SubTrip,
+					GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+				}
+			}
 
 			// Odometer
 			DB_ECU_Odometer_Old = DB_ECU_Odometer;
@@ -229,45 +236,76 @@ void GUI_MainTask(void) {
 			GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 		}
 
-		// Mode Report & Unit
-		if (init || DB_HMI_Mode_Old.mode_report != DB_HMI_Mode.mode_report) {
-			DB_HMI_Mode_Old.mode_report = DB_HMI_Mode.mode_report;
+		// Signal Percentage
+		if (init || DB_ECU_Signal_Old != DB_ECU_Signal) {
+			DB_ECU_Signal_Old = DB_ECU_Signal;
 
-			// clear text position
-			GUI_ClearRect(pRect_Report_Mode.x0, pRect_Report_Mode.y0, pRect_Report_Mode.x1, pRect_Report_Mode.y1);
-			// fill text position
-			GUI_SetFont(&GUI_FontSquare721_BT14);
-			sprintf(str, "%s", Report_Mode[DB_HMI_Mode.mode_report]);
-			GUI_DispStringInRectWrap(str, &pRect_Report_Mode, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
-
-			// clear text position
-			GUI_ClearRect(pRect_Report_Unit.x0, pRect_Report_Unit.y0, pRect_Report_Unit.x1, pRect_Report_Unit.y1);
-			// fill text position
-			GUI_SetFont(&GUI_FontSquare721_BT10);
-			sprintf(str, "%s", Report_Unit[DB_HMI_Mode.mode_report]);
-			GUI_DispStringInRectWrap(str, &pRect_Report_Unit, GUI_TA_BOTTOM | GUI_TA_LEFT, GUI_WRAPMODE_NONE);
+			// fill all black
+			GUI_SetBkColor(GUI_BLACK);
+			GUI_ClearRect(pRect_Signal.x0, pRect_Signal.y0, pRect_Signal.x1, pRect_Signal.y1);
+			// clear some transparent
+			GUI_SetBkColor(GUI_TRANSPARENT);
+			GUI_ClearRect(
+					pRect_Signal.x0,
+					pRect_Signal.y0,
+					pRect_Signal.x0 + (DB_ECU_Signal * (pRect_Signal.x1 - pRect_Signal.x0) / 100),
+					pRect_Signal.y1
+					);
+			// reset the bg color
+			GUI_SetBkColor(GUI_BLACK);
 		}
 
-		// Mode Report Value
-		if (init || DB_HMI_Mode_Old.mode_report_value != DB_HMI_Mode.mode_report_value) {
-			DB_HMI_Mode_Old.mode_report_value = DB_HMI_Mode.mode_report_value;
+		// Mode Report
+		{
+			// Mode Report Label & Unit
+			if (init || DB_HMI_Mode_Old.mode_report != DB_HMI_Mode.mode_report) {
+				DB_HMI_Mode_Old.mode_report = DB_HMI_Mode.mode_report;
 
-			GUI_SetFont(&GUI_FontSquare721_BT17);
-			sprintf(str, "%02u", DB_HMI_Mode.mode_report_value);
-			GUI_DispStringInRectWrap(str, &pRect_Report_Value, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+				// Mode Report Label
+				// clear text position
+				GUI_ClearRect(pRect_Report_Mode.x0, pRect_Report_Mode.y0, pRect_Report_Mode.x1, pRect_Report_Mode.y1);
+				if (DB_HMI_Mode.mode_report != SWITCH_MODE_REPORT_NONE) {
+					// fill text position
+					GUI_SetFont(&GUI_FontSquare721_BT14);
+					sprintf(str, "%s", Report_Mode[DB_HMI_Mode.mode_report]);
+					GUI_DispStringInRectWrap(str, &pRect_Report_Mode, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+				}
+
+				// Mode Report Unit
+				// clear text position
+				GUI_ClearRect(pRect_Report_Unit.x0, pRect_Report_Unit.y0, pRect_Report_Unit.x1, pRect_Report_Unit.y1);
+				GUI_SetFont(&GUI_FontSquare721_BT10);
+				sprintf(str, "%s", Report_Unit[DB_HMI_Mode.mode_report]);
+				GUI_DispStringInRectWrap(str, &pRect_Report_Unit, GUI_TA_BOTTOM | GUI_TA_LEFT, GUI_WRAPMODE_NONE);
+			}
+
+			// Mode Report Value
+			if (init || DB_HMI_Mode_Old.mode_report_value != DB_HMI_Mode.mode_report_value) {
+				DB_HMI_Mode_Old.mode_report_value = DB_HMI_Mode.mode_report_value;
+
+				GUI_SetFont(&GUI_FontSquare721_BT17);
+				sprintf(str, "%02u", DB_HMI_Mode.mode_report_value);
+				GUI_DispStringInRectWrap(str, &pRect_Report_Value, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+			}
 		}
 
 		// Mode Drive
 		if (init || DB_HMI_Mode_Old.mode_drive != DB_HMI_Mode.mode_drive) {
 			DB_HMI_Mode_Old.mode_drive = DB_HMI_Mode.mode_drive;
-			// if reverse, change color
-			if (DB_HMI_Mode.mode_drive == SWITCH_MODE_DRIVE_R) {
-				GUI_SetColor(0xFFFF8000);
+
+			if (DB_HMI_Mode.mode_drive != SWITCH_MODE_DRIVE_NONE) {
+				// if reverse, change color
+				if (DB_HMI_Mode.mode_drive == SWITCH_MODE_DRIVE_R) {
+					GUI_SetColor(0xFFFF8000);
+				}
+				GUI_SetFont(&GUI_FontSquare721_Cn_BT62);
+				sprintf(str, "%c", Drive_Mode[DB_HMI_Mode.mode_drive]);
+				GUI_DispStringInRectWrap(str, &pRect_Drive,
+				GUI_TA_VCENTER | GUI_TA_HCENTER, GUI_WRAPMODE_NONE);
+			} else {
+				// hide
+				GUI_ClearRect(pRect_Drive.x0, pRect_Drive.y0, pRect_Drive.x1, pRect_Drive.y1);
 			}
-			GUI_SetFont(&GUI_FontSquare721_Cn_BT62);
-			sprintf(str, "%c", Drive_Mode[DB_HMI_Mode.mode_drive]);
-			GUI_DispStringInRectWrap(str, &pRect_Drive,
-			GUI_TA_VCENTER | GUI_TA_HCENTER, GUI_WRAPMODE_NONE);
 		}
 #endif
 
