@@ -57,7 +57,6 @@ uint8_t CANBUS_BMS_Dummy(void);
 #if (CAN_NODE & CAN_NODE_HMI)
 uint8_t CANBUS_HMI_Heartbeat(void);
 void CANBUS_ECU_Switch_Read(void);
-void CANBUS_ECU_RTC_Read(void);
 void CANBUS_ECU_Select_Set_Read(void);
 void CANBUS_ECU_Trip_Mode_Read(void);
 void CANBUS_MCU_Dummy_Read(void);

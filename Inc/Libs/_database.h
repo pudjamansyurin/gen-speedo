@@ -20,7 +20,6 @@ typedef enum {
 } switch_mode_t;
 
 typedef enum {
-	SWITCH_MODE_DRIVE_NONE = -1,
 	SWITCH_MODE_DRIVE_E = 0,
 	SWITCH_MODE_DRIVE_S = 1,
 	SWITCH_MODE_DRIVE_P = 2,
@@ -29,14 +28,12 @@ typedef enum {
 } switch_mode_drive_t;
 
 typedef enum {
-	SWITCH_MODE_TRIP_NONE = -1,
 	SWITCH_MODE_TRIP_A = 0,
 	SWITCH_MODE_TRIP_B = 1,
 	SWITCH_MODE_TRIP_MAX = 1,
 } switch_mode_trip_t;
 
 typedef enum {
-	SWITCH_MODE_REPORT_NONE = -1,
 	SWITCH_MODE_REPORT_RANGE = 0,
 	SWITCH_MODE_REPORT_AVERAGE = 1,
 	SWITCH_MODE_REPORT_MAX = 1,

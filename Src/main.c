@@ -476,12 +476,14 @@ void StartCanRxTask(void const *argument) {
 	/* USER CODE BEGIN StartCanRxTask */
 	extern CAN_Rx RxCan;
 	uint32_t ulNotifiedValue;
+	uint8_t RelatedCAN;
 	/* Infinite loop */
 	for (;;) {
 		// check if has new can message
 		xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, portMAX_DELAY);
 
 		// proceed event
+		RelatedCAN = 1;
 		if ((ulNotifiedValue & EVENT_CAN_RX_IT)) {
 			// handle message
 			switch (RxCan.RxHeader.StdId) {
@@ -493,9 +495,6 @@ void StartCanRxTask(void const *argument) {
 				//				extern status_t DB_HMI_Status;
 				//				BSP_Set_Backlight(DB_HMI_Status.daylight);
 				//#endif
-				break;
-			case CAN_ADDR_ECU_RTC:
-				CANBUS_ECU_RTC_Read();
 				break;
 			case CAN_ADDR_ECU_SELECT_SET:
 				CANBUS_ECU_Select_Set_Read();
@@ -510,11 +509,14 @@ void StartCanRxTask(void const *argument) {
 				CANBUS_BMS_Dummy_Read();
 				break;
 			default:
+				RelatedCAN = 0;
 				break;
 			}
 
-			// notify gui thread
-			xTaskNotify(LcdTaskHandle, 0x01, eSetBits);
+			// notify GUI thread
+			if (RelatedCAN) {
+				xTaskNotify(LcdTaskHandle, 0x01, eSetBits);
+			}
 
 			//			// show this message
 			//			SWV_SendStr("ID: ");

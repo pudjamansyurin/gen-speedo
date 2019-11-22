@@ -24,6 +24,7 @@
 #endif
 
 /* Functions prototypes --------------------------------------------------------*/
+void Set_Default_Data(void);
 void Run_Boot_Animation(void);
 void Set_Boot_Overlay(void);
 void Set_Indicator( GUI_CONST_STORAGE GUI_BITMAP *bg,
@@ -41,6 +42,7 @@ void Set_Right_Warning(uint8_t status);
 void Set_Right_Abs(uint8_t status);
 void Set_Right_Temp(uint8_t status);
 void Set_Right_Lamp(uint8_t status);
+void Set_Right_Battery(uint8_t full);
 #endif
 
 /* Main task ------------------------------------------------------------------*/
@@ -49,6 +51,9 @@ void GUI_MainTask(void) {
 	char str[20];
 	uint8_t init = 1;
 	uint32_t ulNotifiedValue;
+	BaseType_t xResult;
+	// background
+	GUI_CONST_STORAGE GUI_BITMAP *Background;
 
 	extern modes_t DB_HMI_Mode;
 	extern status_t DB_HMI_Status;
@@ -56,8 +61,7 @@ void GUI_MainTask(void) {
 	modes_t DB_HMI_Mode_Old;
 
 #if USE_HMI_LEFT
-	const uint16_t x = 58, y = 161, r = 123, h = 7;
-	const uint8_t max = 112;
+	const uint8_t x = 58, y = 161, r = 123, h = 7, max = 112;
 	GUI_RECT pRect_SubTrip = { 159, 83, 159 + 64, 83 + 24 };
 	GUI_RECT pRect_TotalTrip = { 159, 106, 159 + 64, 106 + 24 };
 
@@ -65,8 +69,10 @@ void GUI_MainTask(void) {
 	extern uint32_t DB_ECU_Odometer;
 	uint32_t DB_MCU_RPM_Old;
 	uint32_t DB_ECU_Odometer_Old;
+	uint8_t Mode_Hide_Trip_Old;
+
 	// background
-	GUI_CONST_STORAGE GUI_BITMAP *Background = &bmHMI_Left;
+	Background = &bmHMI_Left;
 	// create MEMDEV on layer 1
 	GUI_SelectLayer(1);
 	GUI_MEMDEV_Handle hMem = GUI_MEMDEV_Create(x, y - r, x + r + (r * cos(D2R(max + 180))) + 5 - (x) + 25, y + h + 5 - (y - r));
@@ -74,7 +80,8 @@ void GUI_MainTask(void) {
 	int8_t RM_XO = -10;
 	GUI_RECT pRect_Speed = { 83, 79, 85 + 102, 79 + 50 };
 	GUI_RECT pRect_Battery = { 227, 164, 227 + 35, 164 + 28 };
-	GUI_RECT pRect_Signal = { 124, 50, 124 + 64, 50 + 10 };
+	GUI_RECT pRect_Battery_Unit = { 266, 170, 266 + 17, 170 + 17 };
+	GUI_RECT pRect_Signal = { 123, 50, 123 + 65, 50 + 10 };
 	GUI_RECT pRect_Drive = { 126, 145, 126 + 26, 145 + 40 };
 	GUI_RECT pRect_Report_Mode = { 174 + RM_XO, 191, 174 + 50 + RM_XO, 191 + 13 };
 	GUI_RECT pRect_Report_Value = { 228 + RM_XO, 190, 228 + 20 + RM_XO, 190 + 15 };
@@ -89,9 +96,14 @@ void GUI_MainTask(void) {
 	extern uint8_t DB_ECU_Signal;
 	uint8_t DB_ECU_Speed_Old;
 	uint8_t DB_BMS_SoC_Old;
+	uint8_t DB_BMS_SoC_Low;
+	uint8_t DB_BMS_SoC_Update;
 	uint8_t DB_ECU_Signal_Old;
+	uint8_t Mode_Hide_Drive_Old;
+	uint8_t Mode_Hide_Report_Old;
+
 	// background
-	GUI_CONST_STORAGE GUI_BITMAP *Background = &bmHMI_Right;
+	Background = &bmHMI_Right;
 #endif
 
 	// Set overlay on all indicator on boot
@@ -114,7 +126,18 @@ void GUI_MainTask(void) {
 	while (1) {
 		if (!init) {
 			// check if has new can message
-			xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, portMAX_DELAY);
+			xResult = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, pdMS_TO_TICKS(1000));
+		}
+
+		// if not receive any CAN message
+		if (xResult == pdFALSE) {
+			init = 1;
+		}
+
+		// init hook
+		if (init) {
+			// reset data to default
+			Set_Default_Data();
 		}
 
 #if USE_HMI_LEFT
@@ -139,8 +162,11 @@ void GUI_MainTask(void) {
 
 		// Others
 		if (init || DB_HMI_Mode_Old.mode_trip != DB_HMI_Mode.mode_trip
-				|| DB_HMI_Mode_Old.mode_trip_value != DB_HMI_Mode.mode_trip_value || DB_ECU_Odometer_Old != DB_ECU_Odometer
-				|| DB_MCU_RPM_Old != DB_MCU_RPM || DB_HMI_Status_Old.keyless != DB_HMI_Status.keyless) {
+				|| DB_HMI_Mode_Old.mode_trip_value != DB_HMI_Mode.mode_trip_value
+				|| DB_ECU_Odometer_Old != DB_ECU_Odometer
+				|| DB_MCU_RPM_Old != DB_MCU_RPM
+				|| DB_HMI_Status_Old.keyless != DB_HMI_Status.keyless
+				|| Mode_Hide_Trip_Old != (DB_HMI_Mode.mode == SWITCH_MODE_TRIP && DB_HMI_Mode.hide)) {
 
 			// Set Color
 			GUI_SetColor(0xFFC0C0C0);
@@ -152,16 +178,18 @@ void GUI_MainTask(void) {
 			// Mode Trip
 			{
 				DB_HMI_Mode_Old.mode_trip = DB_HMI_Mode.mode_trip;
-				if (DB_HMI_Mode.mode_trip != SWITCH_MODE_TRIP_NONE) {
-					// Mode Label
+				Mode_Hide_Trip_Old = (DB_HMI_Mode.mode == SWITCH_MODE_TRIP && DB_HMI_Mode.hide);
+
+				if (!Mode_Hide_Trip_Old) {
+					// Mode Trip Label
 					Set_Left_Trip(DB_HMI_Mode.mode_trip);
-					// Mode Trip Value
-					DB_HMI_Mode_Old.mode_trip_value = DB_HMI_Mode.mode_trip_value;
-					GUI_SetFont(&GUI_FontSquare721_BT23);
-					sprintf(str, "%05u", (unsigned int) DB_HMI_Mode.mode_trip_value);
-					GUI_DispStringInRectWrap(str, &pRect_SubTrip,
-					GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 				}
+
+				// Mode Trip Value
+				DB_HMI_Mode_Old.mode_trip_value = DB_HMI_Mode.mode_trip_value;
+				GUI_SetFont(&GUI_FontSquare721_BT23);
+				sprintf(str, "%05u", (unsigned int) DB_HMI_Mode.mode_trip_value);
+				GUI_DispStringInRectWrap(str, &pRect_SubTrip, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 			}
 
 			// Odometer
@@ -227,13 +255,43 @@ void GUI_MainTask(void) {
 		}
 
 		// Battery Percentage
-		if (init || DB_BMS_SoC_Old != DB_BMS_SoC) {
-			DB_BMS_SoC_Old = DB_BMS_SoC;
+		{
+			if (init || DB_BMS_SoC_Old != DB_BMS_SoC) {
+				DB_BMS_SoC_Old = DB_BMS_SoC;
 
-			GUI_SetFont(&GUI_FontSquare721_BT31);
-			sprintf(str, "%02u", DB_BMS_SoC);
-			GUI_DispStringInRectWrap(str, &pRect_Battery,
-			GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+				// Battery Value
+				GUI_SetFont(&GUI_FontSquare721_BT31);
+				sprintf(str, "%02u", DB_BMS_SoC);
+				GUI_DispStringInRectWrap(str, &pRect_Battery, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+			}
+
+			// Detect trigger event
+			if (DB_BMS_SoC <= 20 && !DB_BMS_SoC_Low) {
+				DB_BMS_SoC_Low = 1;
+				DB_BMS_SoC_Update = 1;
+			} else if (DB_BMS_SoC > 20 && DB_BMS_SoC_Low) {
+				DB_BMS_SoC_Low = 0;
+				DB_BMS_SoC_Update = 1;
+			}
+
+			// Battery Icon & Unit
+			if (init | DB_BMS_SoC_Update) {
+				DB_BMS_SoC_Update = 0;
+				BSP_Led_Toggle(1);
+
+				// Battery Icon
+				Set_Right_Battery((DB_BMS_SoC > 20));
+
+				// Battery Unit
+				if (DB_BMS_SoC <= 20) {
+					GUI_SetColor(0xFFE62129);
+				}
+				GUI_ClearRect(pRect_Battery_Unit.x0, pRect_Battery_Unit.y0, pRect_Battery_Unit.x1, pRect_Battery_Unit.y1);
+				GUI_SetFont(&GUI_FontSquare721_BT17);
+				sprintf(str, "%c", '%');
+				GUI_DispStringInRectWrap(str, &pRect_Battery_Unit, GUI_TA_BOTTOM | GUI_TA_LEFT, GUI_WRAPMODE_NONE);
+				GUI_SetColor(0xFFC0C0C0);
+			}
 		}
 
 		// Signal Percentage
@@ -257,26 +315,26 @@ void GUI_MainTask(void) {
 
 		// Mode Report
 		{
-			// Mode Report Label & Unit
+			// Mode Report Unit
 			if (init || DB_HMI_Mode_Old.mode_report != DB_HMI_Mode.mode_report) {
-				DB_HMI_Mode_Old.mode_report = DB_HMI_Mode.mode_report;
-
-				// Mode Report Label
-				// clear text position
-				GUI_ClearRect(pRect_Report_Mode.x0, pRect_Report_Mode.y0, pRect_Report_Mode.x1, pRect_Report_Mode.y1);
-				if (DB_HMI_Mode.mode_report != SWITCH_MODE_REPORT_NONE) {
-					// fill text position
-					GUI_SetFont(&GUI_FontSquare721_BT14);
-					sprintf(str, "%s", Report_Mode[DB_HMI_Mode.mode_report]);
-					GUI_DispStringInRectWrap(str, &pRect_Report_Mode, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
-				}
-
-				// Mode Report Unit
-				// clear text position
 				GUI_ClearRect(pRect_Report_Unit.x0, pRect_Report_Unit.y0, pRect_Report_Unit.x1, pRect_Report_Unit.y1);
 				GUI_SetFont(&GUI_FontSquare721_BT10);
 				sprintf(str, "%s", Report_Unit[DB_HMI_Mode.mode_report]);
 				GUI_DispStringInRectWrap(str, &pRect_Report_Unit, GUI_TA_BOTTOM | GUI_TA_LEFT, GUI_WRAPMODE_NONE);
+			}
+
+			// Mode Report Label
+			if (init || DB_HMI_Mode_Old.mode_report != DB_HMI_Mode.mode_report
+					|| Mode_Hide_Report_Old != (DB_HMI_Mode.mode == SWITCH_MODE_REPORT && DB_HMI_Mode.hide)) {
+				DB_HMI_Mode_Old.mode_report = DB_HMI_Mode.mode_report;
+				Mode_Hide_Report_Old = (DB_HMI_Mode.mode == SWITCH_MODE_REPORT && DB_HMI_Mode.hide);
+
+				GUI_ClearRect(pRect_Report_Mode.x0, pRect_Report_Mode.y0, pRect_Report_Mode.x1, pRect_Report_Mode.y1);
+				if (!Mode_Hide_Report_Old) {
+					GUI_SetFont(&GUI_FontSquare721_BT14);
+					sprintf(str, "%s", Report_Mode[DB_HMI_Mode.mode_report]);
+					GUI_DispStringInRectWrap(str, &pRect_Report_Mode, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+				}
 			}
 
 			// Mode Report Value
@@ -290,10 +348,12 @@ void GUI_MainTask(void) {
 		}
 
 		// Mode Drive
-		if (init || DB_HMI_Mode_Old.mode_drive != DB_HMI_Mode.mode_drive) {
+		if (init || DB_HMI_Mode_Old.mode_drive != DB_HMI_Mode.mode_drive
+				|| Mode_Hide_Drive_Old != (DB_HMI_Mode.mode == SWITCH_MODE_DRIVE && DB_HMI_Mode.hide)) {
 			DB_HMI_Mode_Old.mode_drive = DB_HMI_Mode.mode_drive;
+			Mode_Hide_Drive_Old = (DB_HMI_Mode.mode == SWITCH_MODE_DRIVE && DB_HMI_Mode.hide);
 
-			if (DB_HMI_Mode.mode_drive != SWITCH_MODE_DRIVE_NONE) {
+			if (!Mode_Hide_Drive_Old) {
 				// if reverse, change color
 				if (DB_HMI_Mode.mode_drive == SWITCH_MODE_DRIVE_R) {
 					GUI_SetColor(0xFFFF8000);
@@ -315,13 +375,44 @@ void GUI_MainTask(void) {
 }
 
 // Functions list
+void Set_Default_Data(void) {
+	extern modes_t DB_HMI_Mode;
+	extern status_t DB_HMI_Status;
+	extern uint32_t DB_ECU_Odometer, DB_MCU_RPM;
+	extern uint8_t DB_ECU_Signal, DB_ECU_Speed, DB_BMS_SoC;
+
+	DB_HMI_Mode.mode = SWITCH_MODE_TRIP;
+	DB_HMI_Mode.hide = 0;
+	DB_HMI_Mode.mode_drive = SWITCH_MODE_DRIVE_E;
+	DB_HMI_Mode.mode_trip = SWITCH_MODE_TRIP_A;
+	DB_HMI_Mode.mode_trip_value = 0;
+	DB_HMI_Mode.mode_report = SWITCH_MODE_REPORT_RANGE;
+	DB_HMI_Mode.mode_report_value = 0;
+
+	DB_HMI_Status.abs = 0;
+	DB_HMI_Status.mirror = 0;
+	DB_HMI_Status.lamp = 0;
+	DB_HMI_Status.warning = 1;
+	DB_HMI_Status.temperature = 0;
+	DB_HMI_Status.finger = 0;
+	DB_HMI_Status.keyless = 0;
+	DB_HMI_Status.daylight = 1;
+	DB_HMI_Status.sein_left = 0;
+	DB_HMI_Status.sein_right = 0;
+
+	DB_ECU_Odometer = 0;
+	DB_ECU_Signal = 0;
+	DB_ECU_Speed = 0;
+	DB_MCU_RPM = 0;
+	DB_BMS_SoC = 0;
+}
 void Run_Boot_Animation(void) {
 	uint16_t k;
-	// start of booting animation
+// start of booting animation
 	GUI_SelectLayer(1);
 	GUI_SetBkColor(GUI_BLACK);
 	GUI_Clear();
-	// start of circular booting animation
+// start of circular booting animation
 	GUI_SetColor(GUI_TRANSPARENT);
 #if USE_HMI_LEFT
 	for (k = 0; k <= 20; k++) {
@@ -350,16 +441,16 @@ void Run_Boot_Animation(void) {
 		GUI_Delay(20);
 	}
 #endif
-	// end of booting animation
+// end of booting animation
 }
 
 void Set_Boot_Overlay(void) {
-	// Make layer 1 transparent
+// Make layer 1 transparent
 	GUI_SelectLayer(1);
 	GUI_SetBkColor(GUI_TRANSPARENT);
 	GUI_Clear();
 
-	// Give overlay on indicators at layer 1
+// Give overlay on indicators at layer 1
 	GUI_SelectLayer(0);
 #if USE_HMI_LEFT
 	GUI_DrawBitmap(&bmHMI_Left, 0, 0);
@@ -373,7 +464,7 @@ void Set_Boot_Overlay(void) {
 			{ 150, 205 }, { 175, 180 }, { 170, 145 }, { 150, 128 }, { 120, 128 }, { 100, 150 }, { 100, 180 }, { 120, 205 }, {
 					LCD_GetXSize() - 1 - 215, 205 }, { LCD_GetXSize() - 1 - 250, 153 }, { LCD_GetXSize() - 1 - 300, 153 } };
 #endif
-	// overlay for first booting
+// overlay for first booting
 	GUI_SetColor(GUI_BLACK);
 	GUI_FillPolygon(aPoints, GUI_COUNTOF(aPoints), 0, 0);
 }
@@ -383,11 +474,11 @@ GUI_CONST_STORAGE GUI_BITMAP *fg, uint16_t x, uint16_t y, uint8_t status, uint8_
 
 	GUI_RECT pRect = { x, y, x + fg->XSize, y + fg->YSize };
 
-	// draw background
+// draw background
 	GUI_SetClipRect(&pRect);
 	GUI_DrawBitmapEx(bg, x, y, x, y, 1000, 1000);
 	GUI_SetClipRect(NULL);
-	// draw indicator image
+// draw indicator image
 	if (status == 1) {
 		GUI_SetAlpha(alpha);
 		GUI_DrawBitmap(fg, x, y);
@@ -428,10 +519,19 @@ void Set_Left_Trip(switch_mode_trip_t mode_trip) {
 }
 
 void Set_Left_Jarum(uint8_t deg, uint16_t x, uint16_t y, uint16_t r, uint16_t h, uint8_t max) {
-	GUI_POINT aPoints_Jarum[] = { { (x + r) + (((h / 2) + 1) * cos(D2R(deg + 270))), (y + (h / 2) + 1)
-			+ (((h / 2) + 1) * sin(D2R(deg + 270))) }, //atas
-			{ (x + r) + (r * cos(D2R(deg + 180))), (y + (h / 2) + 1) + (r * sin(D2R(deg + 180))) }, //ujung
-			{ (x + r) + (((h / 2) + 1) * cos(D2R(deg + 90))), (y + (h / 2) + 1) + (((h / 2) + 1) * sin(D2R(deg + 90))) } //bawah
+	GUI_POINT aPoints_Jarum[] = {
+			{
+					(x + r) + (((h / 2) + 1) * cos(D2R(deg + 270))),
+					(y + (h / 2) + 1) + (((h / 2) + 1) * sin(D2R(deg + 270)))
+			}, //atas
+			{
+					(x + r) + (r * cos(D2R(deg + 180))),
+					(y + (h / 2) + 1) + (r * sin(D2R(deg + 180)))
+			}, //ujung
+			{
+					(x + r) + (((h / 2) + 1) * cos(D2R(deg + 90))),
+					(y + (h / 2) + 1) + (((h / 2) + 1) * sin(D2R(deg + 90)))
+			} //bawah
 	};
 
 	GUI_SetColor(GUI_RED);
@@ -450,7 +550,7 @@ void Set_Right_Sein(uint8_t status) {
 }
 
 void Set_Right_Temp(uint8_t status) {
-	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Temp, 32, 131, status, 200);
+	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Temp, 34, 131, status, 200);
 }
 
 void Set_Right_Lamp(uint8_t status) {
@@ -458,11 +558,16 @@ void Set_Right_Lamp(uint8_t status) {
 }
 
 void Set_Right_Warning(uint8_t status) {
-	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Warning, 2, 130, status, 200);
+	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Warning, 4, 130, status, 200);
 }
 
 void Set_Right_Abs(uint8_t status) {
 	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Abs, 63, 135, status, 200);
+}
+
+void Set_Right_Battery(uint8_t full) {
+	GUI_CONST_STORAGE GUI_BITMAP *bmHMI_Right_Battery = (full ? &bmHMI_Right_Battery_Full : &bmHMI_Right_Battery_Low);
+	Set_Indicator(&bmHMI_Right, bmHMI_Right_Battery, 195, 170, 1, 200);
 }
 #endif
 /*************************** End of file ****************************/

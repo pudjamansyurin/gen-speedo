@@ -23,8 +23,8 @@
 * Range disabled:       0000 - FFFF                                  *
 * Character enabled:   0x4B (75)                                     *
 * Character enabled:   0x4D (77)                                     *
-* Character enabled:   0x57 (87)                                     *
 * Character enabled:   0x2F (47)                                     *
+* Character enabled:   0x57 (87)                                     *
 *                                                                    *
 **********************************************************************
 */
