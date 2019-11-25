@@ -42,7 +42,7 @@ void Set_Right_Warning(uint8_t status);
 void Set_Right_Abs(uint8_t status);
 void Set_Right_Temp(uint8_t status);
 void Set_Right_Lamp(uint8_t status);
-void Set_Right_Battery(uint8_t full);
+void Set_Right_Battery(int8_t status);
 #endif
 
 /* Main task ------------------------------------------------------------------*/
@@ -90,6 +90,9 @@ void GUI_MainTask(void) {
 	const char Drive_Mode[4] = { 'E', 'S', 'P', 'R' };
 	const char Report_Mode[2][8] = { "Range", "Average" };
 	const char Report_Unit[2][6] = { "KM", "KM/KW" };
+	const TickType_t tick500ms = pdMS_TO_TICKS(500);
+	TickType_t tickBatteryLow;
+	uint8_t Hide_Battery_Low = 0;
 
 	extern uint8_t DB_ECU_Speed;
 	extern uint8_t DB_BMS_SoC;
@@ -126,7 +129,7 @@ void GUI_MainTask(void) {
 	while (1) {
 		if (!init) {
 			// check if has new can message
-			xResult = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, pdMS_TO_TICKS(1000));
+			xResult = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, pdMS_TO_TICKS(500));
 		}
 
 		// if not receive any CAN message
@@ -266,21 +269,28 @@ void GUI_MainTask(void) {
 			}
 
 			// Detect trigger event
-			if (DB_BMS_SoC <= 20 && !DB_BMS_SoC_Low) {
-				DB_BMS_SoC_Low = 1;
-				DB_BMS_SoC_Update = 1;
+			if (DB_BMS_SoC <= 20) {
+				if (!DB_BMS_SoC_Low) {
+					DB_BMS_SoC_Low = 1;
+					Hide_Battery_Low = 0;
+					DB_BMS_SoC_Update = 1;
+				} else if ((osKernelSysTick() - tickBatteryLow) >= tick500ms) {
+					tickBatteryLow = osKernelSysTick();
+					Hide_Battery_Low = !Hide_Battery_Low;
+					DB_BMS_SoC_Update = 1;
+				}
 			} else if (DB_BMS_SoC > 20 && DB_BMS_SoC_Low) {
 				DB_BMS_SoC_Low = 0;
+				Hide_Battery_Low = 0;
 				DB_BMS_SoC_Update = 1;
 			}
 
 			// Battery Icon & Unit
-			if (init | DB_BMS_SoC_Update) {
+			if (init || DB_BMS_SoC_Update) {
 				DB_BMS_SoC_Update = 0;
-				BSP_Led_Toggle(1);
 
 				// Battery Icon
-				Set_Right_Battery((DB_BMS_SoC > 20));
+				Set_Right_Battery(Hide_Battery_Low ? -1 : DB_BMS_SoC);
 
 				// Battery Unit
 				if (DB_BMS_SoC <= 20) {
@@ -408,11 +418,11 @@ void Set_Default_Data(void) {
 }
 void Run_Boot_Animation(void) {
 	uint16_t k;
-// start of booting animation
+	// start of booting animation
 	GUI_SelectLayer(1);
 	GUI_SetBkColor(GUI_BLACK);
 	GUI_Clear();
-// start of circular booting animation
+	// start of circular booting animation
 	GUI_SetColor(GUI_TRANSPARENT);
 #if USE_HMI_LEFT
 	for (k = 0; k <= 20; k++) {
@@ -441,16 +451,16 @@ void Run_Boot_Animation(void) {
 		GUI_Delay(20);
 	}
 #endif
-// end of booting animation
+	// end of booting animation
 }
 
 void Set_Boot_Overlay(void) {
-// Make layer 1 transparent
+	// Make layer 1 transparent
 	GUI_SelectLayer(1);
 	GUI_SetBkColor(GUI_TRANSPARENT);
 	GUI_Clear();
 
-// Give overlay on indicators at layer 1
+	// Give overlay on indicators at layer 1
 	GUI_SelectLayer(0);
 #if USE_HMI_LEFT
 	GUI_DrawBitmap(&bmHMI_Left, 0, 0);
@@ -464,7 +474,7 @@ void Set_Boot_Overlay(void) {
 			{ 150, 205 }, { 175, 180 }, { 170, 145 }, { 150, 128 }, { 120, 128 }, { 100, 150 }, { 100, 180 }, { 120, 205 }, {
 					LCD_GetXSize() - 1 - 215, 205 }, { LCD_GetXSize() - 1 - 250, 153 }, { LCD_GetXSize() - 1 - 300, 153 } };
 #endif
-// overlay for first booting
+	// overlay for first booting
 	GUI_SetColor(GUI_BLACK);
 	GUI_FillPolygon(aPoints, GUI_COUNTOF(aPoints), 0, 0);
 }
@@ -474,11 +484,11 @@ GUI_CONST_STORAGE GUI_BITMAP *fg, uint16_t x, uint16_t y, uint8_t status, uint8_
 
 	GUI_RECT pRect = { x, y, x + fg->XSize, y + fg->YSize };
 
-// draw background
+	// draw background
 	GUI_SetClipRect(&pRect);
 	GUI_DrawBitmapEx(bg, x, y, x, y, 1000, 1000);
 	GUI_SetClipRect(NULL);
-// draw indicator image
+	// draw indicator image
 	if (status == 1) {
 		GUI_SetAlpha(alpha);
 		GUI_DrawBitmap(fg, x, y);
@@ -565,9 +575,9 @@ void Set_Right_Abs(uint8_t status) {
 	Set_Indicator(&bmHMI_Right, &bmHMI_Right_Abs, 63, 135, status, 200);
 }
 
-void Set_Right_Battery(uint8_t full) {
-	GUI_CONST_STORAGE GUI_BITMAP *bmHMI_Right_Battery = (full ? &bmHMI_Right_Battery_Full : &bmHMI_Right_Battery_Low);
-	Set_Indicator(&bmHMI_Right, bmHMI_Right_Battery, 195, 170, 1, 200);
+void Set_Right_Battery(int8_t status) {
+	GUI_CONST_STORAGE GUI_BITMAP *bmHMI_Right_Battery = (status > 20 ? &bmHMI_Right_Battery_Full : &bmHMI_Right_Battery_Low);
+	Set_Indicator(&bmHMI_Right, bmHMI_Right_Battery, 195, 170, (status != -1), 200);
 }
 #endif
 /*************************** End of file ****************************/
