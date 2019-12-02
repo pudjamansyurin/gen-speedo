@@ -23,6 +23,9 @@
 #include "HMI_Right.c"
 #endif
 
+/* External variable */
+extern IWDG_HandleTypeDef hiwdg;
+
 /* Functions prototypes --------------------------------------------------------*/
 void Set_Default_Data(void);
 void Run_Boot_Animation(void);
@@ -81,7 +84,7 @@ void GUI_MainTask(void) {
 	GUI_RECT pRect_Speed = { 83, 79, 85 + 102, 79 + 50 };
 	GUI_RECT pRect_Battery = { 227, 164, 227 + 35, 164 + 28 };
 	GUI_RECT pRect_Battery_Unit = { 266, 170, 266 + 17, 170 + 17 };
-	GUI_RECT pRect_Signal = { 123, 50, 123 + 65, 50 + 10 };
+	GUI_RECT pRect_Signal = { 122, 50, 122 + 65, 50 + 10 };
 	GUI_RECT pRect_Drive = { 126, 145, 126 + 26, 145 + 40 };
 	GUI_RECT pRect_Report_Mode = { 174 + RM_XO, 191, 174 + 50 + RM_XO, 191 + 13 };
 	GUI_RECT pRect_Report_Value = { 228 + RM_XO, 190, 228 + 20 + RM_XO, 190 + 15 };
@@ -127,6 +130,9 @@ void GUI_MainTask(void) {
 	GUI_SetBkColor(GUI_BLACK);
 
 	while (1) {
+		// Feed the dog
+		HAL_IWDG_Refresh(&hiwdg);
+
 		if (!init) {
 			// check if has new can message
 			xResult = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, pdMS_TO_TICKS(500));

@@ -61,6 +61,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define TIMER_CAN_MS 500
 #define LEFT_LD1_Pin GPIO_PIN_2
 #define LEFT_LD1_GPIO_Port GPIOE
 #define LEFT_LD2_Pin GPIO_PIN_3

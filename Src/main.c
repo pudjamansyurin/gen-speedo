@@ -51,6 +51,8 @@ CAN_HandleTypeDef hcan2;
 
 CRC_HandleTypeDef hcrc;
 
+IWDG_HandleTypeDef hiwdg;
+
 RTC_HandleTypeDef hrtc;
 
 UART_HandleTypeDef huart1;
@@ -74,6 +76,7 @@ extern void GRAPHICS_MainTask(void);
 static void MX_CAN2_Init(void);
 static void MX_RTC_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_IWDG_Init(void);
 void StartLcdTask(void const *argument);
 void StartCanRxTask(void const *argument);
 void StartSerialTask(void const *argument);
@@ -91,7 +94,8 @@ void CallbackTimerCAN(void const *argument);
  * @brief  The application entry point.
  * @retval int
  */
-int main(void) {
+int main(void)
+{
 	/* USER CODE BEGIN 1 */
 	/* USER CODE END 1 */
 
@@ -115,6 +119,7 @@ int main(void) {
 	MX_CRC_Init();
 	MX_CAN2_Init();
 	MX_USART1_UART_Init();
+	MX_IWDG_Init();
 	/* USER CODE BEGIN 2 */
 	CAN_Init();
 	/* USER CODE END 2 */
@@ -149,7 +154,7 @@ int main(void) {
 
 	/* USER CODE BEGIN RTOS_TIMERS */
 	/* start timers, add new ones, ... */
-	osTimerStart(TimerCANHandle, 500);
+	osTimerStart(TimerCANHandle, TIMER_CAN_MS);
 	/* USER CODE END RTOS_TIMERS */
 
 	/* USER CODE BEGIN RTOS_QUEUES */
@@ -192,7 +197,8 @@ int main(void) {
  * @brief System Clock Configuration
  * @retval None
  */
-void SystemClock_Config(void) {
+void SystemClock_Config(void)
+{
 	RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
 	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
 	RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = { 0 };
@@ -212,23 +218,27 @@ void SystemClock_Config(void) {
 	RCC_OscInitStruct.PLL.PLLN = 180;
 	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
 	RCC_OscInitStruct.PLL.PLLQ = 4;
-	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
+	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+			{
 		Error_Handler();
 	}
 	/** Activate the Over-Drive mode
 	 */
-	if (HAL_PWREx_EnableOverDrive() != HAL_OK) {
+	if (HAL_PWREx_EnableOverDrive() != HAL_OK)
+			{
 		Error_Handler();
 	}
 	/** Initializes the CPU, AHB and APB busses clocks
 	 */
-	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+			| RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
 	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
 	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK) {
+	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
+			{
 		Error_Handler();
 	}
 	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC | RCC_PERIPHCLK_RTC;
@@ -236,7 +246,8 @@ void SystemClock_Config(void) {
 	PeriphClkInitStruct.PLLSAI.PLLSAIR = 5;
 	PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_4;
 	PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
-	if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {
+	if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+			{
 		Error_Handler();
 	}
 }
@@ -246,7 +257,8 @@ void SystemClock_Config(void) {
  * @param None
  * @retval None
  */
-static void MX_CAN2_Init(void) {
+static void MX_CAN2_Init(void)
+{
 
 	/* USER CODE BEGIN CAN2_Init 0 */
 
@@ -266,7 +278,8 @@ static void MX_CAN2_Init(void) {
 	hcan2.Init.AutoRetransmission = DISABLE;
 	hcan2.Init.ReceiveFifoLocked = DISABLE;
 	hcan2.Init.TransmitFifoPriority = DISABLE;
-	if (HAL_CAN_Init(&hcan2) != HAL_OK) {
+	if (HAL_CAN_Init(&hcan2) != HAL_OK)
+			{
 		Error_Handler();
 	}
 	/* USER CODE BEGIN CAN2_Init 2 */
@@ -279,7 +292,8 @@ static void MX_CAN2_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_CRC_Init(void) {
+static void MX_CRC_Init(void)
+{
 
 	/* USER CODE BEGIN CRC_Init 0 */
 
@@ -289,7 +303,8 @@ static void MX_CRC_Init(void) {
 
 	/* USER CODE END CRC_Init 1 */
 	hcrc.Instance = CRC;
-	if (HAL_CRC_Init(&hcrc) != HAL_OK) {
+	if (HAL_CRC_Init(&hcrc) != HAL_OK)
+			{
 		Error_Handler();
 	}
 	/* USER CODE BEGIN CRC_Init 2 */
@@ -299,11 +314,40 @@ static void MX_CRC_Init(void) {
 }
 
 /**
+ * @brief IWDG Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_IWDG_Init(void)
+{
+
+	/* USER CODE BEGIN IWDG_Init 0 */
+
+	/* USER CODE END IWDG_Init 0 */
+
+	/* USER CODE BEGIN IWDG_Init 1 */
+
+	/* USER CODE END IWDG_Init 1 */
+	hiwdg.Instance = IWDG;
+	hiwdg.Init.Prescaler = IWDG_PRESCALER_32;
+	hiwdg.Init.Reload = 4095;
+	if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
+			{
+		Error_Handler();
+	}
+	/* USER CODE BEGIN IWDG_Init 2 */
+
+	/* USER CODE END IWDG_Init 2 */
+
+}
+
+/**
  * @brief RTC Initialization Function
  * @param None
  * @retval None
  */
-static void MX_RTC_Init(void) {
+static void MX_RTC_Init(void)
+{
 
 	/* USER CODE BEGIN RTC_Init 0 */
 
@@ -324,7 +368,8 @@ static void MX_RTC_Init(void) {
 	hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
 	hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
 	hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
-	if (HAL_RTC_Init(&hrtc) != HAL_OK) {
+	if (HAL_RTC_Init(&hrtc) != HAL_OK)
+			{
 		Error_Handler();
 	}
 
@@ -339,7 +384,8 @@ static void MX_RTC_Init(void) {
 	sTime.Seconds = 0x0;
 	sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
 	sTime.StoreOperation = RTC_STOREOPERATION_RESET;
-	if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD) != HAL_OK) {
+	if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD) != HAL_OK)
+			{
 		Error_Handler();
 	}
 	sDate.WeekDay = RTC_WEEKDAY_MONDAY;
@@ -347,7 +393,8 @@ static void MX_RTC_Init(void) {
 	sDate.Date = 0x1;
 	sDate.Year = 0x0;
 
-	if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BCD) != HAL_OK) {
+	if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BCD) != HAL_OK)
+			{
 		Error_Handler();
 	}
 	/* USER CODE BEGIN RTC_Init 2 */
@@ -361,7 +408,8 @@ static void MX_RTC_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_USART1_UART_Init(void) {
+static void MX_USART1_UART_Init(void)
+{
 
 	/* USER CODE BEGIN USART1_Init 0 */
 
@@ -378,7 +426,8 @@ static void MX_USART1_UART_Init(void) {
 	huart1.Init.Mode = UART_MODE_TX_RX;
 	huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
 	huart1.Init.OverSampling = UART_OVERSAMPLING_16;
-	if (HAL_UART_Init(&huart1) != HAL_OK) {
+	if (HAL_UART_Init(&huart1) != HAL_OK)
+			{
 		Error_Handler();
 	}
 	/* USER CODE BEGIN USART1_Init 2 */
@@ -392,7 +441,8 @@ static void MX_USART1_UART_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_GPIO_Init(void) {
+static void MX_GPIO_Init(void)
+{
 	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 
 	/* GPIO Ports Clock Enable */
@@ -447,9 +497,10 @@ static void MX_GPIO_Init(void) {
  * @retval None
  */
 /* USER CODE END Header_StartLcdTask */
-void StartLcdTask(void const *argument) {
+void StartLcdTask(void const *argument)
+{
 	/* Graphic application */
-	//	GRAPHICS_MainTask();
+	//  GRAPHICS_MainTask();
 	/* USER CODE BEGIN 5 */
 #if !USE_HMI_LEFT
 	// Control backlight
@@ -472,7 +523,8 @@ void StartLcdTask(void const *argument) {
  */
 
 /* USER CODE END Header_StartCanRxTask */
-void StartCanRxTask(void const *argument) {
+void StartCanRxTask(void const *argument)
+{
 	/* USER CODE BEGIN StartCanRxTask */
 	extern CAN_Rx RxCan;
 	uint32_t ulNotifiedValue;
@@ -538,7 +590,8 @@ void StartCanRxTask(void const *argument) {
  * @retval None
  */
 /* USER CODE END Header_StartSerialTask */
-void StartSerialTask(void const *argument) {
+void StartSerialTask(void const *argument)
+{
 	/* USER CODE BEGIN StartSerialTask */
 	/* Infinite loop */
 	for (;;) {
@@ -550,7 +603,8 @@ void StartSerialTask(void const *argument) {
 }
 
 /* CallbackTimerCAN function */
-void CallbackTimerCAN(void const *argument) {
+void CallbackTimerCAN(void const *argument)
+{
 	/* USER CODE BEGIN CallbackTimerCAN */
 	CANBUS_HMI_Heartbeat();
 
@@ -566,7 +620,8 @@ void CallbackTimerCAN(void const *argument) {
  * @param  htim : TIM handle
  * @retval None
  */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
 	/* USER CODE BEGIN Callback 0 */
 
 	/* USER CODE END Callback 0 */
@@ -582,7 +637,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
  * @brief  This function is executed in case of error occurrence.
  * @retval None
  */
-void Error_Handler(void) {
+void Error_Handler(void)
+{
 	/* USER CODE BEGIN Error_Handler_Debug */
 	/* User can add his own implementation to report the HAL error return state */
 	while (1) {
