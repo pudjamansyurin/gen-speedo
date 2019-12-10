@@ -502,10 +502,10 @@ void StartLcdTask(void const *argument)
 	/* Graphic application */
 	//  GRAPHICS_MainTask();
 	/* USER CODE BEGIN 5 */
-#if !USE_HMI_LEFT
-	// Control backlight
-	BSP_Set_Backlight(1);
-#endif
+	//#if !USE_HMI_LEFT
+	//	// Control backlight
+	//	BSP_Set_Backlight(1);
+	//#endif
 	// run main task
 	GUI_MainTask();
 	/* Infinite loop */
@@ -526,6 +526,9 @@ void StartLcdTask(void const *argument)
 void StartCanRxTask(void const *argument)
 {
 	/* USER CODE BEGIN StartCanRxTask */
+#if !USE_HMI_LEFT
+	extern status_t DB_HMI_Status;
+#endif
 	extern CAN_Rx RxCan;
 	uint32_t ulNotifiedValue;
 	uint8_t RelatedCAN;
@@ -541,12 +544,11 @@ void StartCanRxTask(void const *argument)
 			switch (RxCan.RxHeader.StdId) {
 			case CAN_ADDR_ECU_SWITCH:
 				CANBUS_ECU_Switch_Read();
-				//#if !USE_HMI_LEFT
-				//				// FIXME enable me on deploy
-				//				// Control backlight
-				//				extern status_t DB_HMI_Status;
-				//				BSP_Set_Backlight(DB_HMI_Status.daylight);
-				//#endif
+#if !USE_HMI_LEFT
+				// FIXME enable me on deploy
+				// Control backlight
+				BSP_Set_Backlight(DB_HMI_Status.daylight);
+#endif
 				break;
 			case CAN_ADDR_ECU_SELECT_SET:
 				CANBUS_ECU_Select_Set_Read();

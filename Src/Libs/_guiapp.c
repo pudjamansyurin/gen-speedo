@@ -147,6 +147,8 @@ void GUI_MainTask(void) {
 		if (init) {
 			// reset data to default
 			Set_Default_Data();
+			// set backlight ON
+			BSP_Set_Backlight(1);
 		}
 
 #if USE_HMI_LEFT
