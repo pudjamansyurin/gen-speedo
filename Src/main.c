@@ -545,8 +545,7 @@ void StartCanRxTask(void const *argument)
 			case CAN_ADDR_ECU_SWITCH:
 				CANBUS_ECU_Switch_Read();
 #if !USE_HMI_LEFT
-				// FIXME enable me on deploy
-				// Control backlight
+				// Control back-light
 				BSP_Set_Backlight(DB_HMI_Status.daylight);
 #endif
 				break;
