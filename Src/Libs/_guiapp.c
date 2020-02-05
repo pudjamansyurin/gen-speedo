@@ -69,9 +69,9 @@ void GUI_MainTask(void) {
 	GUI_RECT pRect_TotalTrip = { 159, 106, 159 + 64, 106 + 24 };
 
 	extern uint32_t DB_MCU_RPM;
-	extern uint32_t DB_ECU_Odometer;
+	extern uint32_t DB_VCU_Odometer;
 	uint32_t DB_MCU_RPM_Old;
-	uint32_t DB_ECU_Odometer_Old;
+	uint32_t DB_VCU_Odometer_Old;
 	uint8_t Mode_Hide_Trip_Old;
 
 	// background
@@ -97,14 +97,14 @@ void GUI_MainTask(void) {
 	TickType_t tickBatteryLow;
 	uint8_t Hide_Battery_Low = 0;
 
-	extern uint8_t DB_ECU_Speed;
+	extern uint8_t DB_VCU_Speed;
 	extern uint8_t DB_BMS_SoC;
-	extern uint8_t DB_ECU_Signal;
-	uint8_t DB_ECU_Speed_Old;
+	extern uint8_t DB_VCU_Signal;
+	uint8_t DB_VCU_Speed_Old;
 	uint8_t DB_BMS_SoC_Old;
 	uint8_t DB_BMS_SoC_Low;
 	uint8_t DB_BMS_SoC_Update;
-	uint8_t DB_ECU_Signal_Old;
+	uint8_t DB_VCU_Signal_Old;
 	uint8_t Mode_Hide_Drive_Old;
 	uint8_t Mode_Hide_Report_Old;
 
@@ -174,7 +174,7 @@ void GUI_MainTask(void) {
 		// Others
 		if (init || DB_HMI_Mode_Old.mode_trip != DB_HMI_Mode.mode_trip
 				|| DB_HMI_Mode_Old.mode_trip_value != DB_HMI_Mode.mode_trip_value
-				|| DB_ECU_Odometer_Old != DB_ECU_Odometer
+				|| DB_VCU_Odometer_Old != DB_VCU_Odometer
 				|| DB_MCU_RPM_Old != DB_MCU_RPM
 				|| DB_HMI_Status_Old.keyless != DB_HMI_Status.keyless
 				|| Mode_Hide_Trip_Old != (DB_HMI_Mode.mode == SWITCH_MODE_TRIP && DB_HMI_Mode.hide)) {
@@ -204,9 +204,9 @@ void GUI_MainTask(void) {
 			}
 
 			// Odometer
-			DB_ECU_Odometer_Old = DB_ECU_Odometer;
+			DB_VCU_Odometer_Old = DB_VCU_Odometer;
 			GUI_SetFont(&GUI_FontSquare721_BT23);
-			sprintf(str, "%05u", (unsigned int) DB_ECU_Odometer);
+			sprintf(str, "%05u", (unsigned int) DB_VCU_Odometer);
 			GUI_DispStringInRectWrap(str, &pRect_TotalTrip, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
 			// Keyless
@@ -257,11 +257,11 @@ void GUI_MainTask(void) {
 		GUI_SetColor(0xFFC0C0C0);
 
 		// Speed
-		if (init || DB_ECU_Speed_Old != DB_ECU_Speed) {
-			DB_ECU_Speed_Old = DB_ECU_Speed;
+		if (init || DB_VCU_Speed_Old != DB_VCU_Speed) {
+			DB_VCU_Speed_Old = DB_VCU_Speed;
 
 			GUI_SetFont(&GUI_FontSquare721_BT60);
-			sprintf(str, "%03u", DB_ECU_Speed);
+			sprintf(str, "%03u", DB_VCU_Speed);
 			GUI_DispStringInRectWrap(str, &pRect_Speed, GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 		}
 
@@ -313,8 +313,8 @@ void GUI_MainTask(void) {
 		}
 
 		// Signal Percentage
-		if (init || DB_ECU_Signal_Old != DB_ECU_Signal) {
-			DB_ECU_Signal_Old = DB_ECU_Signal;
+		if (init || DB_VCU_Signal_Old != DB_VCU_Signal) {
+			DB_VCU_Signal_Old = DB_VCU_Signal;
 
 			// fill all black
 			GUI_SetBkColor(GUI_BLACK);
@@ -324,7 +324,7 @@ void GUI_MainTask(void) {
 			GUI_ClearRect(
 					pRect_Signal.x0,
 					pRect_Signal.y0,
-					pRect_Signal.x0 + (DB_ECU_Signal * (pRect_Signal.x1 - pRect_Signal.x0) / 100),
+					pRect_Signal.x0 + (DB_VCU_Signal * (pRect_Signal.x1 - pRect_Signal.x0) / 100),
 					pRect_Signal.y1
 					);
 			// reset the bg color
@@ -396,8 +396,8 @@ void GUI_MainTask(void) {
 void Set_Default_Data(void) {
 	extern modes_t DB_HMI_Mode;
 	extern status_t DB_HMI_Status;
-	extern uint32_t DB_ECU_Odometer, DB_MCU_RPM;
-	extern uint8_t DB_ECU_Signal, DB_ECU_Speed, DB_BMS_SoC;
+	extern uint32_t DB_VCU_Odometer, DB_MCU_RPM;
+	extern uint8_t DB_VCU_Signal, DB_VCU_Speed, DB_BMS_SoC;
 
 	DB_HMI_Mode.mode = SWITCH_MODE_TRIP;
 	DB_HMI_Mode.hide = 0;
@@ -418,9 +418,9 @@ void Set_Default_Data(void) {
 	DB_HMI_Status.sein_left = 0;
 	DB_HMI_Status.sein_right = 0;
 
-	DB_ECU_Odometer = 0;
-	DB_ECU_Signal = 0;
-	DB_ECU_Speed = 0;
+	DB_VCU_Odometer = 0;
+	DB_VCU_Signal = 0;
+	DB_VCU_Speed = 0;
 	DB_MCU_RPM = 0;
 	DB_BMS_SoC = 0;
 }

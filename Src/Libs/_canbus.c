@@ -23,10 +23,10 @@ uint8_t CANBUS_HMI_Heartbeat(void) {
 }
 
 /* ------------------------------------ READER ------------------------------------- */
-void CANBUS_ECU_Switch_Read(void) {
+void CANBUS_VCU_Switch_Read(void) {
 	extern status_t DB_HMI_Status;
-	extern uint32_t DB_ECU_Odometer;
-	extern uint8_t DB_ECU_Signal;
+	extern uint32_t DB_VCU_Odometer;
+	extern uint8_t DB_VCU_Signal;
 
 	// read message
 	DB_HMI_Status.abs = RxCan.RxData[0] & 0x01;
@@ -43,13 +43,13 @@ void CANBUS_ECU_Switch_Read(void) {
 	DB_HMI_Status.sein_right = (RxCan.RxData[1] >> 1) & 0x01;
 
 	// signal
-	DB_ECU_Signal = RxCan.RxData[2];
+	DB_VCU_Signal = RxCan.RxData[2];
 
 	// odometer
-	DB_ECU_Odometer = (RxCan.RxData[7] << 24) | (RxCan.RxData[6] << 16) | (RxCan.RxData[5] << 8) | RxCan.RxData[4];
+	DB_VCU_Odometer = (RxCan.RxData[7] << 24) | (RxCan.RxData[6] << 16) | (RxCan.RxData[5] << 8) | RxCan.RxData[4];
 }
 
-void CANBUS_ECU_Select_Set_Read(void) {
+void CANBUS_VCU_Select_Set_Read(void) {
 	extern modes_t DB_HMI_Mode;
 
 	// read message
@@ -67,7 +67,7 @@ void CANBUS_ECU_Select_Set_Read(void) {
 	}
 }
 
-void CANBUS_ECU_Trip_Mode_Read(void) {
+void CANBUS_VCU_Trip_Mode_Read(void) {
 	extern modes_t DB_HMI_Mode;
 
 	// read message
@@ -80,13 +80,13 @@ void CANBUS_ECU_Trip_Mode_Read(void) {
 
 void CANBUS_MCU_Dummy_Read(void) {
 	extern uint32_t DB_MCU_RPM;
-	extern uint8_t DB_ECU_Speed;
+	extern uint8_t DB_VCU_Speed;
 
 	// read message
 	DB_MCU_RPM = (RxCan.RxData[3] << 24 | RxCan.RxData[2] << 16 | RxCan.RxData[1] << 8 | RxCan.RxData[0]);
 
 	// convert RPM to Speed
-	DB_ECU_Speed = DB_MCU_RPM * MCU_SPEED_MAX / MCU_RPM_MAX;
+	DB_VCU_Speed = DB_MCU_RPM * MCU_SPEED_MAX / MCU_RPM_MAX;
 }
 
 void CANBUS_BMS_Dummy_Read(void) {

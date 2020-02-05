@@ -542,18 +542,18 @@ void StartCanRxTask(void const *argument)
 		if ((ulNotifiedValue & EVENT_CAN_RX_IT)) {
 			// handle message
 			switch (RxCan.RxHeader.StdId) {
-			case CAN_ADDR_ECU_SWITCH:
-				CANBUS_ECU_Switch_Read();
+			case CAN_ADDR_VCU_SWITCH:
+				CANBUS_VCU_Switch_Read();
 #if !USE_HMI_LEFT
 				// Control back-light
 				BSP_Set_Backlight(DB_HMI_Status.daylight);
 #endif
 				break;
-			case CAN_ADDR_ECU_SELECT_SET:
-				CANBUS_ECU_Select_Set_Read();
+			case CAN_ADDR_VCU_SELECT_SET:
+				CANBUS_VCU_Select_Set_Read();
 				break;
-			case CAN_ADDR_ECU_TRIP_MODE:
-				CANBUS_ECU_Trip_Mode_Read();
+			case CAN_ADDR_VCU_TRIP_MODE:
+				CANBUS_VCU_Trip_Mode_Read();
 				break;
 			case CAN_ADDR_MCU_DUMMY:
 				CANBUS_MCU_Dummy_Read();
