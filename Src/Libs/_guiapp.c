@@ -92,7 +92,7 @@ void GUI_MainTask(void) {
 
 	const char Drive_Mode[4] = { 'E', 'S', 'P', 'R' };
 	const char Report_Mode[2][8] = { "Range", "Average" };
-	const char Report_Unit[2][6] = { "KM", "KM/KW" };
+	const char Report_Unit[2][7] = { "KM", "KM/KWh" };
 	const TickType_t tick500ms = pdMS_TO_TICKS(500);
 	TickType_t tickBatteryLow;
 	uint8_t Hide_Battery_Low = 0;
@@ -476,11 +476,29 @@ void Set_Boot_Overlay(void) {
 			205 }, { 250, 153 }, { 300, 153 } };
 #else
 	GUI_DrawBitmap(&bmHMI_Right, 0, 0);
-	const GUI_POINT aPoints[] = { { LCD_GetXSize() - 1 - 300, 66 }, { LCD_GetXSize() - 1 - 257, 66 },
-			{ LCD_GetXSize() - 1 - 230, 39 }, { LCD_GetXSize() - 1 - 144, 39 }, { LCD_GetXSize() - 1 - 87, 66 }, { LCD_GetXSize() - 1
-					- 87, 66 }, { 273, 135 }, { 275, 140 }, { LCD_GetXSize() - 1 - 39, 175 }, { LCD_GetXSize() - 1 - 55, 205 },
-			{ 150, 205 }, { 175, 180 }, { 170, 145 }, { 150, 128 }, { 120, 128 }, { 100, 150 }, { 100, 180 }, { 120, 205 }, {
-					LCD_GetXSize() - 1 - 215, 205 }, { LCD_GetXSize() - 1 - 250, 153 }, { LCD_GetXSize() - 1 - 300, 153 } };
+	const GUI_POINT aPoints[] = {
+			{ LCD_GetXSize() - 1 - 300, 66 },
+			{ LCD_GetXSize() - 1 - 257, 66 },
+			{ LCD_GetXSize() - 1 - 230, 39 },
+			{ LCD_GetXSize() - 1 - 144, 39 },
+			{ LCD_GetXSize() - 1 - 87, 66 },
+			{ LCD_GetXSize() - 1 - 87, 66 },
+			{ 273, 135 },
+			{ 275, 140 },
+			{ LCD_GetXSize() - 1 - 39, 175 },
+			{ LCD_GetXSize() - 1 - 55, 205 },
+			{ 150, 205 },
+			{ 175, 180 },
+			{ 170, 145 },
+			{ 150, 128 },
+			{ 120, 128 },
+			{ 100, 150 },
+			{ 100, 180 },
+			{ 120, 205 },
+			{ LCD_GetXSize() - 1 - 215, 205 },
+			{ LCD_GetXSize() - 1 - 250, 153 },
+			{ LCD_GetXSize() - 1 - 300, 153 }
+	};
 #endif
 	// overlay for first booting
 	GUI_SetColor(GUI_BLACK);

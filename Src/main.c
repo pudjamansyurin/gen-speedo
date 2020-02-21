@@ -502,10 +502,9 @@ void StartLcdTask(void const *argument)
 	/* Graphic application */
 	//  GRAPHICS_MainTask();
 	/* USER CODE BEGIN 5 */
-	//#if !USE_HMI_LEFT
-	//	// Control backlight
-	//	BSP_Set_Backlight(1);
-	//#endif
+#if !USE_HMI_LEFT
+	BSP_Set_Backlight(1);
+#endif
 	// run main task
 	GUI_MainTask();
 	/* Infinite loop */
@@ -542,28 +541,28 @@ void StartCanRxTask(void const *argument)
 		if ((ulNotifiedValue & EVENT_CAN_RX_IT)) {
 			// handle message
 			switch (RxCan.RxHeader.StdId) {
-			case CAN_ADDR_VCU_SWITCH:
-				CANBUS_VCU_Switch_Read();
+				case CAN_ADDR_VCU_SWITCH:
+					CANBUS_VCU_Switch_Read();
 #if !USE_HMI_LEFT
-				// Control back-light
-				BSP_Set_Backlight(DB_HMI_Status.daylight);
+					// Control back-light
+					BSP_Set_Backlight(DB_HMI_Status.daylight);
 #endif
-				break;
-			case CAN_ADDR_VCU_SELECT_SET:
-				CANBUS_VCU_Select_Set_Read();
-				break;
-			case CAN_ADDR_VCU_TRIP_MODE:
-				CANBUS_VCU_Trip_Mode_Read();
-				break;
-			case CAN_ADDR_MCU_DUMMY:
-				CANBUS_MCU_Dummy_Read();
-				break;
-			case CAN_ADDR_BMS_DUMMY:
-				CANBUS_BMS_Dummy_Read();
-				break;
-			default:
-				RelatedCAN = 0;
-				break;
+					break;
+				case CAN_ADDR_VCU_SELECT_SET:
+					CANBUS_VCU_Select_Set_Read();
+					break;
+				case CAN_ADDR_VCU_TRIP_MODE:
+					CANBUS_VCU_Trip_Mode_Read();
+					break;
+				case CAN_ADDR_MCU_DUMMY:
+					CANBUS_MCU_Dummy_Read();
+					break;
+				case CAN_ADDR_BMS_DUMMY:
+					CANBUS_BMS_Dummy_Read();
+					break;
+				default:
+					RelatedCAN = 0;
+					break;
 			}
 
 			// notify GUI thread
