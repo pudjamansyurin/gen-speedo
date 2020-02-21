@@ -595,6 +595,7 @@ void StartSerialTask(void const *argument)
 	/* USER CODE BEGIN StartSerialTask */
 	/* Infinite loop */
 	for (;;) {
+		// FIXME: remove me as thread
 		SWV_SendStrLn("Serial Task Running");
 
 		osDelay(250);
@@ -606,6 +607,7 @@ void StartSerialTask(void const *argument)
 void CallbackTimerCAN(void const *argument)
 {
 	/* USER CODE BEGIN CallbackTimerCAN */
+	// FIXME: dont use timer, instead use thread with higher priority
 	CANBUS_HMI_Heartbeat();
 
 	BSP_Led_Toggle(2);

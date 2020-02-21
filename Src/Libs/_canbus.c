@@ -8,8 +8,16 @@
 
 #include "_canbus.h"
 
-CAN_Tx TxCan;
+extern status_t DB_HMI_Status;
+extern uint32_t DB_VCU_Odometer;
+extern uint8_t DB_VCU_Signal;
+extern modes_t DB_HMI_Mode;
+extern uint32_t DB_MCU_RPM;
+extern uint8_t DB_VCU_Speed;
+extern modes_t DB_HMI_Mode;
+extern uint8_t DB_BMS_SoC;
 extern CAN_Rx RxCan;
+CAN_Tx TxCan;
 
 // ==================================== HMI =========================================
 #if (CAN_NODE & CAN_NODE_HMI)
@@ -24,10 +32,6 @@ uint8_t CANBUS_HMI_Heartbeat(void) {
 
 /* ------------------------------------ READER ------------------------------------- */
 void CANBUS_VCU_Switch_Read(void) {
-	extern status_t DB_HMI_Status;
-	extern uint32_t DB_VCU_Odometer;
-	extern uint8_t DB_VCU_Signal;
-
 	// read message
 	DB_HMI_Status.abs = RxCan.RxData[0] & 0x01;
 	DB_HMI_Status.mirror = (RxCan.RxData[0] >> 1) & 0x01;
@@ -50,8 +54,6 @@ void CANBUS_VCU_Switch_Read(void) {
 }
 
 void CANBUS_VCU_Select_Set_Read(void) {
-	extern modes_t DB_HMI_Mode;
-
 	// read message
 	DB_HMI_Mode.mode_drive = RxCan.RxData[0] & 0x03;
 	DB_HMI_Mode.mode_trip = (RxCan.RxData[0] >> 2) & 0x01;
@@ -68,8 +70,6 @@ void CANBUS_VCU_Select_Set_Read(void) {
 }
 
 void CANBUS_VCU_Trip_Mode_Read(void) {
-	extern modes_t DB_HMI_Mode;
-
 	// read message
 	if (DB_HMI_Mode.mode_trip == SWITCH_MODE_TRIP_A) {
 		DB_HMI_Mode.mode_trip_value = (RxCan.RxData[3] << 24) | (RxCan.RxData[2] << 16) | (RxCan.RxData[1] << 8) | RxCan.RxData[0];
@@ -79,9 +79,6 @@ void CANBUS_VCU_Trip_Mode_Read(void) {
 }
 
 void CANBUS_MCU_Dummy_Read(void) {
-	extern uint32_t DB_MCU_RPM;
-	extern uint8_t DB_VCU_Speed;
-
 	// read message
 	DB_MCU_RPM = (RxCan.RxData[3] << 24 | RxCan.RxData[2] << 16 | RxCan.RxData[1] << 8 | RxCan.RxData[0]);
 
@@ -90,8 +87,6 @@ void CANBUS_MCU_Dummy_Read(void) {
 }
 
 void CANBUS_BMS_Dummy_Read(void) {
-	extern uint8_t DB_BMS_SoC;
-
 	// read message
 	DB_BMS_SoC = RxCan.RxData[0];
 }
