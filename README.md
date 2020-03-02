@@ -1,4 +1,6 @@
-# Software Progress:
+# HMI PRIMARY / SPEEDO
+
+## Software Progress:
 - [x] Add IWDG to HMI Secondary 
 - [x] LCD on animation 
 - [x] And add R to Drive mode, also handle the control 
@@ -10,7 +12,7 @@
 - [x] Change "KM/KW" to "KM/KWh" in HMI Primary 
 - [ ] Change LTDC from RGB565 to RGB666 
 
-# Hardware Progress:
+## Hardware Progress:
 - [x] Add line from RGB565 to RGB666 
 - [x] Add SMD Fuse 
 - [x] Power is controlled by HUB 
