@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "_utils.h": "c",
+    "_can.h": "c",
+    "_canbus.h": "c",
+    "_database.h": "c"
+  }
+}

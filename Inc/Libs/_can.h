@@ -1,21 +1,21 @@
 /*
- * _canbus.h
+ * _can.h
  *
  *  Created on: Oct 11, 2019
  *      Author: Puja
  */
 
-#ifndef CANBUS_H_
-#define CANBUS_H_
+#ifndef CAN_H_
+#define CAN_H_
 
-#include "_can.h"
-#include "_config.h"
+#include "_utils.h"
+#include "_canbus.h"
 
 // CAN Nodes
-#define CAN_NODE_VCU													SetBit(0)
-#define CAN_NODE_MCU													SetBit(1)
-#define CAN_NODE_BMS													SetBit(2)
-#define CAN_NODE_HMI													SetBit(3)
+#define CAN_NODE_VCU													BIT(0)
+#define CAN_NODE_MCU													BIT(1)
+#define CAN_NODE_BMS													BIT(2)
+#define CAN_NODE_HMI													BIT(3)
 
 // CAN Node Selector
 #define CAN_NODE															(CAN_NODE_HMI)
@@ -45,4 +45,4 @@ void CANBUS_MCU_Dummy_Read(void);
 void CANBUS_BMS_Dummy_Read(void);
 #endif
 
-#endif /* CANBUS_H_ */
+#endif /* CAN_H_ */

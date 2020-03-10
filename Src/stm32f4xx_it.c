@@ -25,7 +25,7 @@
 #include "task.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "_swv.h"
+#include "_log.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
