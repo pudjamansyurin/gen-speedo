@@ -37,12 +37,12 @@
 
 // ==================================== HMI =========================================
 #if (CAN_NODE & CAN_NODE_HMI)
-uint8_t CANBUS_HMI_Heartbeat(void);
-void CANBUS_VCU_Switch_Read(void);
-void CANBUS_VCU_Select_Set_Read(void);
-void CANBUS_VCU_Trip_Mode_Read(void);
-void CANBUS_MCU_Dummy_Read(void);
-void CANBUS_BMS_Dummy_Read(void);
+uint8_t CAN_HMI_Heartbeat(void);
+void CAN_VCU_Switch_Read(void);
+void CAN_VCU_Select_Set_Read(void);
+void CAN_VCU_Trip_Mode_Read(void);
+void CAN_MCU_Dummy_Read(void);
+void CAN_BMS_Dummy_Read(void);
 #endif
 
 #endif /* CAN_H_ */

@@ -34,7 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+extern db_t DB;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -498,9 +498,7 @@ void StartLcdTask(const void *argument)
   /* Graphic application */
   //  GRAPHICS_MainTask();
   /* USER CODE BEGIN 5 */
-#if !USE_HMI_LEFT
-  BSP_Set_Backlight(1);
-#endif
+  _SetBacklight(1);
   // run main task
   GUI_MainTask();
   /* Infinite loop */
@@ -521,9 +519,6 @@ void StartLcdTask(const void *argument)
 void StartCanRxTask(const void *argument)
 {
   /* USER CODE BEGIN StartCanRxTask */
-#if !USE_HMI_LEFT
-  extern status_t DB_HMI_Status;
-#endif
   uint32_t notifValue;
   uint8_t RelatedCAN;
 
@@ -538,23 +533,21 @@ void StartCanRxTask(const void *argument)
       // handle message
       switch (CANBUS_ReadID()) {
         case CAN_ADDR_VCU_SWITCH:
-          CANBUS_VCU_Switch_Read();
-#if !USE_HMI_LEFT
+          CAN_VCU_Switch_Read();
           // Control back-light
-          BSP_Set_Backlight(DB_HMI_Status.daylight);
-#endif
+          _SetBacklight(DB.hmi1.status.daylight);
           break;
         case CAN_ADDR_VCU_SELECT_SET:
-          CANBUS_VCU_Select_Set_Read();
+          CAN_VCU_Select_Set_Read();
           break;
         case CAN_ADDR_VCU_TRIP_MODE:
-          CANBUS_VCU_Trip_Mode_Read();
+          CAN_VCU_Trip_Mode_Read();
           break;
         case CAN_ADDR_MCU_DUMMY:
-          CANBUS_MCU_Dummy_Read();
+          CAN_MCU_Dummy_Read();
           break;
         case CAN_ADDR_BMS_DUMMY:
-          CANBUS_BMS_Dummy_Read();
+          CAN_BMS_Dummy_Read();
           break;
         default:
           RelatedCAN = 0;
@@ -593,7 +586,7 @@ void StartSerialTask(const void *argument)
   for (;;) {
     // FIXME: remove me as thread
     LOG_StrLn("Serial Task Running");
-    BSP_Led_Toggle(1);
+    _LedToggle(1);
 
     osDelay(250);
   }
@@ -605,9 +598,9 @@ void CallbackTimerCAN(const void *argument)
 {
   /* USER CODE BEGIN CallbackTimerCAN */
   // FIXME: dont use timer, instead use thread with higher priority
-  CANBUS_HMI_Heartbeat();
+  CAN_HMI_Heartbeat();
 
-  BSP_Led_Toggle(2);
+  _LedToggle(2);
   /* USER CODE END CallbackTimerCAN */
 }
 

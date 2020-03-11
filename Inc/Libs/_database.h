@@ -10,11 +10,14 @@
 
 #include "main.h"
 
-#define USE_HMI_LEFT 							0
-#define LD1_PORT                  (USE_HMI_LEFT ? LEFT_LD1_GPIO_Port : RIGHT_LD1_GPIO_Port)    
-#define LD1_PIN                   (USE_HMI_LEFT ? LEFT_LD1_Pin : RIGHT_LD1_Pin)    
+#define LCD_SIZE_X                (320-1)
+#define LCD_SIZE_Y                (240-1)
+
+#define USE_HMI_LEFT 			   1
+#define LD1_PORT                  (USE_HMI_LEFT ? LEFT_LD1_GPIO_Port : RIGHT_LD1_GPIO_Port)
+#define LD1_PIN                   (USE_HMI_LEFT ? LEFT_LD1_Pin : RIGHT_LD1_Pin)
 #define LD2_PORT                  (USE_HMI_LEFT ? LEFT_LD2_GPIO_Port : RIGHT_LD2_GPIO_Port)
-#define LD2_PIN                   (USE_HMI_LEFT ? LEFT_LD2_Pin : RIGHT_LD2_Pin)               
+#define LD2_PIN                   (USE_HMI_LEFT ? LEFT_LD2_Pin : RIGHT_LD2_Pin)
 
 // macro to manipulate bit
 #define BIT(x)                    (1 << x)
@@ -23,6 +26,7 @@
 #define BT(var, x)                (var ^= (1 << x))
 #define BSL(var, x)               (var << x)
 #define BSR(var, x)               ((var >> x) & 0xFF)
+#define BBR(var, x)               ((var >> x) & 0x01)
 
 // list event
 #define EVENT_CAN_RX_IT						BIT(0)
@@ -57,19 +61,18 @@ typedef enum {
 
 // struct list
 typedef struct {
-  sw_mode_t mode;
+  sw_mode_t sel;
   uint8_t hide;
-  sw_mode_drive_t mode_drive;
-  sw_mode_trip_t mode_trip;
-  uint32_t mode_trip_value;
-  sw_mode_report_t mode_report;
-  uint8_t mode_report_value;
+  sw_mode_drive_t drive;
+  struct {
+    sw_mode_trip_t sel;
+    uint32_t val;
+  } trip;
+  struct {
+    sw_mode_report_t sel;
+    uint8_t val;
+  } report;
 } modes_t;
-
-typedef struct {
-  RTC_DateTypeDef date;
-  RTC_TimeTypeDef time;
-} timestamp_t;
 
 typedef struct {
   uint8_t abs;
@@ -83,5 +86,33 @@ typedef struct {
   uint8_t sein_left;
   uint8_t sein_right;
 } status_t;
+
+typedef struct {
+  struct {
+    uint8_t signal;
+    uint8_t speed;
+    uint32_t odometer;
+  } vcu;
+  struct {
+    status_t status;
+    modes_t mode;
+  } hmi1;
+  struct {
+    uint8_t rpm;
+  } mcu;
+  struct {
+    uint8_t soc;
+  } bms;
+} db_t;
+
+typedef struct {
+  GUI_CONST_STORAGE GUI_BITMAP *background;
+  struct {
+    GUI_POINT points[25];
+    int count;
+  } overlay;
+} guiapp_t;
+
+void Reset_Database(void);
 
 #endif /* DATABASE_H_ */

@@ -7,10 +7,29 @@
 
 #include "_database.h"
 
-uint32_t DB_VCU_Odometer;
-uint8_t DB_VCU_Signal;
-uint8_t DB_VCU_Speed;
-status_t DB_HMI_Status;
-modes_t DB_HMI_Mode;
-uint32_t DB_MCU_RPM;
-uint8_t DB_BMS_SoC;
+db_t DB;
+
+void Reset_Database(void) {
+  DB.vcu.signal = 0;
+  DB.vcu.speed = 0;
+  DB.vcu.odometer = 0;
+  DB.mcu.rpm = 0;
+  DB.bms.soc = 0;
+  DB.hmi1.status.abs = 0;
+  DB.hmi1.status.mirror = 0;
+  DB.hmi1.status.lamp = 0;
+  DB.hmi1.status.warning = 1;
+  DB.hmi1.status.temperature = 0;
+  DB.hmi1.status.finger = 0;
+  DB.hmi1.status.keyless = 0;
+  DB.hmi1.status.daylight = 1;
+  DB.hmi1.status.sein_left = 0;
+  DB.hmi1.status.sein_right = 0;
+  DB.hmi1.mode.sel = SW_M_TRIP;
+  DB.hmi1.mode.hide = 0;
+  DB.hmi1.mode.drive = SW_M_DRIVE_E;
+  DB.hmi1.mode.trip.sel = SW_M_TRIP_A;
+  DB.hmi1.mode.trip.val = 0;
+  DB.hmi1.mode.report.sel = SW_M_REPORT_RANGE;
+  DB.hmi1.mode.report.val = 0;
+}

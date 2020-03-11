@@ -7,26 +7,44 @@
 
 #include "_utils.h"
 
-void BSP_Led_Write(uint8_t number, uint8_t state) {
-	if (number == 1) {
-		HAL_GPIO_WritePin(LD1_PORT, LD1_PIN, state);
-	} else {
-		HAL_GPIO_WritePin(LD2_PORT, LD2_PIN, state);
-	}
+void _Indicator(const GUI_BITMAP *bg, const GUI_BITMAP *fg, uint16_t x, uint16_t y, uint8_t status, uint8_t alpha) {
+  GUI_RECT pRect = { x, y, x + fg->XSize, y + fg->YSize };
+
+  // draw background
+  GUI_SetClipRect(&pRect);
+  GUI_DrawBitmapEx(bg, x, y, x, y, 1000, 1000);
+  GUI_SetClipRect(NULL);
+
+  // draw indicator image
+  if (status == 1) {
+    GUI_SetAlpha(alpha);
+    GUI_DrawBitmap(fg, x, y);
+    GUI_SetAlpha(255);
+  }
 }
 
-void BSP_Led_Toggle(uint8_t number) {
-	if (number == 1) {
-		HAL_GPIO_TogglePin(LD1_PORT, LD1_PIN);
-	} else {
-		HAL_GPIO_TogglePin(LD2_PORT, LD2_PIN);
-	}
+void _LedWrite(uint8_t number, uint8_t state) {
+  if (number == 1) {
+    HAL_GPIO_WritePin(LD1_PORT, LD1_PIN, state);
+  } else {
+    HAL_GPIO_WritePin(LD2_PORT, LD2_PIN, state);
+  }
 }
 
-void BSP_Set_Backlight(uint8_t state) {
+void _LedToggle(uint8_t number) {
+  if (number == 1) {
+    HAL_GPIO_TogglePin(LD1_PORT, LD1_PIN);
+  } else {
+    HAL_GPIO_TogglePin(LD2_PORT, LD2_PIN);
+  }
+}
+
+void _SetBacklight(uint8_t state) {
+#if !USE_HMI_LEFT
 	HAL_GPIO_WritePin(RIGHT_BACKLIGHT_GPIO_Port, RIGHT_BACKLIGHT_Pin, state);
+#endif
 }
 
-float D2R(uint16_t deg) {
-	return deg * M_PI / 180.0;
+float _D2R(uint16_t deg) {
+  return deg * M_PI / 180.0;
 }

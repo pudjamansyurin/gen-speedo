@@ -20,14 +20,8 @@
  **********************************************************************
  */
 #include <stdlib.h>
+
 #include "GUI.h"
-#include "HMI_Left_Finger.c"
-#include "HMI_Left_Keyless.c"
-#include "HMI_Left_Mirror.c"
-#include "HMI_Left_Sein.c"
-#include "HMI_Left_Trip_A.c"
-#include "HMI_Left_Trip_B.c"
-#include "Square721_BT23.c"
 
 #ifndef GUI_CONST_STORAGE
   #define GUI_CONST_STORAGE const

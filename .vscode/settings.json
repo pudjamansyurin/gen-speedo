@@ -3,6 +3,9 @@
     "_utils.h": "c",
     "_can.h": "c",
     "_canbus.h": "c",
-    "_database.h": "c"
+    "_database.h": "c",
+    "_guiapp_left.h": "c",
+    "_guiapp_right.h": "c",
+    "_guiapp.h": "c"
   }
 }

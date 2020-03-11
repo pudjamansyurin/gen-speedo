@@ -1769,7 +1769,7 @@ static const U8 _acImage_6[3557] = {
 
 /*********************************************************************
 *
-*       _acImage_7, "D:\GEN Drive\HMI\Desain\rev2\extracted\HMI_Left_Jarum.png", ID_IMAGE_7_IMAGE_0
+*       _acImage_7, "D:\GEN Drive\HMI\Desain\rev2\extracted\HMI_Left_Needle.png", ID_IMAGE_7_IMAGE_0
 */
 static const U8 _acImage_7[4141] = {
   0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D, 0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x7C, 0x00, 0x00, 0x00, 0x08, 0x08, 0x06, 0x00, 0x00, 0x00, 0x3B, 0xAD, 0x9B, 0x69, 0x00, 0x00, 0x00, 0x09, 0x70, 0x48, 0x59, 0x73, 0x00,
@@ -1889,7 +1889,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
   { IMAGE_CreateIndirect, "HMI_Left_Lamp", ID_IMAGE_4, 267, 161, 28, 18, 0, IMAGE_CF_AUTOSIZE, 0 },
   { IMAGE_CreateIndirect, "HMI_Left_Trip_A", ID_IMAGE_5, 131, 86, 26, 15, 0, IMAGE_CF_AUTOSIZE, 0 },
   { IMAGE_CreateIndirect, "HMI_Left_Trip_B", ID_IMAGE_6, 131, 86, 26, 15, 0, IMAGE_CF_AUTOSIZE, 0 },
-  { IMAGE_CreateIndirect, "HMI_Left_Jarum", ID_IMAGE_7, 60, 160, 124, 8, 0, IMAGE_CF_ALPHA | IMAGE_CF_AUTOSIZE, 0 },
+  { IMAGE_CreateIndirect, "HMI_Left_Needle", ID_IMAGE_7, 60, 160, 124, 8, 0, IMAGE_CF_ALPHA | IMAGE_CF_AUTOSIZE, 0 },
   { TEXT_CreateIndirect, "Sub_Trip", ID_TEXT_0, 159, 84, 64, 24, 0, 0x64, 0 },
   { TEXT_CreateIndirect, "Total_Trip", ID_TEXT_1, 159, 108, 64, 20, 0, 0x64, 0 },
   // USER START (Optionally insert additional widgets)
@@ -2000,7 +2000,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     pData = _GetImageById(ID_IMAGE_6_IMAGE_0, &FileSize);
     IMAGE_SetPNG(hItem, pData, FileSize);
     //
-    // Initialization of 'HMI_Left_Jarum'
+    // Initialization of 'HMI_Left_Needle'
     //
     hItem = WM_GetDialogItem(pMsg->hWin, ID_IMAGE_7);
     pData = _GetImageById(ID_IMAGE_7_IMAGE_0, &FileSize);

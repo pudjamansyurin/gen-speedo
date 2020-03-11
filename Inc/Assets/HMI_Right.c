@@ -21,20 +21,8 @@
  */
 
 #include <stdlib.h>
+
 #include "GUI.h"
-#include "HMI_Right_Abs.c"
-#include "HMI_Right_Warning.c"
-#include "HMI_Right_Temp.c"
-#include "HMI_Right_Lamp.c"
-#include "HMI_Right_Sein.c"
-#include "HMI_Right_Battery_Full.c"
-#include "HMI_Right_Battery_Low.c"
-#include "Square721_BT10.c"
-#include "Square721_BT14.c"
-#include "Square721_BT17.c"
-#include "Square721_BT31.c"
-#include "Square721_BT60.c"
-#include "Square721_Cn_BT62.c"
 
 #ifndef GUI_CONST_STORAGE
   #define GUI_CONST_STORAGE const
