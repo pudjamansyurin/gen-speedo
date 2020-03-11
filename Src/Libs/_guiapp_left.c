@@ -115,6 +115,7 @@ void LEFT_ModeTrip(latch_t *tmp) {
   tmp->db.hmi1.mode.trip.sel = DB.hmi1.mode.trip.sel;
   tmp->flag.mode.trip = (DB.hmi1.mode.sel == SW_M_TRIP && DB.hmi1.mode.hide);
 
+  // Mode Trip Label
   if (!tmp->flag.mode.trip) {
     // Decide the image
     if (DB.hmi1.mode.trip.sel == SW_M_TRIP_A) {
@@ -122,7 +123,6 @@ void LEFT_ModeTrip(latch_t *tmp) {
     } else {
       pImage = &bmHMI_Left_Trip_B;
     }
-    // Mode Trip Label
     _GUI_Indicator(GAPP.background, pImage, x, y, 1, 254);
   }
 

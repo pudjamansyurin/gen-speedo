@@ -14,7 +14,6 @@
 #define LCD_SIZE_X                (320-1)
 #define LCD_SIZE_Y                (240-1)
 
-
 // Others Parameters
 #define MCU_SPEED_MAX 						200
 #define MCU_RPM_MAX 							99999

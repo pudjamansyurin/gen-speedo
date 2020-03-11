@@ -173,15 +173,6 @@ void RIGHT_Battery(latch_t *tmp) {
   int8_t status;
   GUI_CONST_STORAGE GUI_BITMAP *bmHMI_Right_Battery;
 
-  if (tmp->init || tmp->db.bms.soc != DB.bms.soc) {
-    tmp->db.bms.soc = DB.bms.soc;
-
-    // Battery Value
-    GUI_SetFont(&GUI_FontSquare721_BT31);
-    sprintf(str, "%02u", DB.bms.soc);
-    GUI_DispStringInRectWrap(str, &(RECT.battery.value), GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
-  }
-
   // Detect trigger event
   if (DB.bms.soc <= 20) {
     if (!tmp->flag.soc.low) {
@@ -218,6 +209,15 @@ void RIGHT_Battery(latch_t *tmp) {
     GUI_DispStringInRectWrap(str, &(RECT.battery.unit), GUI_TA_BOTTOM | GUI_TA_LEFT, GUI_WRAPMODE_NONE);
     GUI_SetColor(0xFFC0C0C0);
   }
+
+  // Battery Value
+  if (tmp->init || tmp->db.bms.soc != DB.bms.soc) {
+    tmp->db.bms.soc = DB.bms.soc;
+
+    GUI_SetFont(&GUI_FontSquare721_BT31);
+    sprintf(str, "%02u", DB.bms.soc);
+    GUI_DispStringInRectWrap(str, &(RECT.battery.value), GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
+  }
 }
 
 void RIGHT_ModeReport(latch_t *tmp) {
@@ -232,7 +232,8 @@ void RIGHT_ModeReport(latch_t *tmp) {
   }
 
   // Mode Report Label
-  if (tmp->init || tmp->db.hmi1.mode.report.sel != DB.hmi1.mode.report.sel
+  if (tmp->init
+      || tmp->db.hmi1.mode.report.sel != DB.hmi1.mode.report.sel
       || tmp->flag.mode.report != (DB.hmi1.mode.sel == SW_M_REPORT && DB.hmi1.mode.hide)) {
     tmp->db.hmi1.mode.report.sel = DB.hmi1.mode.report.sel;
     tmp->flag.mode.report = (DB.hmi1.mode.sel == SW_M_REPORT && DB.hmi1.mode.hide);
@@ -246,7 +247,8 @@ void RIGHT_ModeReport(latch_t *tmp) {
   }
 
   // Mode Report Value
-  if (tmp->init || tmp->db.hmi1.mode.report.val != DB.hmi1.mode.report.val) {
+  if (tmp->init
+      || tmp->db.hmi1.mode.report.val != DB.hmi1.mode.report.val) {
     tmp->db.hmi1.mode.report.val = DB.hmi1.mode.report.val;
 
     GUI_SetFont(&GUI_FontSquare721_BT17);
@@ -257,8 +259,9 @@ void RIGHT_ModeReport(latch_t *tmp) {
 
 void RIGHT_ModeDrive(latch_t *tmp) {
   char str[20];
-  
-  if (tmp->init || tmp->db.hmi1.mode.drive != DB.hmi1.mode.drive
+
+  if (tmp->init
+      || tmp->db.hmi1.mode.drive != DB.hmi1.mode.drive
       || tmp->flag.mode.drive != (DB.hmi1.mode.sel == SW_M_DRIVE && DB.hmi1.mode.hide)) {
     tmp->db.hmi1.mode.drive = DB.hmi1.mode.drive;
     tmp->flag.mode.drive = (DB.hmi1.mode.sel == SW_M_DRIVE && DB.hmi1.mode.hide);
@@ -270,8 +273,7 @@ void RIGHT_ModeDrive(latch_t *tmp) {
       }
       GUI_SetFont(&GUI_FontSquare721_Cn_BT62);
       sprintf(str, "%c", COL.drive.mode[DB.hmi1.mode.drive]);
-      GUI_DispStringInRectWrap(str, &(RECT.drive),
-      GUI_TA_VCENTER | GUI_TA_HCENTER, GUI_WRAPMODE_NONE);
+      GUI_DispStringInRectWrap(str, &(RECT.drive), GUI_TA_VCENTER | GUI_TA_HCENTER, GUI_WRAPMODE_NONE);
     } else {
       // hide
       _GUI_ClearRect(&(RECT.drive));
