@@ -29,12 +29,6 @@
 #define CAN_ADDR_BMS_DUMMY										0x7B0
 #define CAN_ADDR_HMI_DUMMY										0x7C0
 
-// Others Parameters
-#define MCU_SPEED_MAX 												200
-#define MCU_RPM_MAX 													99999
-#define VCU_ODOMETER_MAX											99999
-#define HMI_DRIVE_MODE_MAX										3
-
 // ==================================== HMI =========================================
 #if (CAN_NODE & CAN_NODE_HMI)
 uint8_t CAN_HMI_Heartbeat(void);

@@ -16,25 +16,6 @@
 #include "_guiapp_right.h"
 #endif
 
-typedef struct {
-  db_t db;
-  struct {
-    struct {
-      uint8_t trip;
-      uint8_t drive;
-      uint8_t report;
-    } mode;
-    struct {
-      uint8_t low;
-      uint8_t update;
-    } soc;
-    struct {
-      uint8_t low;
-      TickType_t tick;
-    } battery;
-  } flag;
-} latch_t;
-
 /* Functions prototypes --------------------------------------------------------*/
 void GUI_MainTask(void);
 

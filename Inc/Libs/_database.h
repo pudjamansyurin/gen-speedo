@@ -9,11 +9,19 @@
 #define DATABASE_H_
 
 #include "main.h"
+#include "cmsis_os.h"
 
 #define LCD_SIZE_X                (320-1)
 #define LCD_SIZE_Y                (240-1)
 
-#define USE_HMI_LEFT 			   1
+
+// Others Parameters
+#define MCU_SPEED_MAX 						200
+#define MCU_RPM_MAX 							99999
+#define VCU_ODOMETER_MAX					99999
+#define HMI_DRIVE_MODE_MAX				3
+
+#define USE_HMI_LEFT 			        1
 #define LD1_PORT                  (USE_HMI_LEFT ? LEFT_LD1_GPIO_Port : RIGHT_LD1_GPIO_Port)
 #define LD1_PIN                   (USE_HMI_LEFT ? LEFT_LD1_Pin : RIGHT_LD1_Pin)
 #define LD2_PORT                  (USE_HMI_LEFT ? LEFT_LD2_GPIO_Port : RIGHT_LD2_GPIO_Port)
@@ -29,7 +37,7 @@
 #define BBR(var, x)               ((var >> x) & 0x01)
 
 // list event
-#define EVENT_CAN_RX_IT						BIT(0)
+#define EVENT_CAN_RX_IT			  BIT(0)
 
 // enum list
 typedef enum {
@@ -112,6 +120,26 @@ typedef struct {
     int count;
   } overlay;
 } guiapp_t;
+
+typedef struct {
+  db_t db;
+  struct {
+    struct {
+      uint8_t trip;
+      uint8_t drive;
+      uint8_t report;
+    } mode;
+    struct {
+      uint8_t low;
+      uint8_t update;
+    } soc;
+    struct {
+      uint8_t low;
+      TickType_t tick;
+    } battery;
+  } flag;
+  uint8_t init;
+} latch_t;
 
 void Reset_Database(void);
 

@@ -7,7 +7,11 @@
 
 #include "_utils.h"
 
-void _Indicator(const GUI_BITMAP *bg, const GUI_BITMAP *fg, uint16_t x, uint16_t y, uint8_t status, uint8_t alpha) {
+void _GUI_ClearRect(GUI_RECT *rect) {
+  GUI_ClearRect(rect->x0, rect->y0, rect->x1, rect->y1);
+}
+
+void _GUI_Indicator(const GUI_BITMAP *bg, const GUI_BITMAP *fg, uint16_t x, uint16_t y, uint8_t status, uint8_t alpha) {
   GUI_RECT pRect = { x, y, x + fg->XSize, y + fg->YSize };
 
   // draw background
@@ -41,7 +45,7 @@ void _LedToggle(uint8_t number) {
 
 void _SetBacklight(uint8_t state) {
 #if !USE_HMI_LEFT
-	HAL_GPIO_WritePin(RIGHT_BACKLIGHT_GPIO_Port, RIGHT_BACKLIGHT_Pin, state);
+  HAL_GPIO_WritePin(RIGHT_BACKLIGHT_GPIO_Port, RIGHT_BACKLIGHT_Pin, state);
 #endif
 }
 
