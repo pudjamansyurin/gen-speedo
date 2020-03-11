@@ -4,7 +4,7 @@
  *  Created on: Mar 11, 2020
  *      Author: pudja
  */
-
+/* Includes ------------------------------------------------------------------*/
 #include "_guiapp_left.h"
 
 #if USE_HMI_LEFT
@@ -17,8 +17,10 @@
 #include "HMI_Left.c"
 #include "Square721_BT23.c"
 
+/* External variables ------------------------------------------------------------------*/
 extern db_t DB;
 
+/* Variables ------------------------------------------------------------------*/
 guiapp_t GAPP = {
     .background = &bmHMI_Left,
     .overlay = {
@@ -51,6 +53,7 @@ collection_t COL = {
     .max = 112
 };
 
+/* Functions -----------------------------------------------------------------*/
 void LEFT_Animation(void) {
   uint16_t k;
 

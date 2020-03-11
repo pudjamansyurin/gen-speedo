@@ -8,19 +8,19 @@
 /* Includes ------------------------------------------------------------------*/
 #include "_guiapp.h"
 
-/* External variable */
+/* External variables --------------------------------------------------------*/
 extern IWDG_HandleTypeDef hiwdg;
 extern db_t DB;
 extern guiapp_t GAPP;
+extern collection_t COL;
 
-/* Functions prototypes --------------------------------------------------------*/
+/* Functions prototypes ------------------------------------------------------*/
 static void RunBootAnimation(void);
 static void BootOverlay(guiapp_t *GA);
 
-/* Main task ------------------------------------------------------------------*/
+/* Functions -----------------------------------------------------------------*/
 void GUI_MainTask(void) {
   /* USER CODE BEGIN GUI_MainTask */
-  extern collection_t COL;
   latch_t TMP = { 0 };
   uint32_t notifValue;
   BaseType_t xResult;
@@ -37,23 +37,20 @@ void GUI_MainTask(void) {
 
   // Set overlay on all indicator on boot
   BootOverlay(&GAPP);
-
   // Run booting animation on start
   RunBootAnimation();
-
-  // Draw the layer 0 background
+  // Draw the layer 0 (background)
   GUI_SelectLayer(0);
   GUI_DrawBitmap(GAPP.background, 0, 0);
   GUI_Delay(500);
-
   // Make layer 1 transparent
   GUI_SelectLayer(1);
   GUI_SetBkColor(GUI_TRANSPARENT);
   GUI_Clear();
   GUI_SetBkColor(GUI_BLACK);
 
+  // Infinitive loop
   TMP.init = 1;
-
   while (1) {
     // Feed the dog
     HAL_IWDG_Refresh(&hiwdg);
@@ -143,7 +140,6 @@ void GUI_MainTask(void) {
   /* USER CODE END GUI_MainTask */
 }
 
-// Functions list
 static void RunBootAnimation(void) {
   // start of booting animation
   GUI_SelectLayer(1);

@@ -8,8 +8,10 @@
 #ifndef GAPP_RIGHT_H_
 #define GAPP_RIGHT_H_
 
+/* Includes ------------------------------------------------------------------*/
 #include "_utils.h"
 
+/* Struct prototypes -------------------------------------------------------*/
 typedef struct {
   GUI_RECT speed;
   GUI_RECT signal;
@@ -35,6 +37,7 @@ typedef struct {
   } drive;
 } collection_t;
 
+/* Functions prototypes -------------------------------------------------------*/
 void RIGHT_Animation(void);
 void RIGHT_Sein(latch_t *tmp);
 void RIGHT_Warning(latch_t *tmp);

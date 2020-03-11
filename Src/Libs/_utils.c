@@ -5,8 +5,10 @@
  *      Author: Puja
  */
 
+/* Includes ------------------------------------------------------------------*/
 #include "_utils.h"
 
+/* Functions -----------------------------------------------------------------*/
 void _GUI_ClearRect(GUI_RECT *rect) {
   GUI_ClearRect(rect->x0, rect->y0, rect->x1, rect->y1);
 }

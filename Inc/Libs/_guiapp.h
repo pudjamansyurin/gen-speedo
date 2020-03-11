@@ -16,7 +16,7 @@
 #include "_guiapp_right.h"
 #endif
 
-/* Functions prototypes --------------------------------------------------------*/
+/* Functions prototypes -------------------------------------------------------*/
 void GUI_MainTask(void);
 
 #endif /* GAPP_H_ */

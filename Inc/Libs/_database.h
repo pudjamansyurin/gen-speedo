@@ -8,19 +8,19 @@
 #ifndef DATABASE_H_
 #define DATABASE_H_
 
+/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
 
+// Others Parameters
+#define MCU_SPEED_MAX 			  200
+#define MCU_RPM_MAX 			  99999
+#define VCU_ODOMETER_MAX		  99999
+#define HMI_DRIVE_MODE_MAX		  3
 #define LCD_SIZE_X                (320-1)
 #define LCD_SIZE_Y                (240-1)
 
-// Others Parameters
-#define MCU_SPEED_MAX 						200
-#define MCU_RPM_MAX 							99999
-#define VCU_ODOMETER_MAX					99999
-#define HMI_DRIVE_MODE_MAX				3
-
-#define USE_HMI_LEFT 			        1
+#define USE_HMI_LEFT 			  1
 #define LD1_PORT                  (USE_HMI_LEFT ? LEFT_LD1_GPIO_Port : RIGHT_LD1_GPIO_Port)
 #define LD1_PIN                   (USE_HMI_LEFT ? LEFT_LD1_Pin : RIGHT_LD1_Pin)
 #define LD2_PORT                  (USE_HMI_LEFT ? LEFT_LD2_GPIO_Port : RIGHT_LD2_GPIO_Port)
@@ -38,7 +38,7 @@
 // list event
 #define EVENT_CAN_RX_IT			  BIT(0)
 
-// enum list
+/* Enum prototypes -------------------------------------------------------*/
 typedef enum {
   SW_M_DRIVE = 0,
   SW_M_TRIP = 1,
@@ -66,7 +66,7 @@ typedef enum {
   SW_M_REPORT_MAX = 1,
 } sw_mode_report_t;
 
-// struct list
+/* Struct prototypes -------------------------------------------------------*/
 typedef struct {
   sw_mode_t sel;
   uint8_t hide;
@@ -140,6 +140,7 @@ typedef struct {
   uint8_t init;
 } latch_t;
 
+/* Functions prototypes -------------------------------------------------------*/
 void Reset_Database(void);
 
 #endif /* DATABASE_H_ */

@@ -8,15 +8,16 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
-#include <stdlib.h>				// for: itoa()
-#include <stdio.h>				// for: sprintf()
-#include <math.h>					// for: M_PI
-#include <string.h>             // for: strlen()
+/* Includes ------------------------------------------------------------------*/
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
 #include <limits.h>
 #include "_database.h"
 #include "_log.h"
 
-// Function prototype
+/* Functions prototypes -------------------------------------------------------*/
 void _GUI_ClearRect(GUI_RECT *rect);
 void _GUI_Indicator(const GUI_BITMAP *bg, const GUI_BITMAP *fg, uint16_t x, uint16_t y, uint8_t status, uint8_t alpha);
 void _LedWrite(uint8_t number, uint8_t state);

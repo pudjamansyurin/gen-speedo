@@ -346,7 +346,7 @@ static void MX_RTC_Init(void)
 {
 
   /* USER CODE BEGIN RTC_Init 0 */
-
+  // FIXME: remove, i am useless
   /* USER CODE END RTC_Init 0 */
 
   RTC_TimeTypeDef sTime = { 0 };

@@ -4,7 +4,7 @@
  *  Created on: Mar 11, 2020
  *      Author: pudja
  */
-
+/* Includes ------------------------------------------------------------------*/
 #include "_guiapp_right.h"
 
 #if !USE_HMI_LEFT
@@ -23,8 +23,10 @@
 #include "Square721_BT60.c"
 #include "Square721_Cn_BT62.c"
 
+/* External variables ------------------------------------------------------------------*/
 extern db_t DB;
 
+/* Variables ------------------------------------------------------------------*/
 guiapp_t GAPP = {
     .background = &bmHMI_Right,
     .overlay = {
@@ -68,7 +70,6 @@ rect_t RECT = {
         .unit = { 251 + (-10), 194, 251 + 28 + (-10), 194 + 10 }
     }
 };
-
 collection_t COL = {
     .drive = {
         .mode = { 'E', 'S', 'P', 'R' }
@@ -79,6 +80,7 @@ collection_t COL = {
     }
 };
 
+/* Functions -----------------------------------------------------------------*/
 void RIGHT_Animation(void) {
   uint16_t k;
 

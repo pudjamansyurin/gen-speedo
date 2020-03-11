@@ -5,9 +5,10 @@
  *  \date Oct 11, 2019
  *  \author Puja
  */
-
+/* Includes ------------------------------------------------------------------*/
 #include "_can.h"
 
+/* External variables ------------------------------------------------------------------*/
 extern canbus_t CB;
 extern db_t DB;
 

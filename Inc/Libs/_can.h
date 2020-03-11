@@ -8,6 +8,7 @@
 #ifndef CAN_H_
 #define CAN_H_
 
+/* Includes ------------------------------------------------------------------*/
 #include "_utils.h"
 #include "_canbus.h"
 

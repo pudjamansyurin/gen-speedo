@@ -8,8 +8,10 @@
 #ifndef GAPP_LEFT_H_
 #define GAPP_LEFT_H_
 
+/* Includes ------------------------------------------------------------------*/
 #include "_utils.h"
 
+/* Struct prototypes -------------------------------------------------------*/
 typedef struct {
   struct {
     GUI_RECT total;
@@ -25,6 +27,7 @@ typedef struct {
   uint8_t max;
 } collection_t;
 
+/* Functions prototypes -------------------------------------------------------*/
 void LEFT_Animation(void);
 void LEFT_Sein(latch_t *tmp);
 void LEFT_Finger(latch_t *tmp);
