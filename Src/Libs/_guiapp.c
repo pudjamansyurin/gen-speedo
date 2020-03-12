@@ -132,7 +132,7 @@ void GUI_MainTask(void) {
     // Mode Report
     RIGHT_ModeReport(&TMP);
     // Mode Drive
-    RIGHT_ModeDrive(&TMP)
+    RIGHT_ModeDrive(&TMP);
 #endif
 
     TMP.init = 0;
