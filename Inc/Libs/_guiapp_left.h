@@ -32,6 +32,7 @@ void LEFT_Animation(void);
 void LEFT_Sein(latch_t *tmp);
 void LEFT_Finger(latch_t *tmp);
 void LEFT_Mirror(latch_t *tmp);
+uint8_t LEFT_NeedUpdate(latch_t *tmp);
 void LEFT_Keyless(latch_t *tmp);
 void LEFT_Odometer(latch_t *tmp);
 void LEFT_ModeTrip(latch_t *tmp);

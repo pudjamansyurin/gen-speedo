@@ -95,6 +95,17 @@ void LEFT_Mirror(latch_t *tmp) {
   }
 }
 
+uint8_t LEFT_NeedUpdate(latch_t *tmp) {
+  return (tmp->reset
+      || tmp->db.hmi1.mode.trip.sel != DB.hmi1.mode.trip.sel
+      || tmp->db.hmi1.mode.trip.val != DB.hmi1.mode.trip.val
+      || tmp->db.vcu.odometer != DB.vcu.odometer
+      || tmp->db.mcu.rpm != DB.mcu.rpm
+      || tmp->db.hmi1.status.keyless != DB.hmi1.status.keyless
+      || tmp->flag.mode.trip != (DB.hmi1.mode.sel == SW_M_TRIP && DB.hmi1.mode.hide)
+  );
+}
+
 void LEFT_Keyless(latch_t *tmp) {
   tmp->db.hmi1.status.keyless = DB.hmi1.status.keyless;
 

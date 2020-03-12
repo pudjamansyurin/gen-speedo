@@ -16,7 +16,7 @@ extern collection_t COL;
 
 /* Functions prototypes ------------------------------------------------------*/
 static void RunBootAnimation(void);
-static void BootOverlay(guiapp_t *GA);
+static void BootOverlay(guiapp_t *gapp);
 
 /* Functions -----------------------------------------------------------------*/
 void GUI_MainTask(void) {
@@ -81,14 +81,7 @@ void GUI_MainTask(void) {
     LEFT_Mirror(&TMP);
 
     // Others
-    if (TMP.reset
-        || TMP.db.hmi1.mode.trip.sel != DB.hmi1.mode.trip.sel
-        || TMP.db.hmi1.mode.trip.val != DB.hmi1.mode.trip.val
-        || TMP.db.vcu.odometer != DB.vcu.odometer
-        || TMP.db.mcu.rpm != DB.mcu.rpm
-        || TMP.db.hmi1.status.keyless != DB.hmi1.status.keyless
-        || TMP.flag.mode.trip != (DB.hmi1.mode.sel == SW_M_TRIP && DB.hmi1.mode.hide)) {
-
+    if (LEFT_NeedUpdate(&TMP)) {
       // Set Color
       GUI_SetColor(0xFFC0C0C0);
       // Clear Left HMI
@@ -156,7 +149,7 @@ static void RunBootAnimation(void) {
   // end of booting animation
 }
 
-static void BootOverlay(guiapp_t *GA) {
+static void BootOverlay(guiapp_t *gapp) {
   // Make layer 1 transparent
   GUI_SelectLayer(1);
   GUI_SetBkColor(GUI_TRANSPARENT);
@@ -164,10 +157,10 @@ static void BootOverlay(guiapp_t *GA) {
 
   // Give overlay on indicators at layer 1
   GUI_SelectLayer(0);
-  GUI_DrawBitmap(GA->background, 0, 0);
+  GUI_DrawBitmap(gapp->background, 0, 0);
 
   // overlay for first booting
   GUI_SetColor(GUI_BLACK);
-  GUI_FillPolygon(GA->overlay.points, GA->overlay.count, 0, 0);
+  GUI_FillPolygon(gapp->overlay.points, gapp->overlay.count, 0, 0);
 }
 /*************************** End of file ****************************/
