@@ -55,8 +55,8 @@ void GUI_MainTask(void) {
     // Feed the dog
     HAL_IWDG_Refresh(&hiwdg);
 
+    // check if has new can message
     if (!TMP.reset) {
-      // check if has new can message
       xResult = xTaskNotifyWait(0x00, ULONG_MAX, &notifValue, pdMS_TO_TICKS(500));
       // if not receive any CAN message
       if (xResult == pdFALSE) {
@@ -64,37 +64,28 @@ void GUI_MainTask(void) {
       }
     }
 
-    // init hook
+    // reset hook
     if (TMP.reset) {
-      // reset data to default
       Reset_Database();
-      // set back-light ON
       _SetBacklight(1);
     }
 
 #if USE_HMI_LEFT
-    // Sein Left
     LEFT_Sein(&TMP);
-    // Finger
     LEFT_Finger(&TMP);
-    // Mirror
     LEFT_Mirror(&TMP);
 
     // Others
     if (LEFT_NeedUpdate(&TMP)) {
-      // Set Color
-      GUI_SetColor(0xFFC0C0C0);
       // Clear Left HMI
       GUI_MEMDEV_Select(hMem);
       GUI_DrawBitmapEx(GAPP.background, COL.x, COL.y - COL.r, COL.x, COL.y - COL.r, 1000, 1000);
 
-      // Mode Trip
+      // Set Color
+      GUI_SetColor(0xFFC0C0C0);
       LEFT_ModeTrip(&TMP);
-      // Odometer
       LEFT_Odometer(&TMP);
-      // Keyless
       LEFT_Keyless(&TMP);
-      // RPM Needle
       LEFT_Needle(&TMP, &COL);
 
       // Print result to LCD
@@ -103,28 +94,18 @@ void GUI_MainTask(void) {
     }
 
 #else
-    // Sein Right
     RIGHT_Sein(&TMP);
-    // Warning
     RIGHT_Warning(&TMP);
-    // ABS
     RIGHT_ABS(&TMP);
-    // Temperature
     RIGHT_Temperature(&TMP);
-    // Lamp
     RIGHT_Lamp(&TMP);
 
     // Set Color
     GUI_SetColor(0xFFC0C0C0);
-    // Speed
     RIGHT_Speed(&TMP);
-    // Battery
     RIGHT_Battery(&TMP);
-    // Signal
     RIGHT_Signal(&TMP);
-    // Mode Report
     RIGHT_ModeReport(&TMP);
-    // Mode Drive
     RIGHT_ModeDrive(&TMP);
 #endif
 
@@ -138,9 +119,9 @@ static void RunBootAnimation(void) {
   GUI_SelectLayer(1);
   GUI_SetBkColor(GUI_BLACK);
   GUI_Clear();
+
   // start of circular booting animation
   GUI_SetColor(GUI_TRANSPARENT);
-
 #if USE_HMI_LEFT
   LEFT_Animation();
 #else
