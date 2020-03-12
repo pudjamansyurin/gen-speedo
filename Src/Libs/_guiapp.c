@@ -50,22 +50,22 @@ void GUI_MainTask(void) {
   GUI_SetBkColor(GUI_BLACK);
 
   // Infinitive loop
-  TMP.init = 1;
+  TMP.reset = 1;
   while (1) {
     // Feed the dog
     HAL_IWDG_Refresh(&hiwdg);
 
-    if (!TMP.init) {
+    if (!TMP.reset) {
       // check if has new can message
       xResult = xTaskNotifyWait(0x00, ULONG_MAX, &notifValue, pdMS_TO_TICKS(500));
       // if not receive any CAN message
       if (xResult == pdFALSE) {
-        TMP.init = 1;
+        TMP.reset = 1;
       }
     }
 
     // init hook
-    if (TMP.init) {
+    if (TMP.reset) {
       // reset data to default
       Reset_Database();
       // set back-light ON
@@ -81,7 +81,7 @@ void GUI_MainTask(void) {
     LEFT_Mirror(&TMP);
 
     // Others
-    if (TMP.init
+    if (TMP.reset
         || TMP.db.hmi1.mode.trip.sel != DB.hmi1.mode.trip.sel
         || TMP.db.hmi1.mode.trip.val != DB.hmi1.mode.trip.val
         || TMP.db.vcu.odometer != DB.vcu.odometer
@@ -135,7 +135,7 @@ void GUI_MainTask(void) {
     RIGHT_ModeDrive(&TMP);
 #endif
 
-    TMP.init = 0;
+    TMP.reset = 0;
   }
   /* USER CODE END GUI_MainTask */
 }

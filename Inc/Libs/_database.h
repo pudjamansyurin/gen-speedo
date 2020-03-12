@@ -137,7 +137,7 @@ typedef struct {
       TickType_t tick;
     } battery;
   } flag;
-  uint8_t init;
+  uint8_t reset;
 } latch_t;
 
 /* Functions prototypes -------------------------------------------------------*/

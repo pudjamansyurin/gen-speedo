@@ -107,7 +107,7 @@ void RIGHT_Sein(latch_t *tmp) {
 }
 
 void RIGHT_Warning(latch_t *tmp) {
-  if (tmp->init || tmp->db.hmi1.status.warning != DB.hmi1.status.warning) {
+  if (tmp->reset || tmp->db.hmi1.status.warning != DB.hmi1.status.warning) {
     tmp->db.hmi1.status.warning = DB.hmi1.status.warning;
 
     _GUI_Indicator(GAPP.background, &bmHMI_Right_Warning, 4, 130, DB.hmi1.status.warning, 200);
@@ -115,7 +115,7 @@ void RIGHT_Warning(latch_t *tmp) {
 }
 
 void RIGHT_ABS(latch_t *tmp) {
-  if (tmp->init || tmp->db.hmi1.status.abs != DB.hmi1.status.abs) {
+  if (tmp->reset || tmp->db.hmi1.status.abs != DB.hmi1.status.abs) {
     tmp->db.hmi1.status.abs = DB.hmi1.status.abs;
 
     _GUI_Indicator(GAPP.background, &bmHMI_Right_Abs, 63, 135, DB.hmi1.status.abs, 200);
@@ -123,7 +123,7 @@ void RIGHT_ABS(latch_t *tmp) {
 }
 
 void RIGHT_Temperature(latch_t *tmp) {
-  if (tmp->init || tmp->db.hmi1.status.temperature != DB.hmi1.status.temperature) {
+  if (tmp->reset || tmp->db.hmi1.status.temperature != DB.hmi1.status.temperature) {
     tmp->db.hmi1.status.temperature = DB.hmi1.status.temperature;
 
     _GUI_Indicator(GAPP.background, &bmHMI_Right_Temp, 34, 131, DB.hmi1.status.temperature, 200);
@@ -131,7 +131,7 @@ void RIGHT_Temperature(latch_t *tmp) {
 }
 
 void RIGHT_Lamp(latch_t *tmp) {
-  if (tmp->init || tmp->db.hmi1.status.lamp != DB.hmi1.status.lamp) {
+  if (tmp->reset || tmp->db.hmi1.status.lamp != DB.hmi1.status.lamp) {
     tmp->db.hmi1.status.lamp = DB.hmi1.status.lamp;
 
     _GUI_Indicator(GAPP.background, &bmHMI_Right_Lamp, 190, 136, DB.hmi1.status.lamp, 200);
@@ -141,7 +141,7 @@ void RIGHT_Lamp(latch_t *tmp) {
 void RIGHT_Speed(latch_t *tmp) {
   char str[20];
 
-  if (tmp->init || tmp->db.vcu.speed != DB.vcu.speed) {
+  if (tmp->reset || tmp->db.vcu.speed != DB.vcu.speed) {
     tmp->db.vcu.speed = DB.vcu.speed;
 
     GUI_SetFont(&GUI_FontSquare721_BT60);
@@ -151,7 +151,7 @@ void RIGHT_Speed(latch_t *tmp) {
 }
 
 void RIGHT_Signal(latch_t *tmp) {
-  if (tmp->init || tmp->db.vcu.signal != DB.vcu.signal) {
+  if (tmp->reset || tmp->db.vcu.signal != DB.vcu.signal) {
     tmp->db.vcu.signal = DB.vcu.signal;
 
     // fill all black
@@ -193,7 +193,7 @@ void RIGHT_Battery(latch_t *tmp) {
   }
 
   // Battery Icon & Unit
-  if (tmp->init || tmp->flag.soc.update) {
+  if (tmp->reset || tmp->flag.soc.update) {
     tmp->flag.soc.update = 0;
 
     // Battery Icon
@@ -213,7 +213,7 @@ void RIGHT_Battery(latch_t *tmp) {
   }
 
   // Battery Value
-  if (tmp->init || tmp->db.bms.soc != DB.bms.soc) {
+  if (tmp->reset || tmp->db.bms.soc != DB.bms.soc) {
     tmp->db.bms.soc = DB.bms.soc;
 
     GUI_SetFont(&GUI_FontSquare721_BT31);
@@ -226,7 +226,7 @@ void RIGHT_ModeReport(latch_t *tmp) {
   char str[20];
 
   // Mode Report Unit
-  if (tmp->init || tmp->db.hmi1.mode.report.sel != DB.hmi1.mode.report.sel) {
+  if (tmp->reset || tmp->db.hmi1.mode.report.sel != DB.hmi1.mode.report.sel) {
     _GUI_ClearRect(&(RECT.report.unit));
     GUI_SetFont(&GUI_FontSquare721_BT10);
     sprintf(str, "%s", COL.report.unit[DB.hmi1.mode.report.sel]);
@@ -234,7 +234,7 @@ void RIGHT_ModeReport(latch_t *tmp) {
   }
 
   // Mode Report Label
-  if (tmp->init
+  if (tmp->reset
       || tmp->db.hmi1.mode.report.sel != DB.hmi1.mode.report.sel
       || tmp->flag.mode.report != (DB.hmi1.mode.sel == SW_M_REPORT && DB.hmi1.mode.hide)) {
     tmp->db.hmi1.mode.report.sel = DB.hmi1.mode.report.sel;
@@ -249,7 +249,7 @@ void RIGHT_ModeReport(latch_t *tmp) {
   }
 
   // Mode Report Value
-  if (tmp->init
+  if (tmp->reset
       || tmp->db.hmi1.mode.report.val != DB.hmi1.mode.report.val) {
     tmp->db.hmi1.mode.report.val = DB.hmi1.mode.report.val;
 
@@ -262,7 +262,7 @@ void RIGHT_ModeReport(latch_t *tmp) {
 void RIGHT_ModeDrive(latch_t *tmp) {
   char str[20];
 
-  if (tmp->init
+  if (tmp->reset
       || tmp->db.hmi1.mode.drive != DB.hmi1.mode.drive
       || tmp->flag.mode.drive != (DB.hmi1.mode.sel == SW_M_DRIVE && DB.hmi1.mode.hide)) {
     tmp->db.hmi1.mode.drive = DB.hmi1.mode.drive;

@@ -80,7 +80,7 @@ void LEFT_Sein(latch_t *tmp) {
 }
 
 void LEFT_Finger(latch_t *tmp) {
-  if (tmp->init || tmp->db.hmi1.status.finger != DB.hmi1.status.finger) {
+  if (tmp->reset || tmp->db.hmi1.status.finger != DB.hmi1.status.finger) {
     tmp->db.hmi1.status.finger = DB.hmi1.status.finger;
 
     _GUI_Indicator(GAPP.background, &bmHMI_Left_Finger, 293, 127, DB.hmi1.status.finger, 200);
@@ -88,7 +88,7 @@ void LEFT_Finger(latch_t *tmp) {
 }
 
 void LEFT_Mirror(latch_t *tmp) {
-  if (tmp->init || tmp->db.hmi1.status.mirror != DB.hmi1.status.mirror) {
+  if (tmp->reset || tmp->db.hmi1.status.mirror != DB.hmi1.status.mirror) {
     tmp->db.hmi1.status.mirror = DB.hmi1.status.mirror;
 
     _GUI_Indicator(GAPP.background, &bmHMI_Left_Mirror, 261, 129, DB.hmi1.status.mirror, 200);
