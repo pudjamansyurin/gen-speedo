@@ -42,7 +42,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "STemwin_wrapper.h"
 #include "GUI_Private.h"
-#include "_sdram.h"
 
 /** @addtogroup LCD CONFIGURATION
  * @{
@@ -295,8 +294,6 @@ static void _Index2ColorBulk_##PFIX##_DMA2D(void * pIndex, LCD_COLOR * pColor, U
 /** @defgroup LCD CONFIGURATION_Private_Variables
  * @{
  */
-extern LTDC_HandleTypeDef hltdc;
-extern DMA2D_HandleTypeDef hdma2d;
 static LCD_LayerPropTypedef layer_prop[GUI_NUM_LAYERS];
 
 /* Array for speeding up nibble conversion for A4 bitmaps */
@@ -1570,10 +1567,14 @@ void LCD_X_Config(void) {
 /*******************************************************************************
  Main configuration
  *******************************************************************************/
-void GRAPHICS_Init(void) {
-  /* Initialize SDRAM soft */
+void GRAPHICS_HW_Init(void) {
+  MX_FMC_Init();
   MX_SDRAM_InitEx();
+  MX_LTDC_Init();
+  MX_DMA2D_Init();
+}
 
+void GRAPHICS_Init(void) {
   /* Initialize the GUI */
   GUI_Init();
 

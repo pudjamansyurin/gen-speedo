@@ -50,19 +50,27 @@
 #ifndef STEMWIN_WRAPPER_H
 #define STEMWIN_WRAPPER_H
 
+/* External ------------------------------------------------------------------*/
+extern LTDC_HandleTypeDef hltdc;
+extern DMA2D_HandleTypeDef hdma2d;
+extern void MX_FMC_Init(void);
+extern void MX_LTDC_Init(void);
+extern void MX_DMA2D_Init(void);
+
 /* Exported types ------------------------------------------------------------*/
 typedef struct
 {
-  int32_t      address;
-  int32_t      pending_buffer;
-  int32_t      buffer_index;
-  int32_t      xSize;
-  int32_t      ySize;
-  int32_t      BytesPerPixel;
-  LCD_API_COLOR_CONV   *pColorConvAPI;
+  int32_t address;
+  int32_t pending_buffer;
+  int32_t buffer_index;
+  int32_t xSize;
+  int32_t ySize;
+  int32_t BytesPerPixel;
+  LCD_API_COLOR_CONV *pColorConvAPI;
 }
 LCD_LayerPropTypedef;
 
+void GRAPHICS_HW_Init(void);
 void GRAPHICS_Init(void);
 #endif /* STEMWIN_WRAPPER_H */
 
