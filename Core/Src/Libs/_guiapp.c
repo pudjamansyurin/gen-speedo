@@ -58,6 +58,7 @@ void GUI_MainTask(void) {
   while (1) {
     // Feed the dog
     HAL_IWDG_Refresh(&hiwdg);
+    LOG_StrLn("GUI:Refresh");
 
     // check if has new CAN message
     xResult = xTaskNotifyWait(0x00, ULONG_MAX, &notifValue, pdMS_TO_TICKS(500));
