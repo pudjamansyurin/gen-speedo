@@ -5,14 +5,48 @@
  *      Author: Puja Kusuma
  */
 
+/* Includes ------------------------------------------------------------------*/
 #include "_canbus.h"
 
+/* External variables ---------------------------------------------------------*/
 extern osThreadId CanRxTaskHandle;
 extern osMutexId CanTxMutexHandle;
 extern CAN_HandleTypeDef hcan2;
+
+/* Public variables -----------------------------------------------------------*/
 canbus_t CB;
 
+/* Public functions implementation ---------------------------------------------*/
 void CANBUS_Init(void) {
+  /* Configure the CAN Filter */
+  if (CANBUS_Filter()) {
+    /* Start Error */
+    Error_Handler();
+  }
+
+  /* Start the CAN peripheral */
+  if (HAL_CAN_Start(&hcan2) != HAL_OK) {
+    /* Start Error */
+    Error_Handler();
+  }
+
+  /* Activate CAN RX notification */
+  if (HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK) {
+    /* Notification Error */
+    Error_Handler();
+  }
+}
+
+void CANBUS_Header(CAN_TxHeaderTypeDef *TxHeader, uint32_t StdId, uint32_t DLC) {
+  /* Configure Global Transmission process */
+  TxHeader->RTR = CAN_RTR_DATA;
+  TxHeader->IDE = CAN_ID_STD;
+  TxHeader->TransmitGlobalTime = DISABLE;
+  TxHeader->StdId = StdId;
+  TxHeader->DLC = DLC;
+}
+
+uint8_t CANBUS_Filter(void) {
   CAN_FilterTypeDef sFilterConfig;
 
   /* Configure the CAN Filter */
@@ -32,38 +66,7 @@ void CANBUS_Init(void) {
   // activate filter
   sFilterConfig.FilterActivation = ENABLE;
 
-  /* Configure the CAN Filter */
-  if (HAL_CAN_ConfigFilter(&hcan2, &sFilterConfig) != HAL_OK) {
-    /* Start Error */
-    Error_Handler();
-  }
-
-  /* Start the CAN peripheral */
-  if (HAL_CAN_Start(&hcan2) != HAL_OK) {
-    /* Start Error */
-    Error_Handler();
-  }
-
-  /* Activate CAN RX notification */
-  if (HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK) {
-    /* Notification Error */
-    Error_Handler();
-  }
-}
-
-/**
- * Function to set global TxHeader variable.
- * @param TxHeader
- * @param StdId
- * @param DLC
- */
-void CANBUS_Header(CAN_TxHeaderTypeDef *TxHeader, uint32_t StdId, uint32_t DLC) {
-  /* Configure Global Transmission process */
-  TxHeader->RTR = CAN_RTR_DATA;
-  TxHeader->IDE = CAN_ID_STD;
-  TxHeader->TransmitGlobalTime = DISABLE;
-  TxHeader->StdId = StdId;
-  TxHeader->DLC = DLC;
+  return (HAL_CAN_ConfigFilter(&hcan2, &sFilterConfig) == HAL_OK);
 }
 
 /*----------------------------------------------------------------------------
@@ -120,6 +123,7 @@ uint8_t CANBUS_Read(canbus_rx_t *rx) {
     }
     LOG_Enter();
   }
+
   return (status == HAL_OK);
 }
 

@@ -45,6 +45,7 @@
 
 #include "main.h"
 #include "GUIDRV_Lin.h"
+#include "_sdram.h"
 #include <stdint.h>
 
 #ifndef STEMWIN_WRAPPER_H

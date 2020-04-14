@@ -84,6 +84,19 @@ void RIGHT_Animation(void) {
   uint16_t k;
 
   for (k = 0; k <= 20; k++) {
+    GUI_FillRect(320 - 40 - k, 120 - 1, 320 - 40, 170);
+    GUI_Delay(20);
+  }
+  for (k = 0; k <= 180; k++) {
+    GUI_DrawPie(320 - 60, 120 - 1, 250, 270 - k, 270, 0);
+    GUI_Delay(10);
+  }
+  for (k = 0; k <= 20; k++) {
+    GUI_FillRect(320 - 60, 50, 320 - 60 + k, 120 - 1);
+    GUI_Delay(20);
+  }
+
+  for (k = 0; k <= 20; k++) {
     GUI_FillRect(40, 120 - 1, 40 + k, 170);
     GUI_Delay(20);
   }
