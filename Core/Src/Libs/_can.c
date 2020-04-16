@@ -25,7 +25,7 @@ uint8_t CAN_HMI_Heartbeat(void) {
 /* ------------------------------------ READER ------------------------------------- */
 void CAN_VCU_Switch_Read(void) {
   // read message
-  DB.hmi1.status.abs = CB.rx.data[0] & 0x01;
+  DB.hmi1.status.abs = BBR(CB.rx.data[0], 0);
   DB.hmi1.status.mirror = BBR(CB.rx.data[0], 1);
   DB.hmi1.status.lamp = BBR(CB.rx.data[0], 2);
   DB.hmi1.status.warning = BBR(CB.rx.data[0], 3);
@@ -35,7 +35,7 @@ void CAN_VCU_Switch_Read(void) {
   DB.hmi1.status.daylight = BBR(CB.rx.data[0], 7);
 
   // sein
-  DB.hmi1.status.sein_left = CB.rx.data[1] & 0x01;
+  DB.hmi1.status.sein_left = BBR(CB.rx.data[1], 0);
   DB.hmi1.status.sein_right = BBR(CB.rx.data[1], 1);
 
   // signal
@@ -47,10 +47,10 @@ void CAN_VCU_Switch_Read(void) {
 
 void CAN_VCU_Select_Set_Read(void) {
   // read message
-  DB.hmi1.mode.drive = CB.rx.data[0] & 0x03;
+  DB.hmi1.mode.drive = BBR2(CB.rx.data[0], 0);
   DB.hmi1.mode.trip.sel = BBR(CB.rx.data[0], 2);
   DB.hmi1.mode.report.sel = BBR(CB.rx.data[0], 3);
-  DB.hmi1.mode.sel = (CB.rx.data[0] >> 4) & 0x03;
+  DB.hmi1.mode.sel = BBR2(CB.rx.data[0], 4);
   DB.hmi1.mode.hide = BBR(CB.rx.data[0], 6);
 
   // decide report value according to mode

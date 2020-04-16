@@ -12,7 +12,6 @@
 #include "main.h"
 #include "cmsis_os.h"
 
-
 #define USE_HMI_LEFT 			  1
 // Others Parameters
 #define MCU_SPEED_MAX 			  200
@@ -35,6 +34,7 @@
 #define BSL(var, x)               (var << x)
 #define BSR(var, x)               ((var >> x) & 0xFF)
 #define BBR(var, x)               ((var >> x) & 0x01)
+#define BBR2(var, x)               ((var >> x) & 0x03)
 
 // list event
 #define EVENT_CAN_RX_IT			  BIT(0)
