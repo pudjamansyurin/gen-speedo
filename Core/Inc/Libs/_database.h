@@ -106,7 +106,8 @@ typedef struct {
     modes_t mode;
   } hmi1;
   struct {
-    uint8_t rpm;
+    int16_t rpm;
+    int16_t temperature;
   } mcu;
   struct {
     uint8_t soc;
