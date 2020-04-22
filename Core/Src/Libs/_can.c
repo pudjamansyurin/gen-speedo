@@ -25,18 +25,18 @@ uint8_t CAN_HMI_Heartbeat(void) {
 /* ------------------------------------ READER ------------------------------------- */
 void CAN_VCU_Switch_Read(void) {
   // read message
-  DB.hmi1.status.abs = BBR(CB.rx.data.u8[0], 0);
-  DB.hmi1.status.mirror = BBR(CB.rx.data.u8[0], 1);
-  DB.hmi1.status.lamp = BBR(CB.rx.data.u8[0], 2);
-  DB.hmi1.status.warning = BBR(CB.rx.data.u8[0], 3);
-  DB.hmi1.status.temperature = BBR(CB.rx.data.u8[0], 4);
-  DB.hmi1.status.finger = BBR(CB.rx.data.u8[0], 5);
-  DB.hmi1.status.keyless = BBR(CB.rx.data.u8[0], 6);
-  DB.hmi1.status.daylight = BBR(CB.rx.data.u8[0], 7);
+  DB.hmi1.status.abs = _R1(CB.rx.data.u8[0], 0);
+  DB.hmi1.status.mirror = _R1(CB.rx.data.u8[0], 1);
+  DB.hmi1.status.lamp = _R1(CB.rx.data.u8[0], 2);
+  DB.hmi1.status.warning = _R1(CB.rx.data.u8[0], 3);
+  DB.hmi1.status.temperature = _R1(CB.rx.data.u8[0], 4);
+  DB.hmi1.status.finger = _R1(CB.rx.data.u8[0], 5);
+  DB.hmi1.status.keyless = _R1(CB.rx.data.u8[0], 6);
+  DB.hmi1.status.daylight = _R1(CB.rx.data.u8[0], 7);
 
   // sein
-  DB.hmi1.status.sein_left = BBR(CB.rx.data.u8[1], 0);
-  DB.hmi1.status.sein_right = BBR(CB.rx.data.u8[1], 1);
+  DB.hmi1.status.sein_left = _R1(CB.rx.data.u8[1], 0);
+  DB.hmi1.status.sein_right = _R1(CB.rx.data.u8[1], 1);
 
   // signal
   DB.vcu.signal = CB.rx.data.u8[2];
@@ -47,11 +47,11 @@ void CAN_VCU_Switch_Read(void) {
 
 void CAN_VCU_Select_Set_Read(void) {
   // read message
-  DB.hmi1.mode.drive = BBR2(CB.rx.data.u8[0], 0);
-  DB.hmi1.mode.trip.sel = BBR(CB.rx.data.u8[0], 2);
-  DB.hmi1.mode.report.sel = BBR(CB.rx.data.u8[0], 3);
-  DB.hmi1.mode.sel = BBR2(CB.rx.data.u8[0], 4);
-  DB.hmi1.mode.hide = BBR(CB.rx.data.u8[0], 6);
+  DB.hmi1.mode.drive = _R2(CB.rx.data.u8[0], 0);
+  DB.hmi1.mode.trip.sel = _R1(CB.rx.data.u8[0], 2);
+  DB.hmi1.mode.report.sel = _R1(CB.rx.data.u8[0], 3);
+  DB.hmi1.mode.sel = _R2(CB.rx.data.u8[0], 4);
+  DB.hmi1.mode.hide = _R1(CB.rx.data.u8[0], 6);
 
   // decide report value according to mode
   if (DB.hmi1.mode.report.sel == SW_M_REPORT_RANGE) {

@@ -31,10 +31,10 @@
 #define BV(var, x)                (var |= (1 << x))
 #define BC(var, x)                (var &= ~(1 << x))
 #define BT(var, x)                (var ^= (1 << x))
-#define BSL(var, x)               (var << x)
-#define BSR(var, x)               ((var >> x) & 0xFF)
-#define BBR(var, x)               ((var >> x) & 0x01)
-#define BBR2(var, x)              ((var >> x) & 0x03)
+#define _L(var, x)                (var << x)
+#define _R1(var, x)               ((var >> x) & 0x01)
+#define _R2(var, x)               ((var >> x) & 0x03)
+#define _R8(var, x)               ((var >> x) & 0xFF)
 
 // list event
 #define EVENT_CAN_RX_IT			  BIT(0)
