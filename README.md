@@ -10,9 +10,9 @@
 - [x] Blink on Select, and Set 
 - [x] Reset the Trip meter on 3sec press  
 - [x] Change "KM/KW" to "KM/KWh" in HMI Primary 
-- [ ] Handle manual STemWin migration 
-- [ ] Change LTDC from RGB565 to RGB666 
-- [ ] Migrate RTOSv1 to RTOSv2
+- [x] Handle manual STemWin migration 
+- [x] Migrate RTOSv1 to RTOSv2
+- [x] ~~Change LTDC from RGB565 to RGB666~~
 
 ## Hardware Progress:
 - [x] Add line from RGB565 to RGB666 

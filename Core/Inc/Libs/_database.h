@@ -13,7 +13,7 @@
 #include "cmsis_os.h"
 
 /* Exported constants --------------------------------------------------------*/
-#define USE_HMI_LEFT 			  0
+#define USE_HMI_LEFT 			  1
 // Others Parameters
 #define MCU_SPEED_MAX 			  200
 #define MCU_RPM_MAX 			  99999
@@ -38,8 +38,11 @@
 #define _R2(var, x)               ((var >> x) & 0x03)
 #define _R8(var, x)               ((var >> x) & 0xFF)
 
-// list event
-#define EVENT_CAN_RX_IT			  BIT(0)
+// Events (for Individual Thread)
+#define EVT_CAN_RX_IT			  BIT(0)
+
+// Events group (for All Threads)
+#define EVENT_READY               BIT(0)
 
 /* Enum prototypes -------------------------------------------------------*/
 typedef enum {

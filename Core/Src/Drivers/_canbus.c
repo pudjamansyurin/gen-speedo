@@ -9,8 +9,8 @@
 #include "_canbus.h"
 
 /* External variables ---------------------------------------------------------*/
-extern osThreadId CanRxTaskHandle;
-extern osMutexId CanTxMutexHandle;
+extern osThreadId_t CanRxTaskHandle;
+extern osMutexId_t CanTxMutexHandle;
 extern CAN_HandleTypeDef hcan2;
 
 /* Public variables -----------------------------------------------------------*/
@@ -148,8 +148,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
   // read rx fifo
   if (CANBUS_Read(&(CB.rx))) {
     // signal only when RTOS started
-    if (osKernelRunning()) {
-      xTaskNotifyFromISR(CanRxTaskHandle, EVENT_CAN_RX_IT, eSetBits, &xHigherPriorityTaskWoken);
+    if (osKernelGetState() == osKernelRunning) {
+      xTaskNotifyFromISR(CanRxTaskHandle, EVT_CAN_RX_IT, eSetBits, &xHigherPriorityTaskWoken);
     }
   }
 
@@ -158,7 +158,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 
 /* Private functions implementation --------------------------------------------*/
 static void lock(void) {
-  osMutexWait(CanTxMutexHandle, osWaitForever);
+  osMutexAcquire(CanTxMutexHandle, osWaitForever);
 }
 
 static void unlock(void) {

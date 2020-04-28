@@ -9,6 +9,7 @@
 #include "_guiapp.h"
 
 /* External variables --------------------------------------------------------*/
+extern osEventFlagsId_t GlobalEventHandle;
 extern IWDG_HandleTypeDef hiwdg;
 extern db_t DB;
 extern guiapp_t GAPP;
@@ -19,11 +20,14 @@ static void BootOverlay(guiapp_t *GA);
 static void BootAnimation(void);
 
 /* Functions -----------------------------------------------------------------*/
-void GUI_MainTask(void) {
+void StartDisplayTask(void *argument) {
   /* USER CODE BEGIN GUI_MainTask */
   latch_t TMP = { 0 };
   uint32_t notifValue;
   BaseType_t xResult;
+
+  // wait until ManagerTask done
+  osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
   // reset first
   Reset_Database();

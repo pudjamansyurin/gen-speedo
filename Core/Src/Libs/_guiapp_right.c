@@ -180,8 +180,8 @@ void RIGHT_Battery(latch_t *tmp) {
       tmp->flag.soc.low = 1;
       tmp->flag.battery.low = 0;
       tmp->flag.soc.update = 1;
-    } else if ((osKernelSysTick() - tmp->flag.battery.tick) >= pdMS_TO_TICKS(500)) {
-      tmp->flag.battery.tick = osKernelSysTick();
+    } else if ((osKernelGetTickCount() - tmp->flag.battery.tick) >= pdMS_TO_TICKS(500)) {
+      tmp->flag.battery.tick = osKernelGetTickCount();
       tmp->flag.battery.low = !tmp->flag.battery.low;
       tmp->flag.soc.update = 1;
     }

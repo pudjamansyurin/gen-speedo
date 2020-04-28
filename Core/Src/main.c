@@ -57,14 +57,46 @@ UART_HandleTypeDef huart1;
 
 SDRAM_HandleTypeDef hsdram1;
 
-osThreadId LcdTaskHandle;
-osThreadId CanRxTaskHandle;
-osThreadId CanTxTaskHandle;
-osThreadId GeneralTaskHandle;
-osMutexId CanTxMutexHandle;
-osMutexId LogMutexHandle;
+/* Definitions for ManagerTask */
+osThreadId_t ManagerTaskHandle;
+const osThreadAttr_t ManagerTask_attributes = {
+    .name = "ManagerTask",
+    .priority = (osPriority_t) osPriorityRealtime7,
+    .stack_size = 128 * 4
+};
+/* Definitions for DisplayTask */
+osThreadId_t DisplayTaskHandle;
+const osThreadAttr_t DisplayTask_attributes = {
+    .name = "DisplayTask",
+    .priority = (osPriority_t) osPriorityAboveNormal,
+    .stack_size = 256 * 4
+};
+/* Definitions for CanTxTask */
+osThreadId_t CanTxTaskHandle;
+const osThreadAttr_t CanTxTask_attributes = {
+    .name = "CanTxTask",
+    .priority = (osPriority_t) osPriorityNormal,
+    .stack_size = 128 * 4
+};
+/* Definitions for CanRxTask */
+osThreadId_t CanRxTaskHandle;
+const osThreadAttr_t CanRxTask_attributes = {
+    .name = "CanRxTask",
+    .priority = (osPriority_t) osPriorityHigh,
+    .stack_size = 128 * 4
+};
+/* Definitions for CanTxMutex */
+osMutexId_t CanTxMutexHandle;
+const osMutexAttr_t CanTxMutex_attributes = {
+    .name = "CanTxMutex"
+};
+/* Definitions for LogMutex */
+osMutexId_t LogMutexHandle;
+const osMutexAttr_t LogMutex_attributes = {
+    .name = "LogMutex"
+};
 /* USER CODE BEGIN PV */
-
+osEventFlagsId_t GlobalEventHandle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -77,10 +109,10 @@ void MX_FMC_Init(void);
 static void MX_IWDG_Init(void);
 void MX_LTDC_Init(void);
 static void MX_USART1_UART_Init(void);
-void StartLcdTask(const void *argument);
-void StartCanRxTask(const void *argument);
-void StartCanTxTask(const void *argument);
-void StartGeneralTask(const void *argument);
+void StartManagerTask(void *argument);
+extern void StartDisplayTask(void *argument);
+void StartCanTxTask(void *argument);
+void StartCanRxTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -129,14 +161,14 @@ int main(void)
   GRAPHICS_Init();
   /* USER CODE END 2 */
 
+  /* Init scheduler */
+  osKernelInitialize();
   /* Create the mutex(es) */
-  /* definition and creation of CanTxMutex */
-  osMutexDef(CanTxMutex);
-  CanTxMutexHandle = osMutexCreate(osMutex(CanTxMutex));
+  /* creation of CanTxMutex */
+  CanTxMutexHandle = osMutexNew(&CanTxMutex_attributes);
 
-  /* definition and creation of LogMutex */
-  osMutexDef(LogMutex);
-  LogMutexHandle = osMutexCreate(osMutex(LogMutex));
+  /* creation of LogMutex */
+  LogMutexHandle = osMutexNew(&LogMutex_attributes);
 
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
@@ -153,24 +185,21 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
+  GlobalEventHandle = osEventFlagsNew(NULL);
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* definition and creation of LcdTask */
-  osThreadDef(LcdTask, StartLcdTask, osPriorityNormal, 0, 256);
-  LcdTaskHandle = osThreadCreate(osThread(LcdTask), NULL);
+  /* creation of ManagerTask */
+  ManagerTaskHandle = osThreadNew(StartManagerTask, NULL, &ManagerTask_attributes);
 
-  /* definition and creation of CanRxTask */
-  osThreadDef(CanRxTask, StartCanRxTask, osPriorityNormal, 0, 128);
-  CanRxTaskHandle = osThreadCreate(osThread(CanRxTask), NULL);
+  /* creation of DisplayTask */
+  DisplayTaskHandle = osThreadNew(StartDisplayTask, NULL, &DisplayTask_attributes);
 
-  /* definition and creation of CanTxTask */
-  osThreadDef(CanTxTask, StartCanTxTask, osPriorityNormal, 0, 128);
-  //  CanTxTaskHandle = osThreadCreate(osThread(CanTxTask), NULL);
+  /* creation of CanTxTask */
+  CanTxTaskHandle = osThreadNew(StartCanTxTask, NULL, &CanTxTask_attributes);
 
-  /* definition and creation of GeneralTask */
-  osThreadDef(GeneralTask, StartGeneralTask, osPriorityNormal, 0, 128);
-  GeneralTaskHandle = osThreadCreate(osThread(GeneralTask), NULL);
+  /* creation of CanRxTask */
+  CanRxTaskHandle = osThreadNew(StartCanRxTask, NULL, &CanRxTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -357,7 +386,7 @@ static void MX_IWDG_Init(void)
 
   /* USER CODE END IWDG_Init 1 */
   hiwdg.Instance = IWDG;
-  hiwdg.Init.Prescaler = IWDG_PRESCALER_64;
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_16;
   hiwdg.Init.Reload = 4095;
   if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
       {
@@ -638,23 +667,49 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE END 4 */
 
-/* USER CODE BEGIN Header_StartLcdTask */
+/* USER CODE BEGIN Header_StartManagerTask */
 /**
- * @brief  Function implementing the LcdTask thread.
+ * @brief  Function implementing the ManagerTask thread.
  * @param  argument: Not used
  * @retval None
  */
-/* USER CODE END Header_StartLcdTask */
-void StartLcdTask(const void *argument)
+/* USER CODE END Header_StartManagerTask */
+void StartManagerTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
-  // taken over by GUI loop
-  GUI_MainTask();
+
+  // Release other threads
+  osEventFlagsSet(GlobalEventHandle, EVENT_READY);
+
   /* Infinite loop */
   for (;;) {
     osDelay(1);
   }
   /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_StartCanTxTask */
+/**
+ * @brief Function implementing the CanTxTask thread.
+ * @param argument: Not used
+ * @retval None
+ */
+/* USER CODE END Header_StartCanTxTask */
+void StartCanTxTask(void *argument)
+{
+  /* USER CODE BEGIN StartCanTxTask */
+  TickType_t lastWake;
+
+  // wait until ManagerTask done
+  osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
+
+  /* Infinite loop */
+  for (;;) {
+    CAN_HMI_Heartbeat();
+    // Periodic interval
+    vTaskDelayUntil(&lastWake, pdMS_TO_TICKS(500));
+  }
+  /* USER CODE END StartCanTxTask */
 }
 
 /* USER CODE BEGIN Header_StartCanRxTask */
@@ -664,11 +719,14 @@ void StartLcdTask(const void *argument)
  * @retval None
  */
 /* USER CODE END Header_StartCanRxTask */
-void StartCanRxTask(const void *argument)
+void StartCanRxTask(void *argument)
 {
   /* USER CODE BEGIN StartCanRxTask */
   uint32_t notifValue;
   uint8_t related;
+
+  // wait until ManagerTask done
+  osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
   /* Infinite loop */
   for (;;) {
@@ -676,7 +734,7 @@ void StartCanRxTask(const void *argument)
     xTaskNotifyWait(0x00, ULONG_MAX, &notifValue, portMAX_DELAY);
 
     // proceed event
-    if ((notifValue & EVENT_CAN_RX_IT)) {
+    if ((notifValue & EVT_CAN_RX_IT)) {
       related = 1;
       // handle message
       switch (CANBUS_ReadID()) {
@@ -699,45 +757,11 @@ void StartCanRxTask(const void *argument)
 
       // notify GUI thread
       if (related) {
-        xTaskNotify(LcdTaskHandle, 0x01, eSetBits);
+        xTaskNotify(DisplayTaskHandle, 0x01, eSetBits);
       }
     }
   }
   /* USER CODE END StartCanRxTask */
-}
-
-/* USER CODE BEGIN Header_StartCanTxTask */
-/**
- * @brief Function implementing the CanTxTask thread.
- * @param argument: Not used
- * @retval None
- */
-/* USER CODE END Header_StartCanTxTask */
-void StartCanTxTask(const void *argument)
-{
-  /* USER CODE BEGIN StartCanTxTask */
-  /* Infinite loop */
-  for (;;) {
-    CAN_HMI_Heartbeat();
-  }
-  /* USER CODE END StartCanTxTask */
-}
-
-/* USER CODE BEGIN Header_StartGeneralTask */
-/**
- * @brief Function implementing the GeneralTask thread.
- * @param argument: Not used
- * @retval None
- */
-/* USER CODE END Header_StartGeneralTask */
-void StartGeneralTask(const void *argument)
-{
-  /* USER CODE BEGIN StartGeneralTask */
-  /* Infinite loop */
-  for (;;) {
-    osDelay(1000);
-  }
-  /* USER CODE END StartGeneralTask */
 }
 
 /**
@@ -778,12 +802,12 @@ void Error_Handler(void)
 
 #ifdef  USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */

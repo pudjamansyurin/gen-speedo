@@ -9,7 +9,7 @@
 #include "_log.h"
 
 /* External variables ----------------------------------------------------------*/
-extern osMutexId LogMutexHandle;
+extern osMutexId_t LogMutexHandle;
 
 /* Private functions declarations ----------------------------------------------*/
 static void lock(void);
@@ -19,11 +19,11 @@ static void unlock(void);
 void LOG_Char(char ch) {
   uint32_t tick;
 
-  tick = osKernelSysTick();
+  tick = osKernelGetTickCount();
   // wait if busy
   while (1) {
     if (ITM->PORT[0].u32 != 0 ||
-        osKernelSysTick() - tick >= pdMS_TO_TICKS(10)) {
+        osKernelGetTickCount() - tick >= pdMS_TO_TICKS(10)) {
       break;
     }
     osDelay(1);
@@ -203,7 +203,7 @@ void LOG_BufHexFancy(char *buf, uint16_t bufsize, uint8_t column_width, char sub
 
 /* Private functions implementations ----------------------------------------------*/
 static void lock(void) {
-  osMutexWait(LogMutexHandle, osWaitForever);
+  osMutexAcquire(LogMutexHandle, osWaitForever);
 }
 
 static void unlock(void) {

@@ -17,6 +17,6 @@
 #endif
 
 /* Functions prototypes -------------------------------------------------------*/
-void GUI_MainTask(void);
+void StartDisplayTask(void *argument);
 
 #endif /* GAPP_H_ */
