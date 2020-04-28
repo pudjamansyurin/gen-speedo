@@ -32,6 +32,12 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+#include <limits.h>
+
 #include "GUI.h"
 #include "STemwin_wrapper.h"
 /* USER CODE END Includes */

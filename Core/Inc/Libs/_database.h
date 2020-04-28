@@ -12,7 +12,8 @@
 #include "main.h"
 #include "cmsis_os.h"
 
-#define USE_HMI_LEFT 			  1
+/* Exported constants --------------------------------------------------------*/
+#define USE_HMI_LEFT 			  0
 // Others Parameters
 #define MCU_SPEED_MAX 			  200
 #define MCU_RPM_MAX 			  99999
@@ -27,11 +28,12 @@
 #define LD2_PIN                   (USE_HMI_LEFT ? LEFT_LD2_Pin : RIGHT_LD2_Pin)
 
 // macro to manipulate bit
-#define BIT(x)                    (1 << x)
-#define BV(var, x)                (var |= (1 << x))
-#define BC(var, x)                (var &= ~(1 << x))
-#define BT(var, x)                (var ^= (1 << x))
+#define BIT(x)                    (1ULL << x)
+#define BV(var, x)                (var |= (1ULL << x))
+#define BC(var, x)                (var &= ~(1ULL << x))
+#define BT(var, x)                (var ^= (1ULL << x))
 #define _L(var, x)                (var << x)
+#define _R(var, x)                (var >> x)
 #define _R1(var, x)               ((var >> x) & 0x01)
 #define _R2(var, x)               ((var >> x) & 0x03)
 #define _R8(var, x)               ((var >> x) & 0xFF)

@@ -9,11 +9,6 @@
 #define CONFIG_H_
 
 /* Includes ------------------------------------------------------------------*/
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
-#include <limits.h>
 #include "_database.h"
 #include "_log.h"
 

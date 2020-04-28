@@ -15,7 +15,7 @@ extern db_t DB;
 /* Functions implementation --------------------------------------------------*/
 uint8_t CAN_HMI_Heartbeat(void) {
   // set default header
-  CANBUS_Header(&(CB.tx.header), CAN_ADDR_HMI_DUMMY + (USE_HMI_LEFT ? 1 : 0), 1);
+  CANBUS_Header(&(CB.tx.header), CAN_MY_ADRESS, 1);
   CB.tx.header.RTR = CAN_RTR_REMOTE;
 
   // send message

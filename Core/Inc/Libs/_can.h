@@ -13,13 +13,22 @@
 #include "_canbus.h"
 
 // CAN Message Address
-#define CAN_ADDR_VCU_SWITCH					 				0x000
-#define CAN_ADDR_VCU_RTC						 			0x001
-#define CAN_ADDR_VCU_SELECT_SET			 					0x002
-#define CAN_ADDR_VCU_TRIP_MODE			 					0x003
-#define CAN_ADDR_MCU_DUMMY									0x7A0
-#define CAN_ADDR_BMS_DUMMY									0x7B0
-#define CAN_ADDR_HMI_DUMMY									0x7C0
+#define CAND_VCU_SWITCH					 				0x000
+#define CAND_VCU_RTC						 			0x001
+#define CAND_VCU_SELECT_SET			 					0x002
+#define CAND_VCU_TRIP_MODE			 					0x003
+
+#define CAND_HMI1_LEFT                                  0x7C0
+#define CAND_HMI1_RIGHT                                 0x7C1
+
+#define CAND_MCU_DUMMY									0x7A0
+#define CAND_BMS_DUMMY									0x7B0
+
+#if USE_HMI_LEFT
+#define CAN_MY_ADRESS                                   CAND_HMI1_LEFT
+#else
+#define CAN_MY_ADRESS                                   CAND_HMI1_RIGHT
+#endif
 
 /* Function prototype --------------------------------------------------------*/
 uint8_t CAN_HMI_Heartbeat(void);

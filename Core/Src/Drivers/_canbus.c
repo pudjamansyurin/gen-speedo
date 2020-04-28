@@ -16,6 +16,10 @@ extern CAN_HandleTypeDef hcan2;
 /* Public variables -----------------------------------------------------------*/
 canbus_t CB;
 
+/* Private functions declaration ----------------------------------------------*/
+static void lock(void);
+static void unlock(void);
+
 /* Public functions implementation ---------------------------------------------*/
 void CANBUS_Init(void) {
   /* Configure the CAN Filter */
@@ -73,7 +77,7 @@ uint8_t CANBUS_Filter(void) {
  wite a message to CAN peripheral and transmit it
  *----------------------------------------------------------------------------*/
 uint8_t CANBUS_Write(canbus_tx_t *tx) {
-  osMutexWait(CanTxMutexHandle, osWaitForever);
+  lock();
 
   uint32_t TxMailbox;
   HAL_StatusTypeDef status;
@@ -85,20 +89,24 @@ uint8_t CANBUS_Write(canbus_tx_t *tx) {
   /* Start the Transmission process */
   status = HAL_CAN_AddTxMessage(&hcan2, &(tx->header), (uint8_t*) &(tx->data), &TxMailbox);
 
-  // debugging
-  if (status == HAL_OK) {
-    LOG_Str("\n[TX] ");
-    LOG_Hex32(tx->header.StdId);
-    LOG_Str(" => ");
-    if (tx->header.RTR == CAN_RTR_DATA) {
-      LOG_BufHex((char*) &(tx->data), sizeof(tx->data));
-    } else {
-      LOG_Str("RTR");
-    }
-    LOG_Enter();
-  }
+  //  // debugging
+  //  if (status == HAL_OK) {
+  //    LOG_Str("\n[TX] ");
+  //    if (tx->header.IDE == CAN_ID_STD) {
+  //      LOG_Hex32(tx->header.StdId);
+  //    } else {
+  //      LOG_Hex32(tx->header.ExtId);
+  //    }
+  //    LOG_Str(" => ");
+  //    if (tx->header.RTR == CAN_RTR_DATA) {
+  //      LOG_BufHex((char*) &(tx->data), sizeof(tx->data));
+  //    } else {
+  //      LOG_Str("RTR");
+  //    }
+  //    LOG_Enter();
+  //  }
 
-  osMutexRelease(CanTxMutexHandle);
+  unlock();
   return (status == HAL_OK);
 }
 
@@ -111,24 +119,27 @@ uint8_t CANBUS_Read(canbus_rx_t *rx) {
   /* Get RX message */
   status = HAL_CAN_GetRxMessage(&hcan2, CAN_RX_FIFO0, &(rx->header), rx->data.u8);
 
-  // debugging
-  if (status == HAL_OK) {
-    LOG_Str("\n[RX] ");
-    LOG_Hex32(rx->header.StdId);
-    LOG_Str(" <= ");
-    if (rx->header.RTR == CAN_RTR_DATA) {
-      LOG_BufHex((char*) &(rx->data), sizeof(rx->data));
-    } else {
-      LOG_Str("RTR");
-    }
-    LOG_Enter();
-  }
+  //  // debugging
+  //  if (status == HAL_OK) {
+  //    LOG_Str("\n[RX] ");
+  //    LOG_Hex32(CANBUS_ReadID());
+  //    LOG_Str(" <= ");
+  //    if (CB.rx.header.RTR == CAN_RTR_DATA) {
+  //      LOG_BufHex(CB.rx.data.CHAR, sizeof(CB.rx.data.CHAR));
+  //    } else {
+  //      LOG_Str("RTR");
+  //    }
+  //    LOG_Enter();
+  //  }
 
   return (status == HAL_OK);
 }
 
 uint32_t CANBUS_ReadID(void) {
-  return CB.rx.header.StdId;
+  if (CB.rx.header.IDE == CAN_ID_STD) {
+    return CB.rx.header.StdId;
+  }
+  return _R(CB.rx.header.ExtId, 20);
 }
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
@@ -143,4 +154,13 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
   }
 
   portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+}
+
+/* Private functions implementation --------------------------------------------*/
+static void lock(void) {
+  osMutexWait(CanTxMutexHandle, osWaitForever);
+}
+
+static void unlock(void) {
+  osMutexRelease(CanTxMutexHandle);
 }
