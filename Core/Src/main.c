@@ -682,7 +682,6 @@ void StartCanRxTask(const void *argument)
       switch (CANBUS_ReadID()) {
         case CAND_VCU_SWITCH:
           CAN_VCU_Switch_Read();
-          _SetBacklight(DB.hmi1.status.daylight);
           break;
         case CAND_VCU_SELECT_SET:
           CAN_VCU_Select_Set_Read();
@@ -692,9 +691,6 @@ void StartCanRxTask(const void *argument)
           break;
         case CAND_MCU_DUMMY:
           CAN_MCU_Dummy_Read();
-          break;
-        case CAND_BMS_DUMMY:
-          CAN_BMS_Dummy_Read();
           break;
         default:
           related = 0;

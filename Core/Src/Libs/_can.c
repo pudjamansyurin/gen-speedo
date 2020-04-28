@@ -7,6 +7,7 @@
  */
 /* Includes ------------------------------------------------------------------*/
 #include "_can.h"
+#include "_utils.h"
 
 /* External variables --------------------------------------------------------*/
 extern canbus_t CB;
@@ -40,9 +41,13 @@ void CAN_VCU_Switch_Read(void) {
 
   // signal
   DB.vcu.signal = CB.rx.data.u8[2];
+  DB.bms.soc = CB.rx.data.u8[3];
 
   // odometer
   DB.vcu.odometer = CB.rx.data.u32[1];
+
+  // update backlight state
+  _SetBacklight(DB.hmi1.status.daylight);
 }
 
 void CAN_VCU_Select_Set_Read(void) {
@@ -77,10 +82,5 @@ void CAN_MCU_Dummy_Read(void) {
 
   // convert RPM to Speed
   DB.vcu.speed = DB.mcu.rpm * MCU_SPEED_MAX / MCU_RPM_MAX;
-}
-
-void CAN_BMS_Dummy_Read(void) {
-  // read message
-  DB.bms.soc = CB.rx.data.u8[0];
 }
 

@@ -64,6 +64,7 @@ typedef struct
 LCD_LayerPropTypedef;
 
 /* Fucntion prototypes -------------------------------------------------------*/
+void DMA2D_IRQHandler(void);
 void GRAPHICS_HW_Init(void);
 void GRAPHICS_Init(void);
 #endif /* STEMWIN_WRAPPER_H */

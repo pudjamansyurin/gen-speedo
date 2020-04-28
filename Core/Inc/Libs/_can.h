@@ -36,6 +36,5 @@ void CAN_VCU_Switch_Read(void);
 void CAN_VCU_Select_Set_Read(void);
 void CAN_VCU_Trip_Mode_Read(void);
 void CAN_MCU_Dummy_Read(void);
-void CAN_BMS_Dummy_Read(void);
 
 #endif /* CAN_H_ */
