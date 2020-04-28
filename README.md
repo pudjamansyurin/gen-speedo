@@ -12,6 +12,7 @@
 - [x] Change "KM/KW" to "KM/KWh" in HMI Primary 
 - [ ] Handle manual STemWin migration 
 - [ ] Change LTDC from RGB565 to RGB666 
+- [ ] Migrate RTOSv1 to RTOSv2
 
 ## Hardware Progress:
 - [x] Add line from RGB565 to RGB666 

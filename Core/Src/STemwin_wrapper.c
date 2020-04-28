@@ -43,6 +43,13 @@
 #include "STemwin_wrapper.h"
 #include "GUI_Private.h"
 
+/* External ------------------------------------------------------------------*/
+extern void MX_FMC_Init(void);
+extern void MX_LTDC_Init(void);
+extern void MX_DMA2D_Init(void);
+extern LTDC_HandleTypeDef hltdc;
+extern DMA2D_HandleTypeDef hdma2d;
+
 /** @addtogroup LCD CONFIGURATION
  * @{
  */
@@ -101,7 +108,7 @@
 #define ORIENTATION_1 ROTATION_0
 
 /* Define the background color shown where no layer is active */
-#define BK_COLOR GUI_DARKBLUE
+#define BK_COLOR GUI_BLACK
 
 static volatile char TransferInProgress = 0;
 void DMA2D_IRQHandler(void);
@@ -149,9 +156,9 @@ void DMA2D_IRQHandler(void);
 #define DISPLAY_DRIVER_0   GUIDRV_LIN_OSY_24
 #endif
 #elif (COLOR_MODE_0 == CMS_RGB565)   \
-		|| (COLOR_MODE_0 == CMS_ARGB1555) \
-		|| (COLOR_MODE_0 == CMS_ARGB4444) \
-		|| (COLOR_MODE_0 == CMS_AL88)
+    || (COLOR_MODE_0 == CMS_ARGB1555) \
+    || (COLOR_MODE_0 == CMS_ARGB4444) \
+    || (COLOR_MODE_0 == CMS_AL88)
 #if   (ORIENTATION_0 == ROTATION_0)
 #define DISPLAY_DRIVER_0   GUIDRV_LIN_16
 #elif (ORIENTATION_0 == ROTATION_CW)
@@ -162,7 +169,7 @@ void DMA2D_IRQHandler(void);
 #define DISPLAY_DRIVER_0   GUIDRV_LIN_OSY_16
 #endif
 #elif (COLOR_MODE_0 == CMS_L8)   \
-		|| (COLOR_MODE_0 == CMS_AL44)
+    || (COLOR_MODE_0 == CMS_AL44)
 #if   (ORIENTATION_0 == ROTATION_0)
 #define DISPLAY_DRIVER_0   GUIDRV_LIN_8
 #elif (ORIENTATION_0 == ROTATION_CW)
@@ -218,9 +225,9 @@ void DMA2D_IRQHandler(void);
 #define DISPLAY_DRIVER_1   GUIDRV_LIN_OSY_24
 #endif
 #elif (COLOR_MODE_1 == CMS_RGB565)   \
-		|| (COLOR_MODE_1 == CMS_ARGB1555) \
-		|| (COLOR_MODE_1 == CMS_ARGB4444) \
-		|| (COLOR_MODE_1 == CMS_AL88)
+    || (COLOR_MODE_1 == CMS_ARGB1555) \
+    || (COLOR_MODE_1 == CMS_ARGB4444) \
+    || (COLOR_MODE_1 == CMS_AL88)
 #if   (ORIENTATION_1 == ROTATION_0)
 #define DISPLAY_DRIVER_1   GUIDRV_LIN_16
 #elif (ORIENTATION_1 == ROTATION_CW)
@@ -231,7 +238,7 @@ void DMA2D_IRQHandler(void);
 #define DISPLAY_DRIVER_1   GUIDRV_LIN_OSY_16
 #endif
 #elif (COLOR_MODE_1 == CMS_L8)   \
-		|| (COLOR_MODE_1 == CMS_AL44)
+    || (COLOR_MODE_1 == CMS_AL44)
 #if   (ORIENTATION_1 == ROTATION_0)
 #define DISPLAY_DRIVER_1   GUIDRV_LIN_8
 #elif (ORIENTATION_1 == ROTATION_CW)
@@ -281,11 +288,11 @@ void DMA2D_IRQHandler(void);
  */
 /* Redirect bulk conversion to DMA2D routines */
 #define DEFINE_DMA2D_COLORCONVERSION(PFIX, PIXELFORMAT)                                                                 \
-		static void _Color2IndexBulk_##PFIX##_DMA2D(LCD_COLOR * pColor, void * pIndex, U32 NumItems, U8 SizeOfIndex) {  \
-	_DMA_Color2IndexBulk(pColor, pIndex, NumItems, SizeOfIndex, PIXELFORMAT);                                           \
+    static void _Color2IndexBulk_##PFIX##_DMA2D(LCD_COLOR * pColor, void * pIndex, U32 NumItems, U8 SizeOfIndex) {  \
+  _DMA_Color2IndexBulk(pColor, pIndex, NumItems, SizeOfIndex, PIXELFORMAT);                                           \
 }                                                                                                                       \
 static void _Index2ColorBulk_##PFIX##_DMA2D(void * pIndex, LCD_COLOR * pColor, U32 NumItems, U8 SizeOfIndex) {          \
-	_DMA_Index2ColorBulk(pIndex, pColor, NumItems, SizeOfIndex, PIXELFORMAT);                                           \
+  _DMA_Index2ColorBulk(pIndex, pColor, NumItems, SizeOfIndex, PIXELFORMAT);                                           \
 }
 
 /**
@@ -414,35 +421,168 @@ static void _DMA2D_ITConfig(U32 DMA2D_IT, int NewState) {
   }
 }
 
+///**
+// * @brief  DM2D Msp initialisation
+// * @param  hdma2d: DM2D handle
+// * @retval None
+// */
+//void HAL_DMA2D_MspInit(DMA2D_HandleTypeDef *hdma2d) {
+//  /* Enable dma2d clock */
+//  __HAL_RCC_DMA2D_CLK_ENABLE();
+//
+//  /* Set DMA2D Interrupt to the lowest priority */
+//  HAL_NVIC_SetPriority(DMA2D_IRQn, 0xE, 0x0);
+//  /* Enable DMA2D Interrupt */
+//  HAL_NVIC_EnableIRQ(DMA2D_IRQn);
+//  /* Enable DMA2D transfer complete Interrupt */
+//  _DMA2D_ITConfig(DMA2D_CR_TCIE, ENABLE);
+//}
+//
+///**
+// * @brief  DM2D Msp de-initialisation
+// * @param  hdma2d: DM2D handle
+// * @retval None
+// */
+//void HAL_DMA2D_MspDeInit(DMA2D_HandleTypeDef *hdma2d) {
+//  /* Enable DMA2D reset state */
+//  __HAL_RCC_DMA2D_FORCE_RESET();
+//
+//  /* Release DMA2D from reset state */
+//  __HAL_RCC_DMA2D_RELEASE_RESET();
+//}
+//
+///**
+// * @brief  LTDC Msp initialisation
+// * @param  hltdc: LTDC handle
+// * @retval None
+// */
+//void HAL_LTDC_MspInit(LTDC_HandleTypeDef *hltdc) {
+//  GPIO_InitTypeDef GPIO_Init_Structure;
+//
+//  /* Enable peripherals and GPIO Clocks */
+//  /* Enable the LTDC Clock */
+//  __HAL_RCC_LTDC_CLK_ENABLE();
+//
+//  /* Enable GPIO Clock */
+//  __HAL_RCC_GPIOA_CLK_ENABLE()
+//        ;
+//  __HAL_RCC_GPIOB_CLK_ENABLE()
+//        ;
+//  __HAL_RCC_GPIOC_CLK_ENABLE()
+//        ;
+//  __HAL_RCC_GPIOD_CLK_ENABLE();
+//  __HAL_RCC_GPIOF_CLK_ENABLE();
+//  __HAL_RCC_GPIOG_CLK_ENABLE();
+//
+//  /* Configure peripheral GPIO */
+//
+//  /* GPIOs Configuration */
+//  /*
+//   +------------------------+-----------------------+----------------------------+
+//   +                       LCD pins assignment                                   +
+//   +------------------------+-----------------------+----------------------------+
+//   |  LCD_TFT R2 <-> PC.10  |  LCD_TFT G2 <-> PA.06 |  LCD_TFT B2 <-> PD.06      |
+//   |  LCD_TFT R3 <-> PB.00  |  LCD_TFT G3 <-> PG.10 |  LCD_TFT B3 <-> PG.11      |
+//   |  LCD_TFT R4 <-> PA.11  |  LCD_TFT G4 <-> PB.10 |  LCD_TFT B4 <-> PG.12      |
+//   |  LCD_TFT R5 <-> PA.12  |  LCD_TFT G5 <-> PB.11 |  LCD_TFT B5 <-> PA.03      |
+//   |  LCD_TFT R6 <-> PB.01  |  LCD_TFT G6 <-> PC.07 |  LCD_TFT B6 <-> PB.08      |
+//   |  LCD_TFT R7 <-> PG.06  |  LCD_TFT G7 <-> PD.03 |  LCD_TFT B7 <-> PB.09      |
+//   -------------------------------------------------------------------------------
+//   |  LCD_TFT HSYNC <-> PC.06  | LCDTFT VSYNC <->  PA.04 |
+//   |  LCD_TFT CLK   <-> PG.07  | LCD_TFT DE   <->  PF.10 |
+//   -----------------------------------------------------
+//   */
+//
+//  /* GPIOA configuration */
+//  GPIO_Init_Structure.Pin = GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_6 |
+//  GPIO_PIN_11 | GPIO_PIN_12;
+//  GPIO_Init_Structure.Mode = GPIO_MODE_AF_PP;
+//  GPIO_Init_Structure.Pull = GPIO_NOPULL;
+//  GPIO_Init_Structure.Speed = GPIO_SPEED_FAST;
+//  GPIO_Init_Structure.Alternate = GPIO_AF14_LTDC;
+//  HAL_GPIO_Init(GPIOA, &GPIO_Init_Structure);
+//
+//  /* GPIOB configuration */
+//  GPIO_Init_Structure.Pin = GPIO_PIN_8 |
+//  GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11;
+//  HAL_GPIO_Init(GPIOB, &GPIO_Init_Structure);
+//
+//  /* GPIOC configuration */
+//  GPIO_Init_Structure.Pin = GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_10;
+//  HAL_GPIO_Init(GPIOC, &GPIO_Init_Structure);
+//
+//  /* GPIOD configuration */
+//  GPIO_Init_Structure.Pin = GPIO_PIN_3 | GPIO_PIN_6;
+//  HAL_GPIO_Init(GPIOD, &GPIO_Init_Structure);
+//
+//  /* GPIOF configuration */
+//  GPIO_Init_Structure.Pin = GPIO_PIN_10;
+//  HAL_GPIO_Init(GPIOF, &GPIO_Init_Structure);
+//
+//  /* GPIOG configuration */
+//  GPIO_Init_Structure.Pin = GPIO_PIN_6 | GPIO_PIN_7 |
+//  GPIO_PIN_11;
+//  HAL_GPIO_Init(GPIOG, &GPIO_Init_Structure);
+//
+//  /* GPIOB configuration */
+//  GPIO_Init_Structure.Pin = GPIO_PIN_0 | GPIO_PIN_1;
+//  GPIO_Init_Structure.Alternate = GPIO_AF9_LTDC;
+//  HAL_GPIO_Init(GPIOB, &GPIO_Init_Structure);
+//
+//  /* GPIOG configuration */
+//  GPIO_Init_Structure.Pin = GPIO_PIN_10 | GPIO_PIN_12;
+//  HAL_GPIO_Init(GPIOG, &GPIO_Init_Structure);
+//
+//  /* Set LTDC Interrupt to the lowest priority */
+//  HAL_NVIC_SetPriority(LTDC_IRQn, 0xF, 0);
+//
+//  /* Enable LTDC Interrupt */
+//  HAL_NVIC_EnableIRQ(LTDC_IRQn);
+//
+//}
+//
+///**
+// * @brief  LTDC Msp de-initialisation
+// * @param  hltdc: LTDC handle
+// * @retval None
+// */
+//void HAL_LTDC_MspDeInit(LTDC_HandleTypeDef *hltdc) {
+//  /* Enable LTDC reset state */
+//  __HAL_RCC_LTDC_FORCE_RESET();
+//
+//  /* Release LTDC from reset state */
+//  __HAL_RCC_LTDC_RELEASE_RESET();
+//}
+
 /**
  * @brief  Initialise the LCD Controller
  * @param  LayerIndex : layer Index.
  * @retval None
  */
 static void LCD_LL_LayerInit(U32 LayerIndex) {
-//  LTDC_LayerCfgTypeDef layer_cfg;
+  //  LTDC_LayerCfgTypeDef layer_cfg;
   static uint32_t LUT[256];
   uint32_t i;
 
   if (LayerIndex < GUI_NUM_LAYERS) {
-    //FIXME: already set in MX_LTDC_Init()
-    /* Layer configuration */
-    // layer_cfg.WindowX0 = 0;
-    // layer_cfg.WindowX1 = XSIZE_PHYS;
-    // layer_cfg.WindowY0 = 0;
-    // layer_cfg.WindowY1 = YSIZE_PHYS;
-    // layer_cfg.PixelFormat = _GetPixelformat(LayerIndex);
-    // layer_cfg.FBStartAdress = _aAddr[LayerIndex];
-    // layer_cfg.Alpha = 255;
-    // layer_cfg.Alpha0 = 0;
-    // layer_cfg.Backcolor.Blue = 0;
-    // layer_cfg.Backcolor.Green = 0;
-    // layer_cfg.Backcolor.Red = 0;
-    // layer_cfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
-    // layer_cfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
-    // layer_cfg.ImageWidth = XSIZE_PHYS;
-    // layer_cfg.ImageHeight = YSIZE_PHYS;
-    // HAL_LTDC_ConfigLayer(&hltdc, &layer_cfg, LayerIndex);
+    //    /* Layer configuration */
+    //    layer_cfg.WindowX0 = 0;
+    //    layer_cfg.WindowX1 = XSIZE_PHYS;
+    //    layer_cfg.WindowY0 = 0;
+    //    layer_cfg.WindowY1 = YSIZE_PHYS;
+    //    layer_cfg.PixelFormat = _GetPixelformat(LayerIndex);
+    //    layer_cfg.FBStartAdress = _aAddr[LayerIndex];
+    //    layer_cfg.Alpha = 255;
+    //    layer_cfg.Alpha0 = 0;
+    //    layer_cfg.Backcolor.Blue = 0;
+    //    layer_cfg.Backcolor.Green = 0;
+    //    layer_cfg.Backcolor.Red = 0;
+    //    layer_cfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
+    //    layer_cfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
+    //    layer_cfg.ImageWidth = XSIZE_PHYS;
+    //    layer_cfg.ImageHeight = YSIZE_PHYS;
+    //    HAL_LTDC_ConfigLayer(&hltdc, &layer_cfg, LayerIndex);
+
     /* Enable LUT on demand */
     if (LCD_GetBitsPerPixelEx(LayerIndex) <= 8) {
       /* Enable usage of LUT for all modes with <= 8bpp*/
@@ -468,48 +608,46 @@ static void LCD_LL_LayerInit(U32 LayerIndex) {
  */
 static void LCD_LL_Init(void) {
   // FIXME: already set in MX_LTDC_Init()
-  /* DeInit */
-  // HAL_LTDC_DeInit(&hltdc);
-  // /* Set LCD Timings */
-  // hltdc.Init.HorizontalSync = 3;
-  // hltdc.Init.VerticalSync = 3;
-  // hltdc.Init.AccumulatedHBP = 46;
-  // hltdc.Init.AccumulatedVBP = 15;
-  // hltdc.Init.AccumulatedActiveW = 366;
-  // hltdc.Init.AccumulatedActiveH = 255;
-  // hltdc.Init.TotalWidth = 374;
-  // hltdc.Init.TotalHeigh = 263;
-  // /* background value */
-  // hltdc.Init.Backcolor.Blue = 0;
-  // hltdc.Init.Backcolor.Green = 0;
-  // hltdc.Init.Backcolor.Red = 0;
-  // /* Polarity */
-  // hltdc.Init.HSPolarity = LTDC_HSPOLARITY_AL;
-  // hltdc.Init.VSPolarity = LTDC_VSPOLARITY_AL;
-  // hltdc.Init.DEPolarity = LTDC_DEPOLARITY_AL;
-  // hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
-  // hltdc.Instance = LTDC;
-  // HAL_LTDC_Init(&hltdc);
+  //  /* DeInit */
+  //  HAL_LTDC_DeInit(&hltdc);
+  //  /* Set LCD Timings */
+  //  hltdc.Init.HorizontalSync = 3;
+  //  hltdc.Init.VerticalSync = 3;
+  //  hltdc.Init.AccumulatedHBP = 46;
+  //  hltdc.Init.AccumulatedVBP = 15;
+  //  hltdc.Init.AccumulatedActiveW = 366;
+  //  hltdc.Init.AccumulatedActiveH = 255;
+  //  hltdc.Init.TotalWidth = 374;
+  //  hltdc.Init.TotalHeigh = 263;
+  //  /* background value */
+  //  hltdc.Init.Backcolor.Blue = 0;
+  //  hltdc.Init.Backcolor.Green = 0;
+  //  hltdc.Init.Backcolor.Red = 0;
+  //  /* Polarity */
+  //  hltdc.Init.HSPolarity = LTDC_HSPOLARITY_AL;
+  //  hltdc.Init.VSPolarity = LTDC_VSPOLARITY_AL;
+  //  hltdc.Init.DEPolarity = LTDC_DEPOLARITY_AL;
+  //  hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
+  //  hltdc.Instance = LTDC;
+  //
+  //  if (HAL_LTDC_Init(&hltdc) != HAL_OK) {
+  //    Error_Handler();
+  //  }
+
   HAL_LTDC_ProgramLineEvent(&hltdc, 0);
 
-  // FIXME: do i need to be activated?
-  /* Set DMA2D Interrupt to the lowest priority */
-  HAL_NVIC_SetPriority(DMA2D_IRQn, 0xE, 0x0);
-  /* Enable DMA2D Interrupt */
-  HAL_NVIC_EnableIRQ(DMA2D_IRQn);
+  // FIXME: already set on MX_DMA2D_Init()
+  //  /* Configure the DMA2D  default mode */
+  //  hdma2d.Instance = DMA2D;
+  //  hdma2d.Init.Mode = DMA2D_R2M;
+  //  hdma2d.Init.ColorMode = DMA2D_RGB565;
+  //  hdma2d.Init.OutputOffset = 0;
+  //  if (HAL_DMA2D_Init(&hdma2d) != HAL_OK) {
+  //    Error_Handler();
+  //  }
+
   /* Enable DMA2D transfer complete Interrupt */
   _DMA2D_ITConfig(DMA2D_CR_TCIE, ENABLE);
-
-  // FIXME: already set on MX_DMA2D_Init()
-  /* Configure the DMA2D  default mode */
-  // hdma2d.Init.Mode = DMA2D_R2M;
-  // hdma2d.Init.ColorMode = DMA2D_RGB565;
-  // hdma2d.Init.OutputOffset = 0x0;
-  // hdma2d.Instance = DMA2D;
-  // if (HAL_DMA2D_Init(&hdma2d) != HAL_OK) {
-  // 	while (1)
-  // 		;
-  // }
 }
 
 /**

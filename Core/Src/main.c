@@ -121,7 +121,7 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN2_Init();
   MX_CRC_Init();
-  //  MX_IWDG_Init();
+  MX_IWDG_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   CANBUS_Init();
@@ -166,7 +166,7 @@ int main(void)
 
   /* definition and creation of CanTxTask */
   osThreadDef(CanTxTask, StartCanTxTask, osPriorityNormal, 0, 128);
-  CanTxTaskHandle = osThreadCreate(osThread(CanTxTask), NULL);
+  //  CanTxTaskHandle = osThreadCreate(osThread(CanTxTask), NULL);
 
   /* definition and creation of GeneralTask */
   osThreadDef(GeneralTask, StartGeneralTask, osPriorityNormal, 0, 128);
@@ -357,7 +357,7 @@ static void MX_IWDG_Init(void)
 
   /* USER CODE END IWDG_Init 1 */
   hiwdg.Instance = IWDG;
-  hiwdg.Init.Prescaler = IWDG_PRESCALER_32;
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_64;
   hiwdg.Init.Reload = 4095;
   if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
       {
@@ -674,7 +674,6 @@ void StartCanRxTask(const void *argument)
   for (;;) {
     // check if has new can message
     xTaskNotifyWait(0x00, ULONG_MAX, &notifValue, portMAX_DELAY);
-    _LedToggle(1);
 
     // proceed event
     if ((notifValue & EVENT_CAN_RX_IT)) {
@@ -722,13 +721,8 @@ void StartCanTxTask(const void *argument)
 {
   /* USER CODE BEGIN StartCanTxTask */
   /* Infinite loop */
-  for (;;)
-      {
-    if (CAN_HMI_Heartbeat()) {
-      _LedToggle(1);
-    }
-
-    osDelay(500);
+  for (;;) {
+    CAN_HMI_Heartbeat();
   }
   /* USER CODE END StartCanTxTask */
 }
@@ -744,10 +738,7 @@ void StartGeneralTask(const void *argument)
 {
   /* USER CODE BEGIN StartGeneralTask */
   /* Infinite loop */
-  for (;;)
-      {
-    //    _LedToggle(1);
-
+  for (;;) {
     osDelay(1000);
   }
   /* USER CODE END StartGeneralTask */
@@ -770,8 +761,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-  // FIXME: am i needed?
-  //  GRAPHICS_IncTick();
   /* USER CODE END Callback 1 */
 }
 
@@ -783,7 +772,11 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-
+  while (1) {
+    _LedToggle(1);
+    _LedToggle(2);
+    HAL_Delay(50);
+  };
   /* USER CODE END Error_Handler_Debug */
 }
 

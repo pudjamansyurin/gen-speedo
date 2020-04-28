@@ -46,17 +46,9 @@
 #include "main.h"
 #include "GUIDRV_Lin.h"
 #include "_sdram.h"
-#include <stdint.h>
 
 #ifndef STEMWIN_WRAPPER_H
 #define STEMWIN_WRAPPER_H
-
-/* External ------------------------------------------------------------------*/
-extern LTDC_HandleTypeDef hltdc;
-extern DMA2D_HandleTypeDef hdma2d;
-extern void MX_FMC_Init(void);
-extern void MX_LTDC_Init(void);
-extern void MX_DMA2D_Init(void);
 
 /* Exported types ------------------------------------------------------------*/
 typedef struct
@@ -71,6 +63,7 @@ typedef struct
 }
 LCD_LayerPropTypedef;
 
+/* Fucntion prototypes -------------------------------------------------------*/
 void GRAPHICS_HW_Init(void);
 void GRAPHICS_Init(void);
 #endif /* STEMWIN_WRAPPER_H */
