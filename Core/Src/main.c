@@ -269,9 +269,9 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
-  PeriphClkInitStruct.PLLSAI.PLLSAIN = 60;
-  PeriphClkInitStruct.PLLSAI.PLLSAIR = 5;
-  PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_4;
+  PeriphClkInitStruct.PLLSAI.PLLSAIN = 56;
+  PeriphClkInitStruct.PLLSAI.PLLSAIR = 2;
+  PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_8;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
       {
     Error_Handler();
@@ -421,14 +421,14 @@ void MX_LTDC_Init(void)
   hltdc.Init.VSPolarity = LTDC_VSPOLARITY_AL;
   hltdc.Init.DEPolarity = LTDC_DEPOLARITY_AL;
   hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
-  hltdc.Init.HorizontalSync = 42;
-  hltdc.Init.VerticalSync = 11;
-  hltdc.Init.AccumulatedHBP = 85;
-  hltdc.Init.AccumulatedVBP = 23;
-  hltdc.Init.AccumulatedActiveW = 405;
-  hltdc.Init.AccumulatedActiveH = 263;
-  hltdc.Init.TotalWidth = 480;
-  hltdc.Init.TotalHeigh = 300;
+  hltdc.Init.HorizontalSync = 3;
+  hltdc.Init.VerticalSync = 3;
+  hltdc.Init.AccumulatedHBP = 46;
+  hltdc.Init.AccumulatedVBP = 15;
+  hltdc.Init.AccumulatedActiveW = 366;
+  hltdc.Init.AccumulatedActiveH = 255;
+  hltdc.Init.TotalWidth = 374;
+  hltdc.Init.TotalHeigh = 263;
   hltdc.Init.Backcolor.Blue = 0;
   hltdc.Init.Backcolor.Green = 0;
   hltdc.Init.Backcolor.Red = 0;
@@ -814,12 +814,12 @@ void Error_Handler(void)
 
 #ifdef  USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
