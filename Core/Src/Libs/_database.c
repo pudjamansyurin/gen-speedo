@@ -21,7 +21,7 @@ void Reset_Database(void) {
   DB.hmi1.status.mirror = 0;
   DB.hmi1.status.lamp = 0;
   DB.hmi1.status.warning = 1;
-  DB.hmi1.status.temperature = 0;
+  DB.hmi1.status.overheat = 0;
   DB.hmi1.status.finger = 0;
   DB.hmi1.status.keyless = 0;
   DB.hmi1.status.daylight = 1;

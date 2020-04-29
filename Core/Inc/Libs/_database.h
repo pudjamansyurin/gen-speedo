@@ -13,7 +13,7 @@
 #include "cmsis_os.h"
 
 /* Exported constants --------------------------------------------------------*/
-#define USE_HMI_LEFT 			  1
+#define USE_HMI_LEFT 			  0
 // Others Parameters
 #define MCU_SPEED_MAX 			  200
 #define MCU_RPM_MAX 			  99999
@@ -40,6 +40,7 @@
 
 // Events (for Individual Thread)
 #define EVT_CAN_RX_IT			  BIT(0)
+#define EVT_DISPLAY_UPDATE        BIT(0)
 
 // Events group (for All Threads)
 #define EVENT_READY               BIT(0)
@@ -92,7 +93,7 @@ typedef struct {
   uint8_t mirror;
   uint8_t lamp;
   uint8_t warning;
-  uint8_t temperature;
+  uint8_t overheat;
   uint8_t finger;
   uint8_t keyless;
   uint8_t daylight;
@@ -111,8 +112,8 @@ typedef struct {
     modes_t mode;
   } hmi1;
   struct {
-    int16_t rpm;
-    int16_t temperature;
+    uint32_t rpm;
+    uint32_t temperature;
   } mcu;
   struct {
     uint8_t soc;

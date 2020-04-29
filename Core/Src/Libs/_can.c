@@ -30,7 +30,7 @@ void CAN_VCU_Switch_Read(void) {
   DB.hmi1.status.mirror = _R1(CB.rx.data.u8[0], 1);
   DB.hmi1.status.lamp = _R1(CB.rx.data.u8[0], 2);
   DB.hmi1.status.warning = _R1(CB.rx.data.u8[0], 3);
-  DB.hmi1.status.temperature = _R1(CB.rx.data.u8[0], 4);
+  DB.hmi1.status.overheat = _R1(CB.rx.data.u8[0], 4);
   DB.hmi1.status.finger = _R1(CB.rx.data.u8[0], 5);
   DB.hmi1.status.keyless = _R1(CB.rx.data.u8[0], 6);
   DB.hmi1.status.daylight = _R1(CB.rx.data.u8[0], 7);
@@ -64,6 +64,13 @@ void CAN_VCU_Select_Set_Read(void) {
   } else {
     DB.hmi1.mode.report.val = CB.rx.data.u8[2];
   }
+
+  // Speed & RPM
+  DB.vcu.speed = CB.rx.data.u8[3];
+  // FIXME: use real value
+  // convert Speed to RPM
+  DB.mcu.rpm = DB.vcu.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
+  //  DB.mcu.temperature = ?
 }
 
 void CAN_VCU_Trip_Mode_Read(void) {
@@ -75,12 +82,12 @@ void CAN_VCU_Trip_Mode_Read(void) {
   }
 }
 
-void CAN_MCU_Dummy_Read(void) {
-  // read message
-  DB.mcu.rpm = CB.rx.data.u16[0];
-  DB.mcu.temperature = CB.rx.data.u16[1];
-
-  // convert RPM to Speed
-  DB.vcu.speed = DB.mcu.rpm * MCU_SPEED_MAX / MCU_RPM_MAX;
-}
+//void CAN_MCU_Dummy_Read(void) {
+//  // read message
+//  DB.mcu.rpm = CB.rx.data.u16[0];
+//  DB.mcu.temperature = CB.rx.data.u16[1];
+//
+//  // convert RPM to Speed
+//  DB.vcu.speed = DB.mcu.rpm * MCU_SPEED_MAX / MCU_RPM_MAX;
+//}
 

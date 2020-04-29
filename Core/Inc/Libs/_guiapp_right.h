@@ -42,7 +42,7 @@ void RIGHT_Animation(void);
 void RIGHT_Sein(latch_t *tmp);
 void RIGHT_Warning(latch_t *tmp);
 void RIGHT_ABS(latch_t *tmp);
-void RIGHT_Temperature(latch_t *tmp);
+void RIGHT_Overheat(latch_t *tmp);
 void RIGHT_Lamp(latch_t *tmp);
 void RIGHT_Speed(latch_t *tmp);
 void RIGHT_Signal(latch_t *tmp);

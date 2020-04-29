@@ -677,13 +677,23 @@ static void MX_GPIO_Init(void)
 void StartManagerTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
+  TickType_t lastWake;
+
+  // reset first
+  Reset_Database();
+  _SetBacklight(1);
 
   // Release other threads
   osEventFlagsSet(GlobalEventHandle, EVENT_READY);
 
   /* Infinite loop */
+  lastWake = osKernelGetTickCount();
   for (;;) {
-    osDelay(1);
+    // Feed the dog
+    HAL_IWDG_Refresh(&hiwdg);
+
+    // Periodic interval
+    vTaskDelayUntil(&lastWake, pdMS_TO_TICKS(500));
   }
   /* USER CODE END 5 */
 }
@@ -704,8 +714,10 @@ void StartCanTxTask(void *argument)
   osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
   /* Infinite loop */
+  lastWake = osKernelGetTickCount();
   for (;;) {
     CAN_HMI_Heartbeat();
+
     // Periodic interval
     vTaskDelayUntil(&lastWake, pdMS_TO_TICKS(500));
   }
@@ -747,9 +759,9 @@ void StartCanRxTask(void *argument)
         case CAND_VCU_TRIP_MODE:
           CAN_VCU_Trip_Mode_Read();
           break;
-        case CAND_MCU_DUMMY:
-          CAN_MCU_Dummy_Read();
-          break;
+          //        case CAND_MCU_DUMMY:
+          //          CAN_MCU_Dummy_Read();
+          //          break;
         default:
           related = 0;
           break;
@@ -757,7 +769,7 @@ void StartCanRxTask(void *argument)
 
       // notify GUI thread
       if (related) {
-        xTaskNotify(DisplayTaskHandle, 0x01, eSetBits);
+        xTaskNotify(DisplayTaskHandle, EVT_DISPLAY_UPDATE, eSetBits);
       }
     }
   }
@@ -802,12 +814,12 @@ void Error_Handler(void)
 
 #ifdef  USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */

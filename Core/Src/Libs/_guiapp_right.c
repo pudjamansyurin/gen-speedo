@@ -85,15 +85,15 @@ void RIGHT_Animation(void) {
 
   for (k = 0; k <= 40; k++) {
     GUI_FillRect(20, 120 - 1, 20 + k, 170);
-    GUI_Delay(20);
+    osDelay(20);
   }
   for (k = 0; k <= 180; k++) {
     GUI_DrawPie(60, 120 - 1, 250, 270, 270 + k, 0);
-    GUI_Delay(10);
+    osDelay(10);
   }
   for (k = 0; k <= 40; k++) {
     GUI_FillRect(60 - k, 50, 60, 120 - 1);
-    GUI_Delay(20);
+    osDelay(20);
   }
 }
 
@@ -121,11 +121,11 @@ void RIGHT_ABS(latch_t *tmp) {
   }
 }
 
-void RIGHT_Temperature(latch_t *tmp) {
-  if (tmp->reset || tmp->db.hmi1.status.temperature != DB.hmi1.status.temperature) {
-    tmp->db.hmi1.status.temperature = DB.hmi1.status.temperature;
+void RIGHT_Overheat(latch_t *tmp) {
+  if (tmp->reset || tmp->db.hmi1.status.overheat != DB.hmi1.status.overheat) {
+    tmp->db.hmi1.status.overheat = DB.hmi1.status.overheat;
 
-    _GUI_Indicator(GAPP.background, &bmHMI_Right_Temp, 34, 131, DB.hmi1.status.temperature, 200);
+    _GUI_Indicator(GAPP.background, &bmHMI_Right_Temp, 34, 131, DB.hmi1.status.overheat, 200);
   }
 }
 

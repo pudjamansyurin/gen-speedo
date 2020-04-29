@@ -58,15 +58,15 @@ void LEFT_Animation(void) {
 
   for (k = 0; k <= 40; k++) {
     GUI_FillRect(320 - 20 - k, 120 - 1, 320 - 20, 170);
-    GUI_Delay(20);
+    osDelay(20);
   }
   for (k = 0; k <= 180; k++) {
     GUI_DrawPie(320 - 60, 120 - 1, 250, 270 - k, 270, 0);
-    GUI_Delay(10);
+    osDelay(10);
   }
   for (k = 0; k <= 40; k++) {
     GUI_FillRect(320 - 60, 50, 320 - 60 + k, 120 - 1);
-    GUI_Delay(20);
+    osDelay(20);
   }
 }
 

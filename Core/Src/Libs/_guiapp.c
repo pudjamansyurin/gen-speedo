@@ -9,11 +9,10 @@
 #include "_guiapp.h"
 
 /* External variables --------------------------------------------------------*/
-extern osEventFlagsId_t GlobalEventHandle;
-extern IWDG_HandleTypeDef hiwdg;
 extern db_t DB;
 extern guiapp_t GAPP;
 extern collection_t COL;
+extern osEventFlagsId_t GlobalEventHandle;
 
 /* Functions prototypes ------------------------------------------------------*/
 static void BootOverlay(guiapp_t *GA);
@@ -24,14 +23,10 @@ void StartDisplayTask(void *argument) {
   /* USER CODE BEGIN GUI_MainTask */
   latch_t TMP = { 0 };
   uint32_t notifValue;
-  BaseType_t xResult;
 
   // wait until ManagerTask done
   osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
-  // reset first
-  Reset_Database();
-  _SetBacklight(1);
   TMP.reset = 1;
 
 #if USE_HMI_LEFT
@@ -60,14 +55,10 @@ void StartDisplayTask(void *argument) {
 
   // Infinitive loop
   while (1) {
-    // Feed the dog
-    HAL_IWDG_Refresh(&hiwdg);
     LOG_StrLn("GUI:Refresh");
 
     // check if has new CAN message
-    xResult = xTaskNotifyWait(0x00, ULONG_MAX, &notifValue, pdMS_TO_TICKS(500));
-    // if not receive any CAN message
-    if (xResult == pdFALSE) {
+    if (xTaskNotifyWait(EVT_DISPLAY_UPDATE, ULONG_MAX, &notifValue, pdMS_TO_TICKS(500)) == pdFALSE) {
       // reset
       Reset_Database();
       _SetBacklight(1);
@@ -104,7 +95,7 @@ void StartDisplayTask(void *argument) {
     RIGHT_Sein(&TMP);
     RIGHT_Warning(&TMP);
     RIGHT_ABS(&TMP);
-    RIGHT_Temperature(&TMP);
+    RIGHT_Overheat(&TMP);
     RIGHT_Lamp(&TMP);
 
     // Set Color
