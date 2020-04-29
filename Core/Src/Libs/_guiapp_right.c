@@ -55,6 +55,7 @@ guiapp_t GAPP = {
         .count = 21
     }
 };
+
 rect_t RECT = {
     .speed = { 83, 79, 85 + 102, 79 + 50 },
     .signal = { 122, 50, 122 + 65, 50 + 10 },
@@ -69,6 +70,7 @@ rect_t RECT = {
         .unit = { 251 + (-10), 194, 251 + 28 + (-10), 194 + 10 }
     }
 };
+
 collection_t COL = {
     .drive = {
         .mode = { 'E', 'S', 'P', 'R' }

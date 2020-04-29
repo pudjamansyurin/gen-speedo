@@ -64,8 +64,6 @@ void StartDisplayTask(void *argument) {
       _SetBacklight(1);
 
       TMP.reset = 1;
-    } else {
-      TMP.reset = 0;
     }
 
 #if USE_HMI_LEFT
@@ -106,6 +104,8 @@ void StartDisplayTask(void *argument) {
     RIGHT_ModeReport(&TMP);
     RIGHT_ModeDrive(&TMP);
 #endif
+
+    TMP.reset = 0;
   }
   /* USER CODE END GUI_MainTask */
 }

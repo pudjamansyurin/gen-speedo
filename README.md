@@ -13,6 +13,7 @@
 - [x] Handle manual STemWin migration 
 - [x] Migrate RTOSv1 to RTOSv2
 - [x] ~~Change LTDC from RGB565 to RGB666~~
+- [ ] Fix battery indicator & percentage not shown up, and check other similar things.
 
 ## Hardware Progress:
 - [x] Add line from RGB565 to RGB666 
