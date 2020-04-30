@@ -19,7 +19,7 @@ extern GUI_CONST_STORAGE GUI_BITMAP bmHMI_Left_Trip_B;
 extern GUI_CONST_STORAGE GUI_FONT GUI_FontSquare721_BT23;
 extern db_t DB;
 
-/* Variables ------------------------------------------------------------------*/
+/* Global Variables -----------------------------------------------------------*/
 guiapp_t GAPP = {
 		.background = &bmHMI_Left,
 		.overlay = {
@@ -39,14 +39,15 @@ guiapp_t GAPP = {
 		}
 };
 
-rect_t RECT = {
+/* Private Variables ---------------------------------------------------------*/
+static GUI_MEMDEV_Handle hMem;
+static rect_t RECT = {
 		.trip = {
 				.total = { 156, 106, 156 + 66, 106 + 24 },
 				.sub = { 156, 83, 156 + 66, 83 + 24 }
 		}
 };
-
-collection_t COL = {
+static collection_t COL = {
 		.x = 58,
 		.y = 161,
 		.r = 123,
@@ -70,6 +71,26 @@ void LEFT_Animation(void) {
 		GUI_FillRect(320 - 60, 50, 320 - 60 + k, 120 - 1);
 		osDelay(20);
 	}
+}
+
+void LEFT_MemGroupEnter(void) {
+	GUI_SelectLayer(1);
+	hMem = GUI_MEMDEV_Create(
+			COL.x,
+			COL.y - COL.r,
+			COL.x + COL.r + (COL.r * cos(_D2R(COL.max + 180))) + 5 - COL.x + 25,
+			COL.y + COL.h + 5 - (COL.y - COL.r));
+
+	// MEMDEV: Draw to MEM
+	GUI_MEMDEV_Select(hMem);
+	GUI_DrawBitmapEx(GAPP.background, COL.x, COL.y - COL.r, COL.x, COL.y - COL.r, 1000, 1000);
+}
+
+void LEFT_MemGroupExit(void) {
+	// MEMDEV: Print result to LCD
+	GUI_MEMDEV_Select(0);
+	GUI_MEMDEV_CopyToLCD(hMem);
+	GUI_MEMDEV_Delete(hMem);
 }
 
 void LEFT_Sein(void) {

@@ -721,7 +721,7 @@ void StartCanTxTask(void *argument)
 	TickType_t lastWake;
 
 	// wait until ManagerTask done
-	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
+	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsWaitAny | osFlagsNoClear, osWaitForever);
 
 	/* Infinite loop */
 	lastWake = osKernelGetTickCount();
@@ -748,7 +748,7 @@ void StartCanRxTask(void *argument)
 	uint8_t related;
 
 	// wait until ManagerTask done
-	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
+	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsWaitAny | osFlagsNoClear, osWaitForever);
 
 	/* Infinite loop */
 	for (;;) {

@@ -56,7 +56,8 @@ guiapp_t GAPP = {
 		}
 };
 
-rect_t RECT = {
+/* Private Variables ---------------------------------------------------------*/
+static rect_t RECT = {
 		.speed = { 83, 79, 85 + 102, 79 + 50 },
 		.signal = { 122, 50, 122 + 65, 50 + 10 },
 		.drive = { 126, 145, 126 + 26, 145 + 40 },
@@ -71,7 +72,7 @@ rect_t RECT = {
 		}
 };
 
-collection_t COL = {
+static collection_t COL = {
 		.drive = {
 				.mode = { 'E', 'S', 'P', 'R' }
 		},
@@ -80,6 +81,7 @@ collection_t COL = {
 				.unit = { "KM", "KM/KWh" },
 		}
 };
+
 
 /* Functions -----------------------------------------------------------------*/
 void RIGHT_Animation(void) {

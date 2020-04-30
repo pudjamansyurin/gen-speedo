@@ -10,13 +10,13 @@
 
 /* External variables --------------------------------------------------------*/
 extern db_t DB;
-extern collection_t COL;
 extern guiapp_t GAPP;
 extern osEventFlagsId_t GlobalEventHandle;
 
 /* Functions prototypes ------------------------------------------------------*/
 static void BootOverlay(void);
 static void BootAnimation(void);
+static void StartDrawing(void);
 
 /* Functions -----------------------------------------------------------------*/
 void StartDisplayTask(void *argument) {
@@ -24,30 +24,12 @@ void StartDisplayTask(void *argument) {
 	uint32_t notif;
 
 	// wait until ManagerTask done
-	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear,
-	osWaitForever);
-
-	// create MEMDEV on layer 1
-#if USE_HMI_LEFT
-	GUI_SelectLayer(1);
-	GUI_MEMDEV_Handle hMem = GUI_MEMDEV_Create(
-			COL.x,
-			COL.y - COL.r,
-			COL.x + COL.r + (COL.r * cos(_D2R(COL.max + 180))) + 5 - COL.x + 25,
-			COL.y + COL.h + 5 - (COL.y - COL.r));
-#endif
+	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsWaitAny | osFlagsNoClear, osWaitForever);
 
 	// Booting
 	BootOverlay();
 	BootAnimation();
-
-	// Draw the layer 0 (background)
-	GUI_SelectLayer(0);
-	GUI_DrawBitmap(GAPP.background, 0, 0);
-	GUI_Delay(500);
-
-	// Drawing at layer 1
-	GUI_SelectLayer(1);
+	StartDrawing();
 
 	// Infinitive loop
 	while (1) {
@@ -65,19 +47,15 @@ void StartDisplayTask(void *argument) {
 		LEFT_Finger();
 		LEFT_Mirror();
 
-		// MEMDEV: Redraw background
-		GUI_MEMDEV_Select(hMem);
-		GUI_DrawBitmapEx(GAPP.background, COL.x, COL.y - COL.r, COL.x, COL.y - COL.r, 1000, 1000);
-
-		// Icon + Text
-		LEFT_Keyless();
-		LEFT_ModeTrip();
-		LEFT_Odometer();
-		LEFT_Needle();
-
-		// MEMDEV: Print result to LCD
-		GUI_MEMDEV_Select(0);
-		GUI_MEMDEV_CopyToLCD(hMem);
+		// Use MEMDEV to handle multiple components
+		LEFT_MemGroupEnter();
+		{
+			LEFT_Keyless();
+			LEFT_ModeTrip();
+			LEFT_Odometer();
+			LEFT_Needle();
+		}
+		LEFT_MemGroupExit();
 #else
 		// Icon only
 		RIGHT_Sein();
@@ -103,23 +81,21 @@ static void BootOverlay() {
 	GUI_SetBkColor(GUI_TRANSPARENT);
 	GUI_Clear();
 
-	// Give overlay on indicators at layer 1
+	// Draw overlay in layer 1 to hide non-animated components
 	GUI_SelectLayer(0);
 	GUI_DrawBitmap(GAPP.background, 0, 0);
-
-	// overlay for first booting
 	GUI_SetColor(GUI_BLACK);
 	GUI_FillPolygon(GAPP.overlay.points, GAPP.overlay.count, 0, 0);
 }
 
 static void BootAnimation(void) {
-	// start of booting animation
+	// Fill layer 1 with black, then erase it with animation
 	GUI_SelectLayer(1);
 	GUI_SetBkColor(GUI_BLACK);
 	GUI_Clear();
-	// start of circular booting animation
 	GUI_SetColor(GUI_TRANSPARENT);
 
+	// start of circular booting animation
 #if USE_HMI_LEFT
 	LEFT_Animation();
 #else
@@ -128,4 +104,13 @@ static void BootAnimation(void) {
 	// end of booting animation
 }
 
+static void StartDrawing(void) {
+	// Draw the layer 0 (background)
+	GUI_SelectLayer(0);
+	GUI_DrawBitmap(GAPP.background, 0, 0);
+	GUI_Delay(500);
+
+	// Drawing at layer 1
+	GUI_SelectLayer(1);
+}
 /*************************** End of file ****************************/

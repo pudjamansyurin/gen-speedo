@@ -13,7 +13,7 @@
 #include "cmsis_os.h"
 
 /* Exported constants --------------------------------------------------------*/
-#define USE_HMI_LEFT 					  	0
+#define USE_HMI_LEFT 					  	1
 #define GUI_MAIN_COLOR						0xFFC0C0C0
 // Others Parameters
 #define MCU_SPEED_MAX 			  		200U
