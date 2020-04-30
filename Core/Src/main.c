@@ -744,7 +744,7 @@ void StartCanTxTask(void *argument)
 void StartCanRxTask(void *argument)
 {
 	/* USER CODE BEGIN StartCanRxTask */
-	uint32_t notifValue;
+	uint32_t notif;
 	uint8_t related;
 
 	// wait until ManagerTask done
@@ -752,11 +752,12 @@ void StartCanRxTask(void *argument)
 
 	/* Infinite loop */
 	for (;;) {
+
 		// check if has new can message
-		xTaskNotifyWait(0x00, ULONG_MAX, &notifValue, portMAX_DELAY);
+		notif = osThreadFlagsWait(ULONG_MAX, osFlagsWaitAny, osWaitForever);
 
 		// proceed event
-		if ((notifValue & EVT_CAN_RX_IT)) {
+		if (notif & EVT_CAN_RX_IT) {
 			related = 1;
 			// handle message
 			switch (CANBUS_ReadID()) {
@@ -779,7 +780,7 @@ void StartCanRxTask(void *argument)
 
 			// notify GUI thread
 			if (related) {
-				xTaskNotify(DisplayTaskHandle, EVT_DISPLAY_UPDATE, eSetBits);
+				osThreadFlagsSet(DisplayTaskHandle, EVT_DISPLAY_UPDATE);
 			}
 		}
 	}

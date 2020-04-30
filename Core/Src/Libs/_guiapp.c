@@ -21,7 +21,7 @@ static void BootAnimation(void);
 /* Functions -----------------------------------------------------------------*/
 void StartDisplayTask(void *argument) {
 	/* USER CODE BEGIN GUI_MainTask */
-	uint32_t notifValue;
+	uint32_t notif;
 
 	// wait until ManagerTask done
 	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear,
@@ -53,8 +53,9 @@ void StartDisplayTask(void *argument) {
 	while (1) {
 		LOG_StrLn("GUI:Refresh");
 
-		// check if has new CAN message
-		if (xTaskNotifyWait(EVT_DISPLAY_UPDATE, ULONG_MAX, &notifValue, pdMS_TO_TICKS(500)) == pdFALSE) {
+		// check if it needs update
+		notif = osThreadFlagsWait(ULONG_MAX, osFlagsWaitAny, pdMS_TO_TICKS(500));
+		if (!(notif & EVT_DISPLAY_UPDATE)) {
 			Reset_Database();
 		}
 
