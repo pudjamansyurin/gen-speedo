@@ -8,49 +8,67 @@
 /* Includes ------------------------------------------------------------------*/
 #include "_utils.h"
 
+/* External variables --------------------------------------------------------*/
+extern guiapp_t GAPP;
+
 /* Functions -----------------------------------------------------------------*/
 void _GUI_ClearRect(GUI_RECT *rect) {
-  GUI_ClearRect(rect->x0, rect->y0, rect->x1, rect->y1);
+	GUI_ClearRect(rect->x0, rect->y0, rect->x1, rect->y1);
 }
 
-void _GUI_Indicator(const GUI_BITMAP *bg, const GUI_BITMAP *fg, uint16_t x, uint16_t y, uint8_t status, uint8_t alpha) {
-  GUI_RECT pRect = { x, y, x + fg->XSize, y + fg->YSize };
+void _GUI_IconMem(uint16_t x, uint16_t y, const GUI_BITMAP *fg, uint8_t show, uint8_t alpha) {
+	// create & select MEMDEV
+	GUI_SelectLayer(1);
+	GUI_MEMDEV_Handle hMem = GUI_MEMDEV_Create(x, y, x + fg->XSize, y + fg->XSize);
+	GUI_MEMDEV_Select(hMem);
 
-  // draw background
-  GUI_SetClipRect(&pRect);
-  GUI_DrawBitmapEx(bg, x, y, x, y, 1000, 1000);
-  GUI_SetClipRect(NULL);
+	// draw background
+	_GUI_Icon(x, y, fg, show, alpha);
 
-  // draw indicator image
-  if (status == 1) {
-    GUI_SetAlpha(alpha);
-    GUI_DrawBitmap(fg, x, y);
-    GUI_SetAlpha(255);
-  }
+	// Print result & delete MEMDEV
+	GUI_MEMDEV_Select(0);
+	GUI_MEMDEV_CopyToLCD(hMem);
+	GUI_MEMDEV_Delete(hMem);
+}
+
+void _GUI_Icon(uint16_t x, uint16_t y, const GUI_BITMAP *fg, uint8_t show, uint8_t alpha) {
+	GUI_RECT pRect = { x, y, x + fg->XSize, y + fg->YSize };
+
+	// draw background
+	GUI_SetClipRect(&pRect);
+	GUI_DrawBitmapEx(GAPP.background, x, y, x, y, 1000, 1000);
+	GUI_SetClipRect(NULL);
+
+	// draw indicator image
+	if (show) {
+		GUI_SetAlpha(alpha);
+		GUI_DrawBitmap(fg, x, y);
+		GUI_SetAlpha(255);
+	}
 }
 
 void _LedWrite(uint8_t number, uint8_t state) {
-  if (number == 1) {
-    HAL_GPIO_WritePin(LD1_PORT, LD1_PIN, state);
-  } else {
-    HAL_GPIO_WritePin(LD2_PORT, LD2_PIN, state);
-  }
+	if (number == 1) {
+		HAL_GPIO_WritePin(LD1_PORT, LD1_PIN, state);
+	} else {
+		HAL_GPIO_WritePin(LD2_PORT, LD2_PIN, state);
+	}
 }
 
 void _LedToggle(uint8_t number) {
-  if (number == 1) {
-    HAL_GPIO_TogglePin(LD1_PORT, LD1_PIN);
-  } else {
-    HAL_GPIO_TogglePin(LD2_PORT, LD2_PIN);
-  }
+	if (number == 1) {
+		HAL_GPIO_TogglePin(LD1_PORT, LD1_PIN);
+	} else {
+		HAL_GPIO_TogglePin(LD2_PORT, LD2_PIN);
+	}
 }
 
 void _SetBacklight(uint8_t state) {
 #if !USE_HMI_LEFT
-  HAL_GPIO_WritePin(RIGHT_BACKLIGHT_GPIO_Port, RIGHT_BACKLIGHT_Pin, state);
+	HAL_GPIO_WritePin(RIGHT_BACKLIGHT_GPIO_Port, RIGHT_BACKLIGHT_Pin, state);
 #endif
 }
 
 float _D2R(uint16_t deg) {
-  return deg * M_PI / 180.0;
+	return deg * M_PI / 180.0;
 }

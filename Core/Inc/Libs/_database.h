@@ -13,12 +13,13 @@
 #include "cmsis_os.h"
 
 /* Exported constants --------------------------------------------------------*/
-#define USE_HMI_LEFT 			  0
+#define USE_HMI_LEFT 					  	0
+#define GUI_MAIN_COLOR						0xFFC0C0C0
 // Others Parameters
-#define MCU_SPEED_MAX 			  200
-#define MCU_RPM_MAX 			  99999
-#define VCU_ODOMETER_MAX		  99999
-#define HMI_DRIVE_MODE_MAX		  3
+#define MCU_SPEED_MAX 			  		200U
+#define MCU_RPM_MAX 			 			 	99999UL
+#define VCU_ODOMETER_MAX		  		99999UL
+#define HMI_DRIVE_MODE_MAX		  	3U
 #define LCD_SIZE_X                (320-1)
 #define LCD_SIZE_Y                (240-1)
 
@@ -47,106 +48,86 @@
 
 /* Enum prototypes -------------------------------------------------------*/
 typedef enum {
-  SW_M_DRIVE = 0,
-  SW_M_TRIP = 1,
-  SW_M_REPORT = 2,
-  SW_M_MAX = 2
+	SW_M_DRIVE = 0,
+	SW_M_TRIP = 1,
+	SW_M_REPORT = 2,
+	SW_M_MAX = 2
 } sw_mode_t;
 
 typedef enum {
-  SW_M_DRIVE_E = 0,
-  SW_M_DRIVE_S = 1,
-  SW_M_DRIVE_P = 2,
-  SW_M_DRIVE_MAX = 2,
-  SW_M_DRIVE_R = 3,
+	SW_M_DRIVE_E = 0,
+	SW_M_DRIVE_S = 1,
+	SW_M_DRIVE_P = 2,
+	SW_M_DRIVE_MAX = 2,
+	SW_M_DRIVE_R = 3,
 } sw_mode_drive_t;
 
 typedef enum {
-  SW_M_TRIP_A = 0,
-  SW_M_TRIP_B = 1,
-  SW_M_TRIP_MAX = 1,
+	SW_M_TRIP_A = 0,
+	SW_M_TRIP_B = 1,
+	SW_M_TRIP_MAX = 1,
 } sw_mode_trip_t;
 
 typedef enum {
-  SW_M_REPORT_RANGE = 0,
-  SW_M_REPORT_EFFICIENCY = 1,
-  SW_M_REPORT_MAX = 1,
+	SW_M_REPORT_RANGE = 0,
+	SW_M_REPORT_EFFICIENCY = 1,
+	SW_M_REPORT_MAX = 1,
 } sw_mode_report_t;
 
 /* Struct prototypes -------------------------------------------------------*/
 typedef struct {
-  sw_mode_t sel;
-  uint8_t hide;
-  sw_mode_drive_t drive;
-  struct {
-    sw_mode_trip_t sel;
-    uint32_t val;
-  } trip;
-  struct {
-    sw_mode_report_t sel;
-    uint8_t val;
-  } report;
+	sw_mode_t sel;
+	uint8_t hide;
+	sw_mode_drive_t drive;
+	struct {
+		sw_mode_trip_t sel;
+		uint32_t val;
+	} trip;
+	struct {
+		sw_mode_report_t sel;
+		uint8_t val;
+	} report;
 } modes_t;
 
 typedef struct {
-  uint8_t abs;
-  uint8_t mirror;
-  uint8_t lamp;
-  uint8_t warning;
-  uint8_t overheat;
-  uint8_t finger;
-  uint8_t keyless;
-  uint8_t daylight;
-  uint8_t sein_left;
-  uint8_t sein_right;
+	uint8_t abs;
+	uint8_t mirror;
+	uint8_t lamp;
+	uint8_t warning;
+	uint8_t overheat;
+	uint8_t finger;
+	uint8_t keyless;
+	uint8_t daylight;
+	uint8_t sein_left;
+	uint8_t sein_right;
 } status_t;
 
 typedef struct {
-  struct {
-    uint8_t signal;
-    uint8_t speed;
-    uint32_t odometer;
-  } vcu;
-  struct {
-    status_t status;
-    modes_t mode;
-  } hmi1;
-  struct {
-    uint32_t rpm;
-    uint32_t temperature;
-  } mcu;
-  struct {
-    uint8_t soc;
-  } bms;
+	struct {
+		uint8_t signal;
+		uint8_t speed;
+		uint32_t odometer;
+	} vcu;
+	struct {
+		status_t status;
+		modes_t mode;
+	} hmi1;
+	struct {
+		uint32_t rpm;
+		uint32_t temperature;
+	} mcu;
+	struct {
+		uint8_t soc;
+	} bms;
 } db_t;
 
 typedef struct {
-  GUI_CONST_STORAGE GUI_BITMAP *background;
-  struct {
-    GUI_POINT points[25];
-    int count;
-  } overlay;
+	GUI_CONST_STORAGE GUI_BITMAP *background;
+	struct {
+		GUI_POINT points[25];
+		int count;
+	} overlay;
 } guiapp_t;
-
-typedef struct {
-  db_t db;
-  struct {
-    struct {
-      uint8_t trip;
-      uint8_t drive;
-      uint8_t report;
-    } mode;
-    struct {
-      uint8_t low;
-      uint8_t update;
-    } soc;
-    struct {
-      uint8_t low;
-      TickType_t tick;
-    } battery;
-  } flag;
-  uint8_t reset;
-} latch_t;
 
 /* Functions prototypes -------------------------------------------------------*/
 void Reset_Database(void);

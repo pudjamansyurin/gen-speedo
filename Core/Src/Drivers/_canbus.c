@@ -83,8 +83,9 @@ uint8_t CANBUS_Write(canbus_tx_t *tx) {
   HAL_StatusTypeDef status;
 
   // check tx mailbox is ready
-  while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan2) == 0)
-    ;
+  while (!HAL_CAN_GetTxMailboxesFreeLevel(&hcan2)){
+    osDelay(1);
+  };
 
   /* Start the Transmission process */
   status = HAL_CAN_AddTxMessage(&hcan2, &(tx->header), (uint8_t*) &(tx->data), &TxMailbox);

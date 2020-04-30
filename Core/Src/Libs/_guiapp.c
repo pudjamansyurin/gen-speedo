@@ -10,135 +10,121 @@
 
 /* External variables --------------------------------------------------------*/
 extern db_t DB;
-extern guiapp_t GAPP;
 extern collection_t COL;
+extern guiapp_t GAPP;
 extern osEventFlagsId_t GlobalEventHandle;
 
 /* Functions prototypes ------------------------------------------------------*/
-static void BootOverlay(guiapp_t *GA);
+static void BootOverlay(void);
 static void BootAnimation(void);
 
 /* Functions -----------------------------------------------------------------*/
 void StartDisplayTask(void *argument) {
-  /* USER CODE BEGIN GUI_MainTask */
-  latch_t TMP = { 0 };
-  uint32_t notifValue;
+	/* USER CODE BEGIN GUI_MainTask */
+	uint32_t notifValue;
 
-  // wait until ManagerTask done
-  osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
+	// wait until ManagerTask done
+	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear,
+	osWaitForever);
 
-  TMP.reset = 1;
-
+	// create MEMDEV on layer 1
 #if USE_HMI_LEFT
-  // create MEMDEV on layer 1
-  GUI_SelectLayer(1);
-  GUI_MEMDEV_Handle hMem = GUI_MEMDEV_Create(
-      COL.x,
-      COL.y - COL.r,
-      COL.x + COL.r + (COL.r * cos(_D2R(COL.max + 180))) + 5 - COL.x + 25,
-      COL.y + COL.h + 5 - (COL.y - COL.r));
+	GUI_SelectLayer(1);
+	GUI_MEMDEV_Handle hMem = GUI_MEMDEV_Create(
+			COL.x,
+			COL.y - COL.r,
+			COL.x + COL.r + (COL.r * cos(_D2R(COL.max + 180))) + 5 - COL.x + 25,
+			COL.y + COL.h + 5 - (COL.y - COL.r));
 #endif
 
-  // Set overlay on all indicator on boot
-  BootOverlay(&GAPP);
-  // Run booting animation on start
-  BootAnimation();
-  // Draw the layer 0 (background)
-  GUI_SelectLayer(0);
-  GUI_DrawBitmap(GAPP.background, 0, 0);
-  GUI_Delay(500);
-  // Make layer 1 transparent
-  GUI_SelectLayer(1);
-  GUI_SetBkColor(GUI_TRANSPARENT);
-  GUI_Clear();
-  GUI_SetBkColor(GUI_BLACK);
+	// Booting
+	BootOverlay();
+	BootAnimation();
 
-  // Infinitive loop
-  while (1) {
-    LOG_StrLn("GUI:Refresh");
+	// Draw the layer 0 (background)
+	GUI_SelectLayer(0);
+	GUI_DrawBitmap(GAPP.background, 0, 0);
+	GUI_Delay(500);
 
-    // check if has new CAN message
-    if (xTaskNotifyWait(EVT_DISPLAY_UPDATE, ULONG_MAX, &notifValue, pdMS_TO_TICKS(500)) == pdFALSE) {
-      // reset
-      Reset_Database();
-      _SetBacklight(1);
+	// Drawing at layer 1
+	GUI_SelectLayer(1);
 
-      TMP.reset = 1;
-    }
+	// Infinitive loop
+	while (1) {
+		LOG_StrLn("GUI:Refresh");
+
+		// check if has new CAN message
+		if (xTaskNotifyWait(EVT_DISPLAY_UPDATE, ULONG_MAX, &notifValue, pdMS_TO_TICKS(500)) == pdFALSE) {
+			Reset_Database();
+		}
 
 #if USE_HMI_LEFT
-    LEFT_Sein(&TMP);
-    LEFT_Finger(&TMP);
-    LEFT_Mirror(&TMP);
+		// Icon only
+		LEFT_Sein();
+		LEFT_Finger();
+		LEFT_Mirror();
 
-    // Others
-    if (LEFT_NeedUpdate(&TMP)) {
-      // Clear Left HMI
-      GUI_MEMDEV_Select(hMem);
-      GUI_DrawBitmapEx(GAPP.background, COL.x, COL.y - COL.r, COL.x, COL.y - COL.r, 1000, 1000);
+		// MEMDEV: Redraw background
+		GUI_MEMDEV_Select(hMem);
+		GUI_DrawBitmapEx(GAPP.background, COL.x, COL.y - COL.r, COL.x, COL.y - COL.r, 1000, 1000);
 
-      // Set Color
-      GUI_SetColor(0xFFC0C0C0);
-      LEFT_ModeTrip(&TMP);
-      LEFT_Odometer(&TMP);
-      LEFT_Keyless(&TMP);
-      LEFT_Needle(&TMP, &COL);
+		// Icon + Text
+		LEFT_Keyless();
+		LEFT_ModeTrip();
+		LEFT_Odometer();
+		LEFT_Needle();
 
-      // Print result to LCD
-      GUI_MEMDEV_Select(0);
-      GUI_MEMDEV_CopyToLCD(hMem);
-    }
-
+		// MEMDEV: Print result to LCD
+		GUI_MEMDEV_Select(0);
+		GUI_MEMDEV_CopyToLCD(hMem);
 #else
-    RIGHT_Sein(&TMP);
-    RIGHT_Warning(&TMP);
-    RIGHT_ABS(&TMP);
-    RIGHT_Overheat(&TMP);
-    RIGHT_Lamp(&TMP);
+		// Icon only
+		RIGHT_Sein();
+		RIGHT_Warning();
+		RIGHT_ABS();
+		RIGHT_Overheat();
+		RIGHT_Lamp();
 
-    // Set Color
-    GUI_SetColor(0xFFC0C0C0);
-    RIGHT_Speed(&TMP);
-    RIGHT_Battery(&TMP);
-    RIGHT_Signal(&TMP);
-    RIGHT_ModeReport(&TMP);
-    RIGHT_ModeDrive(&TMP);
+		// Icon + Text
+		RIGHT_Speed();
+		RIGHT_Battery();
+		RIGHT_Signal();
+		RIGHT_ModeReport();
+		RIGHT_ModeDrive();
 #endif
-
-    TMP.reset = 0;
-  }
-  /* USER CODE END GUI_MainTask */
+	}
+	/* USER CODE END GUI_MainTask */
 }
 
-static void BootOverlay(guiapp_t *GA) {
-  // Make layer 1 transparent
-  GUI_SelectLayer(1);
-  GUI_SetBkColor(GUI_TRANSPARENT);
-  GUI_Clear();
+static void BootOverlay() {
+	// Make layer 1 transparent
+	GUI_SelectLayer(1);
+	GUI_SetBkColor(GUI_TRANSPARENT);
+	GUI_Clear();
 
-  // Give overlay on indicators at layer 1
-  GUI_SelectLayer(0);
-  GUI_DrawBitmap(GA->background, 0, 0);
+	// Give overlay on indicators at layer 1
+	GUI_SelectLayer(0);
+	GUI_DrawBitmap(GAPP.background, 0, 0);
 
-  // overlay for first booting
-  GUI_SetColor(GUI_BLACK);
-  GUI_FillPolygon(GA->overlay.points, GA->overlay.count, 0, 0);
+	// overlay for first booting
+	GUI_SetColor(GUI_BLACK);
+	GUI_FillPolygon(GAPP.overlay.points, GAPP.overlay.count, 0, 0);
 }
 
 static void BootAnimation(void) {
-  // start of booting animation
-  GUI_SelectLayer(1);
-  GUI_SetBkColor(GUI_BLACK);
-  GUI_Clear();
-  // start of circular booting animation
-  GUI_SetColor(GUI_TRANSPARENT);
+	// start of booting animation
+	GUI_SelectLayer(1);
+	GUI_SetBkColor(GUI_BLACK);
+	GUI_Clear();
+	// start of circular booting animation
+	GUI_SetColor(GUI_TRANSPARENT);
 
 #if USE_HMI_LEFT
-  LEFT_Animation();
+	LEFT_Animation();
 #else
-  RIGHT_Animation();
+	RIGHT_Animation();
 #endif
-  // end of booting animation
+	// end of booting animation
 }
 
 /*************************** End of file ****************************/
