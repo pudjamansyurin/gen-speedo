@@ -686,8 +686,9 @@ void StartManagerTask(void *argument)
 	osEventFlagsSet(GlobalEventHandle, EVENT_READY);
 
 	/* Infinite loop */
-	lastWake = osKernelGetTickCount();
 	for (;;) {
+		lastWake = osKernelGetTickCount();
+
 		// Feed the dog
 		HAL_IWDG_Refresh(&hiwdg);
 
@@ -703,7 +704,7 @@ void StartManagerTask(void *argument)
 		//		DB.vcu.speed++;
 
 		// Periodic interval
-		vTaskDelayUntil(&lastWake, pdMS_TO_TICKS(1000));
+		osDelayUntil(lastWake + pdMS_TO_TICKS(1000));
 	}
 	/* USER CODE END 5 */
 }
@@ -724,12 +725,14 @@ void StartCanTxTask(void *argument)
 	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsWaitAny | osFlagsNoClear, osWaitForever);
 
 	/* Infinite loop */
-	lastWake = osKernelGetTickCount();
 	for (;;) {
+		lastWake = osKernelGetTickCount();
+
+		// Send to CAN
 		CAN_HMI_Heartbeat();
 
 		// Periodic interval
-		vTaskDelayUntil(&lastWake, pdMS_TO_TICKS(500));
+		osDelayUntil(lastWake + pdMS_TO_TICKS(500));
 	}
 	/* USER CODE END StartCanTxTask */
 }
