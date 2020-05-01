@@ -16,10 +16,10 @@
 #define USE_HMI_LEFT 					  	1
 #define GUI_MAIN_COLOR						0xFFC0C0C0
 // Others Parameters
-#define MCU_SPEED_MAX 			  		200U
-#define MCU_RPM_MAX 			 			 	99999UL
-#define VCU_ODOMETER_MAX		  		99999UL
-#define HMI_DRIVE_MODE_MAX		  	3U
+#define MCU_SPEED_MAX 			  		255U
+#define MCU_RPM_MAX 			 			 	99999U
+#define VCU_ODOMETER_MAX		  		99999U
+
 #define LCD_SIZE_X                (320-1)
 #define LCD_SIZE_Y                (240-1)
 
@@ -40,7 +40,7 @@
 #define _R8(var, x)               ((var >> x) & 0xFF)
 
 // Events (for Individual Thread)
-#define EVT_CAN_RX_IT			  BIT(0)
+#define EVT_CAN_RX_IT			  			BIT(0)
 #define EVT_DISPLAY_UPDATE        BIT(0)
 
 // Events group (for All Threads)
