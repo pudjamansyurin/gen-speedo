@@ -20,7 +20,7 @@ extern GUI_CONST_STORAGE GUI_FONT GUI_FontSquare721_BT23;
 extern db_t DB;
 
 /* Global Variables -----------------------------------------------------------*/
-guiapp_t GAPP = {
+display_t DISPLAY = {
 		.background = &bmHMI_Left,
 		.overlay = {
 				.points = {
@@ -83,7 +83,7 @@ void LEFT_MemGroupEnter(void) {
 
 	// MEMDEV: Draw to MEM
 	GUI_MEMDEV_Select(hMem);
-	GUI_DrawBitmapEx(GAPP.background, COL.x, COL.y - COL.r, COL.x, COL.y - COL.r, 1000, 1000);
+	GUI_DrawBitmapEx(DISPLAY.background, COL.x, COL.y - COL.r, COL.x, COL.y - COL.r, 1000, 1000);
 }
 
 void LEFT_MemGroupExit(void) {

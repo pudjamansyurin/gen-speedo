@@ -26,7 +26,7 @@ extern GUI_CONST_STORAGE GUI_FONT GUI_FontSquare721_Cn_BT62;
 extern db_t DB;
 
 /* Variables ------------------------------------------------------------------*/
-guiapp_t GAPP = {
+display_t DISPLAY = {
 		.background = &bmHMI_Right,
 		.overlay = {
 				.points = {

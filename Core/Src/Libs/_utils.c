@@ -9,7 +9,7 @@
 #include "_utils.h"
 
 /* External variables --------------------------------------------------------*/
-extern guiapp_t GAPP;
+extern display_t DISPLAY;
 
 /* Functions -----------------------------------------------------------------*/
 void _GUI_ClearRect(GUI_RECT *rect) {
@@ -36,7 +36,7 @@ void _GUI_Icon(uint16_t x, uint16_t y, const GUI_BITMAP *fg, uint8_t show, uint8
 
 	// draw background
 	GUI_SetClipRect(&pRect);
-	GUI_DrawBitmapEx(GAPP.background, x, y, x, y, 1000, 1000);
+	GUI_DrawBitmapEx(DISPLAY.background, x, y, x, y, 1000, 1000);
 	GUI_SetClipRect(NULL);
 
 	// draw indicator image

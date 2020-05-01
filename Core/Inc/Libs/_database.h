@@ -13,13 +13,13 @@
 #include "cmsis_os.h"
 
 /* Exported constants --------------------------------------------------------*/
-#define USE_HMI_LEFT 					  	1
-#define GUI_MAIN_COLOR						0xFFC0C0C0
+#define USE_HMI_LEFT 					  	0
 // Others Parameters
 #define MCU_SPEED_MAX 			  		255U
 #define MCU_RPM_MAX 			 			 	99999U
 #define VCU_ODOMETER_MAX		  		99999U
 
+#define GUI_MAIN_COLOR						0xFFC0C0C0
 #define LCD_SIZE_X                (320-1)
 #define LCD_SIZE_Y                (240-1)
 
@@ -127,7 +127,7 @@ typedef struct {
 		GUI_POINT points[25];
 		int count;
 	} overlay;
-} guiapp_t;
+} display_t;
 
 /* Functions prototypes -------------------------------------------------------*/
 void Reset_Database(void);

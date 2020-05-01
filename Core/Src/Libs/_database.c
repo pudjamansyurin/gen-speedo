@@ -36,5 +36,6 @@ void Reset_Database(void) {
 	DB.hmi1.mode.report.sel = SW_M_REPORT_RANGE;
 	DB.hmi1.mode.report.val = 0;
 
+	// default backlight is ON
 	_SetBacklight(1);
 }

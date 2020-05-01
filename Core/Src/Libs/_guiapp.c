@@ -10,7 +10,7 @@
 
 /* External variables --------------------------------------------------------*/
 extern db_t DB;
-extern guiapp_t GAPP;
+extern display_t DISPLAY;
 extern osEventFlagsId_t GlobalEventHandle;
 
 /* Functions prototypes ------------------------------------------------------*/
@@ -83,9 +83,9 @@ static void BootOverlay() {
 
 	// Draw overlay in layer 1 to hide non-animated components
 	GUI_SelectLayer(0);
-	GUI_DrawBitmap(GAPP.background, 0, 0);
+	GUI_DrawBitmap(DISPLAY.background, 0, 0);
 	GUI_SetColor(GUI_BLACK);
-	GUI_FillPolygon(GAPP.overlay.points, GAPP.overlay.count, 0, 0);
+	GUI_FillPolygon(DISPLAY.overlay.points, DISPLAY.overlay.count, 0, 0);
 }
 
 static void BootAnimation(void) {
@@ -107,7 +107,7 @@ static void BootAnimation(void) {
 static void StartDrawing(void) {
 	// Draw the layer 0 (background)
 	GUI_SelectLayer(0);
-	GUI_DrawBitmap(GAPP.background, 0, 0);
+	GUI_DrawBitmap(DISPLAY.background, 0, 0);
 	GUI_Delay(500);
 
 	// Drawing at layer 1
