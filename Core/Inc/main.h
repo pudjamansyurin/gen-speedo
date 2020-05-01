@@ -37,7 +37,6 @@ extern "C" {
 #include <stdint.h>
 #include <math.h>
 #include <string.h>
-#include <limits.h>
 
 #include "GUI.h"
 #include "STemwin_wrapper.h"

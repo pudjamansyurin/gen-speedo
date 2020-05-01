@@ -36,7 +36,7 @@ void StartDisplayTask(void *argument) {
 		LOG_StrLn("GUI:Refresh");
 
 		// check if it needs update
-		notif = osThreadFlagsWait(ULONG_MAX, osFlagsWaitAny, pdMS_TO_TICKS(500));
+		notif = osThreadFlagsWait(EVT_MASK, osFlagsWaitAny, pdMS_TO_TICKS(500));
 		if (!(notif & EVT_DISPLAY_UPDATE)) {
 			Reset_Database();
 		}

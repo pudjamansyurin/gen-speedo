@@ -757,7 +757,7 @@ void StartCanRxTask(void *argument)
 	for (;;) {
 
 		// check if has new can message
-		notif = osThreadFlagsWait(ULONG_MAX, osFlagsWaitAny, osWaitForever);
+		notif = osThreadFlagsWait(EVT_MASK, osFlagsWaitAny, osWaitForever);
 
 		// proceed event
 		if (notif & EVT_CAN_RX_IT) {

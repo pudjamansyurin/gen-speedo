@@ -40,10 +40,12 @@
 #define _R8(var, x)               ((var >> x) & 0xFF)
 
 // Events (for Individual Thread)
+#define EVT_MASK									0x7FFFFFFF
 #define EVT_CAN_RX_IT			  			BIT(0)
 #define EVT_DISPLAY_UPDATE        BIT(0)
 
 // Events group (for All Threads)
+#define EVENT_MASK								0xFFFFFF
 #define EVENT_READY               BIT(0)
 
 /* Enum prototypes -------------------------------------------------------*/
