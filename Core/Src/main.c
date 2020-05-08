@@ -230,11 +230,11 @@ void SystemClock_Config(void)
 	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
 	RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = { 0 };
 
-	/** Configure the main internal regulator output voltage
+	/** Configure the main internal regulator output voltage 
 	 */
 	__HAL_RCC_PWR_CLK_ENABLE();
 	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-	/** Initializes the CPU, AHB and APB busses clocks
+	/** Initializes the CPU, AHB and APB busses clocks 
 	 */
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_HSE;
 	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
@@ -249,13 +249,13 @@ void SystemClock_Config(void)
 			{
 		Error_Handler();
 	}
-	/** Activate the Over-Drive mode
+	/** Activate the Over-Drive mode 
 	 */
 	if (HAL_PWREx_EnableOverDrive() != HAL_OK)
 			{
 		Error_Handler();
 	}
-	/** Initializes the CPU, AHB and APB busses clocks
+	/** Initializes the CPU, AHB and APB busses clocks 
 	 */
 	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
 			| RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
@@ -601,8 +601,8 @@ static void MX_GPIO_Init(void)
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-	/*Configure GPIO pins : PC13 PC15 PC1 PC4
-	 PC5 PC8 PC9 PC10
+	/*Configure GPIO pins : PC13 PC15 PC1 PC4 
+	 PC5 PC8 PC9 PC10 
 	 PC11 PC12 */
 	GPIO_InitStruct.Pin = GPIO_PIN_13 | GPIO_PIN_15 | GPIO_PIN_1 | GPIO_PIN_4
 			| GPIO_PIN_5 | GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10
@@ -624,7 +624,7 @@ static void MX_GPIO_Init(void)
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
-	/*Configure GPIO pins : PA0 PA1 PA2 PA5
+	/*Configure GPIO pins : PA0 PA1 PA2 PA5 
 	 PA7 PA8 PA15 */
 	GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_5
 			| GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_15;
@@ -632,7 +632,7 @@ static void MX_GPIO_Init(void)
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	/*Configure GPIO pins : PB2 PB12 PB13 PB14
+	/*Configure GPIO pins : PB2 PB12 PB13 PB14 
 	 PB15 PB4 PB7 */
 	GPIO_InitStruct.Pin = GPIO_PIN_2 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14
 			| GPIO_PIN_15 | GPIO_PIN_4 | GPIO_PIN_7;
@@ -640,7 +640,7 @@ static void MX_GPIO_Init(void)
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-	/*Configure GPIO pins : PD11 PD12 PD13 PD2
+	/*Configure GPIO pins : PD11 PD12 PD13 PD2 
 	 PD4 PD5 PD6 PD7 */
 	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_2
 			| GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7;
@@ -828,18 +828,18 @@ void Error_Handler(void)
 
 #ifdef  USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
-{
-	/* USER CODE BEGIN 6 */
+{ 
+  /* USER CODE BEGIN 6 */
 	/* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-	/* USER CODE END 6 */
+  /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
 
