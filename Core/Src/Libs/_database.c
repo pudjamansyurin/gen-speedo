@@ -8,10 +8,10 @@
 #include "_database.h"
 #include "_utils.h"
 
-/* Variables ------------------------------------------------------------------*/
+/* Exported Variables --------------------------------------------------------*/
 db_t DB;
 
-/* Functions -----------------------------------------------------------------*/
+/* Public Functions ----------------------------------------------------------*/
 void Reset_Database(void) {
 	DB.vcu.signal = 0;
 	DB.vcu.speed = 0;
@@ -38,4 +38,32 @@ void Reset_Database(void) {
 
 	// default backlight is ON
 	_SetBacklight(1);
+}
+
+uint8_t DB_ValidThreadFlag(uint32_t flag) {
+	uint8_t ret = 1;
+
+	// check is empty
+	if (!flag) {
+		ret = 0;
+	} else if (flag & (~EVT_MASK)) {
+		// error
+		ret = 0;
+	}
+
+	return ret;
+}
+
+uint8_t DB_ValidEventFlag(uint32_t flag) {
+	uint8_t ret = 1;
+
+	// check is empty
+	if (!flag) {
+		ret = 0;
+	} else if (flag & (~EVENT_MASK)) {
+		// error
+		ret = 0;
+	}
+
+	return ret;
 }

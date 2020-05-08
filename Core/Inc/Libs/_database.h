@@ -133,5 +133,7 @@ typedef struct {
 
 /* Functions prototypes -------------------------------------------------------*/
 void Reset_Database(void);
+uint8_t DB_ValidThreadFlag(uint32_t flag);
+uint8_t DB_ValidEventFlag(uint32_t flag);
 
 #endif /* DATABASE_H_ */
