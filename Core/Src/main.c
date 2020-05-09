@@ -773,9 +773,6 @@ void StartCanRxTask(void *argument)
 					case CAND_VCU_TRIP_MODE:
 						CAN_VCU_Trip_Mode_Read();
 						break;
-						//        case CAND_MCU_DUMMY:
-						//          CAN_MCU_Dummy_Read();
-						//          break;
 					default:
 						related = 0;
 						break;
