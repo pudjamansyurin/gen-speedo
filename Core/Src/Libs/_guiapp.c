@@ -9,7 +9,6 @@
 #include "_guiapp.h"
 
 /* External variables --------------------------------------------------------*/
-extern db_t DB;
 extern display_t DISPLAY;
 extern osEventFlagsId_t GlobalEventHandle;
 
@@ -38,7 +37,7 @@ void StartDisplayTask(void *argument) {
 		// check if it needs update
 		notif = osThreadFlagsWait(EVT_MASK, osFlagsWaitAny, pdMS_TO_TICKS(500));
 		if (!_RTOS_ValidThreadFlag(notif) || !(notif & EVT_DISPLAY_UPDATE)) {
-			Reset_Database();
+			_ResetSystem();
 		}
 
 #if USE_HMI_LEFT

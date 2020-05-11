@@ -6,6 +6,9 @@
  */
 /* Includes ------------------------------------------------------------------*/
 #include "_guiapp_left.h"
+#include "HMI1.h"
+#include "VCU.h"
+#include "MCU.h"
 
 #if USE_HMI_LEFT
 /* External variables ---------------------------------------------------------*/
@@ -17,7 +20,9 @@ extern GUI_CONST_STORAGE GUI_BITMAP bmHMI_Left_Sein;
 extern GUI_CONST_STORAGE GUI_BITMAP bmHMI_Left_Trip_A;
 extern GUI_CONST_STORAGE GUI_BITMAP bmHMI_Left_Trip_B;
 extern GUI_CONST_STORAGE GUI_FONT GUI_FontSquare721_BT23;
-extern db_t DB;
+extern hmi1_t HMI1;
+extern vcu_t VCU;
+extern mcu_t MCU;
 
 /* Global Variables -----------------------------------------------------------*/
 display_t DISPLAY = {
@@ -94,19 +99,19 @@ void LEFT_MemGroupExit(void) {
 }
 
 void LEFT_Sein(void) {
-	_GUI_IconMem(275, 84, &bmHMI_Left_Sein, DB.hmi1.status.sein_left, 200);
+	_GUI_IconMem(275, 84, &bmHMI_Left_Sein, HMI1.d.status.sein_left, 200);
 }
 
 void LEFT_Finger(void) {
-	_GUI_IconMem(293, 127, &bmHMI_Left_Finger, DB.hmi1.status.finger, 200);
+	_GUI_IconMem(293, 127, &bmHMI_Left_Finger, HMI1.d.status.finger, 200);
 }
 
 void LEFT_Mirror(void) {
-	_GUI_IconMem(261, 129, &bmHMI_Left_Mirror, DB.hmi1.status.mirror, 200);
+	_GUI_IconMem(261, 129, &bmHMI_Left_Mirror, HMI1.d.status.mirror, 200);
 }
 
 void LEFT_Keyless(void) {
-	_GUI_Icon(228, 133, &bmHMI_Left_Keyless, DB.hmi1.status.keyless, 200);
+	_GUI_Icon(228, 133, &bmHMI_Left_Keyless, HMI1.d.status.keyless, 200);
 }
 
 void LEFT_Odometer(void) {
@@ -115,7 +120,7 @@ void LEFT_Odometer(void) {
 	// Drawing
 	GUI_SetColor(GUI_MAIN_COLOR);
 	GUI_SetFont(&GUI_FontSquare721_BT23);
-	sprintf(str, "%05u", (unsigned int) DB.vcu.odometer);
+	sprintf(str, "%05u", (unsigned int) VCU.d.odometer);
 	GUI_DispStringInRectWrap(str, &(RECT.trip.total),
 	GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
@@ -127,8 +132,8 @@ void LEFT_ModeTrip(void) {
 	GUI_CONST_STORAGE GUI_BITMAP *pImage;
 
 	// Decide the image
-	if (DB.hmi1.mode.sel == SW_M_TRIP) {
-		if (DB.hmi1.mode.trip.sel == SW_M_TRIP_A) {
+	if (HMI1.d.mode.sel == SW_M_TRIP) {
+		if (HMI1.d.mode.trip.sel == SW_M_TRIP_A) {
 			pImage = &bmHMI_Left_Trip_A;
 		} else {
 			pImage = &bmHMI_Left_Trip_B;
@@ -136,20 +141,20 @@ void LEFT_ModeTrip(void) {
 	}
 
 	// Mode Trip Label
-	show = DB.hmi1.mode.sel == SW_M_TRIP && !DB.hmi1.mode.hide;
+	show = HMI1.d.mode.sel == SW_M_TRIP && !HMI1.d.mode.hide;
 	_GUI_Icon(129, 89, pImage, show, 254);
 
 	// Mode Trip Value
 	GUI_SetColor(GUI_MAIN_COLOR);
 	GUI_SetFont(&GUI_FontSquare721_BT23);
-	sprintf(str, "%05u", (unsigned int) DB.hmi1.mode.trip.val);
+	sprintf(str, "%05u", (unsigned int) HMI1.d.mode.trip.val);
 	GUI_DispStringInRectWrap(str, &(RECT.trip.sub),
 	GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
 }
 
 void LEFT_Needle(void) {
-	uint8_t deg = DB.mcu.rpm <= MCU_RPM_MAX ? (DB.mcu.rpm * COL.max / MCU_RPM_MAX) : COL.max;
+	uint8_t deg = MCU.d.rpm <= MCU_RPM_MAX ? (MCU.d.rpm * COL.max / MCU_RPM_MAX) : COL.max;
 	GUI_POINT pNeedle[] = {
 			{
 					(COL.x + COL.r) + (((COL.h / 2) + 1) * cos(_D2R(deg + 270))),

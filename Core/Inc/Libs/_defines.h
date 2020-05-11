@@ -5,15 +5,15 @@
  *      Author: Puja
  */
 
-#ifndef DATABASE_H_
-#define DATABASE_H_
+#ifndef DEFINES_H_
+#define DEFINES_H_
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
 
 /* Exported constants --------------------------------------------------------*/
-#define USE_HMI_LEFT 					  	0
+#define USE_HMI_LEFT 					  	1
 // Others Parameters
 #define MCU_SPEED_MAX 			  		255U
 #define MCU_RPM_MAX 			 			 	99999U
@@ -48,6 +48,21 @@
 #define EVENT_MASK								0xFFFFFF
 #define EVENT_READY               BIT(0)
 
+// CAN Message Address
+#define CAND_VCU_SWITCH					 	0x000
+#define CAND_VCU_DATETIME				 	0x001
+#define CAND_VCU_SELECT_SET			 	0x002
+#define CAND_VCU_TRIP_MODE			 	0x003
+
+#define CAND_HMI1_LEFT            0x7C0
+#define CAND_HMI1_RIGHT           0x7C1
+
+#if USE_HMI_LEFT
+#define CAN_MY_ADRESS             CAND_HMI1_LEFT
+#else
+#define CAN_MY_ADRESS             CAND_HMI1_RIGHT
+#endif
+
 /* Enum prototypes -------------------------------------------------------*/
 typedef enum {
 	SW_M_DRIVE = 0,
@@ -78,52 +93,6 @@ typedef enum {
 
 /* Struct prototypes -------------------------------------------------------*/
 typedef struct {
-	sw_mode_t sel;
-	uint8_t hide;
-	sw_mode_drive_t drive;
-	struct {
-		sw_mode_trip_t sel;
-		uint32_t val;
-	} trip;
-	struct {
-		sw_mode_report_t sel;
-		uint8_t val;
-	} report;
-} modes_t;
-
-typedef struct {
-	uint8_t abs;
-	uint8_t mirror;
-	uint8_t lamp;
-	uint8_t warning;
-	uint8_t overheat;
-	uint8_t finger;
-	uint8_t keyless;
-	uint8_t daylight;
-	uint8_t sein_left;
-	uint8_t sein_right;
-} status_t;
-
-typedef struct {
-	struct {
-		uint8_t signal;
-		uint8_t speed;
-		uint32_t odometer;
-	} vcu;
-	struct {
-		status_t status;
-		modes_t mode;
-	} hmi1;
-	struct {
-		uint32_t rpm;
-		uint32_t temperature;
-	} mcu;
-	struct {
-		uint8_t soc;
-	} bms;
-} db_t;
-
-typedef struct {
 	GUI_CONST_STORAGE GUI_BITMAP *background;
 	struct {
 		GUI_POINT points[25];
@@ -133,7 +102,5 @@ typedef struct {
 
 /* Functions prototypes -------------------------------------------------------*/
 void Reset_Database(void);
-uint8_t DB_ValidThreadFlag(uint32_t flag);
-uint8_t DB_ValidEventFlag(uint32_t flag);
 
-#endif /* DATABASE_H_ */
+#endif /* DEFINES_H_ */

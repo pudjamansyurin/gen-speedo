@@ -25,6 +25,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "_guiapp.h"
+#include "_canbus.h"
+#include "HMI1.h"
+#include "VCU.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -34,7 +37,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-extern db_t DB;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -120,7 +122,8 @@ void StartCanRxTask(void *argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+extern hmi1_t HMI1;
+extern vcu_t VCU;
 /* USER CODE END 0 */
 
 /**
@@ -680,7 +683,7 @@ void StartManagerTask(void *argument)
 	TickType_t lastWake;
 
 	// reset database
-	Reset_Database();
+	_ResetSystem();
 
 	// Release other threads
 	osEventFlagsSet(GlobalEventHandle, EVENT_READY);
@@ -729,7 +732,7 @@ void StartCanTxTask(void *argument)
 		lastWake = osKernelGetTickCount();
 
 		// Send to CAN
-		CAN_HMI_Heartbeat();
+		HMI1.can.t.Heartbeat();
 
 		// Periodic interval
 		osDelayUntil(lastWake + pdMS_TO_TICKS(500));
@@ -765,13 +768,13 @@ void StartCanRxTask(void *argument)
 				// handle message
 				switch (CANBUS_ReadID()) {
 					case CAND_VCU_SWITCH:
-						CAN_VCU_Switch_Read();
+						VCU.can.r.Switch();
 						break;
 					case CAND_VCU_SELECT_SET:
-						CAN_VCU_Select_Set_Read();
+						VCU.can.r.SelectSet();
 						break;
 					case CAND_VCU_TRIP_MODE:
-						CAN_VCU_Trip_Mode_Read();
+						VCU.can.r.TripMode();
 						break;
 					default:
 						related = 0;

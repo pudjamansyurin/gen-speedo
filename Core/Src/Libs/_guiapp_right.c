@@ -6,6 +6,9 @@
  */
 /* Includes ------------------------------------------------------------------*/
 #include "_guiapp_right.h"
+#include "VCU.h"
+#include "HMI1.h"
+#include "BMS.h"
 
 #if !USE_HMI_LEFT
 /* External variables ------------------------------------------------------------------*/
@@ -23,7 +26,9 @@ extern GUI_CONST_STORAGE GUI_FONT GUI_FontSquare721_BT17;
 extern GUI_CONST_STORAGE GUI_FONT GUI_FontSquare721_BT31;
 extern GUI_CONST_STORAGE GUI_FONT GUI_FontSquare721_BT60;
 extern GUI_CONST_STORAGE GUI_FONT GUI_FontSquare721_Cn_BT62;
-extern db_t DB;
+extern hmi1_t HMI1;
+extern vcu_t VCU;
+extern bms_t BMS;
 
 /* Variables ------------------------------------------------------------------*/
 display_t DISPLAY = {
@@ -82,7 +87,6 @@ static collection_t COL = {
 		}
 };
 
-
 /* Functions -----------------------------------------------------------------*/
 void RIGHT_Animation(void) {
 	uint16_t k;
@@ -102,23 +106,23 @@ void RIGHT_Animation(void) {
 }
 
 void RIGHT_Sein(void) {
-	_GUI_IconMem(20, 83, &bmHMI_Right_Sein, DB.hmi1.status.sein_right, 200);
+	_GUI_IconMem(20, 83, &bmHMI_Right_Sein, HMI1.d.status.sein_right, 200);
 }
 
 void RIGHT_Warning(void) {
-	_GUI_IconMem(4, 130, &bmHMI_Right_Warning, DB.hmi1.status.warning, 200);
+	_GUI_IconMem(4, 130, &bmHMI_Right_Warning, HMI1.d.status.warning, 200);
 }
 
 void RIGHT_ABS(void) {
-	_GUI_IconMem(63, 135, &bmHMI_Right_Abs, DB.hmi1.status.abs, 200);
+	_GUI_IconMem(63, 135, &bmHMI_Right_Abs, HMI1.d.status.abs, 200);
 }
 
 void RIGHT_Overheat(void) {
-	_GUI_IconMem(34, 131, &bmHMI_Right_Temp, DB.hmi1.status.overheat, 200);
+	_GUI_IconMem(34, 131, &bmHMI_Right_Temp, HMI1.d.status.overheat, 200);
 }
 
 void RIGHT_Lamp(void) {
-	_GUI_IconMem(190, 136, &bmHMI_Right_Lamp, DB.hmi1.status.lamp, 200);
+	_GUI_IconMem(190, 136, &bmHMI_Right_Lamp, HMI1.d.status.lamp, 200);
 }
 
 void RIGHT_Speed(void) {
@@ -134,7 +138,7 @@ void RIGHT_Speed(void) {
 	// Drawing
 	GUI_SetColor(GUI_MAIN_COLOR);
 	GUI_SetFont(&GUI_FontSquare721_BT60);
-	sprintf(str, "%03u", DB.vcu.speed);
+	sprintf(str, "%03u", VCU.d.speed);
 	GUI_DispStringInRectWrap(str, &(RECT.speed),
 	GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
@@ -161,7 +165,7 @@ void RIGHT_Signal(void) {
 	GUI_ClearRect(
 			RECT.signal.x0,
 			RECT.signal.y0,
-			RECT.signal.x0 + (DB.vcu.signal * (RECT.signal.x1 - RECT.signal.x0) / 100),
+			RECT.signal.x0 + (VCU.d.signal * (RECT.signal.x1 - RECT.signal.x0) / 100),
 			RECT.signal.y1);
 	// reset the bg color
 	GUI_SetBkColor(GUI_BLACK);
@@ -179,7 +183,7 @@ void RIGHT_Battery(void) {
 	GUI_CONST_STORAGE GUI_BITMAP *pImage;
 
 	// Detect trigger event
-	if (DB.bms.soc <= 20) {
+	if (BMS.d.soc <= 20) {
 		GUI_SetColor(0xFFE62129);
 		pImage = &bmHMI_Right_Battery_Low;
 		// decide time to blink
@@ -216,7 +220,7 @@ void RIGHT_Battery(void) {
 	// Battery Value
 	GUI_MEMDEV_Select(hMem1);
 	GUI_SetFont(&GUI_FontSquare721_BT31);
-	sprintf(str, "%02u", DB.bms.soc);
+	sprintf(str, "%02u", BMS.d.soc);
 	GUI_DispStringInRectWrap(str, &(RECT.battery.value),
 	GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
@@ -247,16 +251,16 @@ void RIGHT_ModeReport(void) {
 	GUI_MEMDEV_Select(hMem);
 	_GUI_ClearRect(&(RECT.report.unit));
 	GUI_SetFont(&GUI_FontSquare721_BT10);
-	sprintf(str, "%s", COL.report.unit[DB.hmi1.mode.report.sel]);
+	sprintf(str, "%s", COL.report.unit[HMI1.d.mode.report.sel]);
 	GUI_DispStringInRectWrap(str, &(RECT.report.unit),
 	GUI_TA_BOTTOM | GUI_TA_LEFT, GUI_WRAPMODE_NONE);
 
 	// Mode Report: Label
 	GUI_MEMDEV_Select(hMem1);
 	_GUI_ClearRect(&(RECT.report.mode));
-	if (DB.hmi1.mode.sel == SW_M_REPORT && !DB.hmi1.mode.hide) {
+	if (HMI1.d.mode.sel == SW_M_REPORT && !HMI1.d.mode.hide) {
 		GUI_SetFont(&GUI_FontSquare721_BT14);
-		sprintf(str, "%s", COL.report.mode[DB.hmi1.mode.report.sel]);
+		sprintf(str, "%s", COL.report.mode[HMI1.d.mode.report.sel]);
 		GUI_DispStringInRectWrap(str, &(RECT.report.mode),
 		GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 	}
@@ -264,7 +268,7 @@ void RIGHT_ModeReport(void) {
 	// Mode Report: Value
 	GUI_MEMDEV_Select(hMem2);
 	GUI_SetFont(&GUI_FontSquare721_BT17);
-	sprintf(str, "%02u", DB.hmi1.mode.report.val);
+	sprintf(str, "%02u", HMI1.d.mode.report.val);
 	GUI_DispStringInRectWrap(str, &(RECT.report.value),
 	GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
 
@@ -291,13 +295,13 @@ void RIGHT_ModeDrive(void) {
 
 	// Drive Mode
 	_GUI_ClearRect(&(RECT.drive));
-	if (DB.hmi1.mode.sel == SW_M_DRIVE && !DB.hmi1.mode.hide) {
+	if (HMI1.d.mode.sel == SW_M_DRIVE && !HMI1.d.mode.hide) {
 		// if reverse, change color
-		if (DB.hmi1.mode.drive == SW_M_DRIVE_R) {
+		if (HMI1.d.mode.drive == SW_M_DRIVE_R) {
 			GUI_SetColor(0xFFFF8000);
 		}
 		GUI_SetFont(&GUI_FontSquare721_Cn_BT62);
-		sprintf(str, "%c", COL.drive.mode[DB.hmi1.mode.drive]);
+		sprintf(str, "%c", COL.drive.mode[HMI1.d.mode.drive]);
 		GUI_DispStringInRectWrap(str, &(RECT.drive),
 		GUI_TA_VCENTER | GUI_TA_HCENTER, GUI_WRAPMODE_NONE);
 	}

@@ -7,9 +7,17 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "_utils.h"
+#include "VCU.h"
+#include "HMI1.h"
+#include "MCU.h"
+#include "BMS.h"
 
 /* External variables --------------------------------------------------------*/
 extern display_t DISPLAY;
+extern vcu_t VCU;
+extern hmi1_t HMI1;
+extern mcu_t MCU;
+extern bms_t BMS;
 
 /* Functions -----------------------------------------------------------------*/
 void _GUI_ClearRect(GUI_RECT *rect) {
@@ -95,6 +103,16 @@ void _SetBacklight(uint8_t state) {
 #if !USE_HMI_LEFT
 	HAL_GPIO_WritePin(RIGHT_BACKLIGHT_GPIO_Port, RIGHT_BACKLIGHT_Pin, state);
 #endif
+}
+
+void _ResetSystem(void) {
+	VCU.Init();
+	HMI1.Init();
+	MCU.Init();
+	BMS.Init();
+
+	// default backlight is ON
+	_SetBacklight(1);
 }
 
 float _D2R(uint16_t deg) {

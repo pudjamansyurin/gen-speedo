@@ -9,7 +9,6 @@
 #define GAPP_H_
 
 /* Includes ------------------------------------------------------------------*/
-#include "_can.h"
 #if USE_HMI_LEFT
 #include "_guiapp_left.h"
 #else
