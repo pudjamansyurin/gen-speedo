@@ -63,6 +63,34 @@ void _LedToggle(uint8_t number) {
 	}
 }
 
+uint8_t _RTOS_ValidThreadFlag(uint32_t flag) {
+	uint8_t ret = 1;
+
+	// check is empty
+	if (!flag) {
+		ret = 0;
+	} else if (flag & (~EVT_MASK)) {
+		// error
+		ret = 0;
+	}
+
+	return ret;
+}
+
+uint8_t _RTOS_ValidEventFlag(uint32_t flag) {
+	uint8_t ret = 1;
+
+	// check is empty
+	if (!flag) {
+		ret = 0;
+	} else if (flag & (~EVENT_MASK)) {
+		// error
+		ret = 0;
+	}
+
+	return ret;
+}
+
 void _SetBacklight(uint8_t state) {
 #if !USE_HMI_LEFT
 	HAL_GPIO_WritePin(RIGHT_BACKLIGHT_GPIO_Port, RIGHT_BACKLIGHT_Pin, state);

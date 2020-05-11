@@ -37,7 +37,7 @@ void StartDisplayTask(void *argument) {
 
 		// check if it needs update
 		notif = osThreadFlagsWait(EVT_MASK, osFlagsWaitAny, pdMS_TO_TICKS(500));
-		if (!DB_ValidThreadFlag(notif) || !(notif & EVT_DISPLAY_UPDATE)) {
+		if (!_RTOS_ValidThreadFlag(notif) || !(notif & EVT_DISPLAY_UPDATE)) {
 			Reset_Database();
 		}
 

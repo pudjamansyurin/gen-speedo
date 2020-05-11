@@ -39,31 +39,3 @@ void Reset_Database(void) {
 	// default backlight is ON
 	_SetBacklight(1);
 }
-
-uint8_t DB_ValidThreadFlag(uint32_t flag) {
-	uint8_t ret = 1;
-
-	// check is empty
-	if (!flag) {
-		ret = 0;
-	} else if (flag & (~EVT_MASK)) {
-		// error
-		ret = 0;
-	}
-
-	return ret;
-}
-
-uint8_t DB_ValidEventFlag(uint32_t flag) {
-	uint8_t ret = 1;
-
-	// check is empty
-	if (!flag) {
-		ret = 0;
-	} else if (flag & (~EVENT_MASK)) {
-		// error
-		ret = 0;
-	}
-
-	return ret;
-}
