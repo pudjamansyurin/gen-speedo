@@ -6,7 +6,7 @@
  */
 
 /* Includes ------------------------------------------------------------------*/
-#include "_canbus.h"
+#include "Drivers/_canbus.h"
 
 /* External variables ---------------------------------------------------------*/
 extern osThreadId_t CanRxTaskHandle;

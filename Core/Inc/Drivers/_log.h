@@ -9,9 +9,7 @@
 #define LOG_H_
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-#include "cmsis_os.h"
-#include <string.h>
+#include "Libs/_utils.h"
 
 /* Exported constants --------------------------------------------------------*/
 #define HEX_CHARS                                "0123456789ABCDEF"

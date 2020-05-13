@@ -6,55 +6,19 @@
  */
 
 /* Includes ------------------------------------------------------------------*/
-#include "_utils.h"
-#include "VCU.h"
-#include "HMI1.h"
-#include "MCU.h"
-#include "BMS.h"
+#include "Libs/_utils.h"
+#include "Nodes/VCU.h"
+#include "Nodes/HMI1.h"
+#include "Nodes/MCU.h"
+#include "Nodes/BMS.h"
 
 /* External variables --------------------------------------------------------*/
-extern display_t DISPLAY;
 extern vcu_t VCU;
 extern hmi1_t HMI1;
 extern mcu_t MCU;
 extern bms_t BMS;
 
 /* Functions -----------------------------------------------------------------*/
-void _GUI_ClearRect(GUI_RECT *rect) {
-	GUI_ClearRect(rect->x0, rect->y0, rect->x1, rect->y1);
-}
-
-void _GUI_IconMem(uint16_t x, uint16_t y, const GUI_BITMAP *fg, uint8_t show, uint8_t alpha) {
-	// create & select MEMDEV
-	GUI_SelectLayer(1);
-	GUI_MEMDEV_Handle hMem = GUI_MEMDEV_Create(x, y, x + fg->XSize, y + fg->XSize);
-	GUI_MEMDEV_Select(hMem);
-
-	// draw background
-	_GUI_Icon(x, y, fg, show, alpha);
-
-	// Print result & delete MEMDEV
-	GUI_MEMDEV_Select(0);
-	GUI_MEMDEV_CopyToLCD(hMem);
-	GUI_MEMDEV_Delete(hMem);
-}
-
-void _GUI_Icon(uint16_t x, uint16_t y, const GUI_BITMAP *fg, uint8_t show, uint8_t alpha) {
-	GUI_RECT pRect = { x, y, x + fg->XSize, y + fg->YSize };
-
-	// draw background
-	GUI_SetClipRect(&pRect);
-	GUI_DrawBitmapEx(DISPLAY.background, x, y, x, y, 1000, 1000);
-	GUI_SetClipRect(NULL);
-
-	// draw indicator image
-	if (show) {
-		GUI_SetAlpha(alpha);
-		GUI_DrawBitmap(fg, x, y);
-		GUI_SetAlpha(255);
-	}
-}
-
 void _LedWrite(uint8_t number, uint8_t state) {
 	if (number == 1) {
 		HAL_GPIO_WritePin(LD1_PORT, LD1_PIN, state);

@@ -9,13 +9,14 @@
 #define GAPP_H_
 
 /* Includes ------------------------------------------------------------------*/
-#if USE_HMI_LEFT
-#include "_guiapp_left.h"
-#else
-#include "_guiapp_right.h"
-#endif
+#include "Libs/_utils.h"
+
+/* GUI Thread prototypes ------------------------------------------------------*/
+void StartDisplayTask(void *argument);
 
 /* Functions prototypes -------------------------------------------------------*/
-void StartDisplayTask(void *argument);
+void GUI_ClearRectangle(GUI_RECT *rect);
+void GUI_IconMem(uint16_t x, uint16_t y, const GUI_BITMAP *fg, uint8_t show, uint8_t alpha);
+void GUI_Icon(uint16_t x, uint16_t y, const GUI_BITMAP *fg, uint8_t show, uint8_t alpha);
 
 #endif /* GAPP_H_ */

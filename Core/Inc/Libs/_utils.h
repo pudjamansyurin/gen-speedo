@@ -10,13 +10,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "_defines.h"
-#include "_log.h"
+#include "Drivers/_log.h"
 
 /* Functions prototypes -------------------------------------------------------*/
-void _GUI_ClearRect(GUI_RECT *rect);
-void _GUI_IconMem(uint16_t x, uint16_t y, const GUI_BITMAP *fg, uint8_t show, uint8_t alpha);
-void _GUI_Icon(uint16_t x, uint16_t y, const GUI_BITMAP *fg, uint8_t show, uint8_t alpha);
-
 void _LedWrite(uint8_t number, uint8_t state);
 void _LedToggle(uint8_t number);
 

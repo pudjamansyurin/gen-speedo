@@ -14,7 +14,7 @@
 
 /* Exported constants --------------------------------------------------------*/
 #define USE_HMI_LEFT 					  	1
-// Others Parameters
+
 #define MCU_SPEED_MAX 			  		255U
 #define MCU_RPM_MAX 			 			 	99999U
 #define VCU_ODOMETER_MAX		  		99999U

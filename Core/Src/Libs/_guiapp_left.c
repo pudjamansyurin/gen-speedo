@@ -5,12 +5,13 @@
  *      Author: pudja
  */
 /* Includes ------------------------------------------------------------------*/
-#include "_guiapp_left.h"
-#include "HMI1.h"
-#include "VCU.h"
-#include "MCU.h"
-
+#include "Libs/_guiapp.h"
 #if USE_HMI_LEFT
+#include "Libs/_guiapp_left.h"
+#include "Nodes/HMI1.h"
+#include "Nodes/VCU.h"
+#include "Nodes/MCU.h"
+
 /* External variables ---------------------------------------------------------*/
 extern GUI_CONST_STORAGE GUI_BITMAP bmHMI_Left;
 extern GUI_CONST_STORAGE GUI_BITMAP bmHMI_Left_Finger;
@@ -99,19 +100,19 @@ void LEFT_MemGroupExit(void) {
 }
 
 void LEFT_Sein(void) {
-	_GUI_IconMem(275, 84, &bmHMI_Left_Sein, HMI1.d.status.sein_left, 200);
+	GUI_IconMem(275, 84, &bmHMI_Left_Sein, HMI1.d.status.sein_left, 200);
 }
 
 void LEFT_Finger(void) {
-	_GUI_IconMem(293, 127, &bmHMI_Left_Finger, HMI1.d.status.finger, 200);
+	GUI_IconMem(293, 127, &bmHMI_Left_Finger, HMI1.d.status.finger, 200);
 }
 
 void LEFT_Mirror(void) {
-	_GUI_IconMem(261, 129, &bmHMI_Left_Mirror, HMI1.d.status.mirror, 200);
+	GUI_IconMem(261, 129, &bmHMI_Left_Mirror, HMI1.d.status.mirror, 200);
 }
 
 void LEFT_Keyless(void) {
-	_GUI_Icon(228, 133, &bmHMI_Left_Keyless, HMI1.d.status.keyless, 200);
+	GUI_Icon(228, 133, &bmHMI_Left_Keyless, HMI1.d.status.keyless, 200);
 }
 
 void LEFT_Odometer(void) {
@@ -142,7 +143,7 @@ void LEFT_ModeTrip(void) {
 
 	// Mode Trip Label
 	show = HMI1.d.mode.sel == SW_M_TRIP && !HMI1.d.mode.hide;
-	_GUI_Icon(129, 89, pImage, show, 254);
+	GUI_Icon(129, 89, pImage, show, 254);
 
 	// Mode Trip Value
 	GUI_SetColor(GUI_MAIN_COLOR);

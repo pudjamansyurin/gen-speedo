@@ -9,7 +9,8 @@
 #define GAPP_LEFT_H_
 
 /* Includes ------------------------------------------------------------------*/
-#include "_utils.h"
+#include "Libs/_utils.h"
+#if USE_HMI_LEFT
 
 /* Struct prototypes -------------------------------------------------------*/
 typedef struct {
@@ -39,4 +40,5 @@ void LEFT_Odometer(void);
 void LEFT_ModeTrip(void);
 void LEFT_Needle(void);
 
+#endif
 #endif /* GAPP_LEFT_H_ */

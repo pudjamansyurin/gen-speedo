@@ -6,8 +6,8 @@
  */
 
 /* Includes ------------------------------------------------------------------*/
-#include "HMI1.h"
-#include "_canbus.h"
+#include "Nodes/HMI1.h"
+#include "Drivers/_canbus.h"
 
 /* External variables ---------------------------------------------------------*/
 extern canbus_t CB;

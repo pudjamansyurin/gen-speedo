@@ -9,9 +9,9 @@
 #define INC_NODES_VCU_H_
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+#include "Libs/_utils.h"
 
-/* Exported struct --------------------------------------------------------------*/
+/* Exported struct -----------------------------------------------------------*/
 typedef struct {
 	uint8_t signal;
 	uint8_t speed;

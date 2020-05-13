@@ -9,8 +9,9 @@
 #define INC_DRIVERS__SDRAM_H_
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+#include "Libs/_utils.h"
 
+/* Public functions prototypes -----------------------------------------------*/
 void MX_SDRAM_InitEx(void);
 
 #endif /* INC_DRIVERS__SDRAM_H_ */

@@ -24,10 +24,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "_guiapp.h"
-#include "_canbus.h"
-#include "HMI1.h"
-#include "VCU.h"
+#include "Libs/_guiapp.h"
+#include "Drivers/_stemwin.h"
+#include "Drivers/_canbus.h"
+#include "Nodes/HMI1.h"
+#include "Nodes/VCU.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -206,6 +207,7 @@ int main(void)
 
 	/* USER CODE BEGIN RTOS_THREADS */
 	/* add threads, ... */
+	HAL_Delay(2000);
 	/* USER CODE END RTOS_THREADS */
 
 	/* Start scheduler */

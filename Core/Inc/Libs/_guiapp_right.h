@@ -9,7 +9,8 @@
 #define GAPP_RIGHT_H_
 
 /* Includes ------------------------------------------------------------------*/
-#include "_utils.h"
+#include "Libs/_utils.h"
+#if !USE_HMI_LEFT
 
 /* Struct prototypes -------------------------------------------------------*/
 typedef struct {
@@ -50,4 +51,5 @@ void RIGHT_Battery(void);
 void RIGHT_ModeReport(void);
 void RIGHT_ModeDrive(void);
 
+#endif
 #endif /* GAPP_RIGHT_H_ */

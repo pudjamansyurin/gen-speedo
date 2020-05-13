@@ -5,12 +5,13 @@
  *      Author: pudja
  */
 /* Includes ------------------------------------------------------------------*/
-#include "_guiapp_right.h"
-#include "VCU.h"
-#include "HMI1.h"
-#include "BMS.h"
-
+#include "Libs/_guiapp.h"
 #if !USE_HMI_LEFT
+#include "Libs/_guiapp_right.h"
+#include "Nodes/VCU.h"
+#include "Nodes/HMI1.h"
+#include "Nodes/BMS.h"
+
 /* External variables ------------------------------------------------------------------*/
 extern GUI_CONST_STORAGE GUI_BITMAP bmHMI_Right_Abs;
 extern GUI_CONST_STORAGE GUI_BITMAP bmHMI_Right_Warning;
@@ -106,23 +107,23 @@ void RIGHT_Animation(void) {
 }
 
 void RIGHT_Sein(void) {
-	_GUI_IconMem(20, 83, &bmHMI_Right_Sein, HMI1.d.status.sein_right, 200);
+	GUI_IconMem(20, 83, &bmHMI_Right_Sein, HMI1.d.status.sein_right, 200);
 }
 
 void RIGHT_Warning(void) {
-	_GUI_IconMem(4, 130, &bmHMI_Right_Warning, HMI1.d.status.warning, 200);
+	GUI_IconMem(4, 130, &bmHMI_Right_Warning, HMI1.d.status.warning, 200);
 }
 
 void RIGHT_ABS(void) {
-	_GUI_IconMem(63, 135, &bmHMI_Right_Abs, HMI1.d.status.abs, 200);
+	GUI_IconMem(63, 135, &bmHMI_Right_Abs, HMI1.d.status.abs, 200);
 }
 
 void RIGHT_Overheat(void) {
-	_GUI_IconMem(34, 131, &bmHMI_Right_Temp, HMI1.d.status.overheat, 200);
+	GUI_IconMem(34, 131, &bmHMI_Right_Temp, HMI1.d.status.overheat, 200);
 }
 
 void RIGHT_Lamp(void) {
-	_GUI_IconMem(190, 136, &bmHMI_Right_Lamp, HMI1.d.status.lamp, 200);
+	GUI_IconMem(190, 136, &bmHMI_Right_Lamp, HMI1.d.status.lamp, 200);
 }
 
 void RIGHT_Speed(void) {
@@ -159,7 +160,7 @@ void RIGHT_Signal(void) {
 	// Drawing
 	GUI_SetColor(GUI_MAIN_COLOR);
 	GUI_SetBkColor(GUI_BLACK);
-	_GUI_ClearRect(&(RECT.signal));
+	GUI_ClearRectangle(&(RECT.signal));
 	// clear some transparent
 	GUI_SetBkColor(GUI_TRANSPARENT);
 	GUI_ClearRect(
@@ -199,7 +200,7 @@ void RIGHT_Battery(void) {
 	}
 
 	// Battery Icon
-	_GUI_IconMem(195, 170, pImage, show, 200);
+	GUI_IconMem(195, 170, pImage, show, 200);
 
 	// create & select MEMDEV
 	GUI_SelectLayer(1);
@@ -211,7 +212,7 @@ void RIGHT_Battery(void) {
 
 	// Battery Unit
 	GUI_MEMDEV_Select(hMem);
-	_GUI_ClearRect(&(RECT.battery.unit));
+	GUI_ClearRectangle(&(RECT.battery.unit));
 	GUI_SetFont(&GUI_FontSquare721_BT17);
 	GUI_DispStringInRectWrap("%", &(RECT.battery.unit),
 	GUI_TA_BOTTOM | GUI_TA_LEFT, GUI_WRAPMODE_NONE);
@@ -249,7 +250,7 @@ void RIGHT_ModeReport(void) {
 
 	// Mode Report: Unit
 	GUI_MEMDEV_Select(hMem);
-	_GUI_ClearRect(&(RECT.report.unit));
+	GUI_ClearRectangle(&(RECT.report.unit));
 	GUI_SetFont(&GUI_FontSquare721_BT10);
 	sprintf(str, "%s", COL.report.unit[HMI1.d.mode.report.sel]);
 	GUI_DispStringInRectWrap(str, &(RECT.report.unit),
@@ -257,7 +258,7 @@ void RIGHT_ModeReport(void) {
 
 	// Mode Report: Label
 	GUI_MEMDEV_Select(hMem1);
-	_GUI_ClearRect(&(RECT.report.mode));
+	GUI_ClearRectangle(&(RECT.report.mode));
 	if (HMI1.d.mode.sel == SW_M_REPORT && !HMI1.d.mode.hide) {
 		GUI_SetFont(&GUI_FontSquare721_BT14);
 		sprintf(str, "%s", COL.report.mode[HMI1.d.mode.report.sel]);
@@ -294,7 +295,7 @@ void RIGHT_ModeDrive(void) {
 	GUI_SetColor(GUI_MAIN_COLOR);
 
 	// Drive Mode
-	_GUI_ClearRect(&(RECT.drive));
+	GUI_ClearRectangle(&(RECT.drive));
 	if (HMI1.d.mode.sel == SW_M_DRIVE && !HMI1.d.mode.hide) {
 		// if reverse, change color
 		if (HMI1.d.mode.drive == SW_M_DRIVE_R) {

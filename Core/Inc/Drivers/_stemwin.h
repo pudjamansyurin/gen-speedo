@@ -42,28 +42,24 @@
  *
  ******************************************************************************
  */
-
-#include "main.h"
-#include "GUIDRV_Lin.h"
-#include "_sdram.h"
-
 #ifndef STEMWIN_WRAPPER_H
 #define STEMWIN_WRAPPER_H
 
-/* Exported types ------------------------------------------------------------*/
-typedef struct
-{
-  int32_t address;
-  int32_t pending_buffer;
-  int32_t buffer_index;
-  int32_t xSize;
-  int32_t ySize;
-  int32_t BytesPerPixel;
-  LCD_API_COLOR_CONV *pColorConvAPI;
-}
-LCD_LayerPropTypedef;
+/* Includes ------------------------------------------------------------*/
+#include "Libs/_utils.h"
 
-/* Fucntion prototypes -------------------------------------------------------*/
+/* Exported types ------------------------------------------------------------*/
+typedef struct {
+	int32_t address;
+	int32_t pending_buffer;
+	int32_t buffer_index;
+	int32_t xSize;
+	int32_t ySize;
+	int32_t BytesPerPixel;
+	LCD_API_COLOR_CONV *pColorConvAPI;
+} LCD_LayerPropTypedef;
+
+/* Function prototypes -------------------------------------------------------*/
 void DMA2D_IRQHandler(void);
 void GRAPHICS_HW_Init(void);
 void GRAPHICS_Init(void);

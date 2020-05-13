@@ -9,10 +9,9 @@
 #define INC_NODES_HMI1_H_
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-#include "_defines.h"
+#include "Libs/_utils.h"
 
-/* Exported struct --------------------------------------------------------------*/
+/* Exported struct -----------------------------------------------------------*/
 typedef struct {
 	struct {
 		uint8_t abs;

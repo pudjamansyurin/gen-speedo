@@ -6,18 +6,23 @@
  */
 
 /* Includes ------------------------------------------------------------------*/
-#include "_guiapp.h"
+#include "Libs/_guiapp.h"
+#if USE_HMI_LEFT
+#include "Libs/_guiapp_left.h"
+#else
+#include "Libs/_guiapp_right.h"
+#endif
 
 /* External variables --------------------------------------------------------*/
 extern display_t DISPLAY;
 extern osEventFlagsId_t GlobalEventHandle;
 
-/* Functions prototypes ------------------------------------------------------*/
+/* Private Functions prototypes ----------------------------------------------*/
 static void BootOverlay(void);
 static void BootAnimation(void);
 static void StartDrawing(void);
 
-/* Functions -----------------------------------------------------------------*/
+/* GUI Thread ----------------------------------------------------------------*/
 void StartDisplayTask(void *argument) {
 	/* USER CODE BEGIN GUI_MainTask */
 	uint32_t notif;
@@ -74,6 +79,43 @@ void StartDisplayTask(void *argument) {
 	/* USER CODE END GUI_MainTask */
 }
 
+/* Public Functions ----------------------------------------------------------*/
+void GUI_ClearRectangle(GUI_RECT *rect) {
+	GUI_ClearRect(rect->x0, rect->y0, rect->x1, rect->y1);
+}
+
+void GUI_IconMem(uint16_t x, uint16_t y, const GUI_BITMAP *fg, uint8_t show, uint8_t alpha) {
+	// create & select MEMDEV
+	GUI_SelectLayer(1);
+	GUI_MEMDEV_Handle hMem = GUI_MEMDEV_Create(x, y, x + fg->XSize, y + fg->XSize);
+	GUI_MEMDEV_Select(hMem);
+
+	// draw background
+	GUI_Icon(x, y, fg, show, alpha);
+
+	// Print result & delete MEMDEV
+	GUI_MEMDEV_Select(0);
+	GUI_MEMDEV_CopyToLCD(hMem);
+	GUI_MEMDEV_Delete(hMem);
+}
+
+void GUI_Icon(uint16_t x, uint16_t y, const GUI_BITMAP *fg, uint8_t show, uint8_t alpha) {
+	GUI_RECT pRect = { x, y, x + fg->XSize, y + fg->YSize };
+
+	// draw background
+	GUI_SetClipRect(&pRect);
+	GUI_DrawBitmapEx(DISPLAY.background, x, y, x, y, 1000, 1000);
+	GUI_SetClipRect(NULL);
+
+	// draw indicator image
+	if (show) {
+		GUI_SetAlpha(alpha);
+		GUI_DrawBitmap(fg, x, y);
+		GUI_SetAlpha(255);
+	}
+}
+
+/* Private Functions ---------------------------------------------------------*/
 static void BootOverlay() {
 	// Make layer 1 transparent
 	GUI_SelectLayer(1);
@@ -112,4 +154,5 @@ static void StartDrawing(void) {
 	// Drawing at layer 1
 	GUI_SelectLayer(1);
 }
+
 /*************************** End of file ****************************/

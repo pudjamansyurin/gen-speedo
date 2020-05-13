@@ -37,9 +37,7 @@ extern "C" {
 #include <stdint.h>
 #include <math.h>
 #include <string.h>
-
 #include "GUI.h"
-#include "STemwin_wrapper.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
