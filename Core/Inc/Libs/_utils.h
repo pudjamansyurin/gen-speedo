@@ -13,8 +13,8 @@
 #include "Drivers/_log.h"
 
 /* Functions prototypes -------------------------------------------------------*/
-void _LedWrite(uint8_t number, uint8_t state);
-void _LedToggle(uint8_t number);
+void _LedWrite(uint8_t state);
+void _LedToggle(void);
 
 uint8_t _RTOS_ValidThreadFlag(uint32_t flag);
 uint8_t _RTOS_ValidEventFlag(uint32_t flag);

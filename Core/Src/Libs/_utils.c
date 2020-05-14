@@ -19,20 +19,14 @@ extern mcu_t MCU;
 extern bms_t BMS;
 
 /* Functions -----------------------------------------------------------------*/
-void _LedWrite(uint8_t number, uint8_t state) {
-	if (number == 1) {
-		HAL_GPIO_WritePin(LD1_PORT, LD1_PIN, state);
-	} else {
-		HAL_GPIO_WritePin(LD2_PORT, LD2_PIN, state);
-	}
+void _LedWrite(uint8_t state) {
+	HAL_GPIO_WritePin(LD1_PORT, LD1_PIN, state);
+	HAL_GPIO_WritePin(LD2_PORT, LD2_PIN, state);
 }
 
-void _LedToggle(uint8_t number) {
-	if (number == 1) {
-		HAL_GPIO_TogglePin(LD1_PORT, LD1_PIN);
-	} else {
-		HAL_GPIO_TogglePin(LD2_PORT, LD2_PIN);
-	}
+void _LedToggle(void) {
+	HAL_GPIO_TogglePin(LD1_PORT, LD1_PIN);
+	HAL_GPIO_TogglePin(LD2_PORT, LD2_PIN);
 }
 
 uint8_t _RTOS_ValidThreadFlag(uint32_t flag) {

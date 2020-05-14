@@ -33,7 +33,7 @@ void StartDisplayTask(void *argument) {
 	// Initialize
 	osDelay(1000);
 	BootAnimation();
-	GUI_Delay(500);
+	osDelay(500);
 	RefreshLayer();
 
 	// Infinitive loop
