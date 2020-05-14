@@ -1716,6 +1716,11 @@ void GRAPHICS_Init(void) {
 
 	/* Enable multi-buffering for memory device animation */
 	GUI_MEMDEV_MULTIBUF_Enable(1);
+
+	// Replace all random SDRAM value
+	GUI_SelectLayer(1);
+	GUI_SetBkColor(GUI_BLACK);
+	GUI_Clear();
 }
 
 /*************************** End of file ****************************/

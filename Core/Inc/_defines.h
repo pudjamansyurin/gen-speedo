@@ -13,7 +13,7 @@
 #include "cmsis_os.h"
 
 /* Exported constants --------------------------------------------------------*/
-#define USE_HMI_LEFT 					  	1
+#define USE_HMI_LEFT 					  	0
 
 #define MCU_SPEED_MAX 			  		255U
 #define MCU_RPM_MAX 			 			 	99999U
@@ -90,15 +90,6 @@ typedef enum {
 	SW_M_REPORT_EFFICIENCY = 1,
 	SW_M_REPORT_MAX = 1,
 } sw_mode_report_t;
-
-/* Struct prototypes -------------------------------------------------------*/
-typedef struct {
-	GUI_CONST_STORAGE GUI_BITMAP *background;
-	struct {
-		GUI_POINT points[25];
-		int count;
-	} overlay;
-} display_t;
 
 /* Functions prototypes -------------------------------------------------------*/
 void Reset_Database(void);

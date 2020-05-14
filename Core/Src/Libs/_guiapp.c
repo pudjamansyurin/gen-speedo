@@ -7,6 +7,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "Libs/_guiapp.h"
+#include "Drivers/_stemwin.h"
 #if USE_HMI_LEFT
 #include "Libs/_guiapp_left.h"
 #else
@@ -18,32 +19,31 @@ extern display_t DISPLAY;
 extern osEventFlagsId_t GlobalEventHandle;
 
 /* Private Functions prototypes ----------------------------------------------*/
-static void BootOverlay(void);
 static void BootAnimation(void);
-static void StartDrawing(void);
+static void RefreshLayer(void);
 
 /* GUI Thread ----------------------------------------------------------------*/
 void StartDisplayTask(void *argument) {
 	/* USER CODE BEGIN GUI_MainTask */
 	uint32_t notif;
 
-	// wait until ManagerTask done
-	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsWaitAny | osFlagsNoClear, osWaitForever);
+	// Wait until ManagerTask done
+	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
-	// Booting
-	BootOverlay();
+	// Initialize
+	osDelay(1000);
 	BootAnimation();
-	StartDrawing();
+	GUI_Delay(500);
+	RefreshLayer();
 
 	// Infinitive loop
 	while (1) {
-		LOG_StrLn("GUI:Refresh");
-
-		// check if it needs update
+		// Check if it needs update
 		notif = osThreadFlagsWait(EVT_MASK, osFlagsWaitAny, pdMS_TO_TICKS(500));
 		if (!_RTOS_ValidThreadFlag(notif) || !(notif & EVT_DISPLAY_UPDATE)) {
 			_ResetSystem();
 		}
+		LOG_StrLn("GUI:Refresh");
 
 #if USE_HMI_LEFT
 		// Icon only
@@ -116,27 +116,18 @@ void GUI_Icon(uint16_t x, uint16_t y, const GUI_BITMAP *fg, uint8_t show, uint8_
 }
 
 /* Private Functions ---------------------------------------------------------*/
-static void BootOverlay() {
-	// Make layer 1 transparent
-	GUI_SelectLayer(1);
-	GUI_SetBkColor(GUI_TRANSPARENT);
-	GUI_Clear();
-
+static void BootAnimation(void) {
 	// Draw overlay in layer 1 to hide non-animated components
 	GUI_SelectLayer(0);
 	GUI_DrawBitmap(DISPLAY.background, 0, 0);
 	GUI_SetColor(GUI_BLACK);
 	GUI_FillPolygon(DISPLAY.overlay.points, DISPLAY.overlay.count, 0, 0);
-}
 
-static void BootAnimation(void) {
 	// Fill layer 1 with black, then erase it with animation
 	GUI_SelectLayer(1);
 	GUI_SetBkColor(GUI_BLACK);
 	GUI_Clear();
 	GUI_SetColor(GUI_TRANSPARENT);
-
-	// start of circular booting animation
 #if USE_HMI_LEFT
 	LEFT_Animation();
 #else
@@ -145,11 +136,10 @@ static void BootAnimation(void) {
 	// end of booting animation
 }
 
-static void StartDrawing(void) {
+static void RefreshLayer(void) {
 	// Draw the layer 0 (background)
 	GUI_SelectLayer(0);
 	GUI_DrawBitmap(DISPLAY.background, 0, 0);
-	GUI_Delay(500);
 
 	// Drawing at layer 1
 	GUI_SelectLayer(1);

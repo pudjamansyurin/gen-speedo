@@ -13,7 +13,8 @@
 - [x] Handle manual STemWin migration 
 - [x] Migrate RTOSv1 to RTOSv2
 - [x] ~~Change LTDC from RGB565 to RGB666~~
-- [ ] Fix battery indicator & percentage not shown up, and check other similar things.
+- [x] Fix battery indicator & percentage not shown up, and check other similar things.
+- [ ] Add GPIO for LCD Power Control
 
 ## Hardware Progress:
 - [x] Add line from RGB565 to RGB666 
@@ -23,5 +24,5 @@
 - [x] Add logo, module name, module version 
 - [x] ~~Add raster bellow the STM32 chip~~
 - [x] Remove all values, only labels 
-
+- [ ] Add LCD Power Control using MOSFET/PNP 
 

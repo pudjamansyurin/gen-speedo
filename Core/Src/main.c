@@ -207,7 +207,6 @@ int main(void)
 
 	/* USER CODE BEGIN RTOS_THREADS */
 	/* add threads, ... */
-	HAL_Delay(2000);
 	/* USER CODE END RTOS_THREADS */
 
 	/* Start scheduler */
@@ -684,7 +683,7 @@ void StartManagerTask(void *argument)
 	/* USER CODE BEGIN 5 */
 	TickType_t lastWake;
 
-	// reset database
+	// Reset database
 	_ResetSystem();
 
 	// Release other threads
@@ -727,7 +726,7 @@ void StartCanTxTask(void *argument)
 	TickType_t lastWake;
 
 	// wait until ManagerTask done
-	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsWaitAny | osFlagsNoClear, osWaitForever);
+	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
 	/* Infinite loop */
 	for (;;) {
@@ -756,11 +755,10 @@ void StartCanRxTask(void *argument)
 	uint8_t related;
 
 	// wait until ManagerTask done
-	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsWaitAny | osFlagsNoClear, osWaitForever);
+	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
 	/* Infinite loop */
 	for (;;) {
-
 		// check if has new can message
 		notif = osThreadFlagsWait(EVT_MASK, osFlagsWaitAny, osWaitForever);
 		if (_RTOS_ValidThreadFlag(notif)) {
