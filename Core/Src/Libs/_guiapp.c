@@ -31,10 +31,15 @@ void StartDisplayTask(void *argument) {
 	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
 	// Initialize
-	osDelay(1000);
 	BootAnimation();
 	osDelay(500);
 	RefreshLayer();
+
+	// Create group MEMDEV for LEFT LCD
+#if USE_HMI_LEFT
+	GUI_MEMDEV_Handle hMem;
+	LEFT_MemGroupCreate(&hMem);
+#endif
 
 	// Infinitive loop
 	while (1) {
@@ -52,14 +57,15 @@ void StartDisplayTask(void *argument) {
 		LEFT_Mirror();
 
 		// Use MEMDEV to handle multiple components
-		LEFT_MemGroupEnter();
+		LEFT_MemGroupEnter(&hMem);
 		{
 			LEFT_Keyless();
 			LEFT_ModeTrip();
 			LEFT_Odometer();
 			LEFT_Needle();
 		}
-		LEFT_MemGroupExit();
+		LEFT_MemGroupExit(&hMem);
+
 #else
 		// Icon only
 		RIGHT_Sein();

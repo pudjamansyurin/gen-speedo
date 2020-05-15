@@ -30,8 +30,9 @@ typedef struct {
 
 /* Functions prototypes -------------------------------------------------------*/
 void LEFT_Animation(void);
-void LEFT_MemGroupEnter(void);
-void LEFT_MemGroupExit(void);
+void LEFT_MemGroupCreate(GUI_MEMDEV_Handle *hMem);
+void LEFT_MemGroupEnter(GUI_MEMDEV_Handle *hMem);
+void LEFT_MemGroupExit(GUI_MEMDEV_Handle *hMem);
 void LEFT_Sein(void);
 void LEFT_Finger(void);
 void LEFT_Mirror(void);

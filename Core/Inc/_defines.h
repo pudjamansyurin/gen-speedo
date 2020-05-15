@@ -13,7 +13,7 @@
 #include "cmsis_os.h"
 
 /* Exported constants --------------------------------------------------------*/
-#define USE_HMI_LEFT 					  	1
+#define USE_HMI_LEFT 					  	0
 
 #define MCU_SPEED_MAX 			  		255U
 #define MCU_RPM_MAX 			 			 	99999U

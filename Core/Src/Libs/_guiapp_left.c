@@ -46,7 +46,6 @@ display_t DISPLAY = {
 };
 
 /* Private Variables ---------------------------------------------------------*/
-static GUI_MEMDEV_Handle hMem;
 static rect_t RECT = {
 		.trip = {
 				.total = { 156, 106, 156 + 66, 106 + 24 },
@@ -79,24 +78,23 @@ void LEFT_Animation(void) {
 	}
 }
 
-void LEFT_MemGroupEnter(void) {
-	GUI_SelectLayer(1);
-	hMem = GUI_MEMDEV_Create(
+void LEFT_MemGroupCreate(GUI_MEMDEV_Handle *hMem) {
+	*hMem = GUI_MEMDEV_Create(
 			COL.x,
 			COL.y - COL.r,
 			COL.x + COL.r + (COL.r * cos(_D2R(COL.max + 180))) + 5 - COL.x + 25,
 			COL.y + COL.h + 5 - (COL.y - COL.r));
-
+}
+void LEFT_MemGroupEnter(GUI_MEMDEV_Handle *hMem) {
 	// MEMDEV: Draw to MEM
-	GUI_MEMDEV_Select(hMem);
+	GUI_MEMDEV_Select(*hMem);
 	GUI_DrawBitmapEx(DISPLAY.background, COL.x, COL.y - COL.r, COL.x, COL.y - COL.r, 1000, 1000);
 }
 
-void LEFT_MemGroupExit(void) {
+void LEFT_MemGroupExit(GUI_MEMDEV_Handle *hMem) {
 	// MEMDEV: Print result to LCD
 	GUI_MEMDEV_Select(0);
-	GUI_MEMDEV_CopyToLCD(hMem);
-	GUI_MEMDEV_Delete(hMem);
+	GUI_MEMDEV_CopyToLCD(*hMem);
 }
 
 void LEFT_Sein(void) {
@@ -124,26 +122,23 @@ void LEFT_Odometer(void) {
 	sprintf(str, "%05u", (unsigned int) VCU.d.odometer);
 	GUI_DispStringInRectWrap(str, &(RECT.trip.total),
 	GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
-
 }
 
 void LEFT_ModeTrip(void) {
 	char str[20];
-	uint8_t show;
-	GUI_CONST_STORAGE GUI_BITMAP *pImage;
+	uint8_t hide;
+	GUI_BITMAP *pImage;
 
 	// Decide the image
-	if (HMI1.d.mode.sel == SW_M_TRIP) {
-		if (HMI1.d.mode.trip.sel == SW_M_TRIP_A) {
-			pImage = &bmHMI_Left_Trip_A;
-		} else {
-			pImage = &bmHMI_Left_Trip_B;
-		}
+	if (HMI1.d.mode.trip.sel == SW_M_TRIP_A) {
+		pImage = (GUI_BITMAP*) &bmHMI_Left_Trip_A;
+	} else {
+		pImage = (GUI_BITMAP*) &bmHMI_Left_Trip_B;
 	}
 
 	// Mode Trip Label
-	show = HMI1.d.mode.sel == SW_M_TRIP && !HMI1.d.mode.hide;
-	GUI_Icon(129, 89, pImage, show, 254);
+	hide = (HMI1.d.mode.sel == SW_M_TRIP && HMI1.d.mode.hide);
+	GUI_Icon(129, 89, pImage, !hide, 254);
 
 	// Mode Trip Value
 	GUI_SetColor(GUI_MAIN_COLOR);
@@ -151,7 +146,6 @@ void LEFT_ModeTrip(void) {
 	sprintf(str, "%05u", (unsigned int) HMI1.d.mode.trip.val);
 	GUI_DispStringInRectWrap(str, &(RECT.trip.sub),
 	GUI_TA_BOTTOM | GUI_TA_RIGHT, GUI_WRAPMODE_NONE);
-
 }
 
 void LEFT_Needle(void) {

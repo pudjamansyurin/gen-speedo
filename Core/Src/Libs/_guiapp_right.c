@@ -235,6 +235,7 @@ void RIGHT_Battery(void) {
 
 void RIGHT_ModeReport(void) {
 	char str[20];
+	uint8_t hide;
 
 	// create & select MEMDEV
 	GUI_SelectLayer(1);
@@ -259,7 +260,8 @@ void RIGHT_ModeReport(void) {
 	// Mode Report: Label
 	GUI_MEMDEV_Select(hMem1);
 	GUI_ClearRectangle(&(RECT.report.mode));
-	if (HMI1.d.mode.sel == SW_M_REPORT && !HMI1.d.mode.hide) {
+	hide = (HMI1.d.mode.sel == SW_M_REPORT && HMI1.d.mode.hide);
+	if (!hide) {
 		GUI_SetFont(&GUI_FontSquare721_BT14);
 		sprintf(str, "%s", COL.report.mode[HMI1.d.mode.report.sel]);
 		GUI_DispStringInRectWrap(str, &(RECT.report.mode),
@@ -285,6 +287,7 @@ void RIGHT_ModeReport(void) {
 
 void RIGHT_ModeDrive(void) {
 	char str[20];
+	uint8_t hide;
 
 	// create & select MEMDEV
 	GUI_SelectLayer(1);
@@ -296,7 +299,8 @@ void RIGHT_ModeDrive(void) {
 
 	// Drive Mode
 	GUI_ClearRectangle(&(RECT.drive));
-	if (HMI1.d.mode.sel == SW_M_DRIVE && !HMI1.d.mode.hide) {
+	hide = (HMI1.d.mode.sel == SW_M_DRIVE && HMI1.d.mode.hide);
+	if (!hide) {
 		// if reverse, change color
 		if (HMI1.d.mode.drive == SW_M_DRIVE_R) {
 			GUI_SetColor(0xFFFF8000);
