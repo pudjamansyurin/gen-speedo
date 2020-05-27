@@ -20,9 +20,9 @@ typedef struct {
 
 typedef struct {
 	struct {
-		void (*Switch)(void);
-		void (*SelectSet)(void);
-		void (*TripMode)(void);
+		void (*SwitchModeControl)(void);
+		void (*MixedData)(void);
+		void (*SubTripData)(void);
 	} r;
 } vcu_can_t;
 
@@ -34,8 +34,8 @@ typedef struct {
 
 /* Public functions implementation --------------------------------------------*/
 void VCU_Init(void);
-void VCU_CAN_RX_Switch(void);
-void VCU_CAN_RX_SelectSet(void);
-void VCU_CAN_RX_TripMode(void);
+void VCU_CAN_RX_SwitchModeControl(void);
+void VCU_CAN_RX_MixedData(void);
+void VCU_CAN_RX_SubTripData(void);
 
 #endif /* INC_NODES_VCU_H_ */
