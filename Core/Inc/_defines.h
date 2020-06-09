@@ -13,7 +13,7 @@
 #include "cmsis_os.h"
 
 /* Exported constants --------------------------------------------------------*/
-#define USE_HMI_LEFT 					  	0
+#define USE_HMI_LEFT 					  	1
 
 #define MCU_SPEED_MAX 			  		255U
 #define MCU_RPM_MAX 			 			 	99999U
@@ -65,30 +65,30 @@
 
 /* Enum prototypes -------------------------------------------------------*/
 typedef enum {
-	SW_M_DRIVE = 0,
-	SW_M_TRIP = 1,
-	SW_M_REPORT = 2,
-	SW_M_MAX = 2
+    SW_M_DRIVE = 0,
+    SW_M_TRIP = 1,
+    SW_M_REPORT = 2,
+    SW_M_MAX = 2
 } sw_mode_t;
 
 typedef enum {
-	SW_M_DRIVE_E = 0,
-	SW_M_DRIVE_S = 1,
-	SW_M_DRIVE_P = 2,
-	SW_M_DRIVE_MAX = 2,
-	SW_M_DRIVE_R = 3,
+    SW_M_DRIVE_E = 0,
+    SW_M_DRIVE_S = 1,
+    SW_M_DRIVE_P = 2,
+    SW_M_DRIVE_MAX = 2,
+    SW_M_DRIVE_R = 3,
 } sw_mode_drive_t;
 
 typedef enum {
-	SW_M_TRIP_A = 0,
-	SW_M_TRIP_B = 1,
-	SW_M_TRIP_MAX = 1,
+    SW_M_TRIP_A = 0,
+    SW_M_TRIP_B = 1,
+    SW_M_TRIP_MAX = 1,
 } sw_mode_trip_t;
 
 typedef enum {
-	SW_M_REPORT_RANGE = 0,
-	SW_M_REPORT_EFFICIENCY = 1,
-	SW_M_REPORT_MAX = 1,
+    SW_M_REPORT_RANGE = 0,
+    SW_M_REPORT_EFFICIENCY = 1,
+    SW_M_REPORT_MAX = 1,
 } sw_mode_report_t;
 
 /* Functions prototypes -------------------------------------------------------*/

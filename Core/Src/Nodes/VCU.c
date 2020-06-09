@@ -66,6 +66,11 @@ void VCU_CAN_RX_SwitchModeControl(void) {
     // others
     VCU.d.speed = data->u8[3];
 
+    // FIXME: use real value
+    // convert Speed to RPM
+    MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
+    //  MCU.d.temperature = ?
+
     // update backlight state
     _SetBacklight(HMI1.d.status.daylight);
 }
@@ -86,11 +91,6 @@ void VCU_CAN_RX_MixedData(void) {
 
     // odometer
     VCU.d.odometer = data->u32[1];
-
-    // FIXME: use real value
-    // convert Speed to RPM
-    MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
-    //  MCU.d.temperature = ?
 }
 
 void VCU_CAN_RX_SubTripData(void) {
