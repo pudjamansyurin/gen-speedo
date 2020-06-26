@@ -46,7 +46,7 @@ void StartDisplayTask(void *argument) {
         // Check if it needs update
         notif = osThreadFlagsWait(EVT_MASK, osFlagsWaitAny, pdMS_TO_TICKS(500));
         if (!_RTOS_ValidThreadFlag(notif) || !(notif & EVT_DISPLAY_UPDATE)) {
-            _ResetSystem();
+            _FlushData();
         }
         LOG_StrLn("GUI:Refresh");
 

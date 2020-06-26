@@ -686,7 +686,7 @@ void StartManagerTask(void *argument)
     TickType_t lastWake;
 
     // Reset database
-    _ResetSystem();
+    _FlushData();
 
     // Release other threads
     osEventFlagsSet(GlobalEventHandle, EVENT_READY);
@@ -781,13 +781,13 @@ void StartCanRxTask(void *argument)
                 related = 1;
                 // handle message
                 switch (CANBUS_ReadID()) {
-                    case CAND_VCU_SWITCH:
+                    case CAND_VCU_SWITCH :
                         VCU.can.r.SwitchModeControl();
                         break;
-                    case CAND_VCU_SELECT_SET:
+                    case CAND_VCU_SELECT_SET :
                         VCU.can.r.MixedData();
                         break;
-                    case CAND_VCU_TRIP_MODE:
+                    case CAND_VCU_TRIP_MODE :
                         VCU.can.r.SubTripData();
                         break;
                     default:

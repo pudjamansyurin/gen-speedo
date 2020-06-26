@@ -9,7 +9,7 @@
 #define DEFINES_H_
 
 /* Choose between VCU or Boot-loader mode */
-#define BOOTLOADER                              0
+#define BOOTLOADER                              1
 
 /* Includes ------------------------------------------------------------------*/
 #include "_defines_shared.h"
