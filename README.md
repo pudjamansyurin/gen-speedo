@@ -14,7 +14,10 @@
 - [x] Migrate RTOSv1 to RTOSv2
 - [x] ~~Change LTDC from RGB565 to RGB666~~
 - [x] Fix battery indicator & percentage not shown up, and check other similar things.
-- [ ] Add GPIO for LCD Power Control
+- [ ] Handle GPIO for LCD Power Control
+- [ ] Add bootloader 
+- [ ] Handle bootloader's CAN for DFU mode
+- [ ] Use CAN Filter to ignore un-related ID
 
 ## Hardware Progress:
 - [x] Add line from RGB565 to RGB666 
