@@ -32,12 +32,6 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <math.h>
-#include <string.h>
-#include "GUI.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

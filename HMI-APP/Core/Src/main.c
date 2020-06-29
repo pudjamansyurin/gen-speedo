@@ -20,10 +20,10 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "cmsis_os.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "_defines.h"
 #include "Libs/_guiapp.h"
 #include "Drivers/_stemwin.h"
 #include "Drivers/_canbus.h"

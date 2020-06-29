@@ -10,13 +10,18 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <math.h>
+#include <string.h>
+
 #if (!BOOTLOADER)
 #include "cmsis_os.h"
+#include "GUI.h"
 #endif
 
 /* Exported constants --------------------------------------------------------*/
-#define USE_HMI_LEFT 			            1
-
 #define LD1_PORT                            (USE_HMI_LEFT ? LEFT_LD1_GPIO_Port : RIGHT_LD1_GPIO_Port)
 #define LD1_PIN                             (USE_HMI_LEFT ? LEFT_LD1_Pin : RIGHT_LD1_Pin)
 #define LD2_PORT                            (USE_HMI_LEFT ? LEFT_LD2_GPIO_Port : RIGHT_LD2_GPIO_Port)
@@ -38,7 +43,6 @@
 #define CAN_MY_ADRESS                       (USE_HMI_LEFT ? CAND_HMI1_LEFT : CAND_HMI1_RIGHT)
 
 #if (!BOOTLOADER)
-
 #define MCU_SPEED_MAX 			  (uint8_t) 255
 #define MCU_RPM_MAX 			 (uint32_t) 99999
 #define VCU_ODOMETER_MAX		 (uint32_t) 99999

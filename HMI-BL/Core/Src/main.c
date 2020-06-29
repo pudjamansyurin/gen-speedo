@@ -103,74 +103,74 @@ int main(void)
 
     /* IAP flag has been set, initiate firmware download procedure */
     _LedWrite(1);
-    //    if (*(uint32_t*) IAP_FLAG_ADDR == IAP_FLAG) {
-    //        LOG_StrLn("IAP set, do FOTA.");
-    //        /* Everything went well, reset IAP flag & boot form new image */
-    //        if (FOTA_Upgrade()) {
-    //            /* Reset IAP flag */
-    //            *(uint32_t*) IAP_FLAG_ADDR = 0;
-    //            /* Take branching decision on next reboot */
-    //            FOTA_Reboot();
-    //        }
-    //        /* DFU failed, retry until exhausted. */
-    //        else {
-    //            LOG_Str("IAP failed, retry quota = ");
-    //            LOG_Int(*(uint32_t*) IAP_RETRY_ADDR);
-    //            LOG_Enter();
-    //
-    //            /* Decrement IAP retry until exhausted */
-    //            if (*(uint32_t*) IAP_RETRY_ADDR) {
-    //                (*(uint32_t*) IAP_RETRY_ADDR)--;
-    //                HAL_NVIC_SystemReset();
-    //            }
-    //        }
-    //        /* IAP flag is still set, and we ran out of retries */
-    //        /* Reset IAP flag */
-    //        *(uint32_t*) IAP_FLAG_ADDR = 0;
-    //        HAL_NVIC_SystemReset();
-    //    }
-    //    /* Jump to application if it exist and DFU finished */
-    //    else if (FOTA_ValidImage(APP_START_ADDR) && !FOTA_InProgressDFU()) {
-    //        LOG_StrLn("Jump to application.");
-    //        /* Jump sequence */
-    //        FOTA_JumpToApplication();
-    //    }
-    //    /* Power reset during DFU, try once more */
-    //    else if (FOTA_InProgressDFU()) {
-    //        LOG_StrLn("DFU set, do FOTA once more.");
-    //        /* Everything went well, boot form new image */
-    //        if (FOTA_Upgrade()) {
-    //            /* Take branching decision on next reboot */
-    //            FOTA_Reboot();
-    //        }
-    //        /* Erase partially programmed application area */
-    //        FLASHER_EraseAppArea();
-    //        /* Reset DFU flag */
-    //        EEPROM_FlagDFU(EE_CMD_W, 0);
-    //        HAL_NVIC_SystemReset();
-    //    }
-    //    /* Try to restore the backup */
-    //    else {
-    //        /* Check is the backup image valid */
-    //        if (FOTA_ValidImage(BKP_START_ADDR)) {
-    //            LOG_StrLn("Has backed-up image, rollback.");
-    //            /* Restore back old image to application area */
-    //            if (FLASHER_RestoreApp()) {
-    //                /* Take branching decision on next reboot */
-    //                FOTA_Reboot();
-    //            }
-    //        } else {
-    //            LOG_StrLn("No image at all, do FOTA.");
-    //            /* Download new firmware for the first time */
-    //            if (FOTA_Upgrade()) {
-    //                /* Take branching decision on next reboot */
-    //                FOTA_Reboot();
-    //            }
-    //        }
-    //        HAL_NVIC_SystemReset();
-    //        /* Failure indicator */
-    //        _Error("Boot-loader failure!!");
-    //    }
+//    if (*(uint32_t*) IAP_FLAG_ADDR == IAP_FLAG) {
+//        LOG_StrLn("IAP set, do FOTA.");
+//        /* Everything went well, reset IAP flag & boot form new image */
+//        if (FOTA_Upgrade()) {
+//            /* Reset IAP flag */
+//            *(uint32_t*) IAP_FLAG_ADDR = 0;
+//            /* Take branching decision on next reboot */
+//            FOTA_Reboot();
+//        }
+//        /* DFU failed, retry until exhausted. */
+//        else {
+//            LOG_Str("IAP failed, retry quota = ");
+//            LOG_Int(*(uint32_t*) IAP_RETRY_ADDR);
+//            LOG_Enter();
+//
+//            /* Decrement IAP retry until exhausted */
+//            if (*(uint32_t*) IAP_RETRY_ADDR) {
+//                (*(uint32_t*) IAP_RETRY_ADDR)--;
+//                HAL_NVIC_SystemReset();
+//            }
+//        }
+//        /* IAP flag is still set, and we ran out of retries */
+//        /* Reset IAP flag */
+//        *(uint32_t*) IAP_FLAG_ADDR = 0;
+//        HAL_NVIC_SystemReset();
+//    }
+//    /* Jump to application if it exist and DFU finished */
+//    else if (FOTA_ValidImage(APP_START_ADDR) && !FOTA_InProgressDFU()) {
+//        LOG_StrLn("Jump to application.");
+//        /* Jump sequence */
+//        FOTA_JumpToApplication();
+//    }
+//    /* Power reset during DFU, try once more */
+//    else if (FOTA_InProgressDFU()) {
+//        LOG_StrLn("DFU set, do FOTA once more.");
+//        /* Everything went well, boot form new image */
+//        if (FOTA_Upgrade()) {
+//            /* Take branching decision on next reboot */
+//            FOTA_Reboot();
+//        }
+//        /* Erase partially programmed application area */
+//        FLASHER_EraseAppArea();
+//        /* Reset DFU flag */
+//        EEPROM_FlagDFU(EE_CMD_W, 0);
+//        HAL_NVIC_SystemReset();
+//    }
+//    /* Try to restore the backup */
+//    else {
+//        /* Check is the backup image valid */
+//        if (FOTA_ValidImage(BKP_START_ADDR)) {
+//            LOG_StrLn("Has backed-up image, rollback.");
+//            /* Restore back old image to application area */
+//            if (FLASHER_RestoreApp()) {
+//                /* Take branching decision on next reboot */
+//                FOTA_Reboot();
+//            }
+//        } else {
+//            LOG_StrLn("No image at all, do FOTA.");
+//            /* Download new firmware for the first time */
+//            if (FOTA_Upgrade()) {
+//                /* Take branching decision on next reboot */
+//                FOTA_Reboot();
+//            }
+//        }
+//        HAL_NVIC_SystemReset();
+//        /* Failure indicator */
+//        _Error("Boot-loader failure!!");
+//    }
     /* USER CODE END 3 */
 }
 
