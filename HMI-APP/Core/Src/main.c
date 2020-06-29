@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "_defines.h"
 #include "Libs/_guiapp.h"
+#include "Libs/_firmware.h"
 #include "Drivers/_stemwin.h"
 #include "Drivers/_canbus.h"
 #include "Nodes/HMI1.h"
@@ -790,6 +791,12 @@ void StartCanRxTask(void *argument)
                     case CAND_VCU_TRIP_MODE :
                         VCU.can.r.SubTripData();
                         break;
+                    case CAND_ENTER_IAP :
+                        if (FW_UpradeMe()) {
+                            FW_EnterModeIAP();
+                        }
+                        break;
+
                     default:
                         related = 0;
                         break;

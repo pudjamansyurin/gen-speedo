@@ -38,10 +38,6 @@
 #define _R2(var, x)                         ((var >> x) & 0x03)
 #define _R8(var, x)                         ((var >> x) & 0xFF)
 
-#define CAND_HMI1_LEFT           (uint32_t) 0x7C0
-#define CAND_HMI1_RIGHT          (uint32_t) 0x7C1
-#define CAN_MY_ADRESS                       (USE_HMI_LEFT ? CAND_HMI1_LEFT : CAND_HMI1_RIGHT)
-
 #if (!BOOTLOADER)
 #define MCU_SPEED_MAX 			  (uint8_t) 255
 #define MCU_RPM_MAX 			 (uint32_t) 99999
@@ -64,6 +60,19 @@
 #define CAND_VCU_DATETIME		 (uint32_t) 0x001
 #define CAND_VCU_SELECT_SET		 (uint32_t) 0x002
 #define CAND_VCU_TRIP_MODE		 (uint32_t) 0x003
+#define CAND_HMI1_LEFT           (uint32_t) 0x7C0
+#define CAND_HMI1_RIGHT          (uint32_t) 0x7C1
+
+#define CAN_MY_ADRESS                       (USE_HMI_LEFT ? CAND_HMI1_LEFT : CAND_HMI1_RIGHT)
+
+// FOCAN
+#define FOCAN_ACK                     (uint8_t) 0x79
+#define FOCAN_NACK                    (uint8_t) 0x1F
+// FOCAN Command Address
+#define CAND_ENTER_IAP               (uint16_t) 0x100
+#if (BOOTLOADER)
+#define CAND_GET_VERSION             (uint16_t) 0x101
+#endif
 
 /* Enum prototypes -------------------------------------------------------*/
 typedef enum {
