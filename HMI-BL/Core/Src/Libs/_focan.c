@@ -19,7 +19,7 @@ static uint8_t FOCAN_resGetVersion(uint16_t *version);
 
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOCAN_Update(void) {
-//    uint32_t tick;
+    //    uint32_t tick;
     uint8_t p;
     uint16_t version = 0xABCD;
 
@@ -28,16 +28,19 @@ uint8_t FOCAN_Update(void) {
 
     // Wait command
     if (p) {
-//        tick = _GetTickMS();
+        //        tick = _GetTickMS();
         while (p) {
-//            // handle timeout
-//            if (_GetTickMS() - tick < 1000) {
-//                p = 0;
-//                break;
-//            }
+            //            // handle timeout
+            //            if (_GetTickMS() - tick < 1000) {
+            //                p = 0;
+            //                break;
+            //            }
             // read
             if (CANBUS_Read()) {
                 switch (CANBUS_ReadID()) {
+                    case CAND_ENTER_IAP :
+                        p = FOCAN_resEnterModeIAP();
+                        break;
                     case CAND_GET_VERSION :
                         p = FOCAN_resGetVersion(&version);
                         break;
