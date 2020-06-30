@@ -19,7 +19,7 @@ static uint8_t FOCAN_resGetVersion(uint16_t *version);
 
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOCAN_Update(void) {
-    //    uint32_t tick;
+    uint32_t tick, tickIndicator;
     uint8_t p;
     uint16_t version = 0xABCD;
 
@@ -28,10 +28,10 @@ uint8_t FOCAN_Update(void) {
 
     // Wait command
     if (p) {
-        //        tick = _GetTickMS();
+        tickIndicator = _GetTickMS();
         while (p) {
             //            // handle timeout
-            //            if (_GetTickMS() - tick < 1000) {
+            //            if ((_GetTickMS() - tick) < 1000) {
             //                p = 0;
             //                break;
             //            }
@@ -48,8 +48,13 @@ uint8_t FOCAN_Update(void) {
                         break;
                 }
             }
+
+            // indicator
+            if ((_GetTickMS() - tickIndicator) > 100) {
+                tickIndicator = _GetTickMS();
+                _LedToggle();
+            }
         }
-        _LedToggle();
     }
 
     return p;

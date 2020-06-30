@@ -108,7 +108,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     _LedWrite(1);
-
     while (1) {
         FOCAN_Update();
     }
