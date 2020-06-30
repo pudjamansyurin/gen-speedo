@@ -24,7 +24,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Libs/_utils.h"
+#include "Libs/_fota.h"
+#include "Libs/_focan.h"
 #include "Drivers/_canbus.h"
+#include "Drivers/_flasher.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,6 +47,8 @@
 /* Private variables ---------------------------------------------------------*/
 CAN_HandleTypeDef hcan2;
 
+CRC_HandleTypeDef hcrc;
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -52,6 +57,7 @@ CAN_HandleTypeDef hcan2;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_CAN2_Init(void);
+static void MX_CRC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -90,6 +96,7 @@ int main(void)
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
     MX_CAN2_Init();
+    MX_CRC_Init();
     /* USER CODE BEGIN 2 */
     CANBUS_Init();
 
@@ -100,9 +107,54 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-    /* IAP flag has been set, initiate firmware download procedure */
     _LedWrite(1);
+
+    while (1) {
+        FOCAN_Update();
+    }
+    /* IAP flag has been set, initiate firmware download procedure */
+    //    if (*(uint32_t*) IAP_FLAG_ADDR == IAP_FLAG) {
+    //        LOG_StrLn("IAP set, do DFU.");
+    //        /* Everything went well */
+    //        if (FOTA_Upgrade()) {
+    //            /* Reset IAP flag */
+    //            *(uint32_t*) IAP_FLAG_ADDR = 0;
+    //            /* Take branching decision on next reboot */
+    //            FOTA_Reboot();
+    //        }
+    //        /* Reset IAP flag */
+    //        *(uint32_t*) IAP_FLAG_ADDR = 0;
+    //        /* FOTA failed */
+    //        HAL_NVIC_SystemReset();
+    //    }
+    //    /* Jump to application if it exist and DFU finished */
+    //    else if (FOTA_ValidImage(APP_START_ADDR)) {
+    //        LOG_StrLn("Jump to application.");
+    //        /* Jump sequence */
+    //        FOTA_JumpToApplication();
+    //    }
+    //    /* Try to restore the backup */
+    //    else {
+    //        /* Check is the backup image valid */
+    //        if (FOTA_ValidImage(BKP_START_ADDR)) {
+    //            LOG_StrLn("Has backed-up image, roll-back.");
+    //            /* Restore back old image to application area */
+    //            if (FLASHER_RestoreApp()) {
+    //                /* Take branching decision on next reboot */
+    //                FOTA_Reboot();
+    //            }
+    //        } else {
+    //            LOG_StrLn("No image at all, do DFU.");
+    //            /* Download new firmware for the first time */
+    //            if (FOTA_Upgrade()) {
+    //                /* Take branching decision on next reboot */
+    //                FOTA_Reboot();
+    //            }
+    //        }
+    //        HAL_NVIC_SystemReset();
+    //        /* Meaningless, failure indicator */
+    //        _Error("Boot-loader failure!!");
+    //    }
     /* USER CODE END 3 */
 }
 
@@ -192,6 +244,32 @@ static void MX_CAN2_Init(void)
 }
 
 /**
+ * @brief CRC Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_CRC_Init(void)
+{
+
+    /* USER CODE BEGIN CRC_Init 0 */
+
+    /* USER CODE END CRC_Init 0 */
+
+    /* USER CODE BEGIN CRC_Init 1 */
+
+    /* USER CODE END CRC_Init 1 */
+    hcrc.Instance = CRC;
+    if (HAL_CRC_Init(&hcrc) != HAL_OK)
+            {
+        Error_Handler();
+    }
+    /* USER CODE BEGIN CRC_Init 2 */
+
+    /* USER CODE END CRC_Init 2 */
+
+}
+
+/**
  * @brief GPIO Initialization Function
  * @param None
  * @retval None
@@ -258,18 +336,18 @@ void Error_Handler(void)
 
 #ifdef  USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
-    /* USER CODE BEGIN 6 */
+  /* USER CODE BEGIN 6 */
     /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-    /* USER CODE END 6 */
+  /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
 

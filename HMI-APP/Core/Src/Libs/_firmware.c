@@ -26,7 +26,7 @@ void FW_EnterModeIAP(void) {
     HAL_NVIC_SystemReset();
 }
 
-uint8_t FW_UpradeMe(void) {
+uint8_t FW_UpgradeMe(void) {
     CAN_DATA *data = &(CB.rx.data);
 
     return (data->u16[0] == CAN_MY_ADRESS);

@@ -46,7 +46,7 @@ uint8_t CANBUS_Filter(void);
 void CANBUS_Header(CAN_TxHeaderTypeDef *TxHeader, uint32_t StdId, uint32_t DLC);
 uint8_t CANBUS_Write(canbus_tx_t *tx);
 uint8_t CANBUS_Read(canbus_rx_t *rx);
-uint32_t CANBUS_ReadID(void);
+uint16_t CANBUS_ReadID(void);
 void CANBUS_TxDebugger(void);
 void CANBUS_TxDebugger(void);
 

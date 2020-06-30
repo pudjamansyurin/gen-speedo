@@ -95,5 +95,14 @@ void _FlushData(void) {
 float _D2R(uint16_t deg) {
     return deg * M_PI / 180.0;
 }
+#else
+uint32_t _ByteSwap32(uint32_t x) {
+    uint32_t y = (x >> 24) & 0xff;
+    y |= ((x >> 16) & 0xff) << 8;
+    y |= ((x >> 8) & 0xff) << 16;
+    y |= (x & 0xff) << 24;
+
+    return y;
+}
 #endif
 

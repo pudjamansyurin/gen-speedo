@@ -792,7 +792,7 @@ void StartCanRxTask(void *argument)
                         VCU.can.r.SubTripData();
                         break;
                     case CAND_ENTER_IAP :
-                        if (FW_UpradeMe()) {
+                        if (FW_UpgradeMe()) {
                             FW_EnterModeIAP();
                         }
                         break;

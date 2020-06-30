@@ -117,7 +117,7 @@ uint8_t CANBUS_Read(canbus_rx_t *rx) {
     return (status == HAL_OK);
 }
 
-uint32_t CANBUS_ReadID(void) {
+uint16_t CANBUS_ReadID(void) {
     if (CB.rx.header.IDE == CAN_ID_STD) {
         return CB.rx.header.StdId;
     }

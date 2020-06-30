@@ -13,6 +13,6 @@
 
 /* Public functions prototype ------------------------------------------------*/
 void FW_EnterModeIAP(void);
-uint8_t FW_UpradeMe(void);
+uint8_t FW_UpgradeMe(void);
 
 #endif /* INC_LIBS__FIRMWARE_H_ */
