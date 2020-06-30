@@ -36,7 +36,7 @@ uint8_t FOCAN_Update(void) {
                 break;
             }
             // read
-            if (CANBUS_Read(&(CB.rx))) {
+            if (CANBUS_Read()) {
                 switch (CANBUS_ReadID()) {
                     case CAND_GET_VERSION :
                         p = FOCAN_resGetVersion(&version);
@@ -58,10 +58,8 @@ static uint8_t FOCAN_Response(uint16_t address, uint8_t payload) {
     // set message
     txd->u8[0] = payload;
 
-    // set default header
-    CANBUS_Header(&(CB.tx.header), address, 1);
     // send message
-    return CANBUS_Write(&(CB.tx));
+    return CANBUS_Write(address, 1, 0);
 }
 
 static uint8_t FOCAN_resEnterModeIAP(void) {
@@ -80,20 +78,16 @@ static uint8_t FOCAN_resGetVersion(uint16_t *version) {
     if (p) {
         // set message
         txd->u16[0] = *version;
-        // set default header
-        CANBUS_Header(&(CB.tx.header), address, 2);
         // send message
-        p = CANBUS_Write(&(CB.tx));
+        p = CANBUS_Write(address, 2, 0);
     }
 
     // option message (2 bytes)
     if (p) {
         // set message
         txd->u16[0] = 0x0000;
-        // set default header
-        CANBUS_Header(&(CB.tx.header), address, 2);
         // send message
-        p = CANBUS_Write(&(CB.tx));
+        p = CANBUS_Write(address, 2, 0);
     }
 
     // ack

@@ -21,6 +21,7 @@ canbus_t CB;
 /* Private functions declaration ----------------------------------------------*/
 static void lock(void);
 static void unlock(void);
+static void CANBUS_Header(uint32_t StdId, uint32_t DLC, uint8_t RTR);
 
 /* Public functions implementation ---------------------------------------------*/
 void CANBUS_Init(void) {
@@ -41,15 +42,6 @@ void CANBUS_Init(void) {
         /* Notification Error */
         Error_Handler();
     }
-}
-
-void CANBUS_Header(CAN_TxHeaderTypeDef *TxHeader, uint32_t StdId, uint32_t DLC) {
-    /* Configure Global Transmission process */
-    TxHeader->RTR = CAN_RTR_DATA;
-    TxHeader->IDE = CAN_ID_STD;
-    TxHeader->TransmitGlobalTime = DISABLE;
-    TxHeader->StdId = StdId;
-    TxHeader->DLC = DLC;
 }
 
 uint8_t CANBUS_Filter(void) {
@@ -78,7 +70,8 @@ uint8_t CANBUS_Filter(void) {
 /*----------------------------------------------------------------------------
  wite a message to CAN peripheral and transmit it
  *----------------------------------------------------------------------------*/
-uint8_t CANBUS_Write(canbus_tx_t *tx) {
+uint8_t CANBUS_Write(uint32_t StdId, uint32_t DLC, uint8_t RTR) {
+    canbus_tx_t *tx = &(CB.tx);
     uint32_t TxMailbox;
     HAL_StatusTypeDef status;
 
@@ -87,6 +80,9 @@ uint8_t CANBUS_Write(canbus_tx_t *tx) {
     while (!HAL_CAN_GetTxMailboxesFreeLevel(&hcan2)) {
         _DelayMS(1);
     };
+
+    // set header
+    CANBUS_Header(StdId, DLC, RTR);
 
     /* Start the Transmission process */
     status = HAL_CAN_AddTxMessage(&hcan2, &(tx->header), (uint8_t*) &(tx->data), &TxMailbox);
@@ -103,7 +99,8 @@ uint8_t CANBUS_Write(canbus_tx_t *tx) {
 /*----------------------------------------------------------------------------
  read a message from CAN peripheral and release it
  *----------------------------------------------------------------------------*/
-uint8_t CANBUS_Read(canbus_rx_t *rx) {
+uint8_t CANBUS_Read(void) {
+    canbus_rx_t *rx = &(CB.rx);
     HAL_StatusTypeDef status;
 
     /* Get RX message */
@@ -157,7 +154,7 @@ void CANBUS_RxDebugger(void) {
 #if (!BOOTLOADER)
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
     // read rx fifo
-    if (CANBUS_Read(&(CB.rx))) {
+    if (CANBUS_Read()) {
         // signal only when RTOS started
         if (osKernelGetState() == osKernelRunning) {
             osThreadFlagsSet(CanRxTaskHandle, EVT_CAN_RX_IT);
@@ -177,4 +174,14 @@ static void unlock(void) {
 #if (!BOOTLOADER)
     osMutexRelease(CanTxMutexHandle);
 #endif
+}
+
+static void CANBUS_Header(uint32_t StdId, uint32_t DLC, uint8_t RTR) {
+    CAN_TxHeaderTypeDef *TxHeader = &(CB.tx.header);
+    /* Configure Global Transmission process */
+    TxHeader->RTR = (RTR ? CAN_RTR_REMOTE : CAN_RTR_DATA);
+    TxHeader->IDE = CAN_ID_STD;
+    TxHeader->TransmitGlobalTime = DISABLE;
+    TxHeader->StdId = StdId;
+    TxHeader->DLC = DLC;
 }

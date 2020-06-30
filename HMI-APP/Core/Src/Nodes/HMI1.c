@@ -50,10 +50,6 @@ void HMI1_Init(void) {
 
 /* ====================================== CAN TX =================================== */
 uint8_t HMI1_CAN_TX_Heartbeat(void) {
-    // set default header
-    CANBUS_Header(&(CB.tx.header), CAN_MY_ADRESS, 0);
-    CB.tx.header.RTR = CAN_RTR_REMOTE;
-
     // send message
-    return CANBUS_Write(&(CB.tx));
+    return CANBUS_Write(CAN_MY_ADRESS, 0, 1);
 }
