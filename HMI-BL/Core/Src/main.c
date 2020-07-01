@@ -111,6 +111,7 @@ int main(void)
     while (1) {
         FOCAN_Update();
     }
+
     /* IAP flag has been set, initiate firmware download procedure */
     //    if (*(uint32_t*) IAP_FLAG_ADDR == IAP_FLAG) {
     //        LOG_StrLn("IAP set, do DFU.");

@@ -51,8 +51,6 @@ uint8_t CANBUS_Filter(void) {
 
     /* Configure the CAN Filter */
     sFilterConfig.FilterBank = 0;
-    // give all filter to CAN2
-    sFilterConfig.SlaveStartFilterBank = 0;
     // set filter to mask mode (not id_list mode)
     sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
     // set 32-bit scale configuration
@@ -65,6 +63,8 @@ uint8_t CANBUS_Filter(void) {
     sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
     // activate filter
     sFilterConfig.FilterActivation = ENABLE;
+    // give all filter to CAN2
+    sFilterConfig.SlaveStartFilterBank = 0;
 
     return (HAL_CAN_ConfigFilter(&hcan2, &sFilterConfig) == HAL_OK);
 }
@@ -78,10 +78,6 @@ uint8_t CANBUS_Write(uint32_t StdId, uint32_t DLC, uint8_t RTR) {
     HAL_StatusTypeDef status;
 
     lock();
-    // check tx mailbox is ready
-    while (!HAL_CAN_GetTxMailboxesFreeLevel(&hcan2)) {
-        _DelayMS(1);
-    };
 
     // set header
     CANBUS_Header(StdId, DLC, RTR);
@@ -89,9 +85,13 @@ uint8_t CANBUS_Write(uint32_t StdId, uint32_t DLC, uint8_t RTR) {
     /* Start the Transmission process */
     status = HAL_CAN_AddTxMessage(&hcan2, &(tx->header), tx->data.u8, &TxMailbox);
 
+    /* Wait transmission complete */
+    while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan2) != 3)
+        ;
+
     // debugging
     if (status == HAL_OK) {
-        CANBUS_TxDebugger();
+//        CANBUS_TxDebugger();
     }
 
     unlock();
@@ -106,12 +106,16 @@ uint8_t CANBUS_Read(void) {
     HAL_StatusTypeDef status;
 
     lock();
-    /* Get RX message */
-    status = HAL_CAN_GetRxMessage(&hcan2, CAN_RX_FIFO0, &(rx->header), rx->data.u8);
-
-    // debugging
-    if (status == HAL_OK) {
-        CANBUS_RxDebugger();
+    /* Check FIFO */
+    if (HAL_CAN_GetRxFifoFillLevel(&hcan2, CAN_RX_FIFO0)) {
+        /* Get RX message */
+        status = HAL_CAN_GetRxMessage(&hcan2, CAN_RX_FIFO0, &(rx->header), rx->data.u8);
+        // debugging
+        if (status == HAL_OK) {
+//            CANBUS_RxDebugger();
+        }
+    } else {
+        status = HAL_ERROR;
     }
     unlock();
 
@@ -119,10 +123,12 @@ uint8_t CANBUS_Read(void) {
 }
 
 uint16_t CANBUS_ReadID(void) {
-    if (CB.rx.header.IDE == CAN_ID_STD) {
-        return CB.rx.header.StdId;
+    CAN_RxHeaderTypeDef *header = &(CB.rx.header);
+
+    if (header->IDE == CAN_ID_STD) {
+        return header->StdId;
     }
-    return _R(CB.rx.header.ExtId, 20);
+    return _R(header->ExtId, 20);
 }
 
 void CANBUS_TxDebugger(void) {
