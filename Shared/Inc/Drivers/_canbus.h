@@ -38,6 +38,9 @@ typedef struct {
 typedef struct {
     canbus_tx_t tx;
     canbus_rx_t rx;
+#if (BOOTLOADER)
+    uint8_t fifo;
+#endif
 } canbus_t;
 
 /* Public functions prototype ------------------------------------------------*/

@@ -14,8 +14,8 @@ extern canbus_t CB;
 
 /* Private functions prototypes -----------------------------------------------*/
 static uint8_t FOCAN_Response(uint16_t address, uint8_t payload);
-static uint8_t FOCAN_resEnterModeIAP(void);
-static uint8_t FOCAN_resGetVersion(uint16_t *version);
+static uint8_t FOCAN_xEnterModeIAP(void);
+static uint8_t FOCAN_xGetVersion(uint16_t *version);
 
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOCAN_Update(void) {
@@ -24,7 +24,7 @@ uint8_t FOCAN_Update(void) {
     uint16_t version = 0xABCD;
 
     /* Enter IAP Mode */
-    p = FOCAN_resEnterModeIAP();
+    p = FOCAN_xEnterModeIAP();
 
     // Wait command
     if (p) {
@@ -36,13 +36,14 @@ uint8_t FOCAN_Update(void) {
             //                break;
             //            }
             // read
-            if (CANBUS_Read()) {
+            if (CB.fifo) {
+                CB.fifo = 0;
                 switch (CANBUS_ReadID()) {
                     case CAND_ENTER_IAP :
-                        p = FOCAN_resEnterModeIAP();
+                        p = FOCAN_xEnterModeIAP();
                         break;
                     case CAND_GET_VERSION :
-                        p = FOCAN_resGetVersion(&version);
+                        p = FOCAN_xGetVersion(&version);
                         break;
                     default:
                         break;
@@ -71,11 +72,11 @@ static uint8_t FOCAN_Response(uint16_t address, uint8_t payload) {
     return CANBUS_Write(address, 1, 0);
 }
 
-static uint8_t FOCAN_resEnterModeIAP(void) {
+static uint8_t FOCAN_xEnterModeIAP(void) {
     return FOCAN_Response(CAND_ENTER_IAP, FOCAN_ACK);
 }
 
-static uint8_t FOCAN_resGetVersion(uint16_t *version) {
+static uint8_t FOCAN_xGetVersion(uint16_t *version) {
     CAN_DATA *txd = &(CB.tx.data);
     uint16_t address = CAND_GET_VERSION;
     uint8_t p;

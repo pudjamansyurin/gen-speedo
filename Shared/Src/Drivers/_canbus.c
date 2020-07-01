@@ -25,6 +25,9 @@ static void CANBUS_Header(uint32_t StdId, uint32_t DLC, uint8_t RTR);
 
 /* Public functions implementation ---------------------------------------------*/
 void CANBUS_Init(void) {
+#if (BOOTLOADER)
+    CB.fifo = 0;
+#endif
     /* Configure the CAN Filter */
     if (!CANBUS_Filter()) {
         /* Start Error */
@@ -37,13 +40,11 @@ void CANBUS_Init(void) {
         Error_Handler();
     }
 
-#if (!BOOTLOADER)
     /* Activate CAN RX notification */
     if (HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK) {
         /* Notification Error */
         Error_Handler();
     }
-#endif
 }
 
 uint8_t CANBUS_Filter(void) {
@@ -90,9 +91,9 @@ uint8_t CANBUS_Write(uint32_t StdId, uint32_t DLC, uint8_t RTR) {
         ;
 
     // debugging
-    if (status == HAL_OK) {
-//        CANBUS_TxDebugger();
-    }
+    //    if (status == HAL_OK) {
+    //        CANBUS_TxDebugger();
+    //    }
 
     unlock();
     return (status == HAL_OK);
@@ -103,7 +104,7 @@ uint8_t CANBUS_Write(uint32_t StdId, uint32_t DLC, uint8_t RTR) {
  *----------------------------------------------------------------------------*/
 uint8_t CANBUS_Read(void) {
     canbus_rx_t *rx = &(CB.rx);
-    HAL_StatusTypeDef status;
+    HAL_StatusTypeDef status = HAL_ERROR;
 
     lock();
     /* Check FIFO */
@@ -111,11 +112,9 @@ uint8_t CANBUS_Read(void) {
         /* Get RX message */
         status = HAL_CAN_GetRxMessage(&hcan2, CAN_RX_FIFO0, &(rx->header), rx->data.u8);
         // debugging
-        if (status == HAL_OK) {
-//            CANBUS_RxDebugger();
-        }
-    } else {
-        status = HAL_ERROR;
+        //        if (status == HAL_OK) {
+        //            CANBUS_RxDebugger();
+        //        }
     }
     unlock();
 
@@ -161,17 +160,19 @@ void CANBUS_RxDebugger(void) {
     LOG_Enter();
 }
 
-#if (!BOOTLOADER)
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
     // read rx fifo
     if (CANBUS_Read()) {
+#if (!BOOTLOADER)
         // signal only when RTOS started
         if (osKernelGetState() == osKernelRunning) {
             osThreadFlagsSet(CanRxTaskHandle, EVT_CAN_RX_IT);
         }
+#else
+        CB.fifo = 1;
+#endif
     }
 }
-#endif
 
 /* Private functions implementation --------------------------------------------*/
 static void lock(void) {
