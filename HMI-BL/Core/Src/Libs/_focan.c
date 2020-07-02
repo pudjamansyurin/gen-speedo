@@ -26,37 +26,37 @@ uint8_t FOCAN_Update(void) {
     /* Enter IAP Mode */
     p = FOCAN_xEnterModeIAP();
 
-    // Wait command
-    if (p) {
-        tickIndicator = _GetTickMS();
-        while (p) {
-            //            // handle timeout
-            //            if ((_GetTickMS() - tick) > 1000) {
-            //                p = 0;
-            //                break;
-            //            }
-            // read
-            if (CANBUS_Read()) {
-                switch (CANBUS_ReadID()) {
-                    case CAND_ENTER_IAP :
-                        p = FOCAN_xEnterModeIAP();
-                        break;
-                    case CAND_GET_VERSION :
-                        p = FOCAN_xGetVersion(&version);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            // indicator
-            if ((_GetTickMS() - tickIndicator) > 100) {
-                tickIndicator = _GetTickMS();
-                _LedToggle();
-                FOCAN_xEnterModeIAP();
-            }
-        }
-    }
+//    // Wait command
+//    if (p) {
+//        tickIndicator = _GetTickMS();
+//        while (p) {
+//            //            // handle timeout
+//            //            if ((_GetTickMS() - tick) > 1000) {
+//            //                p = 0;
+//            //                break;
+//            //            }
+//            // read
+//            if (CANBUS_Read()) {
+//                switch (CANBUS_ReadID()) {
+//                    case CAND_ENTER_IAP:
+//                        p = FOCAN_xEnterModeIAP();
+//                        break;
+//                    case CAND_GET_VERSION:
+//                        p = FOCAN_xGetVersion(&version);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//
+//            // indicator
+//            if ((_GetTickMS() - tickIndicator) > 100) {
+//                tickIndicator = _GetTickMS();
+//                _LedToggle();
+//                FOCAN_xEnterModeIAP();
+//            }
+//        }
+//    }
 
     return p;
 }
@@ -69,7 +69,7 @@ static uint8_t FOCAN_Response(uint16_t address, uint8_t payload) {
     txd->u8[0] = payload;
 
     // send message
-    return CANBUS_Write(address, 1, 0);
+    return CANBUS_Write(address, 1);
 }
 
 static uint8_t FOCAN_xEnterModeIAP(void) {
@@ -89,7 +89,7 @@ static uint8_t FOCAN_xGetVersion(uint16_t *version) {
         // set message
         txd->u16[0] = *version;
         // send message
-        p = CANBUS_Write(address, 2, 0);
+        p = CANBUS_Write(address, 2);
     }
 
     // option message (2 bytes)
@@ -97,7 +97,7 @@ static uint8_t FOCAN_xGetVersion(uint16_t *version) {
         // set message
         txd->u16[0] = 0x0000;
         // send message
-        p = CANBUS_Write(address, 2, 0);
+        p = CANBUS_Write(address, 2);
     }
 
     // ack

@@ -51,5 +51,5 @@ void HMI1_Init(void) {
 /* ====================================== CAN TX =================================== */
 uint8_t HMI1_CAN_TX_Heartbeat(void) {
     // send message
-    return CANBUS_Write(CAN_MY_ADRESS, 0, 1);
+    return CANBUS_Write(CAN_MY_ADRESS, 0);
 }
