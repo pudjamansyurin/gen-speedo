@@ -19,9 +19,9 @@ static uint8_t FOCAN_xGetChecksum(uint32_t *checksum);
 
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOCAN_Update(void) {
-    uint32_t tick, tickIndicator, timeout = 10000;
+    uint32_t tick, timeout = 10000;
     uint32_t checksum = 0x89ABCDEF;
-    uint8_t p;
+    uint8_t p, related;
 
     /* Enter IAP Mode */
     p = FOCAN_xEnterModeIAP();
@@ -29,19 +29,27 @@ uint8_t FOCAN_Update(void) {
     // Wait command
     if (p) {
         tick = _GetTickMS();
-        tickIndicator = tick;
         while (p) {
             // read
             if (CANBUS_Read()) {
+                related = 1;
                 switch (CANBUS_ReadID()) {
                     case CAND_ENTER_IAP :
                         p = FOCAN_xEnterModeIAP();
                         break;
                     case CAND_GET_CHECKSUM :
                         p = FOCAN_xGetChecksum(&checksum);
+                        timeout = 60000;
                         break;
                     default:
+                        related = 0;
                         break;
+                }
+
+                // update tick on each related commands
+                if (related) {
+                    tick = _GetTickMS();
+                    _LedToggle();
                 }
             }
 
@@ -49,12 +57,6 @@ uint8_t FOCAN_Update(void) {
             if ((_GetTickMS() - tick) > timeout) {
                 p = 0;
                 break;
-            }
-
-            // indicator
-            if ((_GetTickMS() - tickIndicator) > 100) {
-                tickIndicator = _GetTickMS();
-                _LedToggle();
             }
         }
     }
@@ -74,7 +76,25 @@ static uint8_t FOCAN_Response(uint32_t address, FOCAN response) {
 }
 
 static uint8_t FOCAN_xEnterModeIAP(void) {
-    return FOCAN_Response(CAND_ENTER_IAP, FOCAN_ACK);
+    CAN_DATA *txd = &(CB.tx.data);
+    uint32_t address = CAND_ENTER_IAP;
+    uint8_t p;
+
+    // ack
+    p = FOCAN_Response(address, FOCAN_ACK);
+    // version
+    if (p) {
+        // set message
+        txd->u32[0] = CAN_MY_ADRESS;
+        // send message
+        p = CANBUS_Write(address, 4);
+    }
+    // ack
+    if (p) {
+        p = FOCAN_Response(address, FOCAN_ACK);
+    }
+
+    return p;
 }
 
 static uint8_t FOCAN_xGetChecksum(uint32_t *checksum) {
