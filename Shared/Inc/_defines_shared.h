@@ -78,17 +78,18 @@
 
 #define CAN_MY_ADRESS                       (USE_HMI_LEFT ? CAND_HMI1_LEFT : CAND_HMI1_RIGHT)
 
-// FOCAN
-#define FOCAN_ACK                     (uint8_t) 0x79
-#define FOCAN_NACK                    (uint8_t) 0x1F
 // FOCAN Command Address
 #define CAND_ENTER_IAP               (uint32_t) 0x100
 #if (BOOTLOADER)
-#define CAND_GET_VERSION             (uint32_t) 0x101
-#endif
+#define CAND_GET_CHECKSUM            (uint32_t) 0x101
 
-#if (!BOOTLOADER)
-/* Enum prototypes -------------------------------------------------------*/
+/* Enum prototypes ------------------------------------------------------- */
+typedef enum {
+    FOCAN_ACK = 0x79,
+    FOCAN_NACK = 0x1F
+} FOCAN;
+
+#else
 typedef enum {
     SW_M_DRIVE = 0,
     SW_M_TRIP = 1,
