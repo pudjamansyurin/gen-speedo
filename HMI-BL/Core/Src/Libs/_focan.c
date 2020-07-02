@@ -19,7 +19,7 @@ static uint8_t FOCAN_xGetChecksum(uint32_t *checksum);
 
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOCAN_Update(void) {
-    uint32_t tick, timeout = 10000;
+    uint32_t tick, iTick, timeout = 10000;
     uint32_t checksum = 0x89ABCDEF;
     uint8_t p, related;
 
@@ -29,6 +29,7 @@ uint8_t FOCAN_Update(void) {
     // Wait command
     if (p) {
         tick = _GetTickMS();
+        iTick = tick;
         while (p) {
             // read
             if (CANBUS_Read()) {
@@ -51,6 +52,12 @@ uint8_t FOCAN_Update(void) {
                     tick = _GetTickMS();
                     _LedToggle();
                 }
+            }
+
+            // indicator
+            if ((_GetTickMS() - iTick) > 100) {
+                iTick = _GetTickMS();
+                _LedToggle();
             }
 
             // handle timeout
