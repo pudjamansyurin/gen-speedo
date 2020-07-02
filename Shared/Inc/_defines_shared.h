@@ -82,9 +82,9 @@
 #define FOCAN_ACK                     (uint8_t) 0x79
 #define FOCAN_NACK                    (uint8_t) 0x1F
 // FOCAN Command Address
-#define CAND_ENTER_IAP               (uint16_t) 0x100
+#define CAND_ENTER_IAP               (uint32_t) 0x100
 #if (BOOTLOADER)
-#define CAND_GET_VERSION             (uint16_t) 0x101
+#define CAND_GET_VERSION             (uint32_t) 0x101
 #endif
 
 #if (!BOOTLOADER)

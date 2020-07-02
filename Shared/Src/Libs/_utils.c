@@ -47,6 +47,22 @@ void _LedToggle(void) {
     HAL_GPIO_TogglePin(LD2_PORT, LD2_PIN);
 }
 
+void _Error(char msg[50]) {
+#if RTOS_ENABLE
+    if (osKernelGetState() == osKernelRunning) {
+        LOG_StrLn(msg);
+    }
+#else
+    LOG_StrLn(msg);
+#endif
+
+    // indicator error
+    while (1) {
+        _LedToggle();
+        HAL_Delay(50);
+    }
+}
+
 void _SetBacklight(uint8_t state) {
 #if !USE_HMI_LEFT
     HAL_GPIO_WritePin(RIGHT_BACKLIGHT_GPIO_Port, RIGHT_BACKLIGHT_Pin, state);

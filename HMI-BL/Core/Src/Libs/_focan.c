@@ -31,13 +31,12 @@ uint8_t FOCAN_Update(void) {
         tickIndicator = _GetTickMS();
         while (p) {
             //            // handle timeout
-            //            if ((_GetTickMS() - tick) < 1000) {
+            //            if ((_GetTickMS() - tick) > 1000) {
             //                p = 0;
             //                break;
             //            }
             // read
-            if (CB.fifo) {
-                CB.fifo = 0;
+            if (CANBUS_Read()) {
                 switch (CANBUS_ReadID()) {
                     case CAND_ENTER_IAP :
                         p = FOCAN_xEnterModeIAP();
@@ -54,6 +53,7 @@ uint8_t FOCAN_Update(void) {
             if ((_GetTickMS() - tickIndicator) > 100) {
                 tickIndicator = _GetTickMS();
                 _LedToggle();
+                FOCAN_xEnterModeIAP();
             }
         }
     }

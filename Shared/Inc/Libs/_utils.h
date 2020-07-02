@@ -17,6 +17,7 @@ void _DelayMS(uint32_t ms);
 uint32_t _GetTickMS(void);
 void _LedWrite(uint8_t state);
 void _LedToggle(void);
+void _Error(char msg[50]);
 void _SetBacklight(uint8_t state);
 
 #if (!BOOTLOADER)

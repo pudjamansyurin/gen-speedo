@@ -25,9 +25,6 @@ static void CANBUS_Header(uint32_t StdId, uint32_t DLC, uint8_t RTR);
 
 /* Public functions implementation ---------------------------------------------*/
 void CANBUS_Init(void) {
-#if (BOOTLOADER)
-    CB.fifo = 0;
-#endif
     /* Configure the CAN Filter */
     if (!CANBUS_Filter()) {
         /* Start Error */
@@ -40,11 +37,13 @@ void CANBUS_Init(void) {
         Error_Handler();
     }
 
+#if (!BOOTLOADER)
     /* Activate CAN RX notification */
     if (HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK) {
         /* Notification Error */
         Error_Handler();
     }
+#endif
 }
 
 uint8_t CANBUS_Filter(void) {
@@ -75,7 +74,6 @@ uint8_t CANBUS_Filter(void) {
  *----------------------------------------------------------------------------*/
 uint8_t CANBUS_Write(uint32_t StdId, uint32_t DLC, uint8_t RTR) {
     canbus_tx_t *tx = &(CB.tx);
-    uint32_t TxMailbox;
     HAL_StatusTypeDef status;
 
     lock();
@@ -83,12 +81,12 @@ uint8_t CANBUS_Write(uint32_t StdId, uint32_t DLC, uint8_t RTR) {
     // set header
     CANBUS_Header(StdId, DLC, RTR);
 
-    /* Start the Transmission process */
-    status = HAL_CAN_AddTxMessage(&hcan2, &(tx->header), tx->data.u8, &TxMailbox);
-
     /* Wait transmission complete */
-    while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan2) != 3)
+    while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan2) == 0)
         ;
+
+    /* Start the Transmission process */
+    status = HAL_CAN_AddTxMessage(&hcan2, &(tx->header), tx->data.u8, NULL);
 
     // debugging
     //    if (status == HAL_OK) {
@@ -121,7 +119,7 @@ uint8_t CANBUS_Read(void) {
     return (status == HAL_OK);
 }
 
-uint16_t CANBUS_ReadID(void) {
+uint32_t CANBUS_ReadID(void) {
     CAN_RxHeaderTypeDef *header = &(CB.rx.header);
 
     if (header->IDE == CAN_ID_STD) {
@@ -160,19 +158,17 @@ void CANBUS_RxDebugger(void) {
     LOG_Enter();
 }
 
+#if (!BOOTLOADER)
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
     // read rx fifo
     if (CANBUS_Read()) {
-#if (!BOOTLOADER)
         // signal only when RTOS started
         if (osKernelGetState() == osKernelRunning) {
             osThreadFlagsSet(CanRxTaskHandle, EVT_CAN_RX_IT);
         }
-#else
-        CB.fifo = 1;
-#endif
     }
 }
+#endif
 
 /* Private functions implementation --------------------------------------------*/
 static void lock(void) {
