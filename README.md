@@ -18,6 +18,7 @@
 - [ ] Add bootloader 
 - [ ] Handle bootloader's CAN for DFU mode
 - [ ] Use CAN Filter to ignore un-related ID
+- [ ] Simplify simcom library with pointer data
 
 ## Hardware Progress:
 - [x] Add line from RGB565 to RGB666 
