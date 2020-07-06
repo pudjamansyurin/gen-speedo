@@ -156,7 +156,7 @@ uint8_t FOCAN_xDownloadFlash(uint32_t timeout) {
 
     // read
     offset = rxd->u32[0];
-    size = rxd->u8[5];
+    size = rxd->u8[4];
 
     // check the buffer size
     p = size <= BLK_SIZE;
