@@ -16,7 +16,24 @@ extern CAN_HandleTypeDef hcan1;
 extern CRC_HandleTypeDef hcrc;
 
 /* Public functions implementation --------------------------------------------*/
-uint8_t FOTA_CompareChecksum(uint32_t checksum, uint32_t len, uint32_t address) {
+//uint8_t FOTA_Upgrade(void) {
+//    uint8_t p;
+//    uint32_t checksum;
+//
+//    // Backup current application
+//    if (FOTA_NeedBackup()) {
+//        FLASHER_BackupApp();
+//    }
+//
+//    /* Upgrade */
+//    /* Get the stored checksum information */
+//    checksum = *(uint32_t*) (BKP_START_ADDR + CHECKSUM_OFFSET);
+//    /* Download image and install */
+//    p = Simcom_FOTA(checksum);
+//
+//    return p;
+//}
+uint8_t FOTA_ValidateChecksum(uint32_t checksum, uint32_t len, uint32_t address) {
     uint32_t crc = 0;
     uint8_t *addr = (uint8_t*) address;
 
@@ -28,7 +45,7 @@ uint8_t FOTA_CompareChecksum(uint32_t checksum, uint32_t len, uint32_t address) 
     if (crc == checksum) {
         LOG_StrLn("MATCH");
         /* Glue checksum information to image */
-        FLASHER_WriteAppArea((uint8_t*) &crc, sizeof(uint32_t), CHECKSUM_OFFSET);
+        FOTA_GlueInfo32(CHECKSUM_OFFSET, &crc);
     } else {
         LOG_StrLn("NOT MATCH");
         LOG_Hex32(checksum);
@@ -40,51 +57,30 @@ uint8_t FOTA_CompareChecksum(uint32_t checksum, uint32_t len, uint32_t address) 
     return (crc == checksum);
 }
 
-void FOTA_Reboot(void) {
-    /* Clear backup area */
-    FLASHER_EraseBkpArea();
-
-    HAL_NVIC_SystemReset();
-}
-
 uint8_t FOTA_ValidImage(uint32_t address) {
-    uint32_t size, checksum = 0, crc = 0;
-    uint8_t ret;
-    uint8_t *ptr = (uint8_t*) address;
+    uint32_t size, checksum;
+    uint8_t p;
 
     /* Check beginning stack pointer */
-    ret = IS_VALID_SP(APP_START_ADDR);
+    p = IS_VALID_SP(APP_START_ADDR);
 
     /* Check the size */
-    if (ret) {
+    if (p) {
         /* Get the stored size information */
         size = *(uint32_t*) (address + SIZE_OFFSET);
-        ret = (size < APP_MAX_SIZE );
+        p = (size < APP_MAX_SIZE );
     }
 
     /* Check the checksum */
-    if (ret) {
+    if (p) {
         /* Get the stored checksum information */
         checksum = *(uint32_t*) (address + CHECKSUM_OFFSET);
-        /* Calculate CRC */
-        crc = CRC_Calculate8(ptr, size, 1);
 
-        // Indicator
-        LOG_Str("APP:Checksum = ");
-        if (crc == checksum) {
-            LOG_StrLn("MATCH");
-        } else {
-            LOG_StrLn("NOT MATCH");
-            LOG_Hex32(checksum);
-            LOG_Str(" != ");
-            LOG_Hex32(crc);
-            LOG_Enter();
-        }
-
-        ret = (checksum == crc);
+        /* Validate checksum */
+        p = FOTA_ValidateChecksum(checksum, size, address);
     }
 
-    return ret;
+    return p;
 }
 
 void FOTA_JumpToApplication(void) {
@@ -117,22 +113,25 @@ void FOTA_JumpToApplication(void) {
         ;
 }
 
-uint8_t FOTA_Upgrade(void) {
-    uint8_t p;
-    uint32_t checksum;
+void FOTA_Reboot(void) {
+    /* Clear backup area */
+    FLASHER_EraseBkpArea();
 
-    // Backup current application
+    HAL_NVIC_SystemReset();
+}
+
+void FOTA_GetChecksum(uint32_t *checksum) {
+    uint32_t address = BKP_START_ADDR;
+
     if (FOTA_NeedBackup()) {
-        FLASHER_BackupApp();
+        address = APP_START_ADDR;
     }
 
-    /* Upgrade */
-    /* Get the stored checksum information */
-    checksum = *(uint32_t*) (BKP_START_ADDR + CHECKSUM_OFFSET);
-    /* Download image and install */
-    p = Simcom_FOTA(checksum);
+    *checksum = *(uint32_t*) (address + CHECKSUM_OFFSET);
+}
 
-    return p;
+void FOTA_GlueInfo32(uint32_t offset, uint32_t *data) {
+    FLASHER_WriteAppArea((uint8_t*) data, sizeof(uint32_t), offset);
 }
 
 uint8_t FOTA_NeedBackup(void) {

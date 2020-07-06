@@ -82,9 +82,14 @@
 #define CAND_ENTER_IAP               (uint32_t) 0x100
 #if (BOOTLOADER)
 #define CAND_GET_CHECKSUM            (uint32_t) 0x101
+#define CAND_DOWNLOADING             (uint32_t) 0x104
+#define CAND_PRA_DOWNLOAD            (uint32_t) 0x105
+#define CAND_PASCA_DOWNLOAD          (uint32_t) 0x106
+#define CAND_INIT_DOWNLOAD           (uint32_t) 0x131
 
 /* Enum prototypes ------------------------------------------------------- */
 typedef enum {
+    FOCAN_ERROR = 0x00,
     FOCAN_ACK = 0x79,
     FOCAN_NACK = 0x1F
 } FOCAN;
