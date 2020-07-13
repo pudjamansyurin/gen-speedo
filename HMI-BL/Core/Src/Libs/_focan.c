@@ -44,11 +44,11 @@ uint8_t FOCAN_Update(void) {
                     case CAND_PRA_DOWNLOAD :
                         p = FOCAN_xPraDownload(&SIZE);
                         break;
+                    case CAND_INIT_DOWNLOAD :
+                        p = FOCAN_xDownloadFlash(5000);
+                        break;
                     case CAND_PASCA_DOWNLOAD :
                         p = FOCAN_xPascaDownload(&SIZE);
-                        break;
-                    case CAND_INIT_DOWNLOAD :
-                        p = FOCAN_xDownloadFlash(1000);
                         break;
 
                     default:
@@ -109,11 +109,7 @@ uint8_t FOCAN_xPraDownload(uint32_t *size) {
     p = FLASHER_BackupApp();
 
     // Send response
-    if (p) {
-        p = FOCAN_Response(address, FOCAN_ACK);
-    } else {
-        FOCAN_Response(address, FOCAN_NACK);
-    }
+    FOCAN_Response(address, p ? FOCAN_ACK : FOCAN_NACK);
 
     return p;
 }
@@ -136,11 +132,7 @@ uint8_t FOCAN_xPascaDownload(uint32_t *size) {
     }
 
     // Send response
-    if (p) {
-        p = FOCAN_Response(address, FOCAN_ACK);
-    } else {
-        FOCAN_Response(address, FOCAN_NACK);
-    }
+    FOCAN_Response(address, p ? FOCAN_ACK : FOCAN_NACK);
 
     return p;
 }
@@ -148,28 +140,20 @@ uint8_t FOCAN_xPascaDownload(uint32_t *size) {
 uint8_t FOCAN_xDownloadFlash(uint32_t timeout) {
     CAN_RxHeaderTypeDef *rxh = &(CB.rx.header);
     CAN_DATA *rxd = &(CB.rx.data);
-    uint8_t ptr[BLK_SIZE];
+    uint8_t ptr[BLK_SIZE ];
     uint32_t offset, size;
     uint32_t tick;
-    uint8_t pos = 0;
-    uint8_t p;
+    uint16_t pos = 0;
+    uint8_t p, len;
 
     // read
     offset = rxd->u32[0];
-    size = rxd->u8[4];
+    size = rxd->u8[4] + 1;
 
-    // check the buffer size
-    p = size <= BLK_SIZE;
     // check the flash size
-    if (p) {
-        p = (offset + size) <= APP_MAX_SIZE;
-    }
+    p = (offset + size) <= APP_MAX_SIZE;
     // Send response
-    if (p) {
-        p = FOCAN_Response(CAND_INIT_DOWNLOAD, FOCAN_ACK);
-    } else {
-        FOCAN_Response(CAND_INIT_DOWNLOAD, FOCAN_NACK);
-    }
+    FOCAN_Response(CAND_INIT_DOWNLOAD, p ? FOCAN_ACK : FOCAN_NACK);
 
     // Wait data
     if (p) {
@@ -179,17 +163,17 @@ uint8_t FOCAN_xDownloadFlash(uint32_t timeout) {
             if (CANBUS_Read()) {
                 if (CANBUS_ReadID() == CAND_DOWNLOADING) {
                     // read
-                    memcpy(&ptr[pos], rxd, rxh->DLC);
-
+                    len = rxh->DLC;
+                    memcpy(&ptr[pos], rxd, len);
+                    // response ACK
+                    FOCAN_Response(CAND_DOWNLOADING, FOCAN_ACK);
+                    //                    FOCAN_Squeeze(CAND_DOWNLOADING, &pos, 1);
                     // update pointer
-                    pos += rxh->DLC;
+                    pos += len;
 
                     // update tick
                     tick = _GetTickMS();
                     _LedToggle();
-
-                    // response ACK
-                    FOCAN_Response(CAND_DOWNLOADING, FOCAN_ACK);
                 }
             }
 
@@ -207,11 +191,7 @@ uint8_t FOCAN_xDownloadFlash(uint32_t timeout) {
     }
 
     // send final response
-    if (p) {
-        p = FOCAN_Response(CAND_INIT_DOWNLOAD, FOCAN_ACK);
-    } else {
-        FOCAN_Response(CAND_INIT_DOWNLOAD, FOCAN_NACK);
-    }
+    FOCAN_Response(CAND_INIT_DOWNLOAD, p ? FOCAN_ACK : FOCAN_NACK);
 
     return p;
 }

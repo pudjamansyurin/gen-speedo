@@ -25,9 +25,10 @@ static uint8_t FLASHER_WriteByte(uint8_t *ptr, uint32_t size, uint32_t address, 
 
     /* Writing...... */
     while (size && address <= end) {
-        errors += (HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, address, *ptr32++) != HAL_OK);
+        errors += (HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, address, *ptr32) != HAL_OK);
 
         address += 4;
+        ptr32++;
         size -= 4;
     }
 
