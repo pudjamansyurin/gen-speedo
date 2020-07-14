@@ -67,7 +67,12 @@ uint8_t FOCAN_Update(void) {
                 iTick = _GetTickMS();
                 _LedToggle();
             }
-        } while (p && (_GetTickMS() - tick < timeout));
+
+            // handle timeout
+            if (_GetTickMS() - tick > timeout) {
+                p = 0;
+            }
+        } while (p);
     }
 
     return p;
@@ -108,18 +113,14 @@ uint8_t FOCAN_xPraDownload(uint32_t *size) {
     return p;
 }
 
-//uint8_t FOCAN_xDownloadFlashIndividual(uint32_t *size, uint32_t timeout) {
-//
-//}
-
 uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout) {
     CAN_RxHeaderTypeDef *rxh = &(CB.rx.header);
     CAN_DATA *rxd = &(CB.rx.data);
     uint8_t ptr[BLK_SIZE ];
     uint32_t offset, currentSize;
-    uint32_t tick;
+    uint32_t tick, address;
     uint16_t pos = 0;
-    uint8_t p, len;
+    uint8_t p, len = 0;
 
     // read
     offset = rxd->u32[0];
@@ -136,35 +137,27 @@ uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout) {
         do {
             // read
             if (CANBUS_Read()) {
-                if (CANBUS_ReadID() == CAND_DOWNLOADING) {
-                    pos = (rxd->u8[4]);
+                if (_R(CANBUS_ReadID(), 20) == CAND_DOWNLOADING) {
+                    pos = (CANBUS_ReadID() & 0xFF);
 
                     // read
-//                    len = rxh->DLC;
-//                    memcpy(&ptr[pos], rxd, len);
-                    len = (rxh->DLC - 1);
-                    memcpy(&ptr[pos], &(rxd->u32[0]), len);
+                    len = rxh->DLC;
+                    memcpy(&ptr[pos], rxd, len);
 
                     // response ACK
-                    p = FOCAN_Response(CAND_DOWNLOADING, FOCAN_ACK);
+                    address = _L(CAND_DOWNLOADING, 20) | pos;
+                    p = FOCAN_Response(address, FOCAN_ACK);
 
-                    if (p) {
-                        // update pointer & tick
-//                    pos += len;
-//                        LOG_Str("Position = ");
-//                        LOG_Int(pos);
-//                        LOG_Enter();
-
-                        tick = _GetTickMS();
-                        _LedToggle();
-                    }
+                    // update tick
+                    tick = _GetTickMS();
+                    _LedToggle();
                 }
             }
-        } while (p && ((pos + len) < currentSize) && (_GetTickMS() - tick < timeout));
-
-        if (!p) {
-            LOG_StrLn("CAND_DOWNLOADING TIMEOUT");
-        }
+            // handle timeout
+            if ((_GetTickMS() - tick > timeout)) {
+                p = 0;
+            }
+        } while (p && ((pos + len) < currentSize));
     }
 
     // validate received size
@@ -172,18 +165,13 @@ uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout) {
         p = ((pos + len) == currentSize);
     }
 
-    if (!p) {
-        LOG_StrLn("CAND_DOWNLOADING ERROR");
-    }
-
     // flash to firmware
     if (p) {
         p = FLASHER_WriteAppArea(ptr, currentSize, offset);
     }
 
-    if (!p) {
-        LOG_StrLn("FLASHER_WriteAppArea ERROR");
-    } else {
+    // progress indicator
+    if (p) {
         LOG_Str("FOTA:Progress = ");
         LOG_Int(offset);
         LOG_Str(" Bytes (");
