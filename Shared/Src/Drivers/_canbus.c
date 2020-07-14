@@ -21,7 +21,7 @@ canbus_t CB;
 /* Private functions declaration ----------------------------------------------*/
 static void lock(void);
 static void unlock(void);
-static void CANBUS_Header(uint32_t StdId, uint32_t DLC);
+static void CANBUS_Header(uint32_t address, uint32_t DLC);
 
 /* Public functions implementation ---------------------------------------------*/
 void CANBUS_Init(void) {
@@ -72,14 +72,14 @@ uint8_t CANBUS_Filter(void) {
 /*----------------------------------------------------------------------------
  wite a message to CAN peripheral and transmit it
  *----------------------------------------------------------------------------*/
-uint8_t CANBUS_Write(uint32_t StdId, uint32_t DLC) {
+uint8_t CANBUS_Write(uint32_t address, uint32_t DLC) {
     canbus_tx_t *tx = &(CB.tx);
     HAL_StatusTypeDef status;
 
     lock();
 
     // set header
-    CANBUS_Header(StdId, DLC);
+    CANBUS_Header(address, DLC);
 
     /* Wait transmission complete */
     while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan2) == 0)
@@ -125,7 +125,7 @@ uint32_t CANBUS_ReadID(void) {
     if (header->IDE == CAN_ID_STD) {
         return header->StdId;
     }
-    return _R(header->ExtId, 20);
+    return header->ExtId;
 }
 
 void CANBUS_TxDebugger(void) {
@@ -183,12 +183,12 @@ static void unlock(void) {
 #endif
 }
 
-static void CANBUS_Header(uint32_t StdId, uint32_t DLC) {
+static void CANBUS_Header(uint32_t address, uint32_t DLC) {
     CAN_TxHeaderTypeDef *TxHeader = &(CB.tx.header);
     /* Configure Global Transmission process */
     TxHeader->RTR = (DLC ? CAN_RTR_DATA : CAN_RTR_REMOTE);
-    TxHeader->IDE = CAN_ID_STD;
+    TxHeader->IDE = (address > 0x7FF ? CAN_ID_EXT : CAN_ID_STD);
     TxHeader->TransmitGlobalTime = DISABLE;
-    TxHeader->StdId = StdId;
+    TxHeader->StdId = address;
     TxHeader->DLC = DLC;
 }

@@ -111,6 +111,14 @@ int main(void)
     _DelayMS(5000);
     _LedWrite(0);
 
+//    uint32_t data = 0x12345678;
+//    FLASHER_BackupApp();
+//    if (FLASHER_WriteAppArea((uint8_t*) &data, 4, 0)) {
+//        LOG_StrLn("Write OK");
+//    } else {
+//        LOG_StrLn("Write ERROR");
+//    }
+
     while (1) {
         FOCAN_Update();
     }

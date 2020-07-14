@@ -10,25 +10,37 @@
 #include "Libs/_fota.h"
 
 /* Private functions prototype ------------------------------------------------*/
+static void FLASHER_ClearErrors(void);
 static uint8_t FLASHER_WriteByte(uint8_t *ptr, uint32_t size, uint32_t address, uint32_t end);
 static uint8_t FLASHER_Erase(uint32_t FirstSector, uint32_t NbOfSectors);
 static uint32_t FLASHER_GetSector(uint32_t Address);
 static uint32_t FLASHER_GetSectorSize(uint32_t Sector);
 
 /* Public functions implementation ---------------------------------------------*/
+static void FLASHER_ClearErrors(void) {
+    __HAL_FLASH_CLEAR_FLAG(
+            FLASH_FLAG_EOP |
+            FLASH_FLAG_OPERR |
+            FLASH_FLAG_WRPERR |
+            FLASH_FLAG_PGAERR |
+            FLASH_FLAG_PGPERR |
+            FLASH_FLAG_PGSERR
+            );
+}
+
 static uint8_t FLASHER_WriteByte(uint8_t *ptr, uint32_t size, uint32_t address, uint32_t end) {
     uint32_t *ptr32 = (uint32_t*) ptr;
     uint32_t errors = 0;
 
     /* Unlock the Flash to enable the flash control register access *************/
     HAL_FLASH_Unlock();
+    FLASHER_ClearErrors();
 
     /* Writing...... */
     while (size && address <= end) {
-        errors += (HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, address, *ptr32) != HAL_OK);
+        errors += (HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, address, *ptr32++) != HAL_OK);
 
         address += 4;
-        ptr32++;
         size -= 4;
     }
 
@@ -61,14 +73,7 @@ static uint8_t FLASHER_Erase(uint32_t FirstSector, uint32_t NbOfSectors) {
 
     /* Unlock the Flash to enable the flash control register access *************/
     HAL_FLASH_Unlock();
-    __HAL_FLASH_CLEAR_FLAG(
-            FLASH_FLAG_EOP |
-            FLASH_FLAG_OPERR |
-            FLASH_FLAG_WRPERR |
-            FLASH_FLAG_PGAERR |
-            FLASH_FLAG_PGPERR |
-            FLASH_FLAG_PGSERR
-            );
+    FLASHER_ClearErrors();
 
     /* Erasing......... */
     p = (HAL_FLASHEx_Erase(&EraseInitStruct, &SectorError) == HAL_OK);
