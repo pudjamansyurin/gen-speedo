@@ -50,6 +50,10 @@ void HMI1_Init(void) {
 
 /* ====================================== CAN TX =================================== */
 uint8_t HMI1_CAN_TX_Heartbeat(void) {
+    CAN_DATA *data = &(CB.tx.data);
+
+    // set message
+    data->u16[0] = HMI_VERSION;
     // send message
-    return CANBUS_Write(CAN_MY_ADRESS, 0);
+    return CANBUS_Write(CAN_MY_ADRESS, 2);
 }

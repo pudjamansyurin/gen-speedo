@@ -29,5 +29,5 @@ void FW_EnterModeIAP(void) {
 uint8_t FW_UpgradeMe(void) {
     CAN_DATA *data = &(CB.rx.data);
 
-    return (data->u16[0] == CAN_MY_ADRESS);
+    return (data->u32[0] == CAN_MY_ADRESS);
 }

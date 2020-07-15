@@ -12,13 +12,13 @@
 #include "Drivers/_crc.h"
 
 /* External variables ---------------------------------------------------------*/
-extern CAN_HandleTypeDef hcan1;
+extern CAN_HandleTypeDef hcan2;
 extern CRC_HandleTypeDef hcrc;
 
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOTA_ValidateChecksum(uint32_t checksum, uint32_t len, uint32_t address) {
-    uint32_t crc = 0;
     uint8_t *addr = (uint8_t*) address;
+    uint32_t crc = 0;
 
     // Calculate CRC
     crc = CRC_Calculate8(addr, len, 1);
@@ -74,7 +74,7 @@ void FOTA_JumpToApplication(void) {
     appEntry = *(__IO uint32_t*) (APP_START_ADDR + 4);
 
     /* Shutdown all peripherals */
-    HAL_CAN_MspDeInit(&hcan1);
+    HAL_CAN_MspDeInit(&hcan2);
     HAL_CRC_MspDeInit(&hcrc);
     HAL_RCC_DeInit();
     HAL_DeInit();

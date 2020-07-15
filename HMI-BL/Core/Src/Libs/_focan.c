@@ -19,64 +19,86 @@ static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size);
 static uint8_t FOCAN_WaitResponse(uint32_t address, uint32_t timeout);
 
 /* Public functions implementation --------------------------------------------*/
-uint8_t FOCAN_Update(void) {
-    uint32_t tick, iTick, timeout = 5000;
-    uint32_t SIZE, CHECKSUM = 0x89ABCDEF;
+uint8_t FOCAN_Upgrade(uint8_t update) {
+    uint32_t timeout = 5000;
+    uint32_t tick, iTick;
     uint8_t p, related;
+    uint32_t SIZE;
 
     /* Enter IAP Mode */
-    p = FOCAN_xEnterModeIAP();
+    FOCAN_xEnterModeIAP();
 
     // Wait command
-    if (p) {
-        tick = _GetTickMS();
-        iTick = tick;
-        do {
-            // read
-            if (CANBUS_Read()) {
-                related = 1;
-                switch (CANBUS_ReadID()) {
-                    case CAND_ENTER_IAP :
-                        p = FOCAN_xEnterModeIAP();
-                        break;
-                    case CAND_GET_CHECKSUM :
-                        p = FOCAN_xGetChecksum(&CHECKSUM);
-                        break;
-                    case CAND_PRA_DOWNLOAD :
-                        p = FOCAN_xPraDownload(&SIZE);
-                        break;
-                    case CAND_INIT_DOWNLOAD :
-                        p = FOCAN_xDownloadFlash(&SIZE, 5000);
-                        break;
-                    case CAND_PASCA_DOWNLOAD :
-                        p = FOCAN_xPascaDownload(&SIZE);
-                        break;
+    tick = _GetTickMS();
+    iTick = tick;
+    do {
+        // read
+        if (CANBUS_Read()) {
+            related = 1;
+            switch (CANBUS_ReadID()) {
+                case CAND_ENTER_IAP :
+                    p = FOCAN_xEnterModeIAP();
+                    break;
+                case CAND_GET_CHECKSUM :
+                    p = FOCAN_xGetChecksum();
+                    /* Wait until network connected */
+                    timeout = 60000;
+                    break;
+                case CAND_PRA_DOWNLOAD :
+                    p = FOCAN_xPraDownload(&SIZE);
+                    break;
+                case CAND_INIT_DOWNLOAD :
+                    p = FOCAN_xDownloadFlash(&SIZE, 1000);
+                    break;
+                case CAND_PASCA_DOWNLOAD :
+                    p = FOCAN_xPascaDownload(&SIZE);
+                    /* Handle success DFU */
+                    if (p) {
+                        FOTA_Reboot();
+                    }
+                    break;
+                case CAND_VCU_SWITCH :
+                    /* VCU enter normal mode */
+                    if (!update) {
+                        p = FOCAN_RequestFota();
+                    } else {
+                        p = 0;
+                    }
+                    break;
 
-                    default:
-                        related = 0;
-                        break;
-                }
-
-                // update tick on each related commands
-                if (related) {
-                    tick = _GetTickMS();
-                }
+                default:
+                    related = 0;
+                    break;
             }
 
-            // indicator
-            if ((_GetTickMS() - iTick) > 100) {
-                iTick = _GetTickMS();
-                _LedToggle();
+            // update tick on each related commands
+            if (related) {
+                tick = _GetTickMS();
             }
+        }
 
-            // handle timeout
-            if (_GetTickMS() - tick > timeout) {
-                p = 0;
-            }
-        } while (p);
-    }
+        // indicator
+        if ((_GetTickMS() - iTick) > 100) {
+            iTick = _GetTickMS();
+            _LedToggle();
+        }
+
+        // handle timeout
+        if (_GetTickMS() - tick > timeout) {
+            p = 0;
+        }
+    } while (p);
 
     return p;
+}
+
+uint8_t FOCAN_RequestFota(void) {
+    CAN_DATA *txd = &(CB.tx.data);
+
+    // Set message
+    txd->u16[0] = 0xFFFF;
+    // send message
+    return CANBUS_Write(CAN_MY_ADRESS, 2);
 }
 
 uint8_t FOCAN_xEnterModeIAP(void) {
@@ -90,11 +112,15 @@ uint8_t FOCAN_xEnterModeIAP(void) {
     return FOCAN_SendSqueeze(address, &txd, 4);
 }
 
-uint8_t FOCAN_xGetChecksum(uint32_t *checksum) {
+uint8_t FOCAN_xGetChecksum(void) {
     uint32_t address = CAND_GET_CHECKSUM;
+    uint32_t checksum;
+
+    // Make message
+    FOTA_GetChecksum(&checksum);
 
     // Send response
-    return FOCAN_SendSqueeze(address, checksum, 4);
+    return FOCAN_SendSqueeze(address, &checksum, 4);
 }
 
 uint8_t FOCAN_xPraDownload(uint32_t *size) {

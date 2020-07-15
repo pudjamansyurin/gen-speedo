@@ -107,65 +107,56 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    _LedWrite(1);
-    _DelayMS(5000);
-    _LedWrite(0);
-
-//    uint32_t data = 0x12345678;
-//    FLASHER_BackupApp();
-//    if (FLASHER_WriteAppArea((uint8_t*) &data, 4, 0)) {
-//        LOG_StrLn("Write OK");
-//    } else {
-//        LOG_StrLn("Write ERROR");
+//    _LedWrite(1);
+//    _DelayMS(5000);
+//    _LedWrite(0);
+//
+//    while (1) {
+//        FOCAN_Update();
 //    }
-
-    while (1) {
-        FOCAN_Update();
-    }
-
     /* IAP flag has been set, initiate firmware download procedure */
-    //    if (*(uint32_t*) IAP_FLAG_ADDR == IAP_FLAG) {
-    //        LOG_StrLn("IAP set, do DFU.");
-    //        /* Everything went well */
-    //        if (FOTA_Upgrade()) {
-    //            /* Reset IAP flag */
-    //            *(uint32_t*) IAP_FLAG_ADDR = 0;
-    //            /* Take branching decision on next reboot */
-    //            FOTA_Reboot();
-    //        }
-    //        /* Reset IAP flag */
-    //        *(uint32_t*) IAP_FLAG_ADDR = 0;
-    //        /* FOTA failed */
-    //        HAL_NVIC_SystemReset();
-    //    }
-    //    /* Jump to application if it exist and DFU finished */
-    //    else if (FOTA_ValidImage(APP_START_ADDR)) {
-    //        LOG_StrLn("Jump to application.");
-    //        /* Jump sequence */
-    //        FOTA_JumpToApplication();
-    //    }
-    //    /* Try to restore the backup */
-    //    else {
-    //        /* Check is the backup image valid */
-    //        if (FOTA_ValidImage(BKP_START_ADDR)) {
-    //            LOG_StrLn("Has backed-up image, roll-back.");
-    //            /* Restore back old image to application area */
-    //            if (FLASHER_RestoreApp()) {
-    //                /* Take branching decision on next reboot */
-    //                FOTA_Reboot();
-    //            }
-    //        } else {
-    //            LOG_StrLn("No image at all, do DFU.");
-    //            /* Download new firmware for the first time */
-    //            if (FOTA_Upgrade()) {
-    //                /* Take branching decision on next reboot */
-    //                FOTA_Reboot();
-    //            }
-    //        }
-    //        HAL_NVIC_SystemReset();
-    //        /* Meaningless, failure indicator */
-    //        _Error("Boot-loader failure!!");
-    //    }
+    if (*(uint32_t*) IAP_FLAG_ADDR == IAP_FLAG) {
+        LOG_StrLn("IAP set, do DFU.");
+        /* Everything went well */
+        if (FOCAN_Upgrade(1)) {
+            /* Reset IAP flag */
+            *(uint32_t*) IAP_FLAG_ADDR = 0;
+            /* Take branching decision on next reboot */
+            FOTA_Reboot();
+        }
+        /* Reset IAP flag */
+        *(uint32_t*) IAP_FLAG_ADDR = 0;
+        /* FOTA failed */
+        HAL_NVIC_SystemReset();
+    }
+    /* Jump to application if it exist and DFU finished */
+    else if (FOTA_ValidImage(APP_START_ADDR)) {
+        LOG_StrLn("Jump to application.");
+        /* Jump sequence */
+        FOTA_JumpToApplication();
+    }
+    /* Try to restore the backup */
+    else {
+        /* Check is the backup image valid */
+        if (FOTA_ValidImage(BKP_START_ADDR)) {
+            LOG_StrLn("Has backed-up image, roll-back.");
+            /* Restore back old image to application area */
+            if (FLASHER_RestoreApp()) {
+                /* Take branching decision on next reboot */
+                FOTA_Reboot();
+            }
+        } else {
+            LOG_StrLn("No image at all, do DFU.");
+            /* Download new firmware for the first time */
+            if (FOCAN_Upgrade(0)) {
+                /* Take branching decision on next reboot */
+                FOTA_Reboot();
+            }
+        }
+        HAL_NVIC_SystemReset();
+        /* Meaningless, failure indicator */
+        _Error("Boot-loader failure!!");
+    }
     /* USER CODE END 3 */
 }
 

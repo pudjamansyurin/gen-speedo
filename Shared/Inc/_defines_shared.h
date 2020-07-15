@@ -66,13 +66,13 @@
 // Events group (for All Threads)
 #define EVENT_MASK		  		 (uint32_t) 0xFFFFFF
 #define EVENT_READY                         BIT(0)
+#endif
 
 // CAN Message Address
 #define CAND_VCU_SWITCH			 (uint32_t) 0x000
 #define CAND_VCU_DATETIME		 (uint32_t) 0x001
 #define CAND_VCU_SELECT_SET		 (uint32_t) 0x002
 #define CAND_VCU_TRIP_MODE		 (uint32_t) 0x003
-#endif
 #define CAND_HMI1_LEFT           (uint32_t) 0x7C0
 #define CAND_HMI1_RIGHT          (uint32_t) 0x7C1
 
