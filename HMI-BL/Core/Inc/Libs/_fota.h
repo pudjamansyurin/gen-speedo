@@ -12,7 +12,6 @@
 #include "Libs/_utils.h"
 
 /* Public functions implementation --------------------------------------------*/
-//uint8_t FOTA_Upgrade(void);
 uint8_t FOTA_ValidateChecksum(uint32_t checksum, uint32_t len, uint32_t address);
 uint8_t FOTA_ValidImage(uint32_t address);
 void FOTA_JumpToApplication(void);

@@ -16,23 +16,6 @@ extern CAN_HandleTypeDef hcan1;
 extern CRC_HandleTypeDef hcrc;
 
 /* Public functions implementation --------------------------------------------*/
-//uint8_t FOTA_Upgrade(void) {
-//    uint8_t p;
-//    uint32_t checksum;
-//
-//    // Backup current application
-//    if (FOTA_NeedBackup()) {
-//        FLASHER_BackupApp();
-//    }
-//
-//    /* Upgrade */
-//    /* Get the stored checksum information */
-//    checksum = *(uint32_t*) (BKP_START_ADDR + CHECKSUM_OFFSET);
-//    /* Download image and install */
-//    p = Simcom_FOTA(checksum);
-//
-//    return p;
-//}
 uint8_t FOTA_ValidateChecksum(uint32_t checksum, uint32_t len, uint32_t address) {
     uint32_t crc = 0;
     uint8_t *addr = (uint8_t*) address;
