@@ -19,15 +19,16 @@ static uint8_t FOCAN_SendResponse(uint32_t address, FOCAN response);
 static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size);
 
 /* Public functions implementation --------------------------------------------*/
-uint8_t FOCAN_Upgrade(uint8_t update) {
+uint8_t FOCAN_Upgrade(uint8_t factory) {
     uint32_t timeout = 5000;
     uint32_t tick, iTick;
-    uint8_t p, related;
+    uint8_t p, related, success = 0;
     uint32_t SIZE;
 
     /* Initialize LCD */
     BSP_LCD_Init();
-    FOTA_DisplayPrepare();
+    FOTA_DisplayTitle("FOTA for HMI-1 (Left)");
+    FOTA_DisplayStatus("Preparing...");
     FOTA_DisplayPercent(0);
 
     /* Enter IAP Mode */
@@ -42,33 +43,32 @@ uint8_t FOCAN_Upgrade(uint8_t update) {
             related = 1;
             switch (CANBUS_ReadID()) {
                 case CAND_ENTER_IAP :
+                    FOTA_DisplayStatus("Preparing...");
                     p = FOCAN_xEnterModeIAP();
                     break;
                 case CAND_GET_CHECKSUM :
+                    FOTA_DisplayStatus("Connecting...");
                     p = FOCAN_xGetChecksum();
                     /* Wait until network connected */
                     timeout = 60000;
                     break;
                 case CAND_PRA_DOWNLOAD :
+                    FOTA_DisplayStatus("Pra-Download...");
                     p = FOCAN_xPraDownload(&SIZE);
                     break;
                 case CAND_INIT_DOWNLOAD :
+                    FOTA_DisplayStatus("Downloading...");
                     p = FOCAN_xDownloadFlash(&SIZE, timeout, &tick);
                     break;
                 case CAND_PASCA_DOWNLOAD :
+                    FOTA_DisplayStatus("Pasca-Download...");
                     p = FOCAN_xPascaDownload(&SIZE);
                     /* Handle success DFU */
-                    if (p) {
-                        FOTA_Reboot();
-                    }
+                    success = p;
                     break;
                 case CAND_VCU_SWITCH :
                     /* VCU enter normal mode */
-                    if (!update) {
-                        p = FOCAN_RequestFota();
-                    } else {
-                        p = 0;
-                    }
+                    p = (factory ? FOCAN_RequestFota() : 0);
                     break;
 
                 default:
@@ -92,7 +92,14 @@ uint8_t FOCAN_Upgrade(uint8_t update) {
         if (_GetTickMS() - tick > timeout) {
             p = 0;
         }
-    } while (p);
+    } while (p && !success);
+
+    if (p) {
+        FOTA_DisplayStatus("Success.");
+    } else {
+        FOTA_DisplayStatus("Failed.");
+    }
+    _DelayMS(1000);
 
     return p;
 }

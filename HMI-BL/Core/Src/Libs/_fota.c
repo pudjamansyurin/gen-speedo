@@ -122,23 +122,29 @@ uint8_t FOTA_NeedBackup(void) {
     return (FOTA_ValidImage(APP_START_ADDR) && !FOTA_ValidImage(BKP_START_ADDR));
 }
 
-void FOTA_DisplayPrepare(void) {
-    char title[15];
+void FOTA_DisplayTitle(char title[30]) {
+    char str[30];
 
-    /* Set Foreground Layer */
-    BSP_LCD_SelectLayer(0);
-    BSP_LCD_Clear(LCD_COLOR_BLACK);
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-
+    strcpy(str, title);
     BSP_LCD_SetFont(&Font12);
-    sprintf(title, "HMI-1 (Left)");
     BSP_LCD_DisplayStringAt(
-            (BSP_LCD_GetXSize() / 2) - 30,
-            (BSP_LCD_GetYSize() / 2) - 20,
-            (uint8_t*) title,
+            0,
+            0,
+            (uint8_t*) str,
             LEFT_MODE);
 }
 
+void FOTA_DisplayStatus(char status[30]) {
+    char str[30];
+
+    strcpy(str, status);
+    BSP_LCD_SetFont(&Font16);
+    BSP_LCD_DisplayStringAt(
+            0,
+            15,
+            (uint8_t*) str,
+            LEFT_MODE);
+}
 void FOTA_DisplayPercent(uint8_t progress) {
     char percent[6];
 
@@ -146,7 +152,7 @@ void FOTA_DisplayPercent(uint8_t progress) {
     sprintf(percent, "%03d %%", progress);
     BSP_LCD_DisplayStringAt(
             (BSP_LCD_GetXSize() / 2) - 30,
-            (BSP_LCD_GetYSize() / 2),
+            (BSP_LCD_GetYSize() / 2) - 10,
             (uint8_t*) percent,
             LEFT_MODE);
 }

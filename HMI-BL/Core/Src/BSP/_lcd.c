@@ -230,6 +230,11 @@ uint8_t BSP_LCD_Init(void)
     /* Enable the LCD */
     BSP_LCD_DisplayOn();
 
+    /* Set Foreground Layer */
+    BSP_LCD_SelectLayer(0);
+    BSP_LCD_Clear(LCD_COLOR_BLACK);
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+
     return LCD_OK;
 }
 

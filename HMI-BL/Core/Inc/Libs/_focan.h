@@ -16,7 +16,7 @@
 #define FOCAN_RETRY                (uint8_t) 1
 
 /* Public functions implementation --------------------------------------------*/
-uint8_t FOCAN_Upgrade(uint8_t update);
+uint8_t FOCAN_Upgrade(uint8_t factory);
 uint8_t FOCAN_RequestFota(void);
 uint8_t FOCAN_xEnterModeIAP(void);
 uint8_t FOCAN_xGetChecksum(void);

@@ -112,8 +112,6 @@ int main(void)
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
-    while (1)
-        ;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -125,7 +123,7 @@ int main(void)
     if (*(uint32_t*) IAP_FLAG_ADDR == IAP_FLAG) {
         LOG_StrLn("IAP set, do DFU.");
         /* Everything went well */
-        if (FOCAN_Upgrade(1)) {
+        if (FOCAN_Upgrade(0)) {
             /* Reset IAP flag */
             *(uint32_t*) IAP_FLAG_ADDR = 0;
             /* Take branching decision on next reboot */
@@ -155,7 +153,7 @@ int main(void)
         } else {
             LOG_StrLn("No image at all, do DFU.");
             /* Download new firmware for the first time */
-            if (FOCAN_Upgrade(0)) {
+            if (FOCAN_Upgrade(1)) {
                 /* Take branching decision on next reboot */
                 FOTA_Reboot();
             }
