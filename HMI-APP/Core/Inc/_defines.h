@@ -10,11 +10,11 @@
 
 /* Choose between VCU or Boot-loader mode */
 #define BOOTLOADER                          0
-#define USE_HMI_LEFT                        1
+#define USE_HMI_LEFT                        0
 
 /* Includes ------------------------------------------------------------------*/
 #include "_defines_shared.h"
 
-#define HMI_VERSION              (uint16_t) 0x0102
+#define HMI_VERSION              (uint16_t) 0x0103
 
 #endif /* DEFINES_H_ */

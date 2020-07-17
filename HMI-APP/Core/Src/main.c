@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -80,7 +81,7 @@ const osThreadAttr_t DisplayTask_attributes = {
 osThreadId_t CanTxTaskHandle;
 const osThreadAttr_t CanTxTask_attributes = {
         .name = "CanTxTask",
-        .priority = (osPriority_t) osPriorityNormal,
+        .priority = (osPriority_t) osPriorityHigh,
         .stack_size = 128 * 4
 };
 /* Definitions for CanRxTask */
@@ -699,12 +700,12 @@ void StartManagerTask(void *argument)
         // Feed the dog
         HAL_IWDG_Refresh(&hiwdg);
 
-//		 Dummy Data
-//        VCU.d.odometer++;
-//        VCU.d.speed += 1;
-//        MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
+        //		 Dummy Data
+        //        VCU.d.odometer++;
+        //        VCU.d.speed += 1;
+        //        MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
 
-// Periodic interval
+        // Periodic interval
         osDelayUntil(lastWake + pdMS_TO_TICKS(10));
     }
     /* USER CODE END 5 */
@@ -856,9 +857,9 @@ void Error_Handler(void)
   * @retval None
   */
 void assert_failed(uint8_t *file, uint32_t line)
-{
+{ 
   /* USER CODE BEGIN 6 */
-	/* User can add his own implementation to report the file name and line number,
+    /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }

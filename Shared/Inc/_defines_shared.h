@@ -46,7 +46,7 @@
 #define SP_RANGE                           (SP_MASK - (SRAM_SIZE - 1))
 #define IAP_FLAG                (uint32_t) 0xAABBCCDD
 #define IAP_FLAG_ADDR                      (SRAM_END_ADDR - sizeof(uint32_t))
-#define IS_VALID_SP(a)          ((*(__IO uint32_t*)a & SP_RANGE) == SRAM_BASE_ADDR)
+#define IS_VALID_SP(a)                     ((*(__IO uint32_t*)a & SP_RANGE) == SRAM_BASE_ADDR)
 
 // Some constants
 #if (!BOOTLOADER)
@@ -86,39 +86,40 @@
 #define CAND_PRA_DOWNLOAD            (uint32_t) 0x105
 #define CAND_PASCA_DOWNLOAD          (uint32_t) 0x106
 #define CAND_INIT_DOWNLOAD           (uint32_t) 0x131
+#endif
 
 /* Enum prototypes ------------------------------------------------------- */
+#if (BOOTLOADER)
 typedef enum {
     FOCAN_ERROR = 0x00,
     FOCAN_ACK = 0x79,
     FOCAN_NACK = 0x1F
 } FOCAN;
-
 #else
 typedef enum {
     SW_M_DRIVE = 0,
-    SW_M_TRIP = 1,
-    SW_M_REPORT = 2,
+    SW_M_TRIP,
+    SW_M_REPORT,
     SW_M_MAX = 2
 } sw_mode_t;
 
 typedef enum {
     SW_M_DRIVE_E = 0,
-    SW_M_DRIVE_S = 1,
-    SW_M_DRIVE_P = 2,
+    SW_M_DRIVE_S,
+    SW_M_DRIVE_P,
+    SW_M_DRIVE_R,
     SW_M_DRIVE_MAX = 2,
-    SW_M_DRIVE_R = 3,
 } sw_mode_drive_t;
 
 typedef enum {
     SW_M_TRIP_A = 0,
-    SW_M_TRIP_B = 1,
+    SW_M_TRIP_B,
     SW_M_TRIP_MAX = 1,
 } sw_mode_trip_t;
 
 typedef enum {
     SW_M_REPORT_RANGE = 0,
-    SW_M_REPORT_EFFICIENCY = 1,
+    SW_M_REPORT_EFFICIENCY,
     SW_M_REPORT_MAX = 1,
 } sw_mode_report_t;
 #endif

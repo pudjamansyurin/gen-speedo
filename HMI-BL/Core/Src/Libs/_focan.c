@@ -16,7 +16,6 @@ extern canbus_t CB;
 /* Private functions prototypes -----------------------------------------------*/
 static uint8_t FOCAN_SendResponse(uint32_t address, FOCAN response);
 static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size);
-static uint8_t FOCAN_WaitResponse(uint32_t address, uint32_t timeout);
 
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOCAN_Upgrade(uint8_t update) {
@@ -48,7 +47,7 @@ uint8_t FOCAN_Upgrade(uint8_t update) {
                     p = FOCAN_xPraDownload(&SIZE);
                     break;
                 case CAND_INIT_DOWNLOAD :
-                    p = FOCAN_xDownloadFlash(&SIZE, 1000);
+                    p = FOCAN_xDownloadFlash(&SIZE, timeout, &tick);
                     break;
                 case CAND_PASCA_DOWNLOAD :
                     p = FOCAN_xPascaDownload(&SIZE);
@@ -140,18 +139,18 @@ uint8_t FOCAN_xPraDownload(uint32_t *size) {
     return p;
 }
 
-uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout) {
+uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout, uint32_t *tick) {
     CAN_RxHeaderTypeDef *rxh = &(CB.rx.header);
     CAN_DATA *rxd = &(CB.rx.data);
-    uint8_t ptr[BLK_SIZE ];
     uint32_t offset, currentSize;
-    uint32_t tick, address;
+    uint8_t ptr[BLK_SIZE ];
+    uint32_t address;
     uint16_t pos = 0;
     uint8_t p, len = 0;
 
     // read
     offset = rxd->u32[0];
-    currentSize = rxd->u8[4] + 1;
+    currentSize = rxd->u16[2] + 1;
 
     // check the flash size
     p = (offset + currentSize) <= APP_MAX_SIZE;
@@ -160,12 +159,12 @@ uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout) {
 
     // Wait data
     if (p) {
-        tick = _GetTickMS();
+        *tick = _GetTickMS();
         do {
             // read
             if (CANBUS_Read()) {
                 if (_R(CANBUS_ReadID(), 20) == CAND_DOWNLOADING) {
-                    pos = (CANBUS_ReadID() & 0xFF);
+                    pos = (CANBUS_ReadID() & 0xFFFF);
 
                     // read
                     len = rxh->DLC;
@@ -176,12 +175,12 @@ uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout) {
                     p = FOCAN_SendResponse(address, FOCAN_ACK);
 
                     // update tick
-                    tick = _GetTickMS();
+                    *tick = _GetTickMS();
                     _LedToggle();
                 }
             }
             // handle timeout
-            if ((_GetTickMS() - tick > timeout)) {
+            if ((_GetTickMS() - *tick > timeout)) {
                 p = 0;
             }
         } while (p && ((pos + len) < currentSize));
@@ -254,10 +253,6 @@ static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size) {
         if (p) {
             p = FOCAN_SendResponse(address, FOCAN_ACK);
         }
-//        // wait 3 way handshake
-//        if (p) {
-//            p = (FOCAN_WaitResponse(address, 100) == FOCAN_ACK);
-//        }
     } while (!p && --retry);
 
     return p;
@@ -272,31 +267,7 @@ static uint8_t FOCAN_SendResponse(uint32_t address, FOCAN response) {
         txd->u8[0] = response;
         // send message
         p = CANBUS_Write(address, 1);
-//        // wait 3 way handshake
-//        if (p) {
-//            p = (FOCAN_WaitResponse(address, 100) == FOCAN_ACK);
-//        }
     } while (!p && --retry);
 
     return p;
-}
-
-static uint8_t FOCAN_WaitResponse(uint32_t address, uint32_t timeout) {
-    CAN_DATA *rxd = &(CB.rx.data);
-    FOCAN response = FOCAN_ERROR;
-    uint32_t tick;
-
-    // wait response
-    tick = _GetTickMS();
-    do {
-        // read
-        if (CANBUS_Read()) {
-            if (CANBUS_ReadID() == address) {
-                response = rxd->u8[0];
-                break;
-            }
-        }
-    } while (_GetTickMS() - tick < timeout);
-
-    return response;
 }

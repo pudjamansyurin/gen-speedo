@@ -28,6 +28,7 @@
 #include "Libs/_focan.h"
 #include "Drivers/_canbus.h"
 #include "Drivers/_flasher.h"
+#include "BSP/stm32f429i_discovery_lcd.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,6 +50,12 @@ CAN_HandleTypeDef hcan2;
 
 CRC_HandleTypeDef hcrc;
 
+DMA2D_HandleTypeDef hdma2d;
+
+LTDC_HandleTypeDef hltdc;
+
+SDRAM_HandleTypeDef hsdram1;
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -58,6 +65,9 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_CAN2_Init(void);
 static void MX_CRC_Init(void);
+static void MX_DMA2D_Init(void);
+static void MX_FMC_Init(void);
+static void MX_LTDC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -97,9 +107,12 @@ int main(void)
     MX_GPIO_Init();
     MX_CAN2_Init();
     MX_CRC_Init();
+    MX_DMA2D_Init();
+    MX_FMC_Init();
+    MX_LTDC_Init();
     /* USER CODE BEGIN 2 */
     CANBUS_Init();
-
+    BSP_LCD_Init();
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -107,13 +120,10 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//    _LedWrite(1);
-//    _DelayMS(5000);
-//    _LedWrite(0);
-//
-//    while (1) {
-//        FOCAN_Update();
-//    }
+    _LedWrite(1);
+    _DelayMS(1000);
+    _LedWrite(0);
+
     /* IAP flag has been set, initiate firmware download procedure */
     if (*(uint32_t*) IAP_FLAG_ADDR == IAP_FLAG) {
         LOG_StrLn("IAP set, do DFU.");
@@ -168,6 +178,7 @@ void SystemClock_Config(void)
 {
     RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
     RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
+    RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = { 0 };
 
     /** Configure the main internal regulator output voltage
      */
@@ -203,6 +214,14 @@ void SystemClock_Config(void)
     RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
     if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
+            {
+        Error_Handler();
+    }
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
+    PeriphClkInitStruct.PLLSAI.PLLSAIN = 60;
+    PeriphClkInitStruct.PLLSAI.PLLSAIR = 5;
+    PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_4;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
             {
         Error_Handler();
     }
@@ -272,6 +291,172 @@ static void MX_CRC_Init(void)
 }
 
 /**
+ * @brief DMA2D Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_DMA2D_Init(void)
+{
+
+    /* USER CODE BEGIN DMA2D_Init 0 */
+
+    /* USER CODE END DMA2D_Init 0 */
+
+    /* USER CODE BEGIN DMA2D_Init 1 */
+
+    /* USER CODE END DMA2D_Init 1 */
+    hdma2d.Instance = DMA2D;
+    hdma2d.Init.Mode = DMA2D_M2M;
+    hdma2d.Init.ColorMode = DMA2D_OUTPUT_ARGB8888;
+    hdma2d.Init.OutputOffset = 0;
+    hdma2d.LayerCfg[1].InputOffset = 0;
+    hdma2d.LayerCfg[1].InputColorMode = DMA2D_INPUT_ARGB8888;
+    hdma2d.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
+    hdma2d.LayerCfg[1].InputAlpha = 0;
+    if (HAL_DMA2D_Init(&hdma2d) != HAL_OK)
+            {
+        Error_Handler();
+    }
+    if (HAL_DMA2D_ConfigLayer(&hdma2d, 1) != HAL_OK)
+            {
+        Error_Handler();
+    }
+    /* USER CODE BEGIN DMA2D_Init 2 */
+
+    /* USER CODE END DMA2D_Init 2 */
+
+}
+
+/**
+ * @brief LTDC Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_LTDC_Init(void)
+{
+
+    /* USER CODE BEGIN LTDC_Init 0 */
+
+    /* USER CODE END LTDC_Init 0 */
+
+    LTDC_LayerCfgTypeDef pLayerCfg = { 0 };
+    LTDC_LayerCfgTypeDef pLayerCfg1 = { 0 };
+
+    /* USER CODE BEGIN LTDC_Init 1 */
+
+    /* USER CODE END LTDC_Init 1 */
+    hltdc.Instance = LTDC;
+    hltdc.Init.HSPolarity = LTDC_HSPOLARITY_AL;
+    hltdc.Init.VSPolarity = LTDC_VSPOLARITY_AL;
+    hltdc.Init.DEPolarity = LTDC_DEPOLARITY_AL;
+    hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
+    hltdc.Init.HorizontalSync = 3;
+    hltdc.Init.VerticalSync = 3;
+    hltdc.Init.AccumulatedHBP = 46;
+    hltdc.Init.AccumulatedVBP = 15;
+    hltdc.Init.AccumulatedActiveW = 366;
+    hltdc.Init.AccumulatedActiveH = 255;
+    hltdc.Init.TotalWidth = 374;
+    hltdc.Init.TotalHeigh = 263;
+    hltdc.Init.Backcolor.Blue = 0;
+    hltdc.Init.Backcolor.Green = 0;
+    hltdc.Init.Backcolor.Red = 0;
+    if (HAL_LTDC_Init(&hltdc) != HAL_OK)
+            {
+        Error_Handler();
+    }
+    pLayerCfg.WindowX0 = 0;
+    pLayerCfg.WindowX1 = 320;
+    pLayerCfg.WindowY0 = 0;
+    pLayerCfg.WindowY1 = 240;
+    pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
+    pLayerCfg.Alpha = 0;
+    pLayerCfg.Alpha0 = 0;
+    pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
+    pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
+    pLayerCfg.FBStartAdress = 0;
+    pLayerCfg.ImageWidth = 0;
+    pLayerCfg.ImageHeight = 0;
+    pLayerCfg.Backcolor.Blue = 0;
+    pLayerCfg.Backcolor.Green = 0;
+    pLayerCfg.Backcolor.Red = 0;
+    if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg, 0) != HAL_OK)
+            {
+        Error_Handler();
+    }
+    pLayerCfg1.WindowX0 = 0;
+    pLayerCfg1.WindowX1 = 320;
+    pLayerCfg1.WindowY0 = 0;
+    pLayerCfg1.WindowY1 = 0;
+    pLayerCfg1.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
+    pLayerCfg1.Alpha = 0;
+    pLayerCfg1.Alpha0 = 0;
+    pLayerCfg1.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
+    pLayerCfg1.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
+    pLayerCfg1.FBStartAdress = 0;
+    pLayerCfg1.ImageWidth = 0;
+    pLayerCfg1.ImageHeight = 0;
+    pLayerCfg1.Backcolor.Blue = 0;
+    pLayerCfg1.Backcolor.Green = 0;
+    pLayerCfg1.Backcolor.Red = 0;
+    if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg1, 1) != HAL_OK)
+            {
+        Error_Handler();
+    }
+    /* USER CODE BEGIN LTDC_Init 2 */
+
+    /* USER CODE END LTDC_Init 2 */
+
+}
+
+/* FMC initialization function */
+static void MX_FMC_Init(void)
+{
+
+    /* USER CODE BEGIN FMC_Init 0 */
+
+    /* USER CODE END FMC_Init 0 */
+
+    FMC_SDRAM_TimingTypeDef SdramTiming = { 0 };
+
+    /* USER CODE BEGIN FMC_Init 1 */
+
+    /* USER CODE END FMC_Init 1 */
+
+    /** Perform the SDRAM1 memory initialization sequence
+     */
+    hsdram1.Instance = FMC_SDRAM_DEVICE;
+    /* hsdram1.Init */
+    hsdram1.Init.SDBank = FMC_SDRAM_BANK1;
+    hsdram1.Init.ColumnBitsNumber = FMC_SDRAM_COLUMN_BITS_NUM_8;
+    hsdram1.Init.RowBitsNumber = FMC_SDRAM_ROW_BITS_NUM_12;
+    hsdram1.Init.MemoryDataWidth = FMC_SDRAM_MEM_BUS_WIDTH_16;
+    hsdram1.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
+    hsdram1.Init.CASLatency = FMC_SDRAM_CAS_LATENCY_3;
+    hsdram1.Init.WriteProtection = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
+    hsdram1.Init.SDClockPeriod = FMC_SDRAM_CLOCK_PERIOD_2;
+    hsdram1.Init.ReadBurst = FMC_SDRAM_RBURST_DISABLE;
+    hsdram1.Init.ReadPipeDelay = FMC_SDRAM_RPIPE_DELAY_1;
+    /* SdramTiming */
+    SdramTiming.LoadToActiveDelay = 2;
+    SdramTiming.ExitSelfRefreshDelay = 7;
+    SdramTiming.SelfRefreshTime = 4;
+    SdramTiming.RowCycleDelay = 7;
+    SdramTiming.WriteRecoveryTime = 2;
+    SdramTiming.RPDelay = 2;
+    SdramTiming.RCDDelay = 16;
+
+    if (HAL_SDRAM_Init(&hsdram1, &SdramTiming) != HAL_OK)
+            {
+        Error_Handler();
+    }
+
+    /* USER CODE BEGIN FMC_Init 2 */
+
+    /* USER CODE END FMC_Init 2 */
+}
+
+/**
  * @brief GPIO Initialization Function
  * @param None
  * @retval None
@@ -283,10 +468,12 @@ static void MX_GPIO_Init(void)
     /* GPIO Ports Clock Enable */
     __HAL_RCC_GPIOE_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
+    __HAL_RCC_GPIOF_CLK_ENABLE();
     __HAL_RCC_GPIOH_CLK_ENABLE();
-    __HAL_RCC_GPIOG_CLK_ENABLE();
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_GPIOG_CLK_ENABLE();
+    __HAL_RCC_GPIOD_CLK_ENABLE();
 
     /*Configure GPIO pin Output Level */
     HAL_GPIO_WritePin(GPIOE, LEFT_LD1_Pin | LEFT_LD2_Pin, GPIO_PIN_RESET);
