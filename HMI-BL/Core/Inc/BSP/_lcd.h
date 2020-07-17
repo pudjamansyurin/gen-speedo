@@ -45,7 +45,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 /* Include SDRAM Driver */
-#include "stm32f429i_discovery_sdram.h"
+#include "BSP/_sdram.h"
 #include "../../Assets/fonts.h"
 
 /** @addtogroup BSP
@@ -104,9 +104,12 @@ typedef enum
 /**
  * @brief  LCD status structure definition
  */
-#define MAX_LAYER_NUMBER       2
-#define LCD_FRAME_BUFFER       ((uint32_t)0xD0000000)
-#define BUFFER_OFFSET          ((uint32_t)0x50000)
+#define MAX_LAYER_NUMBER         1
+#define LCD_LAYER0_FRAME_BUFFER  ((uint32_t)0xC0000000)
+#define LCD_LAYER1_FRAME_BUFFER  ((uint32_t)0xC0400000)
+
+#define XSIZE_PHYS               320
+#define YSIZE_PHYS               240
 
 /**
  * @brief  LCD color
@@ -172,6 +175,7 @@ typedef enum
 #define LCD_PIXEL_FORMAT_L8               LTDC_PIXEL_FORMAT_L8
 #define LCD_PIXEL_FORMAT_AL44             LTDC_PIXEL_FORMAT_AL44
 #define LCD_PIXEL_FORMAT_AL88             LTDC_PIXEL_FORMAT_AL88
+
 /**
  * @}
  */

@@ -72,7 +72,7 @@
  ------------------------------------------------------------------------------*/
 
 /* Includes ------------------------------------------------------------------*/
-#include "BSP/stm32f429i_discovery_lcd.h"
+#include "BSP/_lcd.h"
 #include "../../Assets/fonts.h"
 #include "../../Assets/font24.c"
 #include "../../Assets/font20.c"
@@ -112,7 +112,7 @@
 /** @defgroup STM32F429I_DISCOVERY_LCD_Private_Macros STM32F429I DISCOVERY LCD Private Macros
  * @{
  */
-#define ABS(X)  ((X) > 0 ? (X) : -(X))
+#define ABS(X)                  ((X) > 0 ? (X) : -(X))
 /**
  * @}
  */
@@ -127,6 +127,9 @@ static RCC_PeriphCLKInitTypeDef PeriphClkInitStruct;
 /* Default LCD configuration with LCD Layer 1 */
 static uint32_t ActiveLayer = 0;
 static LCD_DrawPropTypeDef DrawProp[MAX_LAYER_NUMBER];
+static uint32_t FrameBuffer[] = { LCD_LAYER0_FRAME_BUFFER, LCD_LAYER1_FRAME_BUFFER };
+static uint32_t PixelFormat[] = { LCD_PIXEL_FORMAT_ARGB8888, LCD_PIXEL_FORMAT_ARGB8888 };
+static uint32_t ColorMode[] = { DMA2D_ARGB8888, DMA2D_ARGB8888 };
 /**
  * @}
  */
@@ -219,6 +222,14 @@ uint8_t BSP_LCD_Init(void)
     /* Initialize the font */
     BSP_LCD_SetFont(&LCD_DEFAULT_FONT);
 
+    /* Initialize the Layers */
+    for (uint8_t i = 0; i < MAX_LAYER_NUMBER; i++) {
+        BSP_LCD_LayerDefaultInit(i, FrameBuffer[i]);
+    }
+
+    /* Enable the LCD */
+    BSP_LCD_DisplayOn();
+
     return LCD_OK;
 }
 
@@ -228,7 +239,7 @@ uint8_t BSP_LCD_Init(void)
  */
 uint32_t BSP_LCD_GetXSize(void)
 {
-    return (uint16_t) 320;
+    return XSIZE_PHYS;
 }
 
 /**
@@ -237,7 +248,7 @@ uint32_t BSP_LCD_GetXSize(void)
  */
 uint32_t BSP_LCD_GetYSize(void)
 {
-    return (uint16_t) 240;
+    return YSIZE_PHYS;
 }
 
 /**
@@ -254,7 +265,7 @@ void BSP_LCD_LayerDefaultInit(uint16_t LayerIndex, uint32_t FB_Address)
     Layercfg.WindowX1 = BSP_LCD_GetXSize();
     Layercfg.WindowY0 = 0;
     Layercfg.WindowY1 = BSP_LCD_GetYSize();
-    Layercfg.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
+    Layercfg.PixelFormat = PixelFormat[LayerIndex];
     Layercfg.FBStartAdress = FB_Address;
     Layercfg.Alpha = 255;
     Layercfg.Alpha0 = 0;
@@ -268,9 +279,9 @@ void BSP_LCD_LayerDefaultInit(uint16_t LayerIndex, uint32_t FB_Address)
 
     HAL_LTDC_ConfigLayer(&LtdcHandler, &Layercfg, LayerIndex);
 
-    DrawProp[LayerIndex].BackColor = LCD_COLOR_WHITE;
+    DrawProp[LayerIndex].BackColor = LCD_COLOR_BLACK;
     DrawProp[LayerIndex].pFont = &Font24;
-    DrawProp[LayerIndex].TextColor = LCD_COLOR_BLACK;
+    DrawProp[LayerIndex].TextColor = LCD_COLOR_WHITE;
 
     /* Dithering activation */
     HAL_LTDC_EnableDither(&LtdcHandler);
@@ -1376,7 +1387,7 @@ static void FillBuffer(uint32_t LayerIndex, void *pDst, uint32_t xSize, uint32_t
 
     /* Register to memory mode with ARGB8888 as color Mode */
     Dma2dHandler.Init.Mode = DMA2D_R2M;
-    Dma2dHandler.Init.ColorMode = DMA2D_ARGB8888;
+    Dma2dHandler.Init.ColorMode = ColorMode[LayerIndex];
     Dma2dHandler.Init.OutputOffset = OffLine;
 
     Dma2dHandler.Instance = DMA2D;

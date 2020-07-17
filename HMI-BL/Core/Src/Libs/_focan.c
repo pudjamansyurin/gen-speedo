@@ -9,6 +9,7 @@
 #include "Libs/_focan.h"
 #include "Drivers/_flasher.h"
 #include "Drivers/_canbus.h"
+#include "BSP/_lcd.h"
 
 /* External variables ---------------------------------------------------------*/
 extern canbus_t CB;
@@ -23,6 +24,11 @@ uint8_t FOCAN_Upgrade(uint8_t update) {
     uint32_t tick, iTick;
     uint8_t p, related;
     uint32_t SIZE;
+
+    /* Initialize LCD */
+    BSP_LCD_Init();
+    FOTA_DisplayPrepare();
+    FOTA_DisplayPercent(0);
 
     /* Enter IAP Mode */
     FOCAN_xEnterModeIAP();
@@ -142,11 +148,9 @@ uint8_t FOCAN_xPraDownload(uint32_t *size) {
 uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout, uint32_t *tick) {
     CAN_RxHeaderTypeDef *rxh = &(CB.rx.header);
     CAN_DATA *rxd = &(CB.rx.data);
-    uint32_t offset, currentSize;
-    uint8_t ptr[BLK_SIZE ];
-    uint32_t address;
+    uint32_t offset, currentSize, address;
     uint16_t pos = 0;
-    uint8_t p, len = 0;
+    uint8_t p, percent, len = 0, ptr[BLK_SIZE ];
 
     // read
     offset = rxd->u32[0];
@@ -198,11 +202,14 @@ uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout, uint32_t *tick) {
 
     // progress indicator
     if (p) {
+        percent = offset * 100 / *size;
         LOG_Str("FOTA:Progress = ");
         LOG_Int(offset);
         LOG_Str(" Bytes (");
-        LOG_Int(offset * 100 / *size);
+        LOG_Int(percent);
         LOG_StrLn("%)");
+
+        FOTA_DisplayPercent(percent);
     }
 
     // send final response

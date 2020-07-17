@@ -77,9 +77,8 @@
 /**
  * @brief  FMC SDRAM Bank address
  */
-#define SDRAM_DEVICE_ADDR         ((uint32_t)0xD0000000)
-#define SDRAM_DEVICE_SIZE         ((uint32_t)0x800000)  /* SDRAM device size in Bytes */
-
+//#define SDRAM_DEVICE_ADDR         ((uint32_t)0xC0000000)
+//#define SDRAM_DEVICE_SIZE         ((uint32_t)0x00800000)  /* SDRAM device size in Bytes */
 /**
  * @brief  FMC SDRAM Memory Width
  */

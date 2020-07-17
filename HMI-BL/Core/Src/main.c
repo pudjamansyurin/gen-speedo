@@ -28,7 +28,7 @@
 #include "Libs/_focan.h"
 #include "Drivers/_canbus.h"
 #include "Drivers/_flasher.h"
-#include "BSP/stm32f429i_discovery_lcd.h"
+#include "BSP/_lcd.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,9 +65,9 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_CAN2_Init(void);
 static void MX_CRC_Init(void);
-static void MX_DMA2D_Init(void);
-static void MX_FMC_Init(void);
-static void MX_LTDC_Init(void);
+void MX_DMA2D_Init(void);
+void MX_FMC_Init(void);
+void MX_LTDC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -84,7 +84,6 @@ static void MX_LTDC_Init(void);
 int main(void)
 {
     /* USER CODE BEGIN 1 */
-
     /* USER CODE END 1 */
 
     /* MCU Configuration--------------------------------------------------------*/
@@ -107,16 +106,14 @@ int main(void)
     MX_GPIO_Init();
     MX_CAN2_Init();
     MX_CRC_Init();
-    MX_DMA2D_Init();
-    MX_FMC_Init();
-    MX_LTDC_Init();
     /* USER CODE BEGIN 2 */
     CANBUS_Init();
-    BSP_LCD_Init();
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
+    while (1)
+        ;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -295,7 +292,7 @@ static void MX_CRC_Init(void)
  * @param None
  * @retval None
  */
-static void MX_DMA2D_Init(void)
+void MX_DMA2D_Init(void)
 {
 
     /* USER CODE BEGIN DMA2D_Init 0 */
@@ -332,7 +329,7 @@ static void MX_DMA2D_Init(void)
  * @param None
  * @retval None
  */
-static void MX_LTDC_Init(void)
+void MX_LTDC_Init(void)
 {
 
     /* USER CODE BEGIN LTDC_Init 0 */
@@ -410,7 +407,7 @@ static void MX_LTDC_Init(void)
 }
 
 /* FMC initialization function */
-static void MX_FMC_Init(void)
+void MX_FMC_Init(void)
 {
 
     /* USER CODE BEGIN FMC_Init 0 */

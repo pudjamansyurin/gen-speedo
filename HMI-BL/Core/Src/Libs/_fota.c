@@ -10,6 +10,7 @@
 #include "Libs/_focan.h"
 #include "Drivers/_flasher.h"
 #include "Drivers/_crc.h"
+#include "BSP/_lcd.h"
 
 /* External variables ---------------------------------------------------------*/
 extern CAN_HandleTypeDef hcan2;
@@ -119,4 +120,33 @@ void FOTA_GlueInfo32(uint32_t offset, uint32_t *data) {
 
 uint8_t FOTA_NeedBackup(void) {
     return (FOTA_ValidImage(APP_START_ADDR) && !FOTA_ValidImage(BKP_START_ADDR));
+}
+
+void FOTA_DisplayPrepare(void) {
+    char title[15];
+
+    /* Set Foreground Layer */
+    BSP_LCD_SelectLayer(0);
+    BSP_LCD_Clear(LCD_COLOR_BLACK);
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+
+    BSP_LCD_SetFont(&Font12);
+    sprintf(title, "HMI-1 (Left)");
+    BSP_LCD_DisplayStringAt(
+            (BSP_LCD_GetXSize() / 2) - 30,
+            (BSP_LCD_GetYSize() / 2) - 20,
+            (uint8_t*) title,
+            LEFT_MODE);
+}
+
+void FOTA_DisplayPercent(uint8_t progress) {
+    char percent[6];
+
+    BSP_LCD_SetFont(&Font24);
+    sprintf(percent, "%03d %%", progress);
+    BSP_LCD_DisplayStringAt(
+            (BSP_LCD_GetXSize() / 2) - 30,
+            (BSP_LCD_GetYSize() / 2),
+            (uint8_t*) percent,
+            LEFT_MODE);
 }
