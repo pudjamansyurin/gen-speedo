@@ -15,10 +15,11 @@
 - [x] ~~Change LTDC from RGB565 to RGB666~~
 - [x] Fix battery indicator & percentage not shown up, and check other similar things.
 - [ ] Handle GPIO for LCD Power Control
-- [ ] Add bootloader 
-- [ ] Handle bootloader's CAN for DFU mode
-- [ ] Use CAN Filter to ignore un-related ID
-- [ ] Simplify simcom library with pointer data
+- [x] Add bootloader 
+- [x] Handle bootloader's CAN for DFU mode
+- [x] ~~Use CAN Filter to ignore un-related ID~~
+- [ ] Remove any "right side" code
+- [ ] Build new revised single HMI version
 
 ## Hardware Progress:
 - [x] Add line from RGB565 to RGB666 
