@@ -20,19 +20,15 @@ static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size);
 
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOCAN_Upgrade(uint8_t factory) {
+    uint8_t p, related, success = 0;
     uint32_t timeout = 5000;
     uint32_t tick, iTick;
-    uint8_t p, related, success = 0;
     uint32_t SIZE;
+    IAP_TYPE type = IAP_HMI;
 
     /* Initialize LCD */
     BSP_LCD_Init();
-    FOTA_DisplayTitle("FOTA for HMI-1 (Left)");
-    FOTA_DisplayStatus("Preparing...");
     FOTA_DisplayPercent(0);
-
-    /* Enter IAP Mode */
-    FOCAN_xEnterModeIAP();
 
     // Wait command
     tick = _GetTickMS();
@@ -43,32 +39,36 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
             related = 1;
             switch (CANBUS_ReadID()) {
                 case CAND_ENTER_IAP :
-                    FOTA_DisplayStatus("Preparing...");
-                    p = FOCAN_xEnterModeIAP();
+                    p = FOCAN_xEnterModeIAP(&type);
+                    /* Wait until network connected */
+                    timeout = 90000;
                     break;
                 case CAND_GET_CHECKSUM :
-                    FOTA_DisplayStatus("Connecting...");
                     p = FOCAN_xGetChecksum();
-                    /* Wait until network connected */
-                    timeout = 60000;
                     break;
                 case CAND_PRA_DOWNLOAD :
-                    FOTA_DisplayStatus("Pra-Download...");
+                    FOTA_DisplayStatus("Pra-Download.");
                     p = FOCAN_xPraDownload(&SIZE);
                     break;
                 case CAND_INIT_DOWNLOAD :
-                    FOTA_DisplayStatus("Downloading...");
                     p = FOCAN_xDownloadFlash(&SIZE, timeout, &tick);
                     break;
                 case CAND_PASCA_DOWNLOAD :
-                    FOTA_DisplayStatus("Pasca-Download...");
+                    FOTA_DisplayStatus("Pasca-Download");
                     p = FOCAN_xPascaDownload(&SIZE);
                     /* Handle success DFU */
                     success = p;
                     break;
+                case CAND_SET_PROGRESS :
+                    FOCAN_xSetProgress(&type);
+                    break;
                 case CAND_VCU_SWITCH :
                     /* VCU enter normal mode */
-                    p = (factory ? FOCAN_RequestFota() : 0);
+                    if (type == IAP_HMI) {
+                        p = (factory ? FOCAN_RequestFota() : 0);
+                    } else {
+                        success = 1;
+                    }
                     break;
 
                 default:
@@ -94,12 +94,15 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
         }
     } while (p && !success);
 
-    if (p) {
-        FOTA_DisplayStatus("Success.");
-    } else {
-        FOTA_DisplayStatus("Failed.");
+    // Final response
+    if (type == IAP_HMI) {
+        if (success) {
+            FOTA_DisplayStatus("Success.");
+        } else {
+            FOTA_DisplayStatus("Failed.");
+        }
+        _DelayMS(1000);
     }
-    _DelayMS(1000);
 
     return p;
 }
@@ -113,13 +116,19 @@ uint8_t FOCAN_RequestFota(void) {
     return CANBUS_Write(CAN_MY_ADRESS, 2);
 }
 
-uint8_t FOCAN_xEnterModeIAP(void) {
+uint8_t FOCAN_xEnterModeIAP(IAP_TYPE *type) {
     uint32_t address = CAND_ENTER_IAP;
+    CAN_DATA *rxd = &(CB.rx.data);
     CAN_DATA txd;
 
-    // Set message
-    txd.u32[0] = CAN_MY_ADRESS;
+    // Get IAP type
+    *type = rxd->u32[0];
 
+    // Handle FOTA
+    FOTA_DisplayNode(type);
+
+    // Set message
+    txd.u32[0] = *type;
     // Send response
     return FOCAN_SendSqueeze(address, &txd, 4);
 }
@@ -133,6 +142,25 @@ uint8_t FOCAN_xGetChecksum(void) {
 
     // Send response
     return FOCAN_SendSqueeze(address, &checksum, 4);
+}
+
+uint8_t FOCAN_xSetProgress(IAP_TYPE *type) {
+    CAN_DATA *rxd = &(CB.rx.data);
+    uint8_t p, percent;
+
+    // Get
+    *type = rxd->u32[0];
+    percent = rxd->u8[4];
+
+    // Handle
+    FOTA_DisplayNode(type);
+    FOTA_DisplayStatus(percent ? "Downloading..." : "Connecting...");
+    FOTA_DisplayPercent(percent);
+
+    // Send response
+    p = 1;
+
+    return p;
 }
 
 uint8_t FOCAN_xPraDownload(uint32_t *size) {
@@ -215,8 +243,6 @@ uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout, uint32_t *tick) {
         LOG_Str(" Bytes (");
         LOG_Int(percent);
         LOG_StrLn("%)");
-
-        FOTA_DisplayPercent(percent);
     }
 
     // send final response

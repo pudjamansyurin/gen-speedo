@@ -792,10 +792,9 @@ void StartCanRxTask(void *argument)
                     case CAND_VCU_TRIP_MODE :
                         VCU.can.r.SubTripData();
                         break;
-                    case CAND_ENTER_IAP :
-                        if (FW_UpgradeMe()) {
-                            FW_EnterModeIAP();
-                        }
+                    case CAND_SET_PROGRESS:
+                        case CAND_ENTER_IAP :
+                        FW_EnterModeIAP();
                         break;
 
                     default:
@@ -857,7 +856,7 @@ void Error_Handler(void)
   * @retval None
   */
 void assert_failed(uint8_t *file, uint32_t line)
-{ 
+{
   /* USER CODE BEGIN 6 */
     /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */

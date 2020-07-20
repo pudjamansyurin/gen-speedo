@@ -30,7 +30,7 @@ void StartDisplayTask(void *argument) {
     // Wait until ManagerTask done
     osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
-    // Initialise
+    // Initialize
     BootAnimation();
     osDelay(500);
     RefreshLayer();
@@ -48,7 +48,7 @@ void StartDisplayTask(void *argument) {
         if (!_RTOS_ValidThreadFlag(notif) || !(notif & EVT_DISPLAY_UPDATE)) {
             _FlushData();
         }
-        LOG_StrLn("GUI:Refresh");
+        //        LOG_StrLn("GUI:Refresh");
 
 #if USE_HMI_LEFT
         // Icon only
@@ -67,19 +67,19 @@ void StartDisplayTask(void *argument) {
         LEFT_MemGroupExit(&hMem);
 
 #else
-		// Icon only
-		RIGHT_Sein();
-		RIGHT_Warning();
-		RIGHT_ABS();
-		RIGHT_Overheat();
-		RIGHT_Lamp();
+        // Icon only
+        RIGHT_Sein();
+        RIGHT_Warning();
+        RIGHT_ABS();
+        RIGHT_Overheat();
+        RIGHT_Lamp();
 
-		// Icon + Text
-		RIGHT_Speed();
-		RIGHT_Battery();
-		RIGHT_Signal();
-		RIGHT_ModeReport();
-		RIGHT_ModeDrive();
+        // Icon + Text
+        RIGHT_Speed();
+        RIGHT_Battery();
+        RIGHT_Signal();
+        RIGHT_ModeReport();
+        RIGHT_ModeDrive();
 #endif
     }
     /* USER CODE END GUI_MainTask */
@@ -137,7 +137,7 @@ static void BootAnimation(void) {
 #if USE_HMI_LEFT
     LEFT_Animation();
 #else
-	RIGHT_Animation();
+    RIGHT_Animation();
 #endif
     // end of booting animation
 }

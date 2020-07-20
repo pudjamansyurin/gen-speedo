@@ -80,6 +80,7 @@
 
 // FOCAN Command Address
 #define CAND_ENTER_IAP               (uint32_t) 0x100
+#define CAND_SET_PROGRESS            (uint32_t) 0x10A
 #if (BOOTLOADER)
 #define CAND_GET_CHECKSUM            (uint32_t) 0x101
 #define CAND_DOWNLOADING             (uint32_t) 0x104
@@ -90,6 +91,11 @@
 
 /* Enum prototypes ------------------------------------------------------- */
 #if (BOOTLOADER)
+typedef enum {
+    IAP_VCU = 0xA1B2C3D4,
+    IAP_HMI = 0x1A2B3C4D
+} IAP_TYPE;
+
 typedef enum {
     FOCAN_ERROR = 0x00,
     FOCAN_ACK = 0x79,

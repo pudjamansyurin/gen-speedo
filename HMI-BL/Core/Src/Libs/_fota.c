@@ -122,27 +122,44 @@ uint8_t FOTA_NeedBackup(void) {
     return (FOTA_ValidImage(APP_START_ADDR) && !FOTA_ValidImage(BKP_START_ADDR));
 }
 
-void FOTA_DisplayTitle(char title[30]) {
-    char str[30];
+void FOTA_DisplayNode(IAP_TYPE *type) {
+    char title[20];
 
-    strcpy(str, title);
+    // decide the node
+    strcpy(title, *type == IAP_HMI ? "Upgrade HMI-1" : "Upgrade VCU");
+
     BSP_LCD_SetFont(&Font12);
+    // clear
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+    BSP_LCD_FillRect(
+            0,
+            0,
+            BSP_LCD_GetXSize() - 1,
+            0 + Font12.Height);
+    // set
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     BSP_LCD_DisplayStringAt(
             0,
             0,
-            (uint8_t*) str,
+            (uint8_t*) title,
             LEFT_MODE);
 }
 
-void FOTA_DisplayStatus(char status[30]) {
-    char str[30];
-
-    strcpy(str, status);
+void FOTA_DisplayStatus(char status[20]) {
     BSP_LCD_SetFont(&Font16);
+    // clear
+    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+    BSP_LCD_FillRect(
+            0,
+            15,
+            BSP_LCD_GetXSize() - 1,
+            15 + Font16.Height);
+    // set
+    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     BSP_LCD_DisplayStringAt(
             0,
             15,
-            (uint8_t*) str,
+            (uint8_t*) status,
             LEFT_MODE);
 }
 void FOTA_DisplayPercent(uint8_t progress) {

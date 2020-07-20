@@ -20,7 +20,7 @@ void FOTA_GetChecksum(uint32_t *checksum);
 void FOTA_GlueInfo32(uint32_t offset, uint32_t *data);
 uint8_t FOTA_NeedBackup(void);
 
-void FOTA_DisplayTitle(char title[30]);
-void FOTA_DisplayStatus(char status[30]);
+void FOTA_DisplayNode(IAP_TYPE *type);
+void FOTA_DisplayStatus(char status[20]);
 void FOTA_DisplayPercent(uint8_t progress);
 #endif /* INC_LIBS__FOTA_H_ */

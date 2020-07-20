@@ -18,8 +18,9 @@
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOCAN_Upgrade(uint8_t factory);
 uint8_t FOCAN_RequestFota(void);
-uint8_t FOCAN_xEnterModeIAP(void);
+uint8_t FOCAN_xEnterModeIAP(IAP_TYPE *type);
 uint8_t FOCAN_xGetChecksum(void);
+uint8_t FOCAN_xSetProgress(IAP_TYPE *type);
 uint8_t FOCAN_xPraDownload(uint32_t *size);
 uint8_t FOCAN_xPascaDownload(uint32_t *size);
 uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout, uint32_t *tick);
