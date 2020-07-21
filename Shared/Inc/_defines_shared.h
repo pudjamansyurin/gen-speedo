@@ -73,11 +73,7 @@
 #define CAND_VCU_DATETIME		 (uint32_t) 0x001
 #define CAND_VCU_SELECT_SET		 (uint32_t) 0x002
 #define CAND_VCU_TRIP_MODE		 (uint32_t) 0x003
-#define CAND_HMI1_LEFT           (uint32_t) 0x7C0
-#define CAND_HMI1_RIGHT          (uint32_t) 0x7C1
-
-#define CAN_MY_ADRESS                       (USE_HMI_LEFT ? CAND_HMI1_LEFT : CAND_HMI1_RIGHT)
-
+#define CAND_HMI1                (uint32_t) 0x7C0
 // FOCAN Command Address
 #define CAND_ENTER_IAP               (uint32_t) 0x100
 #define CAND_SET_PROGRESS            (uint32_t) 0x10A

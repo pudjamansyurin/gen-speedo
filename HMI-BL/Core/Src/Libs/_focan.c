@@ -113,7 +113,7 @@ uint8_t FOCAN_RequestFota(void) {
     // Set message
     txd->u16[0] = 0xFFFF;
     // send message
-    return CANBUS_Write(CAN_MY_ADRESS, 2);
+    return CANBUS_Write(CAND_HMI1, 2);
 }
 
 uint8_t FOCAN_xEnterModeIAP(IAP_TYPE *type) {
@@ -123,7 +123,6 @@ uint8_t FOCAN_xEnterModeIAP(IAP_TYPE *type) {
 
     // Get IAP type
     *type = rxd->u32[0];
-
     // Handle FOTA
     FOTA_DisplayNode(type);
 

@@ -40,31 +40,31 @@ void VCU_Init(void) {
 
 /* ====================================== CAN RX =================================== */
 void VCU_CAN_RX_SwitchModeControl(void) {
-    CAN_DATA *data = &(CB.rx.data);
+    CAN_DATA *rxd = &(CB.rx.data);
 
     // read message
-    HMI1.d.status.abs = _R1(data->u8[0], 0);
-    HMI1.d.status.mirror = _R1(data->u8[0], 1);
-    HMI1.d.status.lamp = _R1(data->u8[0], 2);
-    HMI1.d.status.warning = _R1(data->u8[0], 3);
-    HMI1.d.status.overheat = _R1(data->u8[0], 4);
-    HMI1.d.status.finger = _R1(data->u8[0], 5);
-    HMI1.d.status.keyless = _R1(data->u8[0], 6);
-    HMI1.d.status.daylight = _R1(data->u8[0], 7);
+    HMI1.d.status.abs = _R1(rxd->u8[0], 0);
+    HMI1.d.status.mirror = _R1(rxd->u8[0], 1);
+    HMI1.d.status.lamp = _R1(rxd->u8[0], 2);
+    HMI1.d.status.warning = _R1(rxd->u8[0], 3);
+    HMI1.d.status.overheat = _R1(rxd->u8[0], 4);
+    HMI1.d.status.finger = _R1(rxd->u8[0], 5);
+    HMI1.d.status.keyless = _R1(rxd->u8[0], 6);
+    HMI1.d.status.daylight = _R1(rxd->u8[0], 7);
 
     // sein
-    HMI1.d.status.sein_left = _R1(data->u8[1], 0);
-    HMI1.d.status.sein_right = _R1(data->u8[1], 1);
+    HMI1.d.status.sein_left = _R1(rxd->u8[1], 0);
+    HMI1.d.status.sein_right = _R1(rxd->u8[1], 1);
 
     // mode
-    HMI1.d.mode.drive = _R2(data->u8[2], 0);
-    HMI1.d.mode.trip.sel = _R1(data->u8[2], 2);
-    HMI1.d.mode.report.sel = _R1(data->u8[2], 3);
-    HMI1.d.mode.sel = _R2(data->u8[2], 4);
-    HMI1.d.mode.hide = _R1(data->u8[2], 6);
+    HMI1.d.mode.drive = _R2(rxd->u8[2], 0);
+    HMI1.d.mode.trip.sel = _R1(rxd->u8[2], 2);
+    HMI1.d.mode.report.sel = _R1(rxd->u8[2], 3);
+    HMI1.d.mode.sel = _R2(rxd->u8[2], 4);
+    HMI1.d.mode.hide = _R1(rxd->u8[2], 6);
 
     // others
-    VCU.d.speed = data->u8[3];
+    VCU.d.speed = rxd->u8[3];
 
     // FIXME: use real value
     // convert Speed to RPM
@@ -76,30 +76,30 @@ void VCU_CAN_RX_SwitchModeControl(void) {
 }
 
 void VCU_CAN_RX_MixedData(void) {
-    CAN_DATA *data = &(CB.rx.data);
+    CAN_DATA *rxd = &(CB.rx.data);
 
     // read message
-    VCU.d.signal = data->u8[0];
-    BMS.d.soc = data->u8[1];
+    VCU.d.signal = rxd->u8[0];
+    BMS.d.soc = rxd->u8[1];
 
     // decide report value according to mode
     if (HMI1.d.mode.report.sel == SW_M_REPORT_RANGE) {
-        HMI1.d.mode.report.val = data->u8[2];
+        HMI1.d.mode.report.val = rxd->u8[2];
     } else {
-        HMI1.d.mode.report.val = data->u8[3];
+        HMI1.d.mode.report.val = rxd->u8[3];
     }
 
     // odometer
-    VCU.d.odometer = data->u32[1];
+    VCU.d.odometer = rxd->u32[1];
 }
 
 void VCU_CAN_RX_SubTripData(void) {
-    CAN_DATA *data = &(CB.rx.data);
+    CAN_DATA *rxd = &(CB.rx.data);
 
     // read message
     if (HMI1.d.mode.trip.sel == SW_M_TRIP_A) {
-        HMI1.d.mode.trip.val = data->u32[0];
+        HMI1.d.mode.trip.val = rxd->u32[0];
     } else {
-        HMI1.d.mode.trip.val = data->u32[1];
+        HMI1.d.mode.trip.val = rxd->u32[1];
     }
 }
