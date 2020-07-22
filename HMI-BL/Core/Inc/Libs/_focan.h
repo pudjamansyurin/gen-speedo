@@ -10,6 +10,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "Libs/_fota.h"
+#include "Drivers/_canbus.h"
 
 /* Exported macro -------------------------------------------------------------*/
 #define BLK_SIZE                  (uint16_t) (256*5)
@@ -18,11 +19,10 @@
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOCAN_Upgrade(uint8_t factory);
 uint8_t FOCAN_RequestFota(void);
-uint8_t FOCAN_xEnterModeIAP(IAP_TYPE *type);
 uint8_t FOCAN_xGetChecksum(void);
-uint8_t FOCAN_xSetProgress(IAP_TYPE *type);
-uint8_t FOCAN_xPraDownload(uint32_t *size);
-uint8_t FOCAN_xPascaDownload(uint32_t *size);
-uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout, uint32_t *tick);
+uint8_t FOCAN_xSetProgress(can_rx_t *Rx, IAP_TYPE *type);
+uint8_t FOCAN_xPraDownload(can_rx_t *Rx, uint32_t *size);
+uint8_t FOCAN_xPascaDownload(can_rx_t *Rx, uint32_t *size);
+uint8_t FOCAN_xDownloadFlash(can_rx_t *Rx, uint32_t *size, uint32_t timeout, uint32_t *tick);
 
 #endif /* INC_LIBS__FOCAN_H_ */

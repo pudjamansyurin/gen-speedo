@@ -10,32 +10,33 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "Libs/_utils.h"
+#include "Drivers/_canbus.h"
 
 /* Exported struct -----------------------------------------------------------*/
 typedef struct {
-	uint8_t signal;
-	uint8_t speed;
-	uint32_t odometer;
+    uint8_t signal;
+    uint8_t speed;
+    uint32_t odometer;
 } vcu_data_t;
 
 typedef struct {
-	struct {
-		void (*SwitchModeControl)(void);
-		void (*MixedData)(void);
-		void (*SubTripData)(void);
-	} r;
+    struct {
+        void (*SwitchModeControl)(can_rx_t*);
+        void (*MixedData)(can_rx_t*);
+        void (*SubTripData)(can_rx_t*);
+    } r;
 } vcu_can_t;
 
 typedef struct {
-	vcu_data_t d;
-	vcu_can_t can;
-	void (*Init)(void);
+    vcu_data_t d;
+    vcu_can_t can;
+    void (*Init)(void);
 } vcu_t;
 
 /* Public functions implementation --------------------------------------------*/
 void VCU_Init(void);
-void VCU_CAN_RX_SwitchModeControl(void);
-void VCU_CAN_RX_MixedData(void);
-void VCU_CAN_RX_SubTripData(void);
+void VCU_CAN_RX_SwitchModeControl(can_rx_t *Rx);
+void VCU_CAN_RX_MixedData(can_rx_t *Rx);
+void VCU_CAN_RX_SubTripData(can_rx_t *Rx);
 
 #endif /* INC_NODES_VCU_H_ */

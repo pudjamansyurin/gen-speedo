@@ -82,14 +82,19 @@ osThreadId_t CanTxTaskHandle;
 const osThreadAttr_t CanTxTask_attributes = {
         .name = "CanTxTask",
         .priority = (osPriority_t) osPriorityHigh,
-        .stack_size = 128 * 4
+        .stack_size = 256 * 4
 };
 /* Definitions for CanRxTask */
 osThreadId_t CanRxTaskHandle;
 const osThreadAttr_t CanRxTask_attributes = {
         .name = "CanRxTask",
         .priority = (osPriority_t) osPriorityHigh,
-        .stack_size = 128 * 4
+        .stack_size = 256 * 4
+};
+/* Definitions for CanRxQueue */
+osMessageQueueId_t CanRxQueueHandle;
+const osMessageQueueAttr_t CanRxQueue_attributes = {
+        .name = "CanRxQueue"
 };
 /* Definitions for CanTxMutex */
 osMutexId_t CanTxMutexHandle;
@@ -190,6 +195,10 @@ int main(void)
     /* start timers, add new ones, ... */
 
     /* USER CODE END RTOS_TIMERS */
+
+    /* Create the queue(s) */
+    /* creation of CanRxQueue */
+    CanRxQueueHandle = osMessageQueueNew(10, sizeof(can_rx_t), &CanRxQueue_attributes);
 
     /* USER CODE BEGIN RTOS_QUEUES */
     /* add queues, ... */
@@ -767,7 +776,8 @@ void StartCanTxTask(void *argument)
 void StartCanRxTask(void *argument)
 {
     /* USER CODE BEGIN StartCanRxTask */
-    uint32_t notif;
+    can_rx_t Rx;
+    osStatus_t status;
     uint8_t related;
 
     // wait until ManagerTask done
@@ -775,37 +785,32 @@ void StartCanRxTask(void *argument)
 
     /* Infinite loop */
     for (;;) {
-        // check if has new can message
-        notif = osThreadFlagsWait(EVT_MASK, osFlagsWaitAny, osWaitForever);
-        if (_RTOS_ValidThreadFlag(notif)) {
-            // proceed event
-            if (notif & EVT_CAN_RX_IT) {
-                related = 1;
-                // handle message
-                switch (CANBUS_ReadID()) {
-                    case CAND_VCU_SWITCH :
-                        VCU.can.r.SwitchModeControl();
-                        break;
-                    case CAND_VCU_SELECT_SET :
-                        VCU.can.r.MixedData();
-                        break;
-                    case CAND_VCU_TRIP_MODE :
-                        VCU.can.r.SubTripData();
-                        break;
-                    case CAND_SET_PROGRESS:
-                        case CAND_ENTER_IAP :
-                        FW_EnterModeIAP();
-                        break;
-
-                    default:
-                        related = 0;
-                        break;
-                }
-
-                // notify GUI thread
-                if (related) {
-                    osThreadFlagsSet(DisplayTaskHandle, EVT_DISPLAY_UPDATE);
-                }
+        // get can rx in queue
+        status = osMessageQueueGet(CanRxQueueHandle, &Rx, NULL, osWaitForever);
+        // wait forever
+        if (status == osOK) {
+            related = 1;
+            // handle message
+            switch (CANBUS_ReadID(&(Rx.header))) {
+                case CAND_VCU_SWITCH :
+                    VCU.can.r.SwitchModeControl(&Rx);
+                    break;
+                case CAND_VCU_SELECT_SET :
+                    VCU.can.r.MixedData(&Rx);
+                    break;
+                case CAND_VCU_TRIP_MODE :
+                    VCU.can.r.SubTripData(&Rx);
+                    break;
+                case CAND_SET_PROGRESS :
+                    FW_EnterModeIAP();
+                    break;
+                default:
+                    related = 0;
+                    break;
+            }
+            // notify GUI thread
+            if (related) {
+                osThreadFlagsSet(DisplayTaskHandle, EVT_DISPLAY_UPDATE);
             }
         }
     }

@@ -11,23 +11,25 @@
 #include "Drivers/_canbus.h"
 #include "BSP/_lcd.h"
 
-/* External variables ---------------------------------------------------------*/
-extern canbus_t CB;
-
 /* Private functions prototypes -----------------------------------------------*/
 static uint8_t FOCAN_SendResponse(uint32_t address, FOCAN response);
 static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size);
 
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOCAN_Upgrade(uint8_t factory) {
-    uint8_t p, related, success = 0;
-    uint32_t timeout = 5000;
+    can_rx_t Rx;
+    uint8_t p, success = 0;
+    uint32_t timeout = 10000;
     uint32_t tick, iTick;
     uint32_t SIZE;
     IAP_TYPE type = IAP_HMI;
 
-    /* Initialize LCD */
-    BSP_LCD_Init();
+    // Empty Firmware
+    if (factory) {
+        FOTA_DisplayDevice(IAP_HMI);
+        FOTA_DisplayStatus("No Firmware.");
+        FOCAN_RequestFota();
+    }
     FOTA_DisplayPercent(0);
 
     // Wait command
@@ -35,50 +37,45 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
     iTick = tick;
     do {
         // read
-        if (CANBUS_Read()) {
-            related = 1;
-            switch (CANBUS_ReadID()) {
-                case CAND_ENTER_IAP :
-                    p = FOCAN_xEnterModeIAP(&type);
-                    /* Wait until network connected */
-                    timeout = 90000;
-                    break;
+        if (CANBUS_Read(&Rx)) {
+            switch (CANBUS_ReadID(&(Rx.header))) {
                 case CAND_GET_CHECKSUM :
+                    tick = _GetTickMS();
                     p = FOCAN_xGetChecksum();
                     break;
                 case CAND_PRA_DOWNLOAD :
+                    tick = _GetTickMS();
                     FOTA_DisplayStatus("Pra-Download.");
-                    p = FOCAN_xPraDownload(&SIZE);
+                    p = FOCAN_xPraDownload(&Rx, &SIZE);
                     break;
                 case CAND_INIT_DOWNLOAD :
-                    p = FOCAN_xDownloadFlash(&SIZE, timeout, &tick);
+                    tick = _GetTickMS();
+                    p = FOCAN_xDownloadFlash(&Rx, &SIZE, timeout, &tick);
                     break;
                 case CAND_PASCA_DOWNLOAD :
+                    tick = _GetTickMS();
                     FOTA_DisplayStatus("Pasca-Download");
-                    p = FOCAN_xPascaDownload(&SIZE);
+                    p = FOCAN_xPascaDownload(&Rx, &SIZE);
                     /* Handle success DFU */
                     success = p;
                     break;
                 case CAND_SET_PROGRESS :
-                    FOCAN_xSetProgress(&type);
+                    tick = _GetTickMS();
+                    FOCAN_xSetProgress(&Rx, &type);
                     break;
                 case CAND_VCU_SWITCH :
-                    /* VCU enter normal mode */
-                    if (type == IAP_HMI) {
-                        p = (factory ? FOCAN_RequestFota() : 0);
-                    } else {
-                        success = 1;
+                    if (factory) {
+                        FOCAN_RequestFota();
                     }
+//                    /* VCU enter normal mode */
+//                    if (type == IAP_HMI) {
+//                        p = (factory ? FOCAN_RequestFota() : 0);
+//                    } else {
+//                        success = 1;
+//                    }
                     break;
-
                 default:
-                    related = 0;
                     break;
-            }
-
-            // update tick on each related commands
-            if (related) {
-                tick = _GetTickMS();
             }
         }
 
@@ -108,28 +105,12 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
 }
 
 uint8_t FOCAN_RequestFota(void) {
-    CAN_DATA *txd = &(CB.tx.data);
+    CAN_DATA TxData;
 
     // Set message
-    txd->u16[0] = 0xFFFF;
+    TxData.u16[0] = 0xFFFF;
     // send message
-    return CANBUS_Write(CAND_HMI1, 2);
-}
-
-uint8_t FOCAN_xEnterModeIAP(IAP_TYPE *type) {
-    uint32_t address = CAND_ENTER_IAP;
-    CAN_DATA *rxd = &(CB.rx.data);
-    CAN_DATA txd;
-
-    // Get IAP type
-    *type = rxd->u32[0];
-    // Handle FOTA
-    FOTA_DisplayNode(type);
-
-    // Set message
-    txd.u32[0] = *type;
-    // Send response
-    return FOCAN_SendSqueeze(address, &txd, 4);
+    return CANBUS_Write(CAND_HMI1, &TxData, 2);
 }
 
 uint8_t FOCAN_xGetChecksum(void) {
@@ -143,16 +124,15 @@ uint8_t FOCAN_xGetChecksum(void) {
     return FOCAN_SendSqueeze(address, &checksum, 4);
 }
 
-uint8_t FOCAN_xSetProgress(IAP_TYPE *type) {
-    CAN_DATA *rxd = &(CB.rx.data);
+uint8_t FOCAN_xSetProgress(can_rx_t *Rx, IAP_TYPE *type) {
     uint8_t p, percent;
 
     // Get
-    *type = rxd->u32[0];
-    percent = rxd->u8[4];
+    *type = Rx->data.u32[0];
+    percent = Rx->data.u8[4];
 
     // Handle
-    FOTA_DisplayNode(type);
+    FOTA_DisplayDevice(*type);
     FOTA_DisplayStatus(percent ? "Downloading..." : "Connecting...");
     FOTA_DisplayPercent(percent);
 
@@ -162,13 +142,12 @@ uint8_t FOCAN_xSetProgress(IAP_TYPE *type) {
     return p;
 }
 
-uint8_t FOCAN_xPraDownload(uint32_t *size) {
+uint8_t FOCAN_xPraDownload(can_rx_t *Rx, uint32_t *size) {
     uint32_t address = CAND_PRA_DOWNLOAD;
-    CAN_DATA *rxd = &(CB.rx.data);
     uint8_t p;
 
     // Read
-    *size = rxd->u32[0];
+    *size = Rx->data.u32[0];
 
     // Execute
     p = FLASHER_BackupApp();
@@ -179,16 +158,14 @@ uint8_t FOCAN_xPraDownload(uint32_t *size) {
     return p;
 }
 
-uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout, uint32_t *tick) {
-    CAN_RxHeaderTypeDef *rxh = &(CB.rx.header);
-    CAN_DATA *rxd = &(CB.rx.data);
+uint8_t FOCAN_xDownloadFlash(can_rx_t *Rx, uint32_t *size, uint32_t timeout, uint32_t *tick) {
     uint32_t offset, currentSize, address;
-    uint16_t pos = 0;
     uint8_t p, percent, len = 0, ptr[BLK_SIZE ];
+    uint16_t pos = 0;
 
     // read
-    offset = rxd->u32[0];
-    currentSize = rxd->u16[2] + 1;
+    offset = Rx->data.u32[0];
+    currentSize = Rx->data.u16[2] + 1;
 
     // check the flash size
     p = (offset + currentSize) <= APP_MAX_SIZE;
@@ -200,13 +177,13 @@ uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout, uint32_t *tick) {
         *tick = _GetTickMS();
         do {
             // read
-            if (CANBUS_Read()) {
-                if (_R(CANBUS_ReadID(), 20) == CAND_DOWNLOADING) {
-                    pos = (CANBUS_ReadID() & 0xFFFF);
+            if (CANBUS_Read(Rx)) {
+                if (_R(CANBUS_ReadID(&(Rx->header)), 20) == CAND_DOWNLOADING) {
+                    pos = (CANBUS_ReadID(&(Rx->header)) & 0xFFFF);
 
                     // read
-                    len = rxh->DLC;
-                    memcpy(&ptr[pos], rxd, len);
+                    len = Rx->header.DLC;
+                    memcpy(&ptr[pos], &(Rx->data), len);
 
                     // response ACK
                     address = _L(CAND_DOWNLOADING, 20) | pos;
@@ -250,14 +227,13 @@ uint8_t FOCAN_xDownloadFlash(uint32_t *size, uint32_t timeout, uint32_t *tick) {
     return p;
 }
 
-uint8_t FOCAN_xPascaDownload(uint32_t *size) {
+uint8_t FOCAN_xPascaDownload(can_rx_t *Rx, uint32_t *size) {
     uint32_t address = CAND_PASCA_DOWNLOAD;
-    CAN_DATA *rxd = &(CB.rx.data);
     uint32_t checksum;
     uint8_t p;
 
     // Read
-    checksum = rxd->u32[0];
+    checksum = Rx->data.u32[0];
 
     // Execute
     p = FOTA_ValidateChecksum(checksum, *size, APP_START_ADDR);
@@ -275,7 +251,7 @@ uint8_t FOCAN_xPascaDownload(uint32_t *size) {
 
 /* Private functions implementation ------------------------------------------*/
 static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size) {
-    CAN_DATA *txd = &(CB.tx.data);
+    CAN_DATA TxData;
     uint8_t retry = FOCAN_RETRY, p;
 
     do {
@@ -284,9 +260,9 @@ static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size) {
         // version
         if (p) {
             // set message
-            memcpy(txd, data, size);
+            memcpy(&TxData, data, size);
             // send message
-            p = CANBUS_Write(address, size);
+            p = CANBUS_Write(address, &TxData, size);
         }
         // ack
         if (p) {
@@ -298,14 +274,14 @@ static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size) {
 }
 
 static uint8_t FOCAN_SendResponse(uint32_t address, FOCAN response) {
-    CAN_DATA *txd = &(CB.tx.data);
+    CAN_DATA TxData;
     uint8_t retry = FOCAN_RETRY, p;
 
     do {
         // set message
-        txd->u8[0] = response;
+        TxData.u8[0] = response;
         // send message
-        p = CANBUS_Write(address, 1);
+        p = CANBUS_Write(address, &TxData, 1);
     } while (!p && --retry);
 
     return p;

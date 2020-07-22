@@ -121,6 +121,9 @@ int main(void)
 
     /* IAP flag has been set, initiate firmware download procedure */
     if (*(uint32_t*) IAP_FLAG_ADDR == IAP_FLAG) {
+        /* Initialize LCD */
+        BSP_LCD_Init();
+
         LOG_StrLn("IAP set, do DFU.");
         /* Everything went well */
         if (FOCAN_Upgrade(0)) {
@@ -142,9 +145,14 @@ int main(void)
     }
     /* Try to restore the backup */
     else {
+        /* Initialize LCD */
+        BSP_LCD_Init();
+
         /* Check is the backup image valid */
         if (FOTA_ValidImage(BKP_START_ADDR)) {
             LOG_StrLn("Has backed-up image, roll-back.");
+            FOTA_DisplayDevice(IAP_HMI);
+            FOTA_DisplayStatus("Roll-back firmware.");
             /* Restore back old image to application area */
             if (FLASHER_RestoreApp()) {
                 /* Take branching decision on next reboot */

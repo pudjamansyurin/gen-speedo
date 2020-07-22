@@ -60,7 +60,6 @@
 
 // Events (for Individual Thread)
 #define EVT_MASK				 (uint32_t) 0x7FFFFFFF
-#define EVT_CAN_RX_IT			            BIT(0)
 #define EVT_DISPLAY_UPDATE                  BIT(0)
 
 // Events group (for All Threads)
@@ -75,15 +74,14 @@
 #define CAND_VCU_TRIP_MODE		 (uint32_t) 0x003
 #define CAND_HMI1                (uint32_t) 0x7C0
 // FOCAN Command Address
-#define CAND_ENTER_IAP               (uint32_t) 0x100
-#define CAND_SET_PROGRESS            (uint32_t) 0x10A
 #if (BOOTLOADER)
 #define CAND_GET_CHECKSUM            (uint32_t) 0x101
 #define CAND_DOWNLOADING             (uint32_t) 0x104
 #define CAND_PRA_DOWNLOAD            (uint32_t) 0x105
 #define CAND_PASCA_DOWNLOAD          (uint32_t) 0x106
-#define CAND_INIT_DOWNLOAD           (uint32_t) 0x131
+#define CAND_INIT_DOWNLOAD           (uint32_t) 0x107
 #endif
+#define CAND_SET_PROGRESS            (uint32_t) 0x10A
 
 /* Enum prototypes ------------------------------------------------------- */
 #if (BOOTLOADER)

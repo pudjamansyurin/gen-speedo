@@ -122,11 +122,11 @@ uint8_t FOTA_NeedBackup(void) {
     return (FOTA_ValidImage(APP_START_ADDR) && !FOTA_ValidImage(BKP_START_ADDR));
 }
 
-void FOTA_DisplayNode(IAP_TYPE *type) {
+void FOTA_DisplayDevice(IAP_TYPE type) {
     char title[20];
 
     // decide the node
-    strcpy(title, *type == IAP_HMI ? "Upgrade HMI-1" : "Upgrade VCU");
+    strcpy(title, type == IAP_HMI ? "Device: HMI-1" : "Device: VCU");
 
     BSP_LCD_SetFont(&Font12);
     // clear
@@ -145,7 +145,7 @@ void FOTA_DisplayNode(IAP_TYPE *type) {
             LEFT_MODE);
 }
 
-void FOTA_DisplayStatus(char status[20]) {
+void FOTA_DisplayStatus(char *status) {
     BSP_LCD_SetFont(&Font16);
     // clear
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);

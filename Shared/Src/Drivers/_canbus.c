@@ -13,15 +13,13 @@ extern CAN_HandleTypeDef hcan2;
 #if (!BOOTLOADER)
 extern osThreadId_t CanRxTaskHandle;
 extern osMutexId_t CanTxMutexHandle;
+extern osMessageQueueId_t CanRxQueueHandle;
 #endif
-
-/* Public variables -----------------------------------------------------------*/
-canbus_t CB;
 
 /* Private functions declaration ----------------------------------------------*/
 static void lock(void);
 static void unlock(void);
-static void CANBUS_Header(uint32_t address, uint32_t DLC);
+static void CANBUS_Header(CAN_TxHeaderTypeDef *TxHeader, uint32_t address, uint32_t DLC);
 
 /* Public functions implementation ---------------------------------------------*/
 void CANBUS_Init(void) {
@@ -72,26 +70,25 @@ uint8_t CANBUS_Filter(void) {
 /*----------------------------------------------------------------------------
  wite a message to CAN peripheral and transmit it
  *----------------------------------------------------------------------------*/
-uint8_t CANBUS_Write(uint32_t address, uint32_t DLC) {
-    canbus_tx_t *tx = &(CB.tx);
+uint8_t CANBUS_Write(uint32_t address, CAN_DATA *TxData, uint32_t DLC) {
+    CAN_TxHeaderTypeDef TxHeader;
     HAL_StatusTypeDef status;
 
     lock();
-
     // set header
-    CANBUS_Header(address, DLC);
+    CANBUS_Header(&TxHeader, address, DLC);
 
     /* Wait transmission complete */
     while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan2) == 0)
         ;
 
     /* Start the Transmission process */
-    status = HAL_CAN_AddTxMessage(&hcan2, &(tx->header), tx->data.u8, NULL);
+    status = HAL_CAN_AddTxMessage(&hcan2, &TxHeader, TxData->u8, NULL);
 
     // debugging
-    //    if (status == HAL_OK) {
-    //        CANBUS_TxDebugger();
-    //    }
+    if (status == HAL_OK) {
+//        CANBUS_TxDebugger(&TxHeader, TxData);
+    }
 
     unlock();
     return (status == HAL_OK);
@@ -100,58 +97,55 @@ uint8_t CANBUS_Write(uint32_t address, uint32_t DLC) {
 /*----------------------------------------------------------------------------
  read a message from CAN peripheral and release it
  *----------------------------------------------------------------------------*/
-uint8_t CANBUS_Read(void) {
-    canbus_rx_t *rx = &(CB.rx);
+uint8_t CANBUS_Read(can_rx_t *Rx) {
     HAL_StatusTypeDef status = HAL_ERROR;
 
     lock();
     /* Check FIFO */
     if (HAL_CAN_GetRxFifoFillLevel(&hcan2, CAN_RX_FIFO0)) {
         /* Get RX message */
-        status = HAL_CAN_GetRxMessage(&hcan2, CAN_RX_FIFO0, &(rx->header), rx->data.u8);
+        status = HAL_CAN_GetRxMessage(&hcan2, CAN_RX_FIFO0, &(Rx->header), Rx->data.u8);
         // debugging
-        //        if (status == HAL_OK) {
-        //            CANBUS_RxDebugger();
-        //        }
+        if (status == HAL_OK) {
+//            CANBUS_RxDebugger(Rx);
+        }
     }
     unlock();
 
     return (status == HAL_OK);
 }
 
-uint32_t CANBUS_ReadID(void) {
-    CAN_RxHeaderTypeDef *header = &(CB.rx.header);
-
-    if (header->IDE == CAN_ID_STD) {
-        return header->StdId;
+uint32_t CANBUS_ReadID(CAN_RxHeaderTypeDef *RxHeader) {
+    if (RxHeader->IDE == CAN_ID_STD) {
+        return RxHeader->StdId;
     }
-    return header->ExtId;
+    return RxHeader->ExtId;
 }
 
-void CANBUS_TxDebugger(void) {
+void CANBUS_TxDebugger(CAN_TxHeaderTypeDef *TxHeader, CAN_DATA *TxData) {
     // debugging
     LOG_Str("\n[TX] ");
-    if (CB.tx.header.IDE == CAN_ID_STD) {
-        LOG_Hex32(CB.tx.header.StdId);
+    if (TxHeader->IDE == CAN_ID_STD) {
+        LOG_Hex32(TxHeader->StdId);
     } else {
-        LOG_Hex32(CB.tx.header.ExtId);
+        LOG_Hex32(TxHeader->ExtId);
     }
     LOG_Str(" => ");
-    if (CB.tx.header.RTR == CAN_RTR_DATA) {
-        LOG_BufHex((char*) &(CB.tx.data), sizeof(CB.tx.data));
+    if (TxHeader->RTR == CAN_RTR_DATA) {
+        LOG_BufHex((char*) TxData, TxHeader->DLC);
     } else {
         LOG_Str("RTR");
     }
     LOG_Enter();
 }
 
-void CANBUS_RxDebugger(void) {
+void CANBUS_RxDebugger(can_rx_t *Rx) {
     // debugging
     LOG_Str("\n[RX] ");
-    LOG_Hex32(CANBUS_ReadID());
+    LOG_Hex32(CANBUS_ReadID(&(Rx->header)));
     LOG_Str(" <= ");
-    if (CB.rx.header.RTR == CAN_RTR_DATA) {
-        LOG_BufHex(CB.rx.data.CHAR, sizeof(CB.rx.data.CHAR));
+    if (Rx->header.RTR == CAN_RTR_DATA) {
+        LOG_BufHex(Rx->data.CHAR, Rx->header.DLC);
     } else {
         LOG_Str("RTR");
     }
@@ -160,11 +154,11 @@ void CANBUS_RxDebugger(void) {
 
 #if (!BOOTLOADER)
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
-    // read rx fifo
-    if (CANBUS_Read()) {
-        // signal only when RTOS started
+    can_rx_t Rx;
+    // signal only when RTOS started
+    if (CANBUS_Read(&Rx)) {
         if (osKernelGetState() == osKernelRunning) {
-            osThreadFlagsSet(CanRxTaskHandle, EVT_CAN_RX_IT);
+            osMessageQueuePut(CanRxQueueHandle, &Rx, 0U, 0U);
         }
     }
 }
@@ -183,9 +177,8 @@ static void unlock(void) {
 #endif
 }
 
-static void CANBUS_Header(uint32_t address, uint32_t DLC) {
-    CAN_TxHeaderTypeDef *TxHeader = &(CB.tx.header);
-    /* Configure Global Transmission process */
+static void CANBUS_Header(CAN_TxHeaderTypeDef *TxHeader, uint32_t address, uint32_t DLC) {
+    /* Configure Transmission process */
     if (address > 0x7FF) {
         TxHeader->IDE = CAN_ID_EXT;
         TxHeader->ExtId = address;

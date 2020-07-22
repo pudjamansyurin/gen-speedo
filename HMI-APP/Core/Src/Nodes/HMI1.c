@@ -9,9 +9,6 @@
 #include "Nodes/HMI1.h"
 #include "Drivers/_canbus.h"
 
-/* External variables ---------------------------------------------------------*/
-extern canbus_t CB;
-
 /* Public variables -----------------------------------------------------------*/
 hmi1_t HMI1 = {
         .d = {
@@ -50,10 +47,10 @@ void HMI1_Init(void) {
 
 /* ====================================== CAN TX =================================== */
 uint8_t HMI1_CAN_TX_Heartbeat(void) {
-    CAN_DATA *txd = &(CB.tx.data);
+    CAN_DATA TxData;
 
     // set message
-    txd->u16[0] = HMI_VERSION;
+    TxData.u16[0] = HMI_VERSION;
     // send message
-    return CANBUS_Write(CAND_HMI1, 2);
+    return CANBUS_Write(CAND_HMI1, &TxData, 2);
 }
