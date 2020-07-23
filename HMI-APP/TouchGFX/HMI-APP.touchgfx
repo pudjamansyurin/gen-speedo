@@ -1,0 +1,155 @@
+{
+  "Application": {
+    "Screens": [
+      {
+        "Components": [
+          {
+            "FileName": "background.png",
+            "Alpha": 255,
+            "OffsetX": 0,
+            "OffsetY": 0,
+            "Name": "background",
+            "X": 0,
+            "Y": 0,
+            "Width": 800,
+            "Height": 480,
+            "Type": "TiledImage",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextColor": {
+              "Red": 122,
+              "Green": 122,
+              "Blue": 122
+            },
+            "TextId": "Digital_clock",
+            "DisplaySeconds": true,
+            "DisplayLeadingZeroForHourIndicator": true,
+            "Alpha": 255,
+            "UseAmPm": false,
+            "InitialHour": 10,
+            "InitialMinute": 10,
+            "InitialSecond": 0,
+            "Name": "digitalClock",
+            "X": -50,
+            "Y": 11,
+            "Width": 150,
+            "Height": 30,
+            "Type": "DigitalClock",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "FileNameBackground": "clocks_backgrounds_clock_classic_background.png",
+            "RotationCenterX": 116,
+            "RotationCenterY": 116,
+            "UseAnimation": true,
+            "Duration": 10,
+            "Easing": "Cubic",
+            "EasingOption": "InOut",
+            "ClockHands": [
+              {
+                "Type": "SecondClockHand",
+                "FileNameHandImage": "clocks_hands_clock_classic_second_hand.png",
+                "RotationCenterX": 4,
+                "RotationCenterY": 79
+              },
+              {
+                "Type": "MinuteClockHand",
+                "FileNameHandImage": "clocks_hands_clock_classic_minute_hand.png",
+                "RotationCenterX": 2,
+                "RotationCenterY": 64,
+                "MinuteHandSecondCorrection": false
+              },
+              {
+                "Type": "HourClockHand",
+                "FileNameHandImage": "clocks_hands_clock_classic_hour_hand.png",
+                "RotationCenterX": 2,
+                "RotationCenterY": 44,
+                "HourHandMinuteCorrection": true
+              }
+            ],
+            "UseAmPm": false,
+            "InitialHour": 10,
+            "InitialMinute": 10,
+            "InitialSecond": 0,
+            "Name": "analogClock",
+            "X": 87,
+            "Y": 0,
+            "Width": 233,
+            "Height": 240,
+            "Type": "AnalogClock",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          }
+        ],
+        "Interactions": [],
+        "Name": "main",
+        "OverrideDefaultBufferSize": false,
+        "CanvasBufferSize": 0
+      }
+    ],
+    "CustomContainerDefinitions": [],
+    "TextEntries": [
+      {
+        "TextEntryId": "Digital_clock",
+        "IsResource": true
+      }
+    ],
+    "Name": "HMI-APP",
+    "Resolution": {
+      "Width": 320,
+      "Height": 240
+    },
+    "SelectedColorDepth": 16,
+    "StartupScreenName": "main",
+    "SelectedStartupLanguage": "GB",
+    "Skin": "Blue",
+    "TouchGfxPath": "../Middlewares/touchgfx",
+    "UIPath": ".",
+    "AvailableColorDepths": [
+      16
+    ],
+    "AvailableLCDs": {
+      "16": "LCD16bpp"
+    },
+    "AvailableSections": [
+      "ExtFlashSection",
+      "IntFlashSection"
+    ],
+    "AvailableResolutions": [
+      {
+        "Width": 320,
+        "Height": 240
+      }
+    ],
+    "PhysicalButtons": [],
+    "FrameworkFeatures": {
+      "LCD16bpp": {
+        "Id": "LCD16bpp",
+        "IsEnabled": true
+      }
+    },
+    "GenerateAssetsCommand": "make -f simulator/gcc/Makefile assets -j8",
+    "PostGenerateCommand": "touchgfx update_project --project-file=simulator/msvs/Application.vcxproj",
+    "PostGenerateTargetCommand": "touchgfx update_project --project-file=../HMI-APP.ioc --platform=m4",
+    "CompileSimulatorCommand": "make -f simulator/gcc/Makefile -j8",
+    "RunSimulatorCommand": "build\\bin\\simulator.exe",
+    "LandscapeSkinX": 0,
+    "LandscapeSkinY": 0,
+    "PortraitSkinX": 0,
+    "PortraitSkinY": 0,
+    "DisplayOrientation": "Landscape"
+  },
+  "Version": "4.13.0"
+}

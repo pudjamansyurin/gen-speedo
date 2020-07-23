@@ -18,7 +18,7 @@
 
 #if (!BOOTLOADER)
 #include "cmsis_os.h"
-#include "GUI.h"
+//#include "GUI.h"
 #endif
 
 /* Exported constants --------------------------------------------------------*/
