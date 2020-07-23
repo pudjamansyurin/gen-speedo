@@ -21,6 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "app_touchgfx.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -63,33 +64,12 @@ UART_HandleTypeDef huart1;
 
 SDRAM_HandleTypeDef hsdram1;
 
-/* Definitions for ManagerTask */
-osThreadId_t ManagerTaskHandle;
-const osThreadAttr_t ManagerTask_attributes = {
-        .name = "ManagerTask",
-        .priority = (osPriority_t) osPriorityRealtime7,
+/* Definitions for defaultTask */
+osThreadId_t defaultTaskHandle;
+const osThreadAttr_t defaultTask_attributes = {
+        .name = "defaultTask",
+        .priority = (osPriority_t) osPriorityNormal,
         .stack_size = 128 * 4
-};
-/* Definitions for DisplayTask */
-osThreadId_t DisplayTaskHandle;
-const osThreadAttr_t DisplayTask_attributes = {
-        .name = "DisplayTask",
-        .priority = (osPriority_t) osPriorityAboveNormal,
-        .stack_size = 256 * 4
-};
-/* Definitions for CanTxTask */
-osThreadId_t CanTxTaskHandle;
-const osThreadAttr_t CanTxTask_attributes = {
-        .name = "CanTxTask",
-        .priority = (osPriority_t) osPriorityHigh,
-        .stack_size = 256 * 4
-};
-/* Definitions for CanRxTask */
-osThreadId_t CanRxTaskHandle;
-const osThreadAttr_t CanRxTask_attributes = {
-        .name = "CanRxTask",
-        .priority = (osPriority_t) osPriorityHigh,
-        .stack_size = 256 * 4
 };
 /* Definitions for CanRxQueue */
 osMessageQueueId_t CanRxQueueHandle;
@@ -115,15 +95,12 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_CAN2_Init(void);
 static void MX_CRC_Init(void);
-void MX_DMA2D_Init(void);
-void MX_FMC_Init(void);
+static void MX_DMA2D_Init(void);
+static void MX_FMC_Init(void);
 static void MX_IWDG_Init(void);
-void MX_LTDC_Init(void);
+static void MX_LTDC_Init(void);
 static void MX_USART1_UART_Init(void);
-void StartManagerTask(void *argument);
-void StartDisplayTask(void *argument);
-void StartCanTxTask(void *argument);
-void StartCanRxTask(void *argument);
+void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -148,7 +125,7 @@ int main(void)
 
     /* MCU Configuration--------------------------------------------------------*/
 
-    /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+    /* Reset of all peripherals, Initializes thcliee Flash interface and the Systick. */
     HAL_Init();
 
     /* USER CODE BEGIN Init */
@@ -166,12 +143,16 @@ int main(void)
     MX_GPIO_Init();
     MX_CAN2_Init();
     MX_CRC_Init();
+    MX_DMA2D_Init();
+    MX_FMC_Init();
     MX_IWDG_Init();
+    MX_LTDC_Init();
     MX_USART1_UART_Init();
+    MX_TouchGFX_Init();
     /* USER CODE BEGIN 2 */
     CANBUS_Init();
-    GRAPHICS_HW_Init();
-    GRAPHICS_Init();
+    //    GRAPHICS_HW_Init();
+    //    GRAPHICS_Init();
     /* USER CODE END 2 */
 
     /* Init scheduler */
@@ -206,17 +187,8 @@ int main(void)
     /* USER CODE END RTOS_QUEUES */
 
     /* Create the thread(s) */
-    /* creation of ManagerTask */
-    ManagerTaskHandle = osThreadNew(StartManagerTask, NULL, &ManagerTask_attributes);
-
-    /* creation of DisplayTask */
-    DisplayTaskHandle = osThreadNew(StartDisplayTask, NULL, &DisplayTask_attributes);
-
-    /* creation of CanTxTask */
-    CanTxTaskHandle = osThreadNew(StartCanTxTask, NULL, &CanTxTask_attributes);
-
-    /* creation of CanRxTask */
-    CanRxTaskHandle = osThreadNew(StartCanRxTask, NULL, &CanRxTask_attributes);
+    /* creation of defaultTask */
+    defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
     /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
@@ -363,7 +335,7 @@ static void MX_CRC_Init(void)
  * @param None
  * @retval None
  */
-void MX_DMA2D_Init(void)
+static void MX_DMA2D_Init(void)
 {
 
     /* USER CODE BEGIN DMA2D_Init 0 */
@@ -374,10 +346,18 @@ void MX_DMA2D_Init(void)
 
     /* USER CODE END DMA2D_Init 1 */
     hdma2d.Instance = DMA2D;
-    hdma2d.Init.Mode = DMA2D_R2M;
+    hdma2d.Init.Mode = DMA2D_M2M;
     hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB565;
     hdma2d.Init.OutputOffset = 0;
+    hdma2d.LayerCfg[1].InputOffset = 0;
+    hdma2d.LayerCfg[1].InputColorMode = DMA2D_INPUT_RGB565;
+    hdma2d.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
+    hdma2d.LayerCfg[1].InputAlpha = 0;
     if (HAL_DMA2D_Init(&hdma2d) != HAL_OK)
+            {
+        Error_Handler();
+    }
+    if (HAL_DMA2D_ConfigLayer(&hdma2d, 1) != HAL_OK)
             {
         Error_Handler();
     }
@@ -420,7 +400,7 @@ static void MX_IWDG_Init(void)
  * @param None
  * @retval None
  */
-void MX_LTDC_Init(void)
+static void MX_LTDC_Init(void)
 {
 
     /* USER CODE BEGIN LTDC_Init 0 */
@@ -428,7 +408,6 @@ void MX_LTDC_Init(void)
     /* USER CODE END LTDC_Init 0 */
 
     LTDC_LayerCfgTypeDef pLayerCfg = { 0 };
-    LTDC_LayerCfgTypeDef pLayerCfg1 = { 0 };
 
     /* USER CODE BEGIN LTDC_Init 1 */
 
@@ -460,8 +439,8 @@ void MX_LTDC_Init(void)
     pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_RGB565;
     pLayerCfg.Alpha = 255;
     pLayerCfg.Alpha0 = 0;
-    pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
-    pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
+    pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
+    pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
     pLayerCfg.FBStartAdress = 0xC0000000;
     pLayerCfg.ImageWidth = 320;
     pLayerCfg.ImageHeight = 240;
@@ -469,25 +448,6 @@ void MX_LTDC_Init(void)
     pLayerCfg.Backcolor.Green = 0;
     pLayerCfg.Backcolor.Red = 0;
     if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg, 0) != HAL_OK)
-            {
-        Error_Handler();
-    }
-    pLayerCfg1.WindowX0 = 0;
-    pLayerCfg1.WindowX1 = 320;
-    pLayerCfg1.WindowY0 = 0;
-    pLayerCfg1.WindowY1 = 240;
-    pLayerCfg1.PixelFormat = LTDC_PIXEL_FORMAT_ARGB1555;
-    pLayerCfg1.Alpha = 255;
-    pLayerCfg1.Alpha0 = 0;
-    pLayerCfg1.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
-    pLayerCfg1.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
-    pLayerCfg1.FBStartAdress = 0xC0400000;
-    pLayerCfg1.ImageWidth = 320;
-    pLayerCfg1.ImageHeight = 240;
-    pLayerCfg1.Backcolor.Blue = 0;
-    pLayerCfg1.Backcolor.Green = 0;
-    pLayerCfg1.Backcolor.Red = 0;
-    if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg1, 1) != HAL_OK)
             {
         Error_Handler();
     }
@@ -531,7 +491,7 @@ static void MX_USART1_UART_Init(void)
 }
 
 /* FMC initialization function */
-void MX_FMC_Init(void)
+static void MX_FMC_Init(void)
 {
 
     /* USER CODE BEGIN FMC_Init 0 */
@@ -573,7 +533,7 @@ void MX_FMC_Init(void)
     }
 
     /* USER CODE BEGIN FMC_Init 2 */
-
+    MX_SDRAM_InitEx();
     /* USER CODE END FMC_Init 2 */
 }
 
@@ -690,14 +650,14 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE END 4 */
 
-/* USER CODE BEGIN Header_StartManagerTask */
+/* USER CODE BEGIN Header_StartDefaultTask */
 /**
- * @brief  Function implementing the ManagerTask thread.
+ * @brief  Function implementing the defaultTask thread.
  * @param  argument: Not used
  * @retval None
  */
-/* USER CODE END Header_StartManagerTask */
-void StartManagerTask(void *argument)
+/* USER CODE END Header_StartDefaultTask */
+void StartDefaultTask(void *argument)
 {
     /* USER CODE BEGIN 5 */
     TickType_t lastWake;
@@ -724,103 +684,6 @@ void StartManagerTask(void *argument)
         osDelayUntil(lastWake + pdMS_TO_TICKS(10));
     }
     /* USER CODE END 5 */
-}
-
-/* USER CODE BEGIN Header_StartDisplayTask */
-/**
- * @brief Function implementing the DisplayTask thread.
- * @param argument: Not used
- * @retval None
- */
-/* USER CODE END Header_StartDisplayTask */
-__weak void StartDisplayTask(void *argument)
-{
-    /* USER CODE BEGIN StartDisplayTask */
-    /* Infinite loop */
-    for (;;)
-            {
-        osDelay(1);
-    }
-    /* USER CODE END StartDisplayTask */
-}
-
-/* USER CODE BEGIN Header_StartCanTxTask */
-/**
- * @brief Function implementing the CanTxTask thread.
- * @param argument: Not used
- * @retval None
- */
-/* USER CODE END Header_StartCanTxTask */
-void StartCanTxTask(void *argument)
-{
-    /* USER CODE BEGIN StartCanTxTask */
-    TickType_t lastWake;
-
-    // wait until ManagerTask done
-    osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
-
-    /* Infinite loop */
-    for (;;) {
-        lastWake = osKernelGetTickCount();
-
-        // Send to CAN
-        HMI1.can.t.Heartbeat();
-
-        // Periodic interval
-        osDelayUntil(lastWake + pdMS_TO_TICKS(500));
-    }
-    /* USER CODE END StartCanTxTask */
-}
-
-/* USER CODE BEGIN Header_StartCanRxTask */
-/**
- * @brief Function implementing the CanRxTask thread.
- * @param argument: Not used
- * @retval None
- */
-/* USER CODE END Header_StartCanRxTask */
-void StartCanRxTask(void *argument)
-{
-    /* USER CODE BEGIN StartCanRxTask */
-    can_rx_t Rx;
-    osStatus_t status;
-    uint8_t related;
-
-    // wait until ManagerTask done
-    osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
-
-    /* Infinite loop */
-    for (;;) {
-        // get can rx in queue
-        status = osMessageQueueGet(CanRxQueueHandle, &Rx, NULL, osWaitForever);
-        // wait forever
-        if (status == osOK) {
-            related = 1;
-            // handle message
-            switch (CANBUS_ReadID(&(Rx.header))) {
-                case CAND_VCU_SWITCH :
-                    VCU.can.r.SwitchModeControl(&Rx);
-                    break;
-                case CAND_VCU_SELECT_SET :
-                    VCU.can.r.MixedData(&Rx);
-                    break;
-                case CAND_VCU_TRIP_MODE :
-                    VCU.can.r.SubTripData(&Rx);
-                    break;
-                case CAND_SET_PROGRESS :
-                    FW_EnterModeIAP();
-                    break;
-                default:
-                    related = 0;
-                    break;
-            }
-            // notify GUI thread
-            if (related) {
-                osThreadFlagsSet(DisplayTaskHandle, EVT_DISPLAY_UPDATE);
-            }
-        }
-    }
-    /* USER CODE END StartCanRxTask */
 }
 
 /**
@@ -860,18 +723,18 @@ void Error_Handler(void)
 
 #ifdef  USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
 void assert_failed(uint8_t *file, uint32_t line)
-{ 
-  /* USER CODE BEGIN 6 */
+{
+    /* USER CODE BEGIN 6 */
     /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
+    /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
 
