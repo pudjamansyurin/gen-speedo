@@ -40,6 +40,7 @@ MEMORY
   CCMRAM    (xrw)    : ORIGIN = 0x10000000,   LENGTH = 64K
   RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 192K-8
   FLASH    (rx)    : ORIGIN = 0x8020000,   LENGTH = 128K*4
+  SDRAM        (xrw)    : ORIGIN = 0xC0000000,   LENGTH = 8M
 }
 
 /* Sections */
@@ -174,4 +175,25 @@ SECTIONS
   }
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
+    
+  FontFlashSection :
+  {
+    *(FontFlashSection FontFlashSection.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x4);
+  } >SDRAM
+
+  TextFlashSection :
+  {
+    *(TextFlashSection TextFlashSection.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x4);
+  } >SDRAM
+  
+  ExtFlashSection :
+  {
+    *(ExtFlashSection ExtFlashSection.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x4);
+  } >SDRAM
 }

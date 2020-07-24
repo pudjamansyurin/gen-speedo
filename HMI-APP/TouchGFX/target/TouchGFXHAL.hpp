@@ -28,7 +28,7 @@
  *
  * @sa HAL
  */
-class TouchGFXHAL : public TouchGFXGeneratedHAL
+class TouchGFXHAL: public TouchGFXGeneratedHAL
 {
 public:
     /**
@@ -44,11 +44,16 @@ public:
      * @param width            Width of the display.
      * @param height           Height of the display.
      */
-    TouchGFXHAL(touchgfx::DMA_Interface& dma, touchgfx::LCD& display, touchgfx::TouchController& tc, uint16_t width, uint16_t height) : TouchGFXGeneratedHAL(dma, display, tc, width, height)
+    TouchGFXHAL(touchgfx::DMA_Interface &dma, touchgfx::LCD &display, touchgfx::TouchController &tc, uint16_t width,
+            uint16_t height) :
+            TouchGFXGeneratedHAL(dma, display, tc, width, height)
     {
     }
 
     void initialize();
+
+    /* Overwriting default implementation of taskEntry */
+    virtual void taskEntry();
 
     /**
      * @fn virtual void TouchGFXHAL::disableInterrupts();
@@ -114,7 +119,7 @@ public:
      *
      * @see flushFrameBuffer().
      */
-    virtual void flushFrameBuffer(const touchgfx::Rect& rect);
+    virtual void flushFrameBuffer(const touchgfx::Rect &rect);
 
 protected:
     /**
@@ -137,7 +142,7 @@ protected:
      *
      * @param [in,out] adr New frame buffer address.
      */
-    virtual void setTFTFrameBuffer(uint16_t* adr);
+    virtual void setTFTFrameBuffer(uint16_t *adr);
 };
 
 /* USER CODE END TouchGFXHAL.hpp */
