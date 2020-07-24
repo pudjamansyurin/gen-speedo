@@ -2,7 +2,7 @@
 {
   "Application": {
     "Name": "HMI-APP",
-    "TouchGfxPath": "../Middlewares/touchgfx",
+    "TouchGfxPath": "../Middlewares/ST/touchgfx",
     "AvailableColorDepths": [ 16 ],
     "AvailableLCDs":
     {
