@@ -3,35 +3,19 @@
 /*********************************************************************************/
 #include <gui_generated/main_screen/mainViewBase.hpp>
 #include "BitmapDatabase.hpp"
-#include <texts/TextKeysAndLanguages.hpp>
 
 mainViewBase::mainViewBase()
 {
 
-    background.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUND_ID));
-    background.setPosition(0, 0, 800, 480);
-    background.setOffset(0, 0);
+    tiledImage1.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUND_ID));
+    tiledImage1.setPosition(0, 0, 320, 240);
+    tiledImage1.setOffset(0, 0);
 
-    digitalClock.setPosition(-50, 11, 150, 30);
-    digitalClock.setColor(touchgfx::Color::getColorFrom24BitRGB(122, 122, 122));
-    digitalClock.setTypedText(touchgfx::TypedText(T_DIGITAL_CLOCK));
-    digitalClock.displayLeadingZeroForHourIndicator(true);
-    digitalClock.setDisplayMode(touchgfx::DigitalClock::DISPLAY_24_HOUR);
-    digitalClock.setTime24Hour(10, 10, 0);
+    toggleButton1.setXY(96, 101);
+    toggleButton1.setBitmaps(touchgfx::Bitmap(BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_OFF_ID), touchgfx::Bitmap(BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_ON_ID));
 
-    analogClock.setXY(87, 0);
-    analogClock.setBackground(BITMAP_CLOCKS_BACKGROUNDS_CLOCK_CLASSIC_BACKGROUND_ID, 116, 116);
-    analogClock.setupHourHand(BITMAP_CLOCKS_HANDS_CLOCK_CLASSIC_HOUR_HAND_ID, 2, 44);
-    analogClock.setHourHandMinuteCorrection(true);
-    analogClock.setupMinuteHand(BITMAP_CLOCKS_HANDS_CLOCK_CLASSIC_MINUTE_HAND_ID, 2, 64);
-    analogClock.setMinuteHandSecondCorrection(false);
-    analogClock.setupSecondHand(BITMAP_CLOCKS_HANDS_CLOCK_CLASSIC_SECOND_HAND_ID, 4, 79);
-    analogClock.initializeTime24Hour(10, 10, 0);
-    analogClock.setAnimation(10, touchgfx::EasingEquations::cubicEaseInOut);
-
-    add(background);
-    add(digitalClock);
-    add(analogClock);
+    add(tiledImage1);
+    add(toggleButton1);
 }
 
 void mainViewBase::setupScreen()

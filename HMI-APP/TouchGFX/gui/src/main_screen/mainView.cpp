@@ -8,13 +8,13 @@ mainView::mainView() :
 void mainView::setupScreen()
 {
     mainViewBase::setupScreen();
-    digitalHours = digitalClock.getCurrentHour();
+/*     digitalHours = digitalClock.getCurrentHour();
     digitalMinutes = digitalClock.getCurrentMinute();
     digitalSeconds = digitalClock.getCurrentSecond();
 
     analogHours = analogClock.getCurrentHour();
     analogMinutes = analogClock.getCurrentMinute();
-    analogSeconds = analogClock.getCurrentSecond();
+    analogSeconds = analogClock.getCurrentSecond(); */
 }
 
 void mainView::tearDownScreen()
@@ -24,7 +24,8 @@ void mainView::tearDownScreen()
 
 void mainView::handleTickEvent()
 {
-    tickCounter++;
+    /* 
+	tickCounter++;
 
     if (tickCounter % 60 == 0)
             {
@@ -57,5 +58,6 @@ void mainView::handleTickEvent()
         // Update the clocks
         digitalClock.setTime24Hour(digitalHours, digitalMinutes, digitalSeconds);
         analogClock.setTime24Hour(analogHours, analogMinutes, analogSeconds);
-    }
+    } 
+	*/
 }

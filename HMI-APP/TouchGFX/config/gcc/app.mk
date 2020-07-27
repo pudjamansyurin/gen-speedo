@@ -1,6 +1,6 @@
 
 # Relative location of the TouchGFX framework from root of application
-touchgfx_path := ../Middlewares/touchgfx
+touchgfx_path := ../Middlewares/ST/touchgfx
 
 # Location of the TouchGFX Environment
 touchgfx_env := C:/TouchGFX/4.13.0/env

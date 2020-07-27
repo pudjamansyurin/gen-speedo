@@ -8,8 +8,7 @@
 #include <mvp/View.hpp>
 #include <gui/main_screen/mainPresenter.hpp>
 #include <touchgfx/widgets/TiledImage.hpp>
-#include <touchgfx/containers/clock/DigitalClock.hpp>
-#include <touchgfx/containers/clock/AnalogClock.hpp>
+#include <touchgfx/widgets/ToggleButton.hpp>
 
 class mainViewBase : public touchgfx::View<mainPresenter>
 {
@@ -26,9 +25,8 @@ protected:
     /*
      * Member Declarations
      */
-    touchgfx::TiledImage background;
-    touchgfx::DigitalClock digitalClock;
-    touchgfx::AnalogClock analogClock;
+    touchgfx::TiledImage tiledImage1;
+    touchgfx::ToggleButton toggleButton1;
 
 private:
 

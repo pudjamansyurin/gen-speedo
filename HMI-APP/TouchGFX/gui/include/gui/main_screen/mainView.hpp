@@ -15,12 +15,12 @@ public:
     virtual void handleTickEvent();
 protected:
     int tickCounter;
-    int analogHours;
+/*     int analogHours;
     int analogMinutes;
     int analogSeconds;
     int digitalHours;
     int digitalMinutes;
-    int digitalSeconds;
+    int digitalSeconds; */
 };
 
 #endif // MAIN_VIEW_HPP

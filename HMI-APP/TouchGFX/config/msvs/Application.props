@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets"/>
   <PropertyGroup Label="UserMacros">
     <UseBPP>16</UseBPP>
-    <TouchGFXReleasePath>..\..\..\Middlewares\touchgfx</TouchGFXReleasePath>
+    <TouchGFXReleasePath>..\..\..\Middlewares\ST\touchgfx</TouchGFXReleasePath>
     <TouchGFXEnvPath>C:\TouchGFX\4.13.0\env</TouchGFXEnvPath>
     <ApplicationRoot>..\..</ApplicationRoot>
   </PropertyGroup>
