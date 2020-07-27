@@ -94,6 +94,44 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId2",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea1",
+            "X": 159,
+            "Y": 107,
+            "Width": 64,
+            "Height": 25,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "RelativeFilename": "clock_standard_second_hand.png",
+            "Alpha": 255,
+            "Name": "image6",
+            "X": 177,
+            "Y": 99,
+            "Width": 7,
+            "Height": 86,
+            "Type": "Image",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
           }
         ],
         "Interactions": [],
@@ -103,6 +141,12 @@
       }
     ],
     "CustomContainerDefinitions": [],
+    "TextEntries": [
+      {
+        "TextEntryId": "SingleUseId2",
+        "IsResource": false
+      }
+    ],
     "Name": "HMI-APP",
     "Resolution": {
       "Width": 320,

@@ -7,14 +7,15 @@
 #include <touchgfx/lcd/LCD.hpp>
 #include <touchgfx/Bitmap.hpp>
 
-const uint16_t BITMAP_HMI_LEFT_ID = 0;
-const uint16_t BITMAP_HMI_LEFT_FINGER_ID = 1;
-const uint16_t BITMAP_HMI_LEFT_KEYLESS_ID = 2;
-const uint16_t BITMAP_HMI_LEFT_MERGED_ID = 3;
-const uint16_t BITMAP_HMI_LEFT_MIRROR_ID = 4;
-const uint16_t BITMAP_HMI_LEFT_SEIN_ID = 5;
-const uint16_t BITMAP_HMI_LEFT_TRIP_A_ID = 6;
-const uint16_t BITMAP_HMI_LEFT_TRIP_B_ID = 7;
+const uint16_t BITMAP_CLOCK_STANDARD_SECOND_HAND_ID = 0;
+const uint16_t BITMAP_HMI_LEFT_ID = 1;
+const uint16_t BITMAP_HMI_LEFT_FINGER_ID = 2;
+const uint16_t BITMAP_HMI_LEFT_KEYLESS_ID = 3;
+const uint16_t BITMAP_HMI_LEFT_MERGED_ID = 4;
+const uint16_t BITMAP_HMI_LEFT_MIRROR_ID = 5;
+const uint16_t BITMAP_HMI_LEFT_SEIN_ID = 6;
+const uint16_t BITMAP_HMI_LEFT_TRIP_A_ID = 7;
+const uint16_t BITMAP_HMI_LEFT_TRIP_B_ID = 8;
 
 namespace BitmapDatabase
 {

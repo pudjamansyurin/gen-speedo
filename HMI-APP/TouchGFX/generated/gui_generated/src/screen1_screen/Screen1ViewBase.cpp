@@ -3,6 +3,8 @@
 /*********************************************************************************/
 #include <gui_generated/screen1_screen/Screen1ViewBase.hpp>
 #include "BitmapDatabase.hpp"
+#include <texts/TextKeysAndLanguages.hpp>
+#include <touchgfx/Color.hpp>
 
 Screen1ViewBase::Screen1ViewBase()
 {
@@ -26,12 +28,22 @@ Screen1ViewBase::Screen1ViewBase()
     image5.setXY(127, 89);
     image5.setBitmap(touchgfx::Bitmap(BITMAP_HMI_LEFT_TRIP_B_ID));
 
+    textArea1.setXY(159, 107);
+    textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    textArea1.setLinespacing(0);
+    textArea1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID2));
+
+    image6.setXY(177, 99);
+    image6.setBitmap(touchgfx::Bitmap(BITMAP_CLOCK_STANDARD_SECOND_HAND_ID));
+
     add(tiledImage1);
     add(image1);
     add(image2);
     add(image3);
     add(image4);
     add(image5);
+    add(textArea1);
+    add(image6);
 }
 
 void Screen1ViewBase::setupScreen()
