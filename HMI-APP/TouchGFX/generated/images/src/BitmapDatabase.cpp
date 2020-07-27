@@ -7,26 +7,33 @@
 #include <platform/driver/lcd/LCD16bpp.hpp>
 
 extern const unsigned char _clock_standard_second_hand[]; // BITMAP_CLOCK_STANDARD_SECOND_HAND_ID = 0, Size: 7x86 pixels
+extern const unsigned char _clock_standard_second_hand_extra_data[];
 extern const unsigned char _hmi_left[]; // BITMAP_HMI_LEFT_ID = 1, Size: 320x240 pixels
 extern const unsigned char _hmi_left_finger[]; // BITMAP_HMI_LEFT_FINGER_ID = 2, Size: 25x25 pixels
+extern const unsigned char _hmi_left_finger_extra_data[];
 extern const unsigned char _hmi_left_keyless[]; // BITMAP_HMI_LEFT_KEYLESS_ID = 3, Size: 28x24 pixels
+extern const unsigned char _hmi_left_keyless_extra_data[];
 extern const unsigned char _hmi_left_merged[]; // BITMAP_HMI_LEFT_MERGED_ID = 4, Size: 320x241 pixels
 extern const unsigned char _hmi_left_mirror[]; // BITMAP_HMI_LEFT_MIRROR_ID = 5, Size: 29x23 pixels
+extern const unsigned char _hmi_left_mirror_extra_data[];
 extern const unsigned char _hmi_left_sein[]; // BITMAP_HMI_LEFT_SEIN_ID = 6, Size: 21x24 pixels
+extern const unsigned char _hmi_left_sein_extra_data[];
 extern const unsigned char _hmi_left_trip_a[]; // BITMAP_HMI_LEFT_TRIP_A_ID = 7, Size: 26x15 pixels
+extern const unsigned char _hmi_left_trip_a_extra_data[];
 extern const unsigned char _hmi_left_trip_b[]; // BITMAP_HMI_LEFT_TRIP_B_ID = 8, Size: 26x15 pixels
+extern const unsigned char _hmi_left_trip_b_extra_data[];
 
 const touchgfx::Bitmap::BitmapData bitmap_database[] =
 {
-    { _clock_standard_second_hand, 0, 7, 86, 2, 2, 3, (uint8_t)(touchgfx::Bitmap::ARGB8888) >> 3, 81, (uint8_t)(touchgfx::Bitmap::ARGB8888) & 0x7 },
+    { _clock_standard_second_hand, _clock_standard_second_hand_extra_data, 7, 86, 2, 2, 3, (uint8_t)(touchgfx::Bitmap::RGB565) >> 3, 81, (uint8_t)(touchgfx::Bitmap::RGB565) & 0x7 },
     { _hmi_left, 0, 320, 240, 0, 0, 320, (uint8_t)(touchgfx::Bitmap::RGB565) >> 3, 240, (uint8_t)(touchgfx::Bitmap::RGB565) & 0x7 },
-    { _hmi_left_finger, 0, 25, 25, 11, 8, 3, (uint8_t)(touchgfx::Bitmap::ARGB8888) >> 3, 1, (uint8_t)(touchgfx::Bitmap::ARGB8888) & 0x7 },
-    { _hmi_left_keyless, 0, 28, 24, 4, 3, 8, (uint8_t)(touchgfx::Bitmap::ARGB8888) >> 3, 3, (uint8_t)(touchgfx::Bitmap::ARGB8888) & 0x7 },
+    { _hmi_left_finger, _hmi_left_finger_extra_data, 25, 25, 11, 8, 3, (uint8_t)(touchgfx::Bitmap::RGB565) >> 3, 1, (uint8_t)(touchgfx::Bitmap::RGB565) & 0x7 },
+    { _hmi_left_keyless, _hmi_left_keyless_extra_data, 28, 24, 4, 3, 8, (uint8_t)(touchgfx::Bitmap::RGB565) >> 3, 3, (uint8_t)(touchgfx::Bitmap::RGB565) & 0x7 },
     { _hmi_left_merged, 0, 320, 241, 0, 0, 320, (uint8_t)(touchgfx::Bitmap::RGB565) >> 3, 241, (uint8_t)(touchgfx::Bitmap::RGB565) & 0x7 },
-    { _hmi_left_mirror, 0, 29, 23, 24, 4, 2, (uint8_t)(touchgfx::Bitmap::ARGB8888) >> 3, 6, (uint8_t)(touchgfx::Bitmap::ARGB8888) & 0x7 },
-    { _hmi_left_sein, 0, 21, 24, 0, 0, 0, (uint8_t)(touchgfx::Bitmap::ARGB8888) >> 3, 0, (uint8_t)(touchgfx::Bitmap::ARGB8888) & 0x7 },
-    { _hmi_left_trip_a, 0, 26, 15, 16, 1, 5, (uint8_t)(touchgfx::Bitmap::ARGB8888) >> 3, 10, (uint8_t)(touchgfx::Bitmap::ARGB8888) & 0x7 },
-    { _hmi_left_trip_b, 0, 26, 15, 5, 1, 14, (uint8_t)(touchgfx::Bitmap::ARGB8888) >> 3, 12, (uint8_t)(touchgfx::Bitmap::ARGB8888) & 0x7 }
+    { _hmi_left_mirror, _hmi_left_mirror_extra_data, 29, 23, 24, 4, 2, (uint8_t)(touchgfx::Bitmap::RGB565) >> 3, 6, (uint8_t)(touchgfx::Bitmap::RGB565) & 0x7 },
+    { _hmi_left_sein, _hmi_left_sein_extra_data, 21, 24, 0, 0, 0, (uint8_t)(touchgfx::Bitmap::RGB565) >> 3, 0, (uint8_t)(touchgfx::Bitmap::RGB565) & 0x7 },
+    { _hmi_left_trip_a, _hmi_left_trip_a_extra_data, 26, 15, 16, 1, 5, (uint8_t)(touchgfx::Bitmap::RGB565) >> 3, 10, (uint8_t)(touchgfx::Bitmap::RGB565) & 0x7 },
+    { _hmi_left_trip_b, _hmi_left_trip_b_extra_data, 26, 15, 5, 1, 14, (uint8_t)(touchgfx::Bitmap::RGB565) >> 3, 12, (uint8_t)(touchgfx::Bitmap::RGB565) & 0x7 }
 };
 
 namespace BitmapDatabase

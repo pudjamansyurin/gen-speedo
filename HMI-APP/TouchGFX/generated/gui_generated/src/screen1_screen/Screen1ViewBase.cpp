@@ -13,7 +13,7 @@ Screen1ViewBase::Screen1ViewBase()
     tiledImage1.setPosition(0, 0, 320, 240);
     tiledImage1.setOffset(0, 0);
 
-    image1.setXY(275, 84);
+    image1.setXY(275, 83);
     image1.setBitmap(touchgfx::Bitmap(BITMAP_HMI_LEFT_SEIN_ID));
 
     image2.setXY(228, 133);
