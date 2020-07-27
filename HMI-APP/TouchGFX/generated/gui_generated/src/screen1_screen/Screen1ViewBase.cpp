@@ -28,13 +28,19 @@ Screen1ViewBase::Screen1ViewBase()
     image5.setXY(127, 89);
     image5.setBitmap(touchgfx::Bitmap(BITMAP_HMI_LEFT_TRIP_B_ID));
 
-    textArea1.setXY(159, 107);
+    textArea1.setXY(159, 106);
     textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     textArea1.setLinespacing(0);
     textArea1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID2));
 
-    image6.setXY(177, 99);
-    image6.setBitmap(touchgfx::Bitmap(BITMAP_CLOCK_STANDARD_SECOND_HAND_ID));
+    textArea2.setXY(159, 83);
+    textArea2.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    textArea2.setLinespacing(0);
+    textArea2.setTypedText(touchgfx::TypedText(T_SINGLEUSEID3));
+
+    scalableImage1.setBitmap(touchgfx::Bitmap(BITMAP_CLOCK_STANDARD_SECOND_HAND_ID));
+    scalableImage1.setPosition(176, 67, 9, 127);
+    scalableImage1.setScalingAlgorithm(touchgfx::ScalableImage::NEAREST_NEIGHBOR);
 
     add(tiledImage1);
     add(image1);
@@ -43,7 +49,8 @@ Screen1ViewBase::Screen1ViewBase()
     add(image4);
     add(image5);
     add(textArea1);
-    add(image6);
+    add(textArea2);
+    add(scalableImage1);
 }
 
 void Screen1ViewBase::setupScreen()

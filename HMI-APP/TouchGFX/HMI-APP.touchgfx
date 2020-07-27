@@ -108,7 +108,7 @@
             "LineSpacing": 0,
             "Name": "textArea1",
             "X": 159,
-            "Y": 107,
+            "Y": 106,
             "Width": 64,
             "Height": 25,
             "Type": "TextArea",
@@ -119,14 +119,38 @@
             "Moveable": false
           },
           {
-            "RelativeFilename": "clock_standard_second_hand.png",
+            "TextId": "SingleUseId3",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
             "Alpha": 255,
-            "Name": "image6",
-            "X": 177,
-            "Y": 99,
-            "Width": 7,
-            "Height": 86,
-            "Type": "Image",
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea2",
+            "X": 159,
+            "Y": 83,
+            "Width": 64,
+            "Height": 25,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Filename": "clock_standard_second_hand.png",
+            "Alpha": 255,
+            "ScalingAlgorithm": "Nearest-neighbor",
+            "Name": "scalableImage1",
+            "X": 176,
+            "Y": 67,
+            "Width": 9,
+            "Height": 127,
+            "Type": "ScalableImage",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -144,6 +168,10 @@
     "TextEntries": [
       {
         "TextEntryId": "SingleUseId2",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId3",
         "IsResource": false
       }
     ],

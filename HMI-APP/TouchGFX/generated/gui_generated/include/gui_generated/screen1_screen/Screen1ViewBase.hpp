@@ -10,6 +10,7 @@
 #include <touchgfx/widgets/TiledImage.hpp>
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
+#include <touchgfx/widgets/ScalableImage.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -33,7 +34,8 @@ protected:
     touchgfx::Image image4;
     touchgfx::Image image5;
     touchgfx::TextArea textArea1;
-    touchgfx::Image image6;
+    touchgfx::TextArea textArea2;
+    touchgfx::ScalableImage scalableImage1;
 
 private:
 
