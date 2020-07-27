@@ -4,15 +4,15 @@
       {
         "Components": [
           {
-            "FileName": "background.png",
+            "FileName": "HMI_Left.png",
             "Alpha": 255,
             "OffsetX": 0,
             "OffsetY": 0,
-            "Name": "background",
+            "Name": "tiledImage1",
             "X": 0,
             "Y": 0,
-            "Width": 800,
-            "Height": 480,
+            "Width": 320,
+            "Height": 240,
             "Type": "TiledImage",
             "Visible": true,
             "Draggable": false,
@@ -21,25 +21,14 @@
             "Moveable": false
           },
           {
-            "TextColor": {
-              "Red": 122,
-              "Green": 122,
-              "Blue": 122
-            },
-            "TextId": "Digital_clock",
-            "DisplaySeconds": true,
-            "DisplayLeadingZeroForHourIndicator": true,
+            "RelativeFilename": "HMI_Left_Sein.png",
             "Alpha": 255,
-            "UseAmPm": false,
-            "InitialHour": 10,
-            "InitialMinute": 10,
-            "InitialSecond": 0,
-            "Name": "digitalClock",
-            "X": 0,
-            "Y": 210,
-            "Width": 94,
-            "Height": 30,
-            "Type": "DigitalClock",
+            "Name": "image1",
+            "X": 275,
+            "Y": 84,
+            "Width": 21,
+            "Height": 24,
+            "Type": "Image",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -47,46 +36,59 @@
             "Moveable": false
           },
           {
-            "FileNameBackground": "__designer\\Blue_Clocks_Backgrounds_clock_standard_background.png",
-            "RotationCenterX": 116,
-            "RotationCenterY": 116,
-            "Style": "Style1",
-            "UseAnimation": true,
-            "Duration": 10,
-            "Easing": "Cubic",
-            "EasingOption": "InOut",
-            "ClockHands": [
-              {
-                "Type": "SecondClockHand",
-                "FileNameHandImage": "__designer\\Blue_Clocks_Hands_clock_standard_second_hand.png",
-                "RotationCenterX": 3,
-                "RotationCenterY": 66
-              },
-              {
-                "Type": "MinuteClockHand",
-                "FileNameHandImage": "__designer\\Blue_Clocks_Hands_clock_standard_minute_hand.png",
-                "RotationCenterX": 7,
-                "RotationCenterY": 67,
-                "MinuteHandSecondCorrection": false
-              },
-              {
-                "Type": "HourClockHand",
-                "FileNameHandImage": "__designer\\Blue_Clocks_Hands_clock_standard_hour_hand.png",
-                "RotationCenterX": 7,
-                "RotationCenterY": 52,
-                "HourHandMinuteCorrection": true
-              }
-            ],
-            "UseAmPm": false,
-            "InitialHour": 10,
-            "InitialMinute": 10,
-            "InitialSecond": 0,
-            "Name": "analogClock",
-            "X": 86,
-            "Y": 3,
-            "Width": 233,
-            "Height": 243,
-            "Type": "AnalogClock",
+            "RelativeFilename": "HMI_Left_Keyless.png",
+            "Alpha": 255,
+            "Name": "image2",
+            "X": 228,
+            "Y": 133,
+            "Width": 28,
+            "Height": 24,
+            "Type": "Image",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "RelativeFilename": "HMI_Left_Mirror.png",
+            "Alpha": 255,
+            "Name": "image3",
+            "X": 261,
+            "Y": 129,
+            "Width": 29,
+            "Height": 23,
+            "Type": "Image",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "RelativeFilename": "HMI_Left_Finger.png",
+            "Alpha": 255,
+            "Name": "image4",
+            "X": 293,
+            "Y": 127,
+            "Width": 25,
+            "Height": 25,
+            "Type": "Image",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "RelativeFilename": "HMI_Left_Trip_B.png",
+            "Alpha": 255,
+            "Name": "image5",
+            "X": 127,
+            "Y": 89,
+            "Width": 26,
+            "Height": 15,
+            "Type": "Image",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -95,25 +97,19 @@
           }
         ],
         "Interactions": [],
-        "Name": "main",
+        "Name": "Screen1",
         "OverrideDefaultBufferSize": false,
         "CanvasBufferSize": 0
       }
     ],
     "CustomContainerDefinitions": [],
-    "TextEntries": [
-      {
-        "TextEntryId": "Digital_clock",
-        "IsResource": true
-      }
-    ],
     "Name": "HMI-APP",
     "Resolution": {
       "Width": 320,
       "Height": 240
     },
     "SelectedColorDepth": 16,
-    "StartupScreenName": "main",
+    "StartupScreenName": "Screen1",
     "SelectedStartupLanguage": "GB",
     "Skin": "Blue",
     "TouchGfxPath": "../Middlewares/ST/touchgfx",
