@@ -34,6 +34,7 @@ void TouchGFXHAL::initialize()
     TouchGFXGeneratedHAL::initialize();
 }
 
+/* Overwriting default implementation of taskEntry */
 void TouchGFXHAL::taskEntry()
 {
     enableLCDControllerInterrupt();

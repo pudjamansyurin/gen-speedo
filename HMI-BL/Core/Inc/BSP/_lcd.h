@@ -184,6 +184,7 @@ typedef enum
  * @{
  */
 uint8_t BSP_LCD_Init(void);
+void BSP_LCD_DeInit(void);
 uint32_t BSP_LCD_GetXSize(void);
 uint32_t BSP_LCD_GetYSize(void);
 

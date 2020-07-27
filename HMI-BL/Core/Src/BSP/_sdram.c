@@ -152,6 +152,13 @@ uint8_t BSP_SDRAM_Init(void)
 }
 
 /**
+ * @brief  De-Initializes the SDRAM device.
+ */
+void BSP_SDRAM_DeInit(void) {
+    BSP_SDRAM_MspDeInit(&SdramHandle, NULL);
+}
+
+/**
  * @brief  Programs the SDRAM device.
  * @param  RefreshCount: SDRAM refresh counter value
  */

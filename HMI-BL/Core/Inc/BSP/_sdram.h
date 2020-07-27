@@ -149,6 +149,7 @@
  * @{
  */
 uint8_t BSP_SDRAM_Init(void);
+void BSP_SDRAM_DeInit(void);
 void BSP_SDRAM_Initialization_sequence(uint32_t RefreshCount);
 uint8_t BSP_SDRAM_ReadData(uint32_t uwStartAddress, uint32_t *pData, uint32_t uwDataSize);
 uint8_t BSP_SDRAM_ReadData_DMA(uint32_t uwStartAddress, uint32_t *pData, uint32_t uwDataSize);

@@ -175,7 +175,8 @@ SECTIONS
   }
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
-    
+  
+ /*
   FontFlashSection :
   {
     *(FontFlashSection FontFlashSection.*)
@@ -196,4 +197,5 @@ SECTIONS
     *(.gnu.linkonce.r.*)
     . = ALIGN(0x4);
   } >SDRAM
+  */
 }

@@ -213,6 +213,7 @@ uint8_t BSP_LCD_Init(void)
     LtdcHandler.Init.DEPolarity = LTDC_DEPOLARITY_AL;
     LtdcHandler.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
 
+    /* Initialize hardware */
     BSP_LCD_MspInit();
     HAL_LTDC_Init(&LtdcHandler);
 
@@ -236,6 +237,15 @@ uint8_t BSP_LCD_Init(void)
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 
     return LCD_OK;
+}
+
+/**
+ * @brief  Un-Initializes the LCD.
+ * @retval LCD state
+ */
+void BSP_LCD_DeInit(void) {
+    HAL_LTDC_MspDeInit(&LtdcHandler);
+    HAL_DMA2D_MspDeInit(&Dma2dHandler);
 }
 
 /**

@@ -77,6 +77,8 @@ void FOTA_JumpToApplication(void) {
     /* Shutdown all peripherals */
     HAL_CAN_MspDeInit(&hcan2);
     HAL_CRC_MspDeInit(&hcrc);
+    BSP_LCD_DeInit();
+    BSP_SDRAM_DeInit();
     HAL_RCC_DeInit();
     HAL_DeInit();
 

@@ -29,6 +29,7 @@
 #include "Drivers/_canbus.h"
 #include "Drivers/_flasher.h"
 #include "BSP/_lcd.h"
+#include "BSP/_sdram.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,9 +66,9 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_CAN2_Init(void);
 static void MX_CRC_Init(void);
-void MX_DMA2D_Init(void);
-void MX_FMC_Init(void);
-void MX_LTDC_Init(void);
+static void MX_DMA2D_Init(void);
+static void MX_FMC_Init(void);
+static void MX_LTDC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -298,7 +299,7 @@ static void MX_CRC_Init(void)
  * @param None
  * @retval None
  */
-void MX_DMA2D_Init(void)
+static void MX_DMA2D_Init(void)
 {
 
     /* USER CODE BEGIN DMA2D_Init 0 */
@@ -335,7 +336,7 @@ void MX_DMA2D_Init(void)
  * @param None
  * @retval None
  */
-void MX_LTDC_Init(void)
+static void MX_LTDC_Init(void)
 {
 
     /* USER CODE BEGIN LTDC_Init 0 */
@@ -343,7 +344,6 @@ void MX_LTDC_Init(void)
     /* USER CODE END LTDC_Init 0 */
 
     LTDC_LayerCfgTypeDef pLayerCfg = { 0 };
-    LTDC_LayerCfgTypeDef pLayerCfg1 = { 0 };
 
     /* USER CODE BEGIN LTDC_Init 1 */
 
@@ -377,32 +377,13 @@ void MX_LTDC_Init(void)
     pLayerCfg.Alpha0 = 0;
     pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
     pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
-    pLayerCfg.FBStartAdress = 0;
-    pLayerCfg.ImageWidth = 0;
-    pLayerCfg.ImageHeight = 0;
+    pLayerCfg.FBStartAdress = 0xC0000000;
+    pLayerCfg.ImageWidth = 320;
+    pLayerCfg.ImageHeight = 240;
     pLayerCfg.Backcolor.Blue = 0;
     pLayerCfg.Backcolor.Green = 0;
     pLayerCfg.Backcolor.Red = 0;
     if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg, 0) != HAL_OK)
-            {
-        Error_Handler();
-    }
-    pLayerCfg1.WindowX0 = 0;
-    pLayerCfg1.WindowX1 = 320;
-    pLayerCfg1.WindowY0 = 0;
-    pLayerCfg1.WindowY1 = 0;
-    pLayerCfg1.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
-    pLayerCfg1.Alpha = 0;
-    pLayerCfg1.Alpha0 = 0;
-    pLayerCfg1.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
-    pLayerCfg1.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
-    pLayerCfg1.FBStartAdress = 0;
-    pLayerCfg1.ImageWidth = 0;
-    pLayerCfg1.ImageHeight = 0;
-    pLayerCfg1.Backcolor.Blue = 0;
-    pLayerCfg1.Backcolor.Green = 0;
-    pLayerCfg1.Backcolor.Red = 0;
-    if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg1, 1) != HAL_OK)
             {
         Error_Handler();
     }
@@ -413,7 +394,7 @@ void MX_LTDC_Init(void)
 }
 
 /* FMC initialization function */
-void MX_FMC_Init(void)
+static void MX_FMC_Init(void)
 {
 
     /* USER CODE BEGIN FMC_Init 0 */
@@ -455,7 +436,6 @@ void MX_FMC_Init(void)
     }
 
     /* USER CODE BEGIN FMC_Init 2 */
-
     /* USER CODE END FMC_Init 2 */
 }
 

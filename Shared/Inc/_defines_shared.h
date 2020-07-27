@@ -45,7 +45,7 @@
 #define SP_MASK                 (uint32_t) 0x2FFFFFFF
 #define SP_RANGE                           (SP_MASK - (SRAM_SIZE - 1))
 #define IAP_FLAG                (uint32_t) 0xAABBCCDD
-#define IAP_FLAG_ADDR                      (SRAM_END_ADDR - sizeof(uint32_t))
+#define IAP_FLAG_ADDR                      (SRAM_END_ADDR - 4)
 #define IS_VALID_SP(a)                     ((*(__IO uint32_t*)a & SP_RANGE) == SRAM_BASE_ADDR)
 
 // Some constants
