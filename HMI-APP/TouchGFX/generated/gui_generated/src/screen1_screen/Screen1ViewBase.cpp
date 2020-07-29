@@ -57,8 +57,3 @@ void Screen1ViewBase::setupScreen()
 {
 
 }
-
-void Screen1ViewBase::setKeyless(bool value)
-{
-
-}

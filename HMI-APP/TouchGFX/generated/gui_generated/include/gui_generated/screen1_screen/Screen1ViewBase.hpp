@@ -19,11 +19,6 @@ public:
     virtual ~Screen1ViewBase() {}
     virtual void setupScreen();
 
-    /*
-     * Custom Actions
-     */
-    virtual void setKeyless(bool value);
-
 protected:
     FrontendApplication& application() {
         return *static_cast<FrontendApplication*>(touchgfx::Application::getInstance());
