@@ -19,6 +19,11 @@ public:
     virtual ~Screen1ViewBase() {}
     virtual void setupScreen();
 
+    /*
+     * Custom Actions
+     */
+    virtual void setKeyless(bool value);
+
 protected:
     FrontendApplication& application() {
         return *static_cast<FrontendApplication*>(touchgfx::Application::getInstance());
@@ -27,15 +32,15 @@ protected:
     /*
      * Member Declarations
      */
-    touchgfx::TiledImage tiledImage1;
-    touchgfx::Image image1;
-    touchgfx::Image image2;
-    touchgfx::Image image3;
-    touchgfx::Image image4;
-    touchgfx::Image image5;
-    touchgfx::TextArea textArea1;
-    touchgfx::TextArea textArea2;
-    touchgfx::ScalableImage scalableImage1;
+    touchgfx::TiledImage background;
+    touchgfx::Image seinLeft;
+    touchgfx::Image keylessKey;
+    touchgfx::Image mirrorPhone;
+    touchgfx::Image fingerScan;
+    touchgfx::Image tripLabel;
+    touchgfx::TextArea odometerValue;
+    touchgfx::TextArea tripValue;
+    touchgfx::ScalableImage speedoMeter;
 
 private:
 
