@@ -119,7 +119,7 @@
             "Moveable": false
           },
           {
-            "TextId": "ResourceId1",
+            "TextId": "SingleUseId1",
             "TextRotation": "0",
             "Color": {
               "Red": 255,
@@ -169,6 +169,10 @@
       {
         "TextEntryId": "ResourceId1",
         "IsResource": true
+      },
+      {
+        "TextEntryId": "SingleUseId1",
+        "IsResource": false
       }
     ],
     "Name": "HMI-APP",
