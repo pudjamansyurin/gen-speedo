@@ -11,7 +11,11 @@ public:
     virtual ~Screen1View() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
+    virtual void handleTickEvent();
 protected:
+    uint32_t ticker;
+    uint32_t odometer;
 };
 
 #endif // SCREEN1VIEW_HPP
