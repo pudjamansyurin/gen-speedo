@@ -86,20 +86,20 @@ void Screen1ViewBase::setupScreen()
 //Called when the screen is done with transition/load
 void Screen1ViewBase::afterTransition()
 {
-    //Interaction1
-    //When screen is entered call animationDone on Screen1
-    //Call animationDone
-    animationDone(false);
-
     //Interaction2
-    //When Interaction1 completed fade overlay
+    //When screen is entered fade overlay
     //Fade overlay to alpha:0 with LinearIn easing in 1000 ms (60 Ticks)
     overlay.clearFadeAnimationEndedAction();
     overlay.startFadeAnimation(0, 60, touchgfx::EasingEquations::linearEaseIn);
     overlay.setFadeAnimationEndedAction(interaction2EndedCallback);
+
+    //Interaction1
+    //When screen is entered call setAnimationState on Screen1
+    //Call setAnimationState
+    setAnimationState(true);
 }
 
-void Screen1ViewBase::animationDone(bool value)
+void Screen1ViewBase::setAnimationState(bool value)
 {
 
 }
@@ -107,7 +107,7 @@ void Screen1ViewBase::animationDone(bool value)
 void Screen1ViewBase::interaction2EndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::Shape>& comp)
 {
     //Interaction3
-    //When Interaction2 completed call animationDone on Screen1
-    //Call animationDone
-    animationDone(true);
+    //When Interaction2 completed call setAnimationState on Screen1
+    //Call setAnimationState
+    setAnimationState(false);
 }

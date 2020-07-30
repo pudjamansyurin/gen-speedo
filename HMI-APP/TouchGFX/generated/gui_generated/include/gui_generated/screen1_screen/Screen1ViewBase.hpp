@@ -26,7 +26,7 @@ public:
     /*
      * Custom Actions
      */
-    virtual void animationDone(bool value);
+    virtual void setAnimationState(bool value);
     virtual void afterTransition();
 
 protected:

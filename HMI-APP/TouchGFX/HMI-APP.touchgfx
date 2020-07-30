@@ -257,24 +257,10 @@
         ],
         "Interactions": [
           {
-            "InteractionName": "Interaction1",
-            "HasCompletedTrigger": true,
-            "Trigger": {
-              "Type": "TriggerScreenEntered"
-            },
-            "Action": {
-              "ActionCustomTypeName": "Call Screen1 animationDone",
-              "ParameterValue": "false",
-              "ActionComponent": "Screen1",
-              "Type": "ActionCustom2"
-            }
-          },
-          {
             "InteractionName": "Interaction2",
             "HasCompletedTrigger": true,
             "Trigger": {
-              "InteractionToTriggerOn": "Interaction1",
-              "Type": "TriggerInteractionCompleted"
+              "Type": "TriggerScreenEntered"
             },
             "Action": {
               "Alpha": 0,
@@ -286,6 +272,19 @@
             }
           },
           {
+            "InteractionName": "Interaction1",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "Type": "TriggerScreenEntered"
+            },
+            "Action": {
+              "ActionCustomTypeName": "Call Screen1 setAnimationState",
+              "ParameterValue": "true",
+              "ActionComponent": "Screen1",
+              "Type": "ActionCustom2"
+            }
+          },
+          {
             "InteractionName": "Interaction3",
             "HasCompletedTrigger": false,
             "Trigger": {
@@ -293,8 +292,8 @@
               "Type": "TriggerInteractionCompleted"
             },
             "Action": {
-              "ActionCustomTypeName": "Call Screen1 animationDone",
-              "ParameterValue": "true",
+              "ActionCustomTypeName": "Call Screen1 setAnimationState",
+              "ParameterValue": "false",
               "ActionComponent": "Screen1",
               "Type": "ActionCustom2"
             }
@@ -302,8 +301,8 @@
         ],
         "CustomActions": [
           {
-            "Name": "animationDone",
-            "Description": "Welcome animation state",
+            "Name": "setAnimationState",
+            "Description": "Set welcome animation state",
             "HasValue": true,
             "ValueType": "bool"
           }
