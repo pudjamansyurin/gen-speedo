@@ -11,6 +11,8 @@
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/widgets/TextureMapper.hpp>
+#include <touchgfx/widgets/canvas/Shape.hpp>
+#include <touchgfx/widgets/canvas/PainterRGB565.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -36,6 +38,8 @@ protected:
     touchgfx::TextAreaWithOneWildcard tripValue;
     touchgfx::TextAreaWithOneWildcard odomValue;
     touchgfx::TextureMapper speedoMeter;
+    touchgfx::Shape<12> overlay;
+    touchgfx::PainterRGB565 overlayPainter;
 
     /*
      * Wildcard Buffers
@@ -47,6 +51,11 @@ protected:
 
 private:
 
+    /*
+     * Canvas Buffer Size
+     */
+    static const uint16_t CANVAS_BUFFER_SIZE = 4800;
+    uint8_t canvasBuffer[CANVAS_BUFFER_SIZE];
 };
 
 #endif // SCREEN1VIEWBASE_HPP

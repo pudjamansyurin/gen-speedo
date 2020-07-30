@@ -9,6 +9,8 @@
 Screen1ViewBase::Screen1ViewBase()
 {
 
+    touchgfx::CanvasWidgetRenderer::setupBuffer(canvasBuffer, CANVAS_BUFFER_SIZE);
+
     background.setBitmap(touchgfx::Bitmap(BITMAP_HMI_LEFT_ID));
     background.setPosition(0, 0, 320, 240);
     background.setOffset(0, 0);
@@ -42,17 +44,26 @@ Screen1ViewBase::Screen1ViewBase()
     odomValue.setWildcard(odomValueBuffer);
     odomValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID2));
 
-    speedoMeter.setXY(80, 65);
+    speedoMeter.setXY(81, 65);
     speedoMeter.setBitmap(touchgfx::Bitmap(BITMAP_CLOCK_STANDARD_SECOND_HAND_ID));
     speedoMeter.setWidth(200);
     speedoMeter.setHeight(200);
-    speedoMeter.setBitmapPosition(96.300f, 33.600f);
+    speedoMeter.setBitmapPosition(96.500f, 33.500f);
     speedoMeter.setScale(1.400f);
     speedoMeter.setCameraDistance(1000.000f);
     speedoMeter.setOrigo(100.000f, 100.000f, 1000.000f);
     speedoMeter.setCamera(100.000f, 100.000f);
     speedoMeter.updateAngles(0.000f, 0.000f, -1.570f);
     speedoMeter.setRenderingAlgorithm(touchgfx::TextureMapper::BILINEAR_INTERPOLATION);
+
+    overlay.setPosition(24, 23, 296, 193);
+    overlay.setOrigin(0.000f, 0.000f);
+    overlay.setScale(1.000f, 1.000f);
+    overlay.setAngle(0.000f);
+    overlayPainter.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    overlay.setPainter(overlayPainter);
+    const touchgfx::AbstractShape::ShapePoint<float> overlayPoints[12] = { { 294.000f, 40.000f }, { 230.000f, 40.000f }, { 205.000f, 13.800f }, { 122.300f, 14.000f }, { 97.700f, 21.400f }, { 60.000f, 45.000f }, { 35.000f, 90.000f }, { 12.000f, 160.000f }, { 33.000f, 180.000f }, { 195.000f, 180.000f }, { 223.000f, 137.000f }, { 294.000f, 137.000f } };
+    overlay.setShape(overlayPoints);
 
     add(background);
     add(seinLeft);
@@ -63,6 +74,7 @@ Screen1ViewBase::Screen1ViewBase()
     add(tripValue);
     add(odomValue);
     add(speedoMeter);
+    add(overlay);
 }
 
 void Screen1ViewBase::setupScreen()
