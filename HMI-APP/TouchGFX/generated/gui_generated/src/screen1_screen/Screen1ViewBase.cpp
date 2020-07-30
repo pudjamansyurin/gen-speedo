@@ -35,7 +35,7 @@ Screen1ViewBase::Screen1ViewBase()
     tripValue.setWildcard(tripValueBuffer);
     tripValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID1));
 
-    odomValue.setPosition(159, 106, 64, 25);
+    odomValue.setPosition(159, 107, 64, 25);
     odomValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     odomValue.setLinespacing(0);
     Unicode::snprintf(odomValueBuffer, ODOMVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID3).getText());

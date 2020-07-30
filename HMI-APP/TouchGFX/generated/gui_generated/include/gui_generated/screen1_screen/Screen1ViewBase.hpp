@@ -42,9 +42,9 @@ protected:
     /*
      * Wildcard Buffers
      */
-    static const uint16_t TRIPVALUE_SIZE = 7;
+    static const uint16_t TRIPVALUE_SIZE = 6;
     touchgfx::Unicode::UnicodeChar tripValueBuffer[TRIPVALUE_SIZE];
-    static const uint16_t ODOMVALUE_SIZE = 7;
+    static const uint16_t ODOMVALUE_SIZE = 6;
     touchgfx::Unicode::UnicodeChar odomValueBuffer[ODOMVALUE_SIZE];
 
 private:

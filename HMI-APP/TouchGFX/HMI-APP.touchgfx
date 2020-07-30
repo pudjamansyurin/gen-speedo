@@ -109,7 +109,7 @@
             "Wildcard1": {
               "TextId": "SingleUseId4",
               "UseBuffer": true,
-              "BufferSize": 7
+              "BufferSize": 6
             },
             "Name": "tripValue",
             "X": 159,
@@ -137,11 +137,11 @@
             "Wildcard1": {
               "TextId": "SingleUseId3",
               "UseBuffer": true,
-              "BufferSize": 7
+              "BufferSize": 6
             },
             "Name": "odomValue",
             "X": 159,
-            "Y": 106,
+            "Y": 107,
             "Width": 64,
             "Height": 25,
             "Type": "TextArea",
