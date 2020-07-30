@@ -106,8 +106,5 @@ void Screen1ViewBase::setAnimationState(bool value)
 
 void Screen1ViewBase::interaction1EndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::Shape>& comp)
 {
-    //Interaction3
-    //When Interaction1 completed call setAnimationState on Screen1
-    //Call setAnimationState
-    setAnimationState(false);
+
 }
