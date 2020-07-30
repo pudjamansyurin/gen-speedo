@@ -65,7 +65,7 @@ void Screen1View::handleTickEvent() {
         if(rpmmeter > 9000) {
             rpmmeter = 0;
         } else  {
-            rpmmeter+=10;
+            rpmmeter+=50;
         }
         speedoMeter.updateAngles(0.000f, 0.000f, (piRpm * rpmmeter) - M_PI_2);
         speedoMeter.invalidate();
