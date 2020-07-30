@@ -10,8 +10,8 @@
     },
     "AvailableResolutions" : [
       {
-        "Width": 320,
-        "Height": 240
+        "Width": 800,
+        "Height": 480
       }
     ],
     "PostGenerateTargetCommand" : "touchgfx update_project --project-file=../HMI-APP.ioc --platform=m4"
