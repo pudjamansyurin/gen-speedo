@@ -35,8 +35,8 @@ protected:
     touchgfx::Image mirrorPhone;
     touchgfx::Image fingerScan;
     touchgfx::Image tripLabel;
-    touchgfx::TextAreaWithOneWildcard odometerValue;
     touchgfx::TextAreaWithOneWildcard tripValue;
+    touchgfx::TextAreaWithOneWildcard odomValue;
     touchgfx::MoveAnimator< touchgfx::ScalableImage > speedoMeter;
 
     /*
@@ -44,6 +44,8 @@ protected:
      */
     static const uint16_t TRIPVALUE_SIZE = 7;
     touchgfx::Unicode::UnicodeChar tripValueBuffer[TRIPVALUE_SIZE];
+    static const uint16_t ODOMVALUE_SIZE = 7;
+    touchgfx::Unicode::UnicodeChar odomValueBuffer[ODOMVALUE_SIZE];
 
 private:
 

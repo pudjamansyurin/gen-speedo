@@ -28,17 +28,19 @@ Screen1ViewBase::Screen1ViewBase()
     tripLabel.setXY(127, 89);
     tripLabel.setBitmap(touchgfx::Bitmap(BITMAP_HMI_LEFT_TRIP_B_ID));
 
-    odometerValue.setPosition(159, 106, 64, 25);
-    odometerValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
-    odometerValue.setLinespacing(0);
-    odometerValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID2));
-
-    tripValue.setPosition(159, 82, 64, 25);
+    tripValue.setPosition(159, 83, 64, 25);
     tripValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     tripValue.setLinespacing(0);
     tripValueBuffer[0] = 0;
     tripValue.setWildcard(tripValueBuffer);
     tripValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID1));
+
+    odomValue.setPosition(159, 106, 64, 25);
+    odomValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    odomValue.setLinespacing(0);
+    odomValueBuffer[0] = 0;
+    odomValue.setWildcard(odomValueBuffer);
+    odomValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID2));
 
     speedoMeter.setBitmap(touchgfx::Bitmap(BITMAP_CLOCK_STANDARD_SECOND_HAND_ID));
     speedoMeter.setPosition(176, 67, 9, 127);
@@ -50,8 +52,8 @@ Screen1ViewBase::Screen1ViewBase()
     add(mirrorPhone);
     add(fingerScan);
     add(tripLabel);
-    add(odometerValue);
     add(tripValue);
+    add(odomValue);
     add(speedoMeter);
 }
 
