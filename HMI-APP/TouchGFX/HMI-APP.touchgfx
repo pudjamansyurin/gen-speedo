@@ -258,7 +258,7 @@
         "Interactions": [
           {
             "InteractionName": "Interaction1",
-            "HasCompletedTrigger": true,
+            "HasCompletedTrigger": false,
             "Trigger": {
               "Type": "TriggerScreenEntered"
             },
