@@ -10,9 +10,7 @@
 #include <touchgfx/widgets/TiledImage.hpp>
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
-#include <touchgfx/widgets/ScalableImage.hpp>
-#include <touchgfx/EasingEquations.hpp>
-#include <touchgfx/mixins/MoveAnimator.hpp>
+#include <touchgfx/widgets/TextureMapper.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -37,7 +35,7 @@ protected:
     touchgfx::Image tripLabel;
     touchgfx::TextAreaWithOneWildcard tripValue;
     touchgfx::TextAreaWithOneWildcard odomValue;
-    touchgfx::MoveAnimator< touchgfx::ScalableImage > speedoMeter;
+    touchgfx::TextureMapper speedoMeter;
 
     /*
      * Wildcard Buffers

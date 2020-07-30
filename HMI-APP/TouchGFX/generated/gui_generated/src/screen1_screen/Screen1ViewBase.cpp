@@ -42,9 +42,17 @@ Screen1ViewBase::Screen1ViewBase()
     odomValue.setWildcard(odomValueBuffer);
     odomValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID2));
 
+    speedoMeter.setXY(80, 65);
     speedoMeter.setBitmap(touchgfx::Bitmap(BITMAP_CLOCK_STANDARD_SECOND_HAND_ID));
-    speedoMeter.setPosition(176, 67, 9, 127);
-    speedoMeter.setScalingAlgorithm(touchgfx::ScalableImage::NEAREST_NEIGHBOR);
+    speedoMeter.setWidth(200);
+    speedoMeter.setHeight(200);
+    speedoMeter.setBitmapPosition(96.300f, 33.600f);
+    speedoMeter.setScale(1.400f);
+    speedoMeter.setCameraDistance(1000.000f);
+    speedoMeter.setOrigo(100.000f, 100.000f, 1000.000f);
+    speedoMeter.setCamera(100.000f, 100.000f);
+    speedoMeter.updateAngles(0.000f, 0.000f, -1.570f);
+    speedoMeter.setRenderingAlgorithm(touchgfx::TextureMapper::NEAREST_NEIGHBOR);
 
     add(background);
     add(seinLeft);
