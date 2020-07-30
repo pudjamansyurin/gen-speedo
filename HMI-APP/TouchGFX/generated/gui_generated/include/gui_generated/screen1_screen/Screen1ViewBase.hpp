@@ -22,11 +22,6 @@ public:
     Screen1ViewBase();
     virtual ~Screen1ViewBase() {}
     virtual void setupScreen();
-
-    /*
-     * Custom Actions
-     */
-    virtual void setAnimationState(bool value);
     virtual void afterTransition();
 
 protected:

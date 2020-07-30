@@ -90,14 +90,4 @@ void Screen1ViewBase::afterTransition()
     //Fade overlay to alpha:0 with LinearOut easing in 1000 ms (60 Ticks)
     overlay.clearFadeAnimationEndedAction();
     overlay.startFadeAnimation(0, 60, touchgfx::EasingEquations::linearEaseOut);
-
-    //Interaction2
-    //When screen is entered call setAnimationState on Screen1
-    //Call setAnimationState
-    setAnimationState(true);
-}
-
-void Screen1ViewBase::setAnimationState(bool value)
-{
-
 }

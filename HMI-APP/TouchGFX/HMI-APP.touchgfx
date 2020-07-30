@@ -270,27 +270,6 @@
               "ActionComponent": "overlay",
               "Type": "ActionFade"
             }
-          },
-          {
-            "InteractionName": "Interaction2",
-            "HasCompletedTrigger": false,
-            "Trigger": {
-              "Type": "TriggerScreenEntered"
-            },
-            "Action": {
-              "ActionCustomTypeName": "Call Screen1 setAnimationState",
-              "ParameterValue": "true",
-              "ActionComponent": "Screen1",
-              "Type": "ActionCustom2"
-            }
-          }
-        ],
-        "CustomActions": [
-          {
-            "Name": "setAnimationState",
-            "Description": "Set welcome animation state",
-            "HasValue": true,
-            "ValueType": "bool"
           }
         ],
         "Name": "Screen1",
