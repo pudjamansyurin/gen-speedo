@@ -153,7 +153,7 @@
           },
           {
             "UseAnimation": false,
-            "RenderingAlgorithm": "Bilinear Interpolation",
+            "RenderingAlgorithm": "Nearest-neighbor",
             "FileNameImage": "clock_standard_second_hand.png",
             "LockBitmapToCenter": false,
             "XBitmapPosition": 96.300000000000011,
@@ -167,7 +167,7 @@
             "YOrigo": 100.0,
             "ZOrigo": 1000.0,
             "CameraDistance": 1000.0,
-            "Alpha": 163,
+            "Alpha": 200,
             "Name": "speedoMeter",
             "X": 80,
             "Y": 65,
