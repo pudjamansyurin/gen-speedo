@@ -3,91 +3,90 @@
 /*********************************************************************************/
 #include <gui_generated/screen1_screen/Screen1ViewBase.hpp>
 #include "BitmapDatabase.hpp"
-#include <texts/TextKeysAndLanguages.hpp>
-#include <touchgfx/Color.hpp>
 
 Screen1ViewBase::Screen1ViewBase()
 {
 
-    touchgfx::CanvasWidgetRenderer::setupBuffer(canvasBuffer, CANVAS_BUFFER_SIZE);
+    background.setXY(0, 0);
+    background.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUND_ID));
 
-    background.setBitmap(touchgfx::Bitmap(BITMAP_HMI_LEFT_ID));
-    background.setPosition(0, 0, 320, 240);
-    background.setOffset(0, 0);
+    frontend.setXY(0, 0);
+    frontend.setVisible(false);
+    frontend.setBitmap(touchgfx::Bitmap(BITMAP_FRONTEND_ID));
 
-    seinLeft.setXY(275, 83);
-    seinLeft.setBitmap(touchgfx::Bitmap(BITMAP_HMI_LEFT_SEIN_ID));
+    seinRight.setXY(568, 67);
+    seinRight.setBitmap(touchgfx::Bitmap(BITMAP_SEINRIGHT_ID));
 
-    keylessKey.setXY(228, 133);
-    keylessKey.setBitmap(touchgfx::Bitmap(BITMAP_HMI_LEFT_KEYLESS_ID));
+    seinLeft.setXY(152, 67);
+    seinLeft.setBitmap(touchgfx::Bitmap(BITMAP_SEINLEFT_ID));
 
-    mirrorPhone.setXY(261, 129);
-    mirrorPhone.setBitmap(touchgfx::Bitmap(BITMAP_HMI_LEFT_MIRROR_ID));
+    engineRotation.setXY(558, 57);
+    engineRotation.setBitmap(touchgfx::Bitmap(BITMAP_ENGINEROTATION_ID));
 
-    fingerScan.setXY(293, 127);
-    fingerScan.setBitmap(touchgfx::Bitmap(BITMAP_HMI_LEFT_FINGER_ID));
+    speedLevel.setXY(104, 57);
+    speedLevel.setBitmap(touchgfx::Bitmap(BITMAP_SPEEDLEVEL_ID));
 
-    tripLabel.setXY(127, 89);
-    tripLabel.setBitmap(touchgfx::Bitmap(BITMAP_HMI_LEFT_TRIP_B_ID));
+    container1.setPosition(275, 145, 245, 199);
 
-    tripValue.setPosition(159, 83, 64, 25);
-    tripValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
-    tripValue.setLinespacing(0);
-    Unicode::snprintf(tripValueBuffer, TRIPVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID4).getText());
-    tripValue.setWildcard(tripValueBuffer);
-    tripValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID1));
+    mainGo.setXY(20, 55);
+    mainGo.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
+    container1.add(mainGo);
 
-    odomValue.setPosition(159, 107, 64, 25);
-    odomValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
-    odomValue.setLinespacing(0);
-    Unicode::snprintf(odomValueBuffer, ODOMVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID3).getText());
-    odomValue.setWildcard(odomValueBuffer);
-    odomValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID2));
+    mainReverse.setXY(75, 55);
+    mainReverse.setVisible(false);
+    mainReverse.setBitmap(touchgfx::Bitmap(BITMAP_MAINREVERSE_ID));
+    container1.add(mainReverse);
 
-    speedoMeter.setXY(81, 65);
-    speedoMeter.setBitmap(touchgfx::Bitmap(BITMAP_CLOCK_STANDARD_SECOND_HAND_ID));
-    speedoMeter.setWidth(200);
-    speedoMeter.setHeight(200);
-    speedoMeter.setBitmapPosition(96.500f, 33.500f);
-    speedoMeter.setScale(1.400f);
-    speedoMeter.setCameraDistance(1000.000f);
-    speedoMeter.setOrigo(100.000f, 100.000f, 1000.000f);
-    speedoMeter.setCamera(100.000f, 100.000f);
-    speedoMeter.updateAngles(0.000f, 0.000f, -1.570f);
-    speedoMeter.setRenderingAlgorithm(touchgfx::TextureMapper::BILINEAR_INTERPOLATION);
+    batteryDrainOut.setXY(23, 37);
+    batteryDrainOut.setVisible(false);
+    batteryDrainOut.setBitmap(touchgfx::Bitmap(BITMAP_BATTERYDRAINOUT_ID));
+    container1.add(batteryDrainOut);
 
-    overlay.setPosition(24, 23, 296, 193);
-    overlay.setOrigin(0.000f, 0.000f);
-    overlay.setScale(1.000f, 1.000f);
-    overlay.setAngle(0.000f);
-    overlayPainter.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-    overlay.setPainter(overlayPainter);
-    const touchgfx::AbstractShape::ShapePoint<float> overlayPoints[12] = { { 294.000f, 40.000f }, { 230.000f, 40.000f }, { 205.000f, 13.800f }, { 122.300f, 14.000f }, { 97.700f, 21.400f }, { 60.000f, 45.000f }, { 35.000f, 90.000f }, { 12.000f, 160.000f }, { 33.000f, 180.000f }, { 195.000f, 180.000f }, { 223.000f, 137.000f }, { 294.000f, 137.000f } };
-    overlay.setShape(overlayPoints);
+    brakeSystemAlert.setXY(27, 18);
+    brakeSystemAlert.setVisible(false);
+    brakeSystemAlert.setBitmap(touchgfx::Bitmap(BITMAP_BRAKESYSTEMALERT_ID));
+    container1.add(brakeSystemAlert);
+
+    coolantTemperatureWarning.setXY(52, 36);
+    coolantTemperatureWarning.setVisible(false);
+    coolantTemperatureWarning.setBitmap(touchgfx::Bitmap(BITMAP_COOLANTTEMPERATUREWARNING_ID));
+    container1.add(coolantTemperatureWarning);
+
+    electronicErrorMessage.setXY(52, 32);
+    electronicErrorMessage.setVisible(false);
+    electronicErrorMessage.setBitmap(touchgfx::Bitmap(BITMAP_ELECTRONICERRORMESSAGE_ID));
+    container1.add(electronicErrorMessage);
+
+    fingerscanLoginStatus.setXY(54, 19);
+    fingerscanLoginStatus.setVisible(false);
+    fingerscanLoginStatus.setBitmap(touchgfx::Bitmap(BITMAP_FINGERSCANLOGINSTATUS_ID));
+    container1.add(fingerscanLoginStatus);
+
+    highBeamActivated.setXY(33, 33);
+    highBeamActivated.setVisible(false);
+    highBeamActivated.setBitmap(touchgfx::Bitmap(BITMAP_HIGHBEAMACTIVATED_ID));
+    container1.add(highBeamActivated);
+
+    keylessIgnitionKeyDetection.setXY(33, 24);
+    keylessIgnitionKeyDetection.setVisible(false);
+    keylessIgnitionKeyDetection.setBitmap(touchgfx::Bitmap(BITMAP_KEYLESSIGNITIONKEYDETECTION_ID));
+    container1.add(keylessIgnitionKeyDetection);
+
+    smartphoneMirroringStatus.setXY(32, 33);
+    smartphoneMirroringStatus.setVisible(false);
+    smartphoneMirroringStatus.setBitmap(touchgfx::Bitmap(BITMAP_SMARTPHONEMIRRORINGSTATUS_ID));
+    container1.add(smartphoneMirroringStatus);
 
     add(background);
+    add(frontend);
+    add(seinRight);
     add(seinLeft);
-    add(keylessKey);
-    add(mirrorPhone);
-    add(fingerScan);
-    add(tripLabel);
-    add(tripValue);
-    add(odomValue);
-    add(speedoMeter);
-    add(overlay);
+    add(engineRotation);
+    add(speedLevel);
+    add(container1);
 }
 
 void Screen1ViewBase::setupScreen()
 {
 
-}
-
-//Called when the screen is done with transition/load
-void Screen1ViewBase::afterTransition()
-{
-    //Interaction1
-    //When screen is entered fade overlay
-    //Fade overlay to alpha:0 with LinearOut easing in 1000 ms (60 Ticks)
-    overlay.clearFadeAnimationEndedAction();
-    overlay.startFadeAnimation(0, 60, touchgfx::EasingEquations::linearEaseOut);
 }

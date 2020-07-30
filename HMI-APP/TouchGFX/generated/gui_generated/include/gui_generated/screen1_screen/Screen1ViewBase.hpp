@@ -7,14 +7,8 @@
 #include <gui/common/FrontendApplication.hpp>
 #include <mvp/View.hpp>
 #include <gui/screen1_screen/Screen1Presenter.hpp>
-#include <touchgfx/widgets/TiledImage.hpp>
 #include <touchgfx/widgets/Image.hpp>
-#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
-#include <touchgfx/widgets/TextureMapper.hpp>
-#include <touchgfx/widgets/canvas/Shape.hpp>
-#include <touchgfx/widgets/canvas/PainterRGB565.hpp>
-#include <touchgfx/EasingEquations.hpp>
-#include <touchgfx/mixins/FadeAnimator.hpp>
+#include <touchgfx/containers/Container.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -22,7 +16,6 @@ public:
     Screen1ViewBase();
     virtual ~Screen1ViewBase() {}
     virtual void setupScreen();
-    virtual void afterTransition();
 
 protected:
     FrontendApplication& application() {
@@ -32,33 +25,26 @@ protected:
     /*
      * Member Declarations
      */
-    touchgfx::TiledImage background;
+    touchgfx::Image background;
+    touchgfx::Image frontend;
+    touchgfx::Image seinRight;
     touchgfx::Image seinLeft;
-    touchgfx::Image keylessKey;
-    touchgfx::Image mirrorPhone;
-    touchgfx::Image fingerScan;
-    touchgfx::Image tripLabel;
-    touchgfx::TextAreaWithOneWildcard tripValue;
-    touchgfx::TextAreaWithOneWildcard odomValue;
-    touchgfx::TextureMapper speedoMeter;
-    touchgfx::FadeAnimator< touchgfx::Shape<12> > overlay;
-    touchgfx::PainterRGB565 overlayPainter;
-
-    /*
-     * Wildcard Buffers
-     */
-    static const uint16_t TRIPVALUE_SIZE = 6;
-    touchgfx::Unicode::UnicodeChar tripValueBuffer[TRIPVALUE_SIZE];
-    static const uint16_t ODOMVALUE_SIZE = 6;
-    touchgfx::Unicode::UnicodeChar odomValueBuffer[ODOMVALUE_SIZE];
+    touchgfx::Image engineRotation;
+    touchgfx::Image speedLevel;
+    touchgfx::Container container1;
+    touchgfx::Image mainGo;
+    touchgfx::Image mainReverse;
+    touchgfx::Image batteryDrainOut;
+    touchgfx::Image brakeSystemAlert;
+    touchgfx::Image coolantTemperatureWarning;
+    touchgfx::Image electronicErrorMessage;
+    touchgfx::Image fingerscanLoginStatus;
+    touchgfx::Image highBeamActivated;
+    touchgfx::Image keylessIgnitionKeyDetection;
+    touchgfx::Image smartphoneMirroringStatus;
 
 private:
 
-    /*
-     * Canvas Buffer Size
-     */
-    static const uint16_t CANVAS_BUFFER_SIZE = 4800;
-    uint8_t canvasBuffer[CANVAS_BUFFER_SIZE];
 };
 
 #endif // SCREEN1VIEWBASE_HPP

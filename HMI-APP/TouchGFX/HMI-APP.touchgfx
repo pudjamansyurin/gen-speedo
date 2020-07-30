@@ -4,16 +4,14 @@
       {
         "Components": [
           {
-            "FileName": "HMI_Left.png",
+            "RelativeFilename": "Background.png",
             "Alpha": 255,
-            "OffsetX": 0,
-            "OffsetY": 0,
             "Name": "background",
             "X": 0,
             "Y": 0,
-            "Width": 320,
-            "Height": 240,
-            "Type": "TiledImage",
+            "Width": 800,
+            "Height": 480,
+            "Type": "Image",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -21,13 +19,43 @@
             "Moveable": false
           },
           {
-            "RelativeFilename": "HMI_Left_Sein.png",
+            "RelativeFilename": "Frontend.png",
+            "Alpha": 255,
+            "Name": "frontend",
+            "X": 0,
+            "Y": 0,
+            "Width": 800,
+            "Height": 480,
+            "Type": "Image",
+            "Visible": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "RelativeFilename": "SeinRight.png",
+            "Alpha": 255,
+            "Name": "seinRight",
+            "X": 568,
+            "Y": 67,
+            "Width": 79,
+            "Height": 354,
+            "Type": "Image",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "RelativeFilename": "SeinLeft.png",
             "Alpha": 255,
             "Name": "seinLeft",
-            "X": 275,
-            "Y": 83,
-            "Width": 21,
-            "Height": 24,
+            "X": 152,
+            "Y": 67,
+            "Width": 80,
+            "Height": 355,
             "Type": "Image",
             "Visible": true,
             "Draggable": false,
@@ -36,13 +64,13 @@
             "Moveable": false
           },
           {
-            "RelativeFilename": "HMI_Left_Keyless.png",
+            "RelativeFilename": "EngineRotation.png",
             "Alpha": 255,
-            "Name": "keylessKey",
-            "X": 228,
-            "Y": 133,
-            "Width": 28,
-            "Height": 24,
+            "Name": "engineRotation",
+            "X": 558,
+            "Y": 57,
+            "Width": 137,
+            "Height": 366,
             "Type": "Image",
             "Visible": true,
             "Draggable": false,
@@ -51,13 +79,13 @@
             "Moveable": false
           },
           {
-            "RelativeFilename": "HMI_Left_Mirror.png",
+            "RelativeFilename": "SpeedLevel.png",
             "Alpha": 255,
-            "Name": "mirrorPhone",
-            "X": 261,
-            "Y": 129,
-            "Width": 29,
-            "Height": 23,
+            "Name": "speedLevel",
+            "X": 104,
+            "Y": 57,
+            "Width": 136,
+            "Height": 366,
             "Type": "Image",
             "Visible": true,
             "Draggable": false,
@@ -66,188 +94,165 @@
             "Moveable": false
           },
           {
-            "RelativeFilename": "HMI_Left_Finger.png",
-            "Alpha": 255,
-            "Name": "fingerScan",
-            "X": 293,
-            "Y": 127,
-            "Width": 25,
-            "Height": 25,
-            "Type": "Image",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "RelativeFilename": "HMI_Left_Trip_B.png",
-            "Alpha": 255,
-            "Name": "tripLabel",
-            "X": 127,
-            "Y": 89,
-            "Width": 26,
-            "Height": 15,
-            "Type": "Image",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "TextId": "SingleUseId1",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "Alpha": 255,
-            "AutoSize": false,
-            "LineSpacing": 0,
-            "Wildcard1": {
-              "TextId": "SingleUseId4",
-              "UseBuffer": true,
-              "BufferSize": 6
-            },
-            "Name": "tripValue",
-            "X": 159,
-            "Y": 83,
-            "Width": 64,
-            "Height": 25,
-            "Type": "TextArea",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "TextId": "SingleUseId2",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "Alpha": 255,
-            "AutoSize": false,
-            "LineSpacing": 0,
-            "Wildcard1": {
-              "TextId": "SingleUseId3",
-              "UseBuffer": true,
-              "BufferSize": 6
-            },
-            "Name": "odomValue",
-            "X": 159,
-            "Y": 107,
-            "Width": 64,
-            "Height": 25,
-            "Type": "TextArea",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "UseAnimation": false,
-            "RenderingAlgorithm": "Bilinear Interpolation",
-            "FileNameImage": "clock_standard_second_hand.png",
-            "LockBitmapToCenter": false,
-            "XBitmapPosition": 96.5,
-            "YBitmapPosition": 33.499999999999666,
-            "XAngle": 0.0,
-            "YAngle": 0.0,
-            "ZAngle": -1.5700000000000012,
-            "Scale": 1.4,
-            "LockOrigoToCenter": true,
-            "XOrigo": 100.0,
-            "YOrigo": 100.0,
-            "ZOrigo": 1000.0,
-            "CameraDistance": 1000.0,
-            "Alpha": 255,
-            "Name": "speedoMeter",
-            "X": 81,
-            "Y": 65,
-            "Width": 200,
-            "Height": 200,
-            "Type": "TextureMapper",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "Color": {
-              "Red": 0,
-              "Green": 0,
-              "Blue": 0
-            },
-            "Points": [
+            "Components": [
               {
-                "X": 294.0,
-                "Y": 40.0
+                "RelativeFilename": "MainGo.png",
+                "Alpha": 255,
+                "Name": "mainGo",
+                "X": 20,
+                "Y": 55,
+                "Width": 210,
+                "Height": 81,
+                "Type": "Image",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
               },
               {
-                "X": 230.0,
-                "Y": 40.0
+                "RelativeFilename": "MainReverse.png",
+                "Alpha": 255,
+                "Name": "mainReverse",
+                "X": 75,
+                "Y": 55,
+                "Width": 101,
+                "Height": 81,
+                "Type": "Image",
+                "Visible": false,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
               },
               {
-                "X": 205.0,
-                "Y": 13.799999999999987
+                "RelativeFilename": "BatteryDrainOut.png",
+                "Alpha": 255,
+                "Name": "batteryDrainOut",
+                "X": 23,
+                "Y": 37,
+                "Width": 204,
+                "Height": 116,
+                "Type": "Image",
+                "Visible": false,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
               },
               {
-                "X": 122.30000000000015,
-                "Y": 13.999999999999989
+                "RelativeFilename": "BrakeSystemAlert.png",
+                "Alpha": 255,
+                "Name": "brakeSystemAlert",
+                "X": 27,
+                "Y": 18,
+                "Width": 196,
+                "Height": 154,
+                "Type": "Image",
+                "Visible": false,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
               },
               {
-                "X": 97.699999999998141,
-                "Y": 21.399999999999736
+                "RelativeFilename": "CoolantTemperatureWarning.png",
+                "Alpha": 255,
+                "Name": "coolantTemperatureWarning",
+                "X": 52,
+                "Y": 36,
+                "Width": 146,
+                "Height": 118,
+                "Type": "Image",
+                "Visible": false,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
               },
               {
-                "X": 60.0,
-                "Y": 45.0
+                "RelativeFilename": "ElectronicErrorMessage.png",
+                "Alpha": 255,
+                "Name": "electronicErrorMessage",
+                "X": 52,
+                "Y": 32,
+                "Width": 146,
+                "Height": 126,
+                "Type": "Image",
+                "Visible": false,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
               },
               {
-                "X": 35.0,
-                "Y": 90.0
+                "RelativeFilename": "FingerscanLoginStatus.png",
+                "Alpha": 255,
+                "Name": "fingerscanLoginStatus",
+                "X": 54,
+                "Y": 19,
+                "Width": 142,
+                "Height": 153,
+                "Type": "Image",
+                "Visible": false,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
               },
               {
-                "X": 12.0,
-                "Y": 160.0
+                "RelativeFilename": "HighBeamActivated.png",
+                "Alpha": 255,
+                "Name": "highBeamActivated",
+                "X": 33,
+                "Y": 33,
+                "Width": 185,
+                "Height": 124,
+                "Type": "Image",
+                "Visible": false,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
               },
               {
-                "X": 33.0,
-                "Y": 180.0
+                "RelativeFilename": "KeylessIgnitionKeyDetection.png",
+                "Alpha": 255,
+                "Name": "keylessIgnitionKeyDetection",
+                "X": 33,
+                "Y": 24,
+                "Width": 185,
+                "Height": 143,
+                "Type": "Image",
+                "Visible": false,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
               },
               {
-                "X": 195.0,
-                "Y": 180.0
-              },
-              {
-                "X": 223.0,
-                "Y": 137.0
-              },
-              {
-                "X": 294.0,
-                "Y": 137.0
+                "RelativeFilename": "SmartphoneMirroringStatus.png",
+                "Alpha": 255,
+                "Name": "smartphoneMirroringStatus",
+                "X": 32,
+                "Y": 33,
+                "Width": 186,
+                "Height": 124,
+                "Type": "Image",
+                "Visible": false,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
               }
             ],
-            "Angle": 0.0,
-            "XScale": 1.0,
-            "YScale": 1.0,
-            "XOrigin": 0.0,
-            "YOrigin": 0.0,
-            "Alpha": 255,
-            "Name": "overlay",
-            "X": 24,
-            "Y": 23,
-            "Width": 296,
-            "Height": 193,
-            "Type": "Shape",
+            "IsCacheableContainer": false,
+            "Name": "container1",
+            "X": 275,
+            "Y": 145,
+            "Width": 245,
+            "Height": 199,
+            "Type": "Container",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -255,51 +260,17 @@
             "Moveable": false
           }
         ],
-        "Interactions": [
-          {
-            "InteractionName": "Interaction1",
-            "HasCompletedTrigger": false,
-            "Trigger": {
-              "Type": "TriggerScreenEntered"
-            },
-            "Action": {
-              "Alpha": 0,
-              "Easing": "Linear",
-              "EasingOption": "Out",
-              "Duration": 1000,
-              "ActionComponent": "overlay",
-              "Type": "ActionFade"
-            }
-          }
-        ],
+        "Interactions": [],
         "Name": "Screen1",
         "OverrideDefaultBufferSize": false,
-        "CanvasBufferSize": 4800
+        "CanvasBufferSize": 0
       }
     ],
     "CustomContainerDefinitions": [],
-    "TextEntries": [
-      {
-        "TextEntryId": "SingleUseId1",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId2",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId3",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId4",
-        "IsResource": false
-      }
-    ],
     "Name": "HMI-APP",
     "Resolution": {
-      "Width": 320,
-      "Height": 240
+      "Width": 800,
+      "Height": 480
     },
     "SelectedColorDepth": 16,
     "StartupScreenName": "Screen1",
@@ -319,8 +290,8 @@
     ],
     "AvailableResolutions": [
       {
-        "Width": 320,
-        "Height": 240
+        "Width": 800,
+        "Height": 480
       }
     ],
     "PhysicalButtons": [],
