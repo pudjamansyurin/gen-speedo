@@ -251,7 +251,7 @@
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
-            "Fadeable": true,
+            "Fadeable": false,
             "Moveable": false
           }
         ],
