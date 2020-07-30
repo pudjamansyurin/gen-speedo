@@ -96,7 +96,7 @@
             "Moveable": false
           },
           {
-            "TextId": "SingleUseId4",
+            "TextId": "SingleUseId2",
             "TextRotation": "0",
             "Color": {
               "Red": 255,
@@ -175,15 +175,11 @@
     "CustomContainerDefinitions": [],
     "TextEntries": [
       {
-        "TextEntryId": "ResourceId1",
-        "IsResource": true
-      },
-      {
         "TextEntryId": "SingleUseId1",
         "IsResource": false
       },
       {
-        "TextEntryId": "SingleUseId4",
+        "TextEntryId": "SingleUseId2",
         "IsResource": false
       }
     ],

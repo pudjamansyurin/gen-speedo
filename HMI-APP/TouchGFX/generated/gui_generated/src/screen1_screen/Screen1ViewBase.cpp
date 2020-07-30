@@ -31,7 +31,7 @@ Screen1ViewBase::Screen1ViewBase()
     odometerValue.setPosition(159, 106, 64, 25);
     odometerValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     odometerValue.setLinespacing(0);
-    odometerValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID4));
+    odometerValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID2));
 
     tripValue.setPosition(159, 82, 64, 25);
     tripValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
