@@ -6,8 +6,7 @@
 #include <texts/TextKeysAndLanguages.hpp>
 #include <touchgfx/Color.hpp>
 
-Screen1ViewBase::Screen1ViewBase() :
-    interaction2EndedCallback(this, &Screen1ViewBase::interaction2EndedCallbackHandler)
+Screen1ViewBase::Screen1ViewBase()
 {
 
     touchgfx::CanvasWidgetRenderer::setupBuffer(canvasBuffer, CANVAS_BUFFER_SIZE);
@@ -86,28 +85,14 @@ void Screen1ViewBase::setupScreen()
 //Called when the screen is done with transition/load
 void Screen1ViewBase::afterTransition()
 {
-    //Interaction2
-    //When screen is entered fade overlay
-    //Fade overlay to alpha:0 with LinearIn easing in 1000 ms (60 Ticks)
-    overlay.clearFadeAnimationEndedAction();
-    overlay.startFadeAnimation(0, 60, touchgfx::EasingEquations::linearEaseIn);
-    overlay.setFadeAnimationEndedAction(interaction2EndedCallback);
-
     //Interaction1
-    //When screen is entered call setAnimationState on Screen1
-    //Call setAnimationState
-    setAnimationState(true);
+    //When screen is entered fade overlay
+    //Fade overlay to alpha:0 with LinearOut easing in 1000 ms (60 Ticks)
+    overlay.clearFadeAnimationEndedAction();
+    overlay.startFadeAnimation(0, 60, touchgfx::EasingEquations::linearEaseOut);
 }
 
 void Screen1ViewBase::setAnimationState(bool value)
 {
 
-}
-
-void Screen1ViewBase::interaction2EndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::Shape>& comp)
-{
-    //Interaction3
-    //When Interaction2 completed call setAnimationState on Screen1
-    //Call setAnimationState
-    setAnimationState(false);
 }

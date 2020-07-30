@@ -58,16 +58,6 @@ protected:
     touchgfx::Unicode::UnicodeChar odomValueBuffer[ODOMVALUE_SIZE];
 
 private:
-    /*
-     * Interaction Callback Declarations
-     */
-    touchgfx::Callback < Screen1ViewBase, const touchgfx::FadeAnimator<touchgfx::Shape>& >  interaction2EndedCallback;
-
-
-    /*
-     * Interaction Handlers
-     */
-    void interaction2EndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::Shape>& comp);
 
     /*
      * Canvas Buffer Size
