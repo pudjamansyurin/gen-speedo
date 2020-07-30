@@ -13,6 +13,8 @@
 #include <touchgfx/widgets/TextureMapper.hpp>
 #include <touchgfx/widgets/canvas/Shape.hpp>
 #include <touchgfx/widgets/canvas/PainterRGB565.hpp>
+#include <touchgfx/EasingEquations.hpp>
+#include <touchgfx/mixins/FadeAnimator.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -38,7 +40,7 @@ protected:
     touchgfx::TextAreaWithOneWildcard tripValue;
     touchgfx::TextAreaWithOneWildcard odomValue;
     touchgfx::TextureMapper speedoMeter;
-    touchgfx::Shape<12> overlay;
+    touchgfx::FadeAnimator< touchgfx::Shape<12> > overlay;
     touchgfx::PainterRGB565 overlayPainter;
 
     /*
