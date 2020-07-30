@@ -1,7 +1,6 @@
 #include <gui/screen1_screen/Screen1View.hpp>
 #include <math.h>
 
-// 1 rpm = (pi/4)/7000;
 static const float piRpm = M_PI_2 / 7000;
 
 Screen1View::Screen1View() :

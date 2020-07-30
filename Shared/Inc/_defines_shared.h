@@ -60,7 +60,6 @@
 
 // Events (for Individual Thread)
 #define EVT_MASK				 (uint32_t) 0x7FFFFFFF
-#define EVT_DISPLAY_UPDATE                  BIT(0)
 
 // Events group (for All Threads)
 #define EVENT_MASK		  		 (uint32_t) 0xFFFFFF
