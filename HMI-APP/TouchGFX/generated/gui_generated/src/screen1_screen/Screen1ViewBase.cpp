@@ -3,6 +3,8 @@
 /*********************************************************************************/
 #include <gui_generated/screen1_screen/Screen1ViewBase.hpp>
 #include "BitmapDatabase.hpp"
+#include <texts/TextKeysAndLanguages.hpp>
+#include <touchgfx/Color.hpp>
 
 Screen1ViewBase::Screen1ViewBase()
 {
@@ -77,6 +79,14 @@ Screen1ViewBase::Screen1ViewBase()
     smartphoneMirroringStatus.setBitmap(touchgfx::Bitmap(BITMAP_SMARTPHONEMIRRORINGSTATUS_ID));
     container1.add(smartphoneMirroringStatus);
 
+    textArea1.setXY(370, 104);
+    textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    textArea1.setLinespacing(0);
+    Unicode::snprintf(textArea1Buffer, TEXTAREA1_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID2).getText());
+    textArea1.setWildcard(textArea1Buffer);
+    textArea1.resizeToCurrentText();
+    textArea1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID1));
+
     add(background);
     add(frontend);
     add(seinRight);
@@ -84,6 +94,7 @@ Screen1ViewBase::Screen1ViewBase()
     add(engineRotation);
     add(speedLevel);
     add(container1);
+    add(textArea1);
 }
 
 void Screen1ViewBase::setupScreen()
