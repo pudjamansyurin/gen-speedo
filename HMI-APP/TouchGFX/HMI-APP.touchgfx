@@ -167,7 +167,7 @@
             "YOrigo": 100.0,
             "ZOrigo": 1000.0,
             "CameraDistance": 1000.0,
-            "Alpha": 200,
+            "Alpha": 255,
             "Name": "speedoMeter",
             "X": 80,
             "Y": 65,

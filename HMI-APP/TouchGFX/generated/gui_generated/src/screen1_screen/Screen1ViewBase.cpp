@@ -53,7 +53,6 @@ Screen1ViewBase::Screen1ViewBase()
     speedoMeter.setCamera(100.000f, 100.000f);
     speedoMeter.updateAngles(0.000f, 0.000f, -1.570f);
     speedoMeter.setRenderingAlgorithm(touchgfx::TextureMapper::BILINEAR_INTERPOLATION);
-    speedoMeter.setAlpha(200);
 
     add(background);
     add(seinLeft);
