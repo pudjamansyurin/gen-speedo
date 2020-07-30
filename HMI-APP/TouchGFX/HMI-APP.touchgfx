@@ -153,7 +153,7 @@
           },
           {
             "UseAnimation": false,
-            "RenderingAlgorithm": "Nearest-neighbor",
+            "RenderingAlgorithm": "Bilinear Interpolation",
             "FileNameImage": "clock_standard_second_hand.png",
             "LockBitmapToCenter": false,
             "XBitmapPosition": 96.300000000000011,
