@@ -16,6 +16,8 @@ public:
 protected:
     uint32_t ticker;
     uint32_t odometer;
+    uint32_t tripmeter;
+    uint16_t rpmmeter;
 };
 
 #endif // SCREEN1VIEW_HPP
