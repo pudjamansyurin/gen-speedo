@@ -31,14 +31,14 @@ Screen1ViewBase::Screen1ViewBase()
     tripValue.setPosition(159, 83, 64, 25);
     tripValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     tripValue.setLinespacing(0);
-    tripValueBuffer[0] = 0;
+    Unicode::snprintf(tripValueBuffer, TRIPVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID4).getText());
     tripValue.setWildcard(tripValueBuffer);
     tripValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID1));
 
     odomValue.setPosition(159, 106, 64, 25);
     odomValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     odomValue.setLinespacing(0);
-    odomValueBuffer[0] = 0;
+    Unicode::snprintf(odomValueBuffer, ODOMVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID3).getText());
     odomValue.setWildcard(odomValueBuffer);
     odomValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID2));
 
