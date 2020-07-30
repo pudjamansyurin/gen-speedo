@@ -9,8 +9,10 @@
 #include <gui/screen1_screen/Screen1Presenter.hpp>
 #include <touchgfx/widgets/TiledImage.hpp>
 #include <touchgfx/widgets/Image.hpp>
-#include <touchgfx/widgets/TextArea.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/widgets/ScalableImage.hpp>
+#include <touchgfx/EasingEquations.hpp>
+#include <touchgfx/mixins/MoveAnimator.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -33,9 +35,15 @@ protected:
     touchgfx::Image mirrorPhone;
     touchgfx::Image fingerScan;
     touchgfx::Image tripLabel;
-    touchgfx::TextArea odometerValue;
-    touchgfx::TextArea tripValue;
-    touchgfx::ScalableImage speedoMeter;
+    touchgfx::TextAreaWithOneWildcard odometerValue;
+    touchgfx::TextAreaWithOneWildcard tripValue;
+    touchgfx::MoveAnimator< touchgfx::ScalableImage > speedoMeter;
+
+    /*
+     * Wildcard Buffers
+     */
+    static const uint16_t TRIPVALUE_SIZE = 7;
+    touchgfx::Unicode::UnicodeChar tripValueBuffer[TRIPVALUE_SIZE];
 
 private:
 

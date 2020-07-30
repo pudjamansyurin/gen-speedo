@@ -20,7 +20,8 @@ extern const touchgfx::TypedText::TypedTextData* const typedTextDatabaseArray[];
 TEXT_LOCATION_FLASH_PRAGMA
 KEEP extern const touchgfx::Unicode::UnicodeChar texts_all_languages[] TEXT_LOCATION_FLASH_ATTRIBUTE =
 {
-    0x39, 0x39, 0x39, 0x39, 0x39, 0x0 // @0 "99999"
+    0x2, 0x0, // @0 "<>"
+    0x39, 0x39, 0x39, 0x39, 0x39, 0x0 // @2 "99999"
 };
 extern uint32_t const indicesGb[];
 

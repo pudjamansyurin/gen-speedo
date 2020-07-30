@@ -16,6 +16,7 @@ typedef enum
 {
     T_RESOURCEID1,
     T_SINGLEUSEID1,
+    T_SINGLEUSEID4,
     NUMBER_OF_TEXT_KEYS
 } TEXTS;
 
