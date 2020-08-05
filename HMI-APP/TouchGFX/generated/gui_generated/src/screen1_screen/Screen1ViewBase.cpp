@@ -110,7 +110,7 @@ Screen1ViewBase::Screen1ViewBase()
     image1.setBitmap(touchgfx::Bitmap(BITMAP_SPEEDLEVEL_ID));
 
     image2.setXY(558, 57);
-    image2.setBitmap(touchgfx::Bitmap(BITMAP_ENGINEROTATION_ID));
+    image2.setBitmap(touchgfx::Bitmap(BITMAP_ENGINEROTATIONFLIPPED_ID));
 
     add(container1);
     add(reportValue);

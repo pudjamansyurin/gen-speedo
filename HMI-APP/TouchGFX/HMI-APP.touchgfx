@@ -409,12 +409,12 @@
             "Moveable": false
           },
           {
-            "RelativeFilename": "EngineRotation.png",
+            "RelativeFilename": "EngineRotationFlipped.png",
             "Alpha": 255,
             "Name": "image2",
             "X": 558,
             "Y": 57,
-            "Width": 137,
+            "Width": 136,
             "Height": 366,
             "Type": "Image",
             "Visible": true,
