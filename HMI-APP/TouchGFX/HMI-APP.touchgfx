@@ -23,21 +23,6 @@
             "Moveable": false
           },
           {
-            "RelativeFilename": "Background.png",
-            "Alpha": 255,
-            "Name": "backgroundRefference",
-            "X": 0,
-            "Y": 0,
-            "Width": 800,
-            "Height": 480,
-            "Type": "Image",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
             "RelativeFilename": "BackgroundLeft.png",
             "Alpha": 255,
             "Name": "backgroundLeft",

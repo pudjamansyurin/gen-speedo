@@ -12,9 +12,6 @@ Screen1ViewBase::Screen1ViewBase()
     background.setPosition(0, 0, 800, 480);
     background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
 
-    backgroundRefference.setXY(0, 0);
-    backgroundRefference.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUND_ID));
-
     backgroundLeft.setXY(0, 54);
     backgroundLeft.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUNDLEFT_ID));
 
@@ -49,7 +46,6 @@ Screen1ViewBase::Screen1ViewBase()
     signalPercent.setTypedText(touchgfx::TypedText(T_RESOURCEID1));
 
     add(background);
-    add(backgroundRefference);
     add(backgroundLeft);
     add(backgroundRight);
     add(modeContainer);

@@ -27,7 +27,6 @@ protected:
      * Member Declarations
      */
     touchgfx::Box background;
-    touchgfx::Image backgroundRefference;
     touchgfx::Image backgroundLeft;
     touchgfx::Image backgroundRight;
     touchgfx::Image modeContainer;
