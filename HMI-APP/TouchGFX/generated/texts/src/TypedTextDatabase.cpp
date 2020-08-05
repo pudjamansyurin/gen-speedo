@@ -7,11 +7,13 @@
 
 extern touchgfx::GeneratedFont& getFont_venus_rising_rg_12_4bpp();
 extern touchgfx::GeneratedFont& getFont_venus_rising_rg_15_4bpp();
+extern touchgfx::GeneratedFont& getFont_venus_rising_rg_17_4bpp();
 
 const touchgfx::Font* _fonts[] =
 {
     &(getFont_venus_rising_rg_12_4bpp()),
-    &(getFont_venus_rising_rg_15_4bpp())
+    &(getFont_venus_rising_rg_15_4bpp()),
+    &(getFont_venus_rising_rg_17_4bpp())
 };
 
 extern const touchgfx::TypedText::TypedTextData typedText_database_DEFAULT[];
@@ -21,6 +23,15 @@ TEXT_LOCATION_FLASH_PRAGMA
 const touchgfx::TypedText::TypedTextData typedText_database_DEFAULT[] TEXT_LOCATION_FLASH_ATTRIBUTE =
 {
     { 0, touchgfx::LEFT, touchgfx::TEXT_DIRECTION_LTR },
+    { 1, touchgfx::LEFT, touchgfx::TEXT_DIRECTION_LTR },
+    { 2, touchgfx::CENTER, touchgfx::TEXT_DIRECTION_LTR },
+    { 2, touchgfx::CENTER, touchgfx::TEXT_DIRECTION_LTR },
+    { 1, touchgfx::RIGHT, touchgfx::TEXT_DIRECTION_LTR },
+    { 1, touchgfx::RIGHT, touchgfx::TEXT_DIRECTION_LTR },
+    { 2, touchgfx::RIGHT, touchgfx::TEXT_DIRECTION_LTR },
+    { 1, touchgfx::LEFT, touchgfx::TEXT_DIRECTION_LTR },
+    { 1, touchgfx::RIGHT, touchgfx::TEXT_DIRECTION_LTR },
+    { 1, touchgfx::LEFT, touchgfx::TEXT_DIRECTION_LTR },
     { 1, touchgfx::LEFT, touchgfx::TEXT_DIRECTION_LTR }
 };
 
@@ -63,6 +74,9 @@ void resetFont(touchgfx::FontId fontId)
         break;
     case 1:
         _fonts[1] = &(getFont_venus_rising_rg_15_4bpp());
+        break;
+    case 2:
+        _fonts[2] = &(getFont_venus_rising_rg_17_4bpp());
         break;
     }
 }

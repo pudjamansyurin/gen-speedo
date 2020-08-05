@@ -5,8 +5,19 @@
 FONT_TABLE_LOCATION_FLASH_PRAGMA
 KEEP extern const touchgfx::GlyphNode glyphs_venus_rising_rg_15_4bpp[] FONT_TABLE_LOCATION_FLASH_ATTRIBUTE =
 {
+    {     0, 0x0020,   0,   0,   0,   0,   6,   0,   0, 0x00 },
     {     0, 0x0025,  12,  11,  11,   1,  14,   0,   0, 0x00 },
-    {    66, 0x003F,  14,  11,  11,   1,  15,   0,   0, 0x00 }
+    {    66, 0x0030,  15,  11,  11,   0,  16,   0,   0, 0x00 },
+    {   154, 0x0031,   6,  11,  11,   0,   7,   0,   0, 0x00 },
+    {   187, 0x0038,  15,  11,  11,   0,  16,   0,   0, 0x00 },
+    {   275, 0x003F,  14,  11,  11,   1,  15,   0,   0, 0x00 },
+    {   352, 0x0041,  15,  11,  11,   0,  16,   0,   0, 0x00 },
+    {   440, 0x0045,  14,  11,  11,   1,  15,   0,   0, 0x00 },
+    {   517, 0x0047,  15,  11,  11,   0,  15,   0,   0, 0x00 },
+    {   605, 0x004B,  15,  11,  11,   1,  15,   0,   0, 0x00 },
+    {   693, 0x004D,  20,  11,  11,   1,  21,   0,   0, 0x00 },
+    {   803, 0x004E,  14,  11,  11,   1,  16,   0,   0, 0x00 },
+    {   880, 0x0052,  14,  11,  11,   1,  15,   0,   0, 0x00 }
 };
 
 // venus_rising_rg_15_4bpp
@@ -21,6 +32,6 @@ touchgfx::GeneratedFont& getFont_venus_rising_rg_15_4bpp();
 
 touchgfx::GeneratedFont& getFont_venus_rising_rg_15_4bpp()
 {
-    static touchgfx::GeneratedFont venus_rising_rg_15_4bpp(glyphs_venus_rising_rg_15_4bpp, 2, 15, 0, 4, 1, 0, 0, unicodes_venus_rising_rg_15_4bpp, kerning_venus_rising_rg_15_4bpp, 63, 0, 0);
+    static touchgfx::GeneratedFont venus_rising_rg_15_4bpp(glyphs_venus_rising_rg_15_4bpp, 13, 15, 0, 4, 1, 0, 1, unicodes_venus_rising_rg_15_4bpp, kerning_venus_rising_rg_15_4bpp, 63, 0, 0);
     return venus_rising_rg_15_4bpp;
 }

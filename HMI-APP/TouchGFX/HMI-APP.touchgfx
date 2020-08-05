@@ -4,18 +4,193 @@
       {
         "Components": [
           {
-            "Color": {
-              "Red": 0,
-              "Green": 0,
-              "Blue": 0
-            },
-            "Alpha": 255,
-            "Name": "background",
+            "Components": [
+              {
+                "Color": {
+                  "Red": 0,
+                  "Green": 0,
+                  "Blue": 0
+                },
+                "Alpha": 255,
+                "Name": "background",
+                "X": 0,
+                "Y": 0,
+                "Width": 800,
+                "Height": 480,
+                "Type": "Box",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "TextId": "SingleUseId1",
+                "TextRotation": "0",
+                "Color": {
+                  "Red": 128,
+                  "Green": 128,
+                  "Blue": 128
+                },
+                "Alpha": 255,
+                "AutoSize": true,
+                "LineSpacing": 0,
+                "Name": "tripUnit",
+                "X": 295,
+                "Y": 114,
+                "Width": 46,
+                "Height": 14,
+                "Type": "TextArea",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "TextId": "SingleUseId9",
+                "TextRotation": "0",
+                "Color": {
+                  "Red": 179,
+                  "Green": 179,
+                  "Blue": 179
+                },
+                "Alpha": 255,
+                "AutoSize": true,
+                "LineSpacing": 0,
+                "Name": "signalPercent",
+                "X": 484,
+                "Y": 59,
+                "Width": 12,
+                "Height": 18,
+                "Type": "TextArea",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "TextId": "SingleUseId10",
+                "TextRotation": "0",
+                "Color": {
+                  "Red": 179,
+                  "Green": 179,
+                  "Blue": 179
+                },
+                "Alpha": 255,
+                "AutoSize": true,
+                "LineSpacing": 0,
+                "Name": "batteryPercent",
+                "X": 376,
+                "Y": 59,
+                "Width": 12,
+                "Height": 18,
+                "Type": "TextArea",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "RelativeFilename": "SignalIcon.png",
+                "Alpha": 255,
+                "Name": "signalIcon",
+                "X": 412,
+                "Y": 62,
+                "Width": 24,
+                "Height": 17,
+                "Type": "Image",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "RelativeFilename": "BatteryIcon.png",
+                "Alpha": 255,
+                "Name": "batteryIcon",
+                "X": 302,
+                "Y": 63,
+                "Width": 26,
+                "Height": 15,
+                "Type": "Image",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "RelativeFilename": "BackgroundRight.png",
+                "Alpha": 255,
+                "Name": "backgroundRight",
+                "X": 556,
+                "Y": 54,
+                "Width": 243,
+                "Height": 370,
+                "Type": "Image",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "RelativeFilename": "BackgroundLeft.png",
+                "Alpha": 255,
+                "Name": "backgroundLeft",
+                "X": 0,
+                "Y": 54,
+                "Width": 243,
+                "Height": 372,
+                "Type": "Image",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "RelativeFilename": "TripContainer.png",
+                "Alpha": 255,
+                "Name": "tripContainer",
+                "X": 364,
+                "Y": 98,
+                "Width": 143,
+                "Height": 30,
+                "Type": "Image",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "RelativeFilename": "ModeContainer.png",
+                "Alpha": 255,
+                "Name": "modeContainer",
+                "X": 277,
+                "Y": 364,
+                "Width": 245,
+                "Height": 31,
+                "Type": "Image",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              }
+            ],
+            "IsCacheableContainer": false,
+            "Name": "container1",
             "X": 0,
             "Y": 0,
             "Width": 800,
             "Height": 480,
-            "Type": "Box",
+            "Type": "Container",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -23,14 +198,22 @@
             "Moveable": false
           },
           {
-            "RelativeFilename": "BackgroundLeft.png",
+            "TextId": "SingleUseId8",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 179,
+              "Green": 179,
+              "Blue": 179
+            },
             "Alpha": 255,
-            "Name": "backgroundLeft",
-            "X": 0,
-            "Y": 54,
-            "Width": 243,
-            "Height": 372,
-            "Type": "Image",
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Name": "reportValue",
+            "X": 380,
+            "Y": 406,
+            "Width": 122,
+            "Height": 20,
+            "Type": "TextArea",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -38,14 +221,22 @@
             "Moveable": false
           },
           {
-            "RelativeFilename": "BackgroundRight.png",
+            "TextId": "SingleUseId7",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 179,
+              "Green": 179,
+              "Blue": 179
+            },
             "Alpha": 255,
-            "Name": "backgroundRight",
-            "X": 556,
-            "Y": 54,
-            "Width": 243,
-            "Height": 370,
-            "Type": "Image",
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Name": "reportMode",
+            "X": 297,
+            "Y": 406,
+            "Width": 81,
+            "Height": 20,
+            "Type": "TextArea",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -53,14 +244,22 @@
             "Moveable": false
           },
           {
-            "RelativeFilename": "ModeContainer.png",
+            "TextId": "SingleUseId2",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 17,
+              "Green": 170,
+              "Blue": 212
+            },
             "Alpha": 255,
-            "Name": "modeContainer",
-            "X": 277,
-            "Y": 364,
-            "Width": 245,
-            "Height": 31,
-            "Type": "Image",
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Name": "driveMode",
+            "X": 288,
+            "Y": 368,
+            "Width": 222,
+            "Height": 23,
+            "Type": "TextArea",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -68,14 +267,22 @@
             "Moveable": false
           },
           {
-            "RelativeFilename": "TripContainer.png",
+            "TextId": "SingleUseId3",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
             "Alpha": 255,
-            "Name": "tripContainer",
-            "X": 364,
-            "Y": 98,
-            "Width": 143,
-            "Height": 30,
-            "Type": "Image",
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Name": "tripValue",
+            "X": 374,
+            "Y": 102,
+            "Width": 119,
+            "Height": 20,
+            "Type": "TextArea",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -83,37 +290,7 @@
             "Moveable": false
           },
           {
-            "RelativeFilename": "BatteryIcon.png",
-            "Alpha": 255,
-            "Name": "batteryIcon",
-            "X": 302,
-            "Y": 63,
-            "Width": 26,
-            "Height": 15,
-            "Type": "Image",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "RelativeFilename": "SignalIcon.png",
-            "Alpha": 255,
-            "Name": "signalIcon",
-            "X": 412,
-            "Y": 62,
-            "Width": 24,
-            "Height": 17,
-            "Type": "Image",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "TextId": "SingleUseId1",
+            "TextId": "SingleUseId6",
             "TextRotation": "0",
             "Color": {
               "Red": 128,
@@ -121,13 +298,13 @@
               "Blue": 128
             },
             "Alpha": 255,
-            "AutoSize": true,
+            "AutoSize": false,
             "LineSpacing": 0,
-            "Name": "tripUnit",
-            "X": 295,
-            "Y": 114,
-            "Width": 46,
-            "Height": 14,
+            "Name": "tripLabel",
+            "X": 269,
+            "Y": 93,
+            "Width": 79,
+            "Height": 20,
             "Type": "TextArea",
             "Visible": true,
             "Draggable": false,
@@ -136,7 +313,7 @@
             "Moveable": false
           },
           {
-            "TextId": "ResourceId1",
+            "TextId": "SingleUseId4",
             "TextRotation": "0",
             "Color": {
               "Red": 179,
@@ -144,13 +321,13 @@
               "Blue": 179
             },
             "Alpha": 255,
-            "AutoSize": true,
+            "AutoSize": false,
             "LineSpacing": 0,
-            "Name": "batteryPercent",
-            "X": 375,
+            "Name": "signalValue",
+            "X": 445,
             "Y": 59,
-            "Width": 12,
-            "Height": 18,
+            "Width": 39,
+            "Height": 20,
             "Type": "TextArea",
             "Visible": true,
             "Draggable": false,
@@ -159,7 +336,7 @@
             "Moveable": false
           },
           {
-            "TextId": "ResourceId1",
+            "TextId": "SingleUseId5",
             "TextRotation": "0",
             "Color": {
               "Red": 179,
@@ -167,13 +344,13 @@
               "Blue": 179
             },
             "Alpha": 255,
-            "AutoSize": true,
+            "AutoSize": false,
             "LineSpacing": 0,
-            "Name": "signalPercent",
-            "X": 483,
+            "Name": "batteryValue",
+            "X": 337,
             "Y": 59,
-            "Width": 12,
-            "Height": 18,
+            "Width": 39,
+            "Height": 20,
             "Type": "TextArea",
             "Visible": true,
             "Draggable": false,
@@ -197,6 +374,42 @@
       {
         "TextEntryId": "ResourceId1",
         "IsResource": true
+      },
+      {
+        "TextEntryId": "SingleUseId2",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId3",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId4",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId5",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId6",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId7",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId8",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId9",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId10",
+        "IsResource": false
       }
     ],
     "Name": "HMI-APP",

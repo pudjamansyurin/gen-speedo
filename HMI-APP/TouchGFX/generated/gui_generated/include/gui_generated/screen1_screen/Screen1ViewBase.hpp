@@ -7,9 +7,10 @@
 #include <gui/common/FrontendApplication.hpp>
 #include <mvp/View.hpp>
 #include <gui/screen1_screen/Screen1Presenter.hpp>
+#include <touchgfx/containers/Container.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
+#include <touchgfx/widgets/Image.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -26,16 +27,24 @@ protected:
     /*
      * Member Declarations
      */
+    touchgfx::Container container1;
     touchgfx::Box background;
-    touchgfx::Image backgroundLeft;
-    touchgfx::Image backgroundRight;
-    touchgfx::Image modeContainer;
-    touchgfx::Image tripContainer;
-    touchgfx::Image batteryIcon;
-    touchgfx::Image signalIcon;
     touchgfx::TextArea tripUnit;
-    touchgfx::TextArea batteryPercent;
     touchgfx::TextArea signalPercent;
+    touchgfx::TextArea batteryPercent;
+    touchgfx::Image signalIcon;
+    touchgfx::Image batteryIcon;
+    touchgfx::Image backgroundRight;
+    touchgfx::Image backgroundLeft;
+    touchgfx::Image tripContainer;
+    touchgfx::Image modeContainer;
+    touchgfx::TextArea reportValue;
+    touchgfx::TextArea reportMode;
+    touchgfx::TextArea driveMode;
+    touchgfx::TextArea tripValue;
+    touchgfx::TextArea tripLabel;
+    touchgfx::TextArea signalValue;
+    touchgfx::TextArea batteryValue;
 
 private:
 
