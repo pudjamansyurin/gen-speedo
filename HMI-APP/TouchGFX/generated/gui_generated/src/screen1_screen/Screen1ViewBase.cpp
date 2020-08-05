@@ -41,12 +41,12 @@ Screen1ViewBase::Screen1ViewBase()
     batteryPercent.setXY(375, 59);
     batteryPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     batteryPercent.setLinespacing(0);
-    batteryPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID3));
+    batteryPercent.setTypedText(touchgfx::TypedText(T_RESOURCEID1));
 
     signalPercent.setXY(483, 59);
     signalPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     signalPercent.setLinespacing(0);
-    signalPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID4));
+    signalPercent.setTypedText(touchgfx::TypedText(T_RESOURCEID1));
 
     add(background);
     add(backgroundRefference);
