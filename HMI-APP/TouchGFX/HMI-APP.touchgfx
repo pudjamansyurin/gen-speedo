@@ -36,7 +36,7 @@
                 "AutoSize": true,
                 "LineSpacing": 0,
                 "Name": "tripUnit",
-                "X": 295,
+                "X": 292,
                 "Y": 114,
                 "Width": 46,
                 "Height": 14,
@@ -208,6 +208,11 @@
             "Alpha": 255,
             "AutoSize": false,
             "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId17",
+              "UseBuffer": true,
+              "BufferSize": 11
+            },
             "Name": "reportValue",
             "X": 380,
             "Y": 406,
@@ -231,6 +236,11 @@
             "Alpha": 255,
             "AutoSize": false,
             "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId16",
+              "UseBuffer": true,
+              "BufferSize": 6
+            },
             "Name": "reportMode",
             "X": 297,
             "Y": 406,
@@ -254,6 +264,11 @@
             "Alpha": 255,
             "AutoSize": false,
             "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId15",
+              "UseBuffer": true,
+              "BufferSize": 9
+            },
             "Name": "driveMode",
             "X": 288,
             "Y": 368,
@@ -277,6 +292,11 @@
             "Alpha": 255,
             "AutoSize": false,
             "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId11",
+              "UseBuffer": true,
+              "BufferSize": 7
+            },
             "Name": "tripValue",
             "X": 374,
             "Y": 102,
@@ -300,6 +320,11 @@
             "Alpha": 255,
             "AutoSize": false,
             "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId14",
+              "UseBuffer": true,
+              "BufferSize": 7
+            },
             "Name": "tripLabel",
             "X": 269,
             "Y": 93,
@@ -323,6 +348,11 @@
             "Alpha": 255,
             "AutoSize": false,
             "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId13",
+              "UseBuffer": true,
+              "BufferSize": 4
+            },
             "Name": "signalValue",
             "X": 445,
             "Y": 59,
@@ -346,6 +376,11 @@
             "Alpha": 255,
             "AutoSize": false,
             "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId12",
+              "UseBuffer": true,
+              "BufferSize": 4
+            },
             "Name": "batteryValue",
             "X": 337,
             "Y": 59,
@@ -370,10 +405,6 @@
       {
         "TextEntryId": "SingleUseId1",
         "IsResource": false
-      },
-      {
-        "TextEntryId": "ResourceId1",
-        "IsResource": true
       },
       {
         "TextEntryId": "SingleUseId2",
@@ -409,6 +440,34 @@
       },
       {
         "TextEntryId": "SingleUseId10",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId11",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId12",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId13",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId14",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId15",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId16",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId17",
         "IsResource": false
       }
     ],

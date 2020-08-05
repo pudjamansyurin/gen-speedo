@@ -11,6 +11,7 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/widgets/Image.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -38,13 +39,31 @@ protected:
     touchgfx::Image backgroundLeft;
     touchgfx::Image tripContainer;
     touchgfx::Image modeContainer;
-    touchgfx::TextArea reportValue;
-    touchgfx::TextArea reportMode;
-    touchgfx::TextArea driveMode;
-    touchgfx::TextArea tripValue;
-    touchgfx::TextArea tripLabel;
-    touchgfx::TextArea signalValue;
-    touchgfx::TextArea batteryValue;
+    touchgfx::TextAreaWithOneWildcard reportValue;
+    touchgfx::TextAreaWithOneWildcard reportMode;
+    touchgfx::TextAreaWithOneWildcard driveMode;
+    touchgfx::TextAreaWithOneWildcard tripValue;
+    touchgfx::TextAreaWithOneWildcard tripLabel;
+    touchgfx::TextAreaWithOneWildcard signalValue;
+    touchgfx::TextAreaWithOneWildcard batteryValue;
+
+    /*
+     * Wildcard Buffers
+     */
+    static const uint16_t REPORTVALUE_SIZE = 11;
+    touchgfx::Unicode::UnicodeChar reportValueBuffer[REPORTVALUE_SIZE];
+    static const uint16_t REPORTMODE_SIZE = 6;
+    touchgfx::Unicode::UnicodeChar reportModeBuffer[REPORTMODE_SIZE];
+    static const uint16_t DRIVEMODE_SIZE = 9;
+    touchgfx::Unicode::UnicodeChar driveModeBuffer[DRIVEMODE_SIZE];
+    static const uint16_t TRIPVALUE_SIZE = 7;
+    touchgfx::Unicode::UnicodeChar tripValueBuffer[TRIPVALUE_SIZE];
+    static const uint16_t TRIPLABEL_SIZE = 7;
+    touchgfx::Unicode::UnicodeChar tripLabelBuffer[TRIPLABEL_SIZE];
+    static const uint16_t SIGNALVALUE_SIZE = 4;
+    touchgfx::Unicode::UnicodeChar signalValueBuffer[SIGNALVALUE_SIZE];
+    static const uint16_t BATTERYVALUE_SIZE = 4;
+    touchgfx::Unicode::UnicodeChar batteryValueBuffer[BATTERYVALUE_SIZE];
 
 private:
 
