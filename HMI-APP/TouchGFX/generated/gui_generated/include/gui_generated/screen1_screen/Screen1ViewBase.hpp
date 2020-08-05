@@ -7,9 +7,8 @@
 #include <gui/common/FrontendApplication.hpp>
 #include <mvp/View.hpp>
 #include <gui/screen1_screen/Screen1Presenter.hpp>
+#include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/Image.hpp>
-#include <touchgfx/containers/Container.hpp>
-#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -26,30 +25,13 @@ protected:
     /*
      * Member Declarations
      */
-    touchgfx::Image background;
-    touchgfx::Image frontend;
-    touchgfx::Image seinRight;
-    touchgfx::Image seinLeft;
-    touchgfx::Image engineRotation;
-    touchgfx::Image speedLevel;
-    touchgfx::Container container1;
-    touchgfx::Image mainGo;
-    touchgfx::Image mainReverse;
-    touchgfx::Image batteryDrainOut;
-    touchgfx::Image brakeSystemAlert;
-    touchgfx::Image coolantTemperatureWarning;
-    touchgfx::Image electronicErrorMessage;
-    touchgfx::Image fingerscanLoginStatus;
-    touchgfx::Image highBeamActivated;
-    touchgfx::Image keylessIgnitionKeyDetection;
-    touchgfx::Image smartphoneMirroringStatus;
-    touchgfx::TextAreaWithOneWildcard textArea1;
-
-    /*
-     * Wildcard Buffers
-     */
-    static const uint16_t TEXTAREA1_SIZE = 7;
-    touchgfx::Unicode::UnicodeChar textArea1Buffer[TEXTAREA1_SIZE];
+    touchgfx::Box box1;
+    touchgfx::Image backgroundLeft;
+    touchgfx::Image backgroundRight;
+    touchgfx::Image modeContainer;
+    touchgfx::Image tripContainer;
+    touchgfx::Image batteryIcon;
+    touchgfx::Image signalIcon;
 
 private:
 
