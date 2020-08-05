@@ -11,6 +11,8 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/widgets/Image.hpp>
+#include <touchgfx/widgets/canvas/Circle.hpp>
+#include <touchgfx/widgets/canvas/PainterRGB565.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
@@ -28,7 +30,7 @@ protected:
     /*
      * Member Declarations
      */
-    touchgfx::Container container1;
+    touchgfx::Container frame;
     touchgfx::Box background;
     touchgfx::TextArea tripUnit;
     touchgfx::TextArea signalPercent;
@@ -39,6 +41,21 @@ protected:
     touchgfx::Image backgroundLeft;
     touchgfx::Image tripContainer;
     touchgfx::Image modeContainer;
+    touchgfx::Container indicator;
+    touchgfx::Image batteryLow;
+    touchgfx::Image brakeAlert;
+    touchgfx::Image temperatureWarning;
+    touchgfx::Image errorMessage;
+    touchgfx::Image fingerScan;
+    touchgfx::Image beamActivated;
+    touchgfx::Image keylessKey;
+    touchgfx::Image phoneMirroring;
+    touchgfx::Image mainGo;
+    touchgfx::Image mainReverse;
+    touchgfx::Circle circleLeft;
+    touchgfx::PainterRGB565 circleLeftPainter;
+    touchgfx::Circle circleRight;
+    touchgfx::PainterRGB565 circleRightPainter;
     touchgfx::TextAreaWithOneWildcard reportValue;
     touchgfx::TextAreaWithOneWildcard reportMode;
     touchgfx::TextAreaWithOneWildcard driveMode;
@@ -46,10 +63,10 @@ protected:
     touchgfx::TextAreaWithOneWildcard tripLabel;
     touchgfx::TextAreaWithOneWildcard signalValue;
     touchgfx::TextAreaWithOneWildcard batteryValue;
-    touchgfx::Image image1;
-    touchgfx::Image image2;
-    touchgfx::Image image3;
-    touchgfx::Image image4;
+    touchgfx::Image speedLevel;
+    touchgfx::Image engineRotation;
+    touchgfx::Image seinLeft;
+    touchgfx::Image seinRight;
 
     /*
      * Wildcard Buffers
@@ -71,6 +88,11 @@ protected:
 
 private:
 
+    /*
+     * Canvas Buffer Size
+     */
+    static const uint16_t CANVAS_BUFFER_SIZE = 12000;
+    uint8_t canvasBuffer[CANVAS_BUFFER_SIZE];
 };
 
 #endif // SCREEN1VIEWBASE_HPP

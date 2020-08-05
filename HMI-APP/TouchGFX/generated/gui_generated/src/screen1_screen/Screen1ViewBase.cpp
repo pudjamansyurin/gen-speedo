@@ -9,53 +9,124 @@
 Screen1ViewBase::Screen1ViewBase()
 {
 
-    container1.setPosition(0, 0, 800, 480);
+    touchgfx::CanvasWidgetRenderer::setupBuffer(canvasBuffer, CANVAS_BUFFER_SIZE);
+
+    frame.setPosition(0, 0, 800, 480);
 
     background.setPosition(-1, -1, 800, 480);
     background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-    container1.add(background);
+    frame.add(background);
 
     tripUnit.setXY(292, 114);
     tripUnit.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
     tripUnit.setLinespacing(0);
     tripUnit.setTypedText(touchgfx::TypedText(T_SINGLEUSEID1));
-    container1.add(tripUnit);
+    frame.add(tripUnit);
 
     signalPercent.setXY(484, 59);
     signalPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     signalPercent.setLinespacing(0);
     signalPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID9));
-    container1.add(signalPercent);
+    frame.add(signalPercent);
 
     batteryPercent.setXY(376, 59);
     batteryPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     batteryPercent.setLinespacing(0);
     batteryPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID10));
-    container1.add(batteryPercent);
+    frame.add(batteryPercent);
 
     signalIcon.setXY(412, 62);
     signalIcon.setBitmap(touchgfx::Bitmap(BITMAP_SIGNALICON_ID));
-    container1.add(signalIcon);
+    frame.add(signalIcon);
 
     batteryIcon.setXY(302, 63);
     batteryIcon.setBitmap(touchgfx::Bitmap(BITMAP_BATTERYICON_ID));
-    container1.add(batteryIcon);
+    frame.add(batteryIcon);
 
     backgroundRight.setXY(556, 54);
     backgroundRight.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUNDRIGHT_ID));
-    container1.add(backgroundRight);
+    frame.add(backgroundRight);
 
     backgroundLeft.setXY(0, 54);
     backgroundLeft.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUNDLEFT_ID));
-    container1.add(backgroundLeft);
+    frame.add(backgroundLeft);
 
     tripContainer.setXY(364, 98);
     tripContainer.setBitmap(touchgfx::Bitmap(BITMAP_TRIPCONTAINER_ID));
-    container1.add(tripContainer);
+    frame.add(tripContainer);
 
     modeContainer.setXY(277, 364);
     modeContainer.setBitmap(touchgfx::Bitmap(BITMAP_MODECONTAINER_ID));
-    container1.add(modeContainer);
+    frame.add(modeContainer);
+
+    indicator.setPosition(274, 114, 250, 250);
+
+    batteryLow.setXY(24, 67);
+    batteryLow.setVisible(false);
+    batteryLow.setBitmap(touchgfx::Bitmap(BITMAP_BATTERYDRAINOUT_ID));
+    indicator.add(batteryLow);
+
+    brakeAlert.setXY(28, 48);
+    brakeAlert.setVisible(false);
+    brakeAlert.setBitmap(touchgfx::Bitmap(BITMAP_BRAKESYSTEMALERT_ID));
+    indicator.add(brakeAlert);
+
+    temperatureWarning.setXY(52, 71);
+    temperatureWarning.setVisible(false);
+    temperatureWarning.setBitmap(touchgfx::Bitmap(BITMAP_COOLANTTEMPERATUREWARNING_ID));
+    indicator.add(temperatureWarning);
+
+    errorMessage.setXY(52, 63);
+    errorMessage.setVisible(false);
+    errorMessage.setBitmap(touchgfx::Bitmap(BITMAP_ELECTRONICERRORMESSAGE_ID));
+    indicator.add(errorMessage);
+
+    fingerScan.setXY(55, 50);
+    fingerScan.setVisible(false);
+    fingerScan.setBitmap(touchgfx::Bitmap(BITMAP_FINGERSCANLOGINSTATUS_ID));
+    indicator.add(fingerScan);
+
+    beamActivated.setXY(33, 64);
+    beamActivated.setVisible(false);
+    beamActivated.setBitmap(touchgfx::Bitmap(BITMAP_HIGHBEAMACTIVATED_ID));
+    indicator.add(beamActivated);
+
+    keylessKey.setXY(34, 55);
+    keylessKey.setVisible(false);
+    keylessKey.setBitmap(touchgfx::Bitmap(BITMAP_KEYLESSIGNITIONKEYDETECTION_ID));
+    indicator.add(keylessKey);
+
+    phoneMirroring.setXY(33, 63);
+    phoneMirroring.setVisible(false);
+    phoneMirroring.setBitmap(touchgfx::Bitmap(BITMAP_SMARTPHONEMIRRORINGSTATUS_ID));
+    indicator.add(phoneMirroring);
+
+    mainGo.setXY(21, 86);
+    mainGo.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
+    indicator.add(mainGo);
+
+    mainReverse.setXY(76, 86);
+    mainReverse.setVisible(false);
+    mainReverse.setBitmap(touchgfx::Bitmap(BITMAP_MAINREVERSE_ID));
+    indicator.add(mainReverse);
+
+    circleLeft.setPosition(-126, 124, 2, 2);
+    circleLeft.setCenter(40, 40);
+    circleLeft.setRadius(40);
+    circleLeft.setLineWidth(0);
+    circleLeft.setArc(0, 360);
+    circleLeftPainter.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    circleLeft.setPainter(circleLeftPainter);
+    indicator.add(circleLeft);
+
+    circleRight.setPosition(376, 124, 2, 2);
+    circleRight.setCenter(40, 40);
+    circleRight.setRadius(40);
+    circleRight.setLineWidth(0);
+    circleRight.setArc(0, 360);
+    circleRightPainter.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    circleRight.setPainter(circleRightPainter);
+    indicator.add(circleRight);
 
     reportValue.setPosition(380, 406, 122, 20);
     reportValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
@@ -106,19 +177,20 @@ Screen1ViewBase::Screen1ViewBase()
     batteryValue.setWildcard(batteryValueBuffer);
     batteryValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
 
-    image1.setXY(105, 57);
-    image1.setBitmap(touchgfx::Bitmap(BITMAP_SPEEDLEVEL_ID));
+    speedLevel.setXY(105, 57);
+    speedLevel.setBitmap(touchgfx::Bitmap(BITMAP_SPEEDLEVEL_ID));
 
-    image2.setXY(558, 57);
-    image2.setBitmap(touchgfx::Bitmap(BITMAP_ENGINEROTATIONFLIPPED_ID));
+    engineRotation.setXY(558, 57);
+    engineRotation.setBitmap(touchgfx::Bitmap(BITMAP_ENGINEROTATIONFLIPPED_ID));
 
-    image3.setXY(152, 67);
-    image3.setBitmap(touchgfx::Bitmap(BITMAP_SEINLEFT_ID));
+    seinLeft.setXY(152, 67);
+    seinLeft.setBitmap(touchgfx::Bitmap(BITMAP_SEINLEFT_ID));
 
-    image4.setXY(567, 67);
-    image4.setBitmap(touchgfx::Bitmap(BITMAP_SEINRIGHTFLIPPED_ID));
+    seinRight.setXY(567, 67);
+    seinRight.setBitmap(touchgfx::Bitmap(BITMAP_SEINRIGHTFLIPPED_ID));
 
-    add(container1);
+    add(frame);
+    add(indicator);
     add(reportValue);
     add(reportMode);
     add(driveMode);
@@ -126,10 +198,10 @@ Screen1ViewBase::Screen1ViewBase()
     add(tripLabel);
     add(signalValue);
     add(batteryValue);
-    add(image1);
-    add(image2);
-    add(image3);
-    add(image4);
+    add(speedLevel);
+    add(engineRotation);
+    add(seinLeft);
+    add(seinRight);
 }
 
 void Screen1ViewBase::setupScreen()
