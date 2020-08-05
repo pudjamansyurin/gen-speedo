@@ -11,7 +11,7 @@ Screen1ViewBase::Screen1ViewBase()
 
     container1.setPosition(0, 0, 800, 480);
 
-    background.setPosition(0, 0, 800, 480);
+    background.setPosition(-1, -1, 800, 480);
     background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     container1.add(background);
 
@@ -106,6 +106,12 @@ Screen1ViewBase::Screen1ViewBase()
     batteryValue.setWildcard(batteryValueBuffer);
     batteryValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
 
+    image1.setXY(105, 57);
+    image1.setBitmap(touchgfx::Bitmap(BITMAP_SPEEDLEVEL_ID));
+
+    image2.setXY(558, 57);
+    image2.setBitmap(touchgfx::Bitmap(BITMAP_ENGINEROTATION_ID));
+
     add(container1);
     add(reportValue);
     add(reportMode);
@@ -114,6 +120,8 @@ Screen1ViewBase::Screen1ViewBase()
     add(tripLabel);
     add(signalValue);
     add(batteryValue);
+    add(image1);
+    add(image2);
 }
 
 void Screen1ViewBase::setupScreen()

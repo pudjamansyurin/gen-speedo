@@ -46,6 +46,8 @@ protected:
     touchgfx::TextAreaWithOneWildcard tripLabel;
     touchgfx::TextAreaWithOneWildcard signalValue;
     touchgfx::TextAreaWithOneWildcard batteryValue;
+    touchgfx::Image image1;
+    touchgfx::Image image2;
 
     /*
      * Wildcard Buffers
