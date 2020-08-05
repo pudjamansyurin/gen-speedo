@@ -422,6 +422,36 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
+          },
+          {
+            "RelativeFilename": "SeinLeft.png",
+            "Alpha": 255,
+            "Name": "image3",
+            "X": 152,
+            "Y": 67,
+            "Width": 80,
+            "Height": 355,
+            "Type": "Image",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "RelativeFilename": "SeinRightFlipped.png",
+            "Alpha": 255,
+            "Name": "image4",
+            "X": 567,
+            "Y": 67,
+            "Width": 80,
+            "Height": 355,
+            "Type": "Image",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
           }
         ],
         "Interactions": [],

@@ -48,6 +48,8 @@ protected:
     touchgfx::TextAreaWithOneWildcard batteryValue;
     touchgfx::Image image1;
     touchgfx::Image image2;
+    touchgfx::Image image3;
+    touchgfx::Image image4;
 
     /*
      * Wildcard Buffers

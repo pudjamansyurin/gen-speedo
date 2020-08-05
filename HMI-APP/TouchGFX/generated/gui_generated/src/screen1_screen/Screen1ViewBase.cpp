@@ -112,6 +112,12 @@ Screen1ViewBase::Screen1ViewBase()
     image2.setXY(558, 57);
     image2.setBitmap(touchgfx::Bitmap(BITMAP_ENGINEROTATIONFLIPPED_ID));
 
+    image3.setXY(152, 67);
+    image3.setBitmap(touchgfx::Bitmap(BITMAP_SEINLEFT_ID));
+
+    image4.setXY(567, 67);
+    image4.setBitmap(touchgfx::Bitmap(BITMAP_SEINRIGHTFLIPPED_ID));
+
     add(container1);
     add(reportValue);
     add(reportMode);
@@ -122,6 +128,8 @@ Screen1ViewBase::Screen1ViewBase()
     add(batteryValue);
     add(image1);
     add(image2);
+    add(image3);
+    add(image4);
 }
 
 void Screen1ViewBase::setupScreen()
