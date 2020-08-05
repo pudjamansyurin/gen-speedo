@@ -14,8 +14,8 @@ struct Typography
 
 struct TypographyFontIndex
 {
-    static const touchgfx::FontId SMALL = 0;  // venus_rising_rg_15_4bpp
-    static const touchgfx::FontId MEDIUM = 1; // venus_rising_rg_17_4bpp
+    static const touchgfx::FontId SMALL = 0;  // venus_rising_rg_12_4bpp
+    static const touchgfx::FontId MEDIUM = 1; // venus_rising_rg_15_4bpp
     static const uint16_t NUMBER_OF_FONTS = 2;
 };
 

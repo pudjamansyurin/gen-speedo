@@ -10,10 +10,10 @@ touchgfx::Font* ApplicationFontProvider::getFont(touchgfx::FontId typography)
     switch (typography)
     {
     case Typography::SMALL:
-        // venus_rising_rg_15_4bpp
+        // venus_rising_rg_12_4bpp
         return const_cast<touchgfx::Font*>(TypedTextDatabase::getFonts()[0]);
     case Typography::MEDIUM:
-        // venus_rising_rg_17_4bpp
+        // venus_rising_rg_15_4bpp
         return const_cast<touchgfx::Font*>(TypedTextDatabase::getFonts()[1]);
     default:
         return 0;

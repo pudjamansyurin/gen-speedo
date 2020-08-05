@@ -9,6 +9,7 @@
 #include <gui/screen1_screen/Screen1Presenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/Image.hpp>
+#include <touchgfx/widgets/TextArea.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -25,13 +26,17 @@ protected:
     /*
      * Member Declarations
      */
-    touchgfx::Box box1;
+    touchgfx::Box background;
+    touchgfx::Image backgroundRefference;
     touchgfx::Image backgroundLeft;
     touchgfx::Image backgroundRight;
     touchgfx::Image modeContainer;
     touchgfx::Image tripContainer;
     touchgfx::Image batteryIcon;
     touchgfx::Image signalIcon;
+    touchgfx::TextArea tripUnit;
+    touchgfx::TextArea batteryPercent;
+    touchgfx::TextArea signalPercent;
 
 private:
 

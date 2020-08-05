@@ -4,12 +4,16 @@
 #include <gui_generated/screen1_screen/Screen1ViewBase.hpp>
 #include <touchgfx/Color.hpp>
 #include "BitmapDatabase.hpp"
+#include <texts/TextKeysAndLanguages.hpp>
 
 Screen1ViewBase::Screen1ViewBase()
 {
 
-    box1.setPosition(0, 0, 800, 480);
-    box1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    background.setPosition(0, 0, 800, 480);
+    background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+
+    backgroundRefference.setXY(0, 0);
+    backgroundRefference.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUND_ID));
 
     backgroundLeft.setXY(0, 54);
     backgroundLeft.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUNDLEFT_ID));
@@ -29,13 +33,32 @@ Screen1ViewBase::Screen1ViewBase()
     signalIcon.setXY(412, 62);
     signalIcon.setBitmap(touchgfx::Bitmap(BITMAP_SIGNALICON_ID));
 
-    add(box1);
+    tripUnit.setXY(295, 114);
+    tripUnit.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
+    tripUnit.setLinespacing(0);
+    tripUnit.setTypedText(touchgfx::TypedText(T_SINGLEUSEID1));
+
+    batteryPercent.setXY(375, 59);
+    batteryPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    batteryPercent.setLinespacing(0);
+    batteryPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID3));
+
+    signalPercent.setXY(483, 59);
+    signalPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    signalPercent.setLinespacing(0);
+    signalPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID4));
+
+    add(background);
+    add(backgroundRefference);
     add(backgroundLeft);
     add(backgroundRight);
     add(modeContainer);
     add(tripContainer);
     add(batteryIcon);
     add(signalIcon);
+    add(tripUnit);
+    add(batteryPercent);
+    add(signalPercent);
 }
 
 void Screen1ViewBase::setupScreen()
