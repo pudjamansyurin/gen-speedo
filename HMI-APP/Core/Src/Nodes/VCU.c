@@ -51,18 +51,18 @@ void VCU_CAN_RX_SwitchModeControl(can_rx_t *Rx) {
     // sein
     HMI1.d.status.sein_left = _R1(Rx->data.u8[1], 0);
     HMI1.d.status.sein_right = _R1(Rx->data.u8[1], 1);
+    HMI1.d.mode.reverse = _R1(Rx->data.u8[1], 2);
 
     // mode
-    HMI1.d.mode.drive = _R2(Rx->data.u8[2], 0);
-    HMI1.d.mode.trip.sel = _R1(Rx->data.u8[2], 2);
-    HMI1.d.mode.report.sel = _R1(Rx->data.u8[2], 3);
-    HMI1.d.mode.sel = _R2(Rx->data.u8[2], 4);
-    HMI1.d.mode.hide = _R1(Rx->data.u8[2], 6);
+    HMI1.d.mode.val[SW_M_DRIVE] = _R2(Rx->data.u8[2], 0);
+    HMI1.d.mode.val[SW_M_TRIP] = _R1(Rx->data.u8[2], 2);
+    HMI1.d.mode.val[SW_M_REPORT] = _R1(Rx->data.u8[2], 4);
+    HMI1.d.mode.sel = _R2(Rx->data.u8[2], 5);
+    HMI1.d.mode.hide = _R1(Rx->data.u8[2], 7);
 
     // others
     VCU.d.speed = Rx->data.u8[3];
 
-    // FIXME: use real value
     // convert Speed to RPM
     MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
     //  MCU.d.temperature = ?
@@ -77,21 +77,25 @@ void VCU_CAN_RX_MixedData(can_rx_t *Rx) {
     BMS.d.soc = Rx->data.u8[1];
 
     // decide report value according to mode
-    if (HMI1.d.mode.report.sel == SW_M_REPORT_RANGE) {
-        HMI1.d.mode.report.val = Rx->data.u8[2];
+    if (HMI1.d.mode.val[SW_M_REPORT]  == SW_M_REPORT_RANGE) {
+        HMI1.d.mode.report = Rx->data.u8[2];
     } else {
-        HMI1.d.mode.report.val = Rx->data.u8[3];
+        HMI1.d.mode.report = Rx->data.u8[3];
     }
 
     // odometer
     VCU.d.odometer = Rx->data.u32[1];
+    if (HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_ODO) {
+        HMI1.d.mode.trip = VCU.d.odometer;
+    }
 }
 
 void VCU_CAN_RX_SubTripData(can_rx_t *Rx) {
     // read message
-    if (HMI1.d.mode.trip.sel == SW_M_TRIP_A) {
-        HMI1.d.mode.trip.val = Rx->data.u32[0];
-    } else {
-        HMI1.d.mode.trip.val = Rx->data.u32[1];
+    if (HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_A) {
+        HMI1.d.mode.trip = Rx->data.u32[0];
+    }
+    else if (HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_B) {
+        HMI1.d.mode.trip = Rx->data.u32[1];
     }
 }

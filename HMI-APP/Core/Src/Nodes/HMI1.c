@@ -11,6 +11,18 @@
 
 /* Public variables -----------------------------------------------------------*/
 hmi1_t HMI1 = {
+        .ref = {
+                .drive = {
+                        .mode = { "ECONOMIC", "STANDARD", "SPORT", "PERFORMANCE" }
+                },
+                .trip = {
+                        .mode = { "TRIP A", "TRIP B", "ODO" }
+                },
+                .report = {
+                        .mode = { "RANGE", "AVG" },
+                        .unit = { "KM", "KM/KWH" },
+                },
+        },
         .d = {
                 .status = { 0 },
                 .mode = { 0 },
@@ -38,11 +50,11 @@ void HMI1_Init(void) {
 
     HMI1.d.mode.sel = SW_M_TRIP;
     HMI1.d.mode.hide = 0;
-    HMI1.d.mode.drive = SW_M_DRIVE_E;
-    HMI1.d.mode.trip.sel = SW_M_TRIP_A;
-    HMI1.d.mode.trip.val = 0;
-    HMI1.d.mode.report.sel = SW_M_REPORT_RANGE;
-    HMI1.d.mode.report.val = 0;
+    HMI1.d.mode.val[SW_M_DRIVE] = SW_M_DRIVE_ECONOMY;
+    HMI1.d.mode.val[SW_M_TRIP] = SW_M_TRIP_ODO;
+    HMI1.d.mode.val[SW_M_REPORT] = SW_M_REPORT_RANGE;
+    HMI1.d.mode.trip = 0;
+    HMI1.d.mode.report = 0;
 }
 
 /* ====================================== CAN TX =================================== */

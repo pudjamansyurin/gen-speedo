@@ -100,27 +100,28 @@ typedef enum {
     SW_M_TRIP,
     SW_M_REPORT,
     SW_M_MAX = 2
-} sw_mode_t;
+} SW_MODE;
 
 typedef enum {
-    SW_M_DRIVE_E = 0,
-    SW_M_DRIVE_S,
-    SW_M_DRIVE_P,
-    SW_M_DRIVE_R,
-    SW_M_DRIVE_MAX = 2,
-} sw_mode_drive_t;
+    SW_M_DRIVE_ECONOMY = 0,
+    SW_M_DRIVE_STANDARD,
+    SW_M_DRIVE_SPORT,
+    SW_M_DRIVE_PERFORMANCE,
+    SW_M_DRIVE_MAX = 3,
+} SW_MODE_DRIVE;
 
 typedef enum {
     SW_M_TRIP_A = 0,
     SW_M_TRIP_B,
-    SW_M_TRIP_MAX = 1,
-} sw_mode_trip_t;
+    SW_M_TRIP_ODO,
+    SW_M_TRIP_MAX = 2,
+} SW_MODE_TRIP;
 
 typedef enum {
     SW_M_REPORT_RANGE = 0,
-    SW_M_REPORT_EFFICIENCY,
+    SW_M_REPORT_AVERAGE,
     SW_M_REPORT_MAX = 1,
-} sw_mode_report_t;
+} SW_MODE_REPORT;
 #endif
 
 #endif /* DEFINES_SHARED_H_ */
