@@ -1,14 +1,7 @@
 #include <gui/screen1_screen/Screen1View.hpp>
 
-#ifdef SIMULATOR
 #include <stdlib.h>
-
-hmi1_t HMI1;
-vcu_t VCU;
-bms_t BMS;
-mcu_t MCU;
-
-#else
+#ifndef SIMULATOR
 #include "Nodes/VCU.h"
 #include "Nodes/HMI1.h"
 #include "Nodes/BMS.h"
@@ -18,6 +11,11 @@ extern vcu_t VCU;
 extern hmi1_t HMI1;
 extern bms_t BMS;
 extern mcu_t MCU;
+#else
+hmi1_t HMI1;
+vcu_t VCU;
+bms_t BMS;
+mcu_t MCU;
 #endif
 
 Screen1View::Screen1View() :
@@ -93,7 +91,7 @@ void Screen1View::handleTickEvent() {
         signalValue.invalidate();
     }
     if(ticker % 20 == 0) {
-        if(HMI1.d.mode.report > 999999) {
+        if(HMI1.d.mode.report > 255) {
             HMI1.d.mode.report = 0;
         } else  {
             HMI1.d.mode.report++;
