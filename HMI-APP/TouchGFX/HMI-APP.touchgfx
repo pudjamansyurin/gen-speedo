@@ -59,7 +59,7 @@
                 "AutoSize": true,
                 "LineSpacing": 0,
                 "Name": "signalPercent",
-                "X": 484,
+                "X": 485,
                 "Y": 59,
                 "Width": 12,
                 "Height": 18,
@@ -82,7 +82,7 @@
                 "AutoSize": true,
                 "LineSpacing": 0,
                 "Name": "batteryPercent",
-                "X": 376,
+                "X": 377,
                 "Y": 59,
                 "Width": 12,
                 "Height": 18,
@@ -677,7 +677,7 @@
         "Interactions": [],
         "Name": "Screen1",
         "OverrideDefaultBufferSize": false,
-        "CanvasBufferSize": 0
+        "CanvasBufferSize": 12000
       }
     ],
     "CustomContainerDefinitions": [],

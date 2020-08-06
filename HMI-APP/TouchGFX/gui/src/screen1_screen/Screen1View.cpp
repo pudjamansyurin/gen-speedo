@@ -3,7 +3,7 @@
 //static collection_t COL = {
 //        .report = {
 //                .mode = { "RANGE", "AVG" },
-//                .unit = { "0 KM", "0 KM/KWH" },
+//                .unit = { "KM", "KM/KWH" },
 //        },
 //        .drive = {
 //                .mode = { "ECONOMIC", "SPORT", "PERSONAL", "STANDARD" }
@@ -41,23 +41,23 @@ void Screen1View::handleTickEvent() {
         seinRight.invalidate();
     }
     if(ticker % 50 == 0) {
-        if(_batteryValue > 100) {
+        if(_batteryValue > 99) {
             _batteryValue = 0;
         } else  {
             _batteryValue++;
         }
 
-        Unicode::snprintf(batteryValueBuffer, BATTERYVALUE_SIZE, "%03d", _batteryValue);
+        Unicode::snprintf(batteryValueBuffer, BATTERYVALUE_SIZE, "%3d", _batteryValue);
         batteryValue.invalidate();
     }
     if(ticker % 30 == 0) {
-        if(_signalValue > 100) {
+        if(_signalValue > 99) {
             _signalValue = 0;
         } else  {
             _signalValue++;
         }
 
-        Unicode::snprintf(signalValueBuffer, SIGNALVALUE_SIZE, "%03d", _signalValue);
+        Unicode::snprintf(signalValueBuffer, SIGNALVALUE_SIZE, "%3d", _signalValue);
         signalValue.invalidate();
     }
     if(ticker % 10 == 0) {

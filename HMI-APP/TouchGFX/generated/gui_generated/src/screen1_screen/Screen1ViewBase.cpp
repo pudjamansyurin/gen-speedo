@@ -23,13 +23,13 @@ Screen1ViewBase::Screen1ViewBase()
     tripUnit.setTypedText(touchgfx::TypedText(T_SINGLEUSEID1));
     frame.add(tripUnit);
 
-    signalPercent.setXY(484, 59);
+    signalPercent.setXY(485, 59);
     signalPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     signalPercent.setLinespacing(0);
     signalPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID9));
     frame.add(signalPercent);
 
-    batteryPercent.setXY(376, 59);
+    batteryPercent.setXY(377, 59);
     batteryPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     batteryPercent.setLinespacing(0);
     batteryPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID10));
