@@ -56,6 +56,8 @@ protected:
     touchgfx::PainterRGB565 circleLeftPainter;
     touchgfx::Circle circleRight;
     touchgfx::PainterRGB565 circleRightPainter;
+    touchgfx::Container leftBar;
+    touchgfx::Image speedLevel;
     touchgfx::TextAreaWithOneWildcard reportValue;
     touchgfx::TextAreaWithOneWildcard reportMode;
     touchgfx::TextAreaWithOneWildcard driveMode;
@@ -63,7 +65,6 @@ protected:
     touchgfx::TextAreaWithOneWildcard tripMode;
     touchgfx::TextAreaWithOneWildcard signalValue;
     touchgfx::TextAreaWithOneWildcard batteryValue;
-    touchgfx::Image speedLevel;
     touchgfx::Image engineRotation;
     touchgfx::Image seinLeft;
     touchgfx::Image seinRight;

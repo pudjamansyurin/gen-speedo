@@ -128,6 +128,12 @@ Screen1ViewBase::Screen1ViewBase()
     circleRight.setPainter(circleRightPainter);
     indicator.add(circleRight);
 
+    leftBar.setPosition(105, 57, 137, 0);
+
+    speedLevel.setXY(0, 0);
+    speedLevel.setBitmap(touchgfx::Bitmap(BITMAP_SPEEDLEVEL_ID));
+    leftBar.add(speedLevel);
+
     reportValue.setPosition(361, 406, 151, 18);
     reportValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     reportValue.setLinespacing(0);
@@ -144,7 +150,7 @@ Screen1ViewBase::Screen1ViewBase()
     reportMode.setTypedText(touchgfx::TypedText(T_SINGLEUSEID7));
 
     driveMode.setPosition(288, 369, 222, 19);
-    driveMode.setColor(touchgfx::Color::getColorFrom24BitRGB(17, 170, 212));
+    driveMode.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 255, 0));
     driveMode.setLinespacing(0);
     Unicode::snprintf(driveModeBuffer, DRIVEMODE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID15).getText());
     driveMode.setWildcard(driveModeBuffer);
@@ -164,22 +170,19 @@ Screen1ViewBase::Screen1ViewBase()
     tripMode.setWildcard(tripModeBuffer);
     tripMode.setTypedText(touchgfx::TypedText(T_SINGLEUSEID6));
 
-    signalValue.setPosition(445, 61, 39, 20);
+    signalValue.setPosition(443, 61, 39, 20);
     signalValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     signalValue.setLinespacing(0);
     Unicode::snprintf(signalValueBuffer, SIGNALVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID13).getText());
     signalValue.setWildcard(signalValueBuffer);
     signalValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID4));
 
-    batteryValue.setPosition(337, 61, 39, 20);
+    batteryValue.setPosition(335, 61, 39, 20);
     batteryValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     batteryValue.setLinespacing(0);
     Unicode::snprintf(batteryValueBuffer, BATTERYVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID12).getText());
     batteryValue.setWildcard(batteryValueBuffer);
     batteryValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
-
-    speedLevel.setXY(105, 57);
-    speedLevel.setBitmap(touchgfx::Bitmap(BITMAP_SPEEDLEVEL_ID));
 
     engineRotation.setXY(558, 57);
     engineRotation.setBitmap(touchgfx::Bitmap(BITMAP_ENGINEROTATIONFLIPPED_ID));
@@ -192,6 +195,7 @@ Screen1ViewBase::Screen1ViewBase()
 
     add(frame);
     add(indicator);
+    add(leftBar);
     add(reportValue);
     add(reportMode);
     add(driveMode);
@@ -199,7 +203,6 @@ Screen1ViewBase::Screen1ViewBase()
     add(tripMode);
     add(signalValue);
     add(batteryValue);
-    add(speedLevel);
     add(engineRotation);
     add(seinLeft);
     add(seinRight);

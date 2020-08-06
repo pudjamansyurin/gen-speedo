@@ -1,5 +1,5 @@
 #include <gui/screen1_screen/Screen1View.hpp>
-
+#include <touchgfx/Color.hpp>
 #include <stdlib.h>
 #ifndef SIMULATOR
 #include "Nodes/VCU.h"
@@ -17,14 +17,19 @@ bms_t BMS;
 mcu_t MCU;
 hmi1_t HMI1;
 #endif
+uint16_t y,h;
 
 Screen1View::Screen1View() :
         ticker(0)
 {	
 	Unicode::strncpy(HMI1.ref.drive.mode[0], "ECONOMIC", DRIVEMODE_SIZE);
+	HMI1.ref.drive.color[0] = Color::getColorFrom24BitRGB(255, 255, 0);
 	Unicode::strncpy(HMI1.ref.drive.mode[1], "STANDARD", DRIVEMODE_SIZE);
+	HMI1.ref.drive.color[1] = Color::getColorFrom24BitRGB(0, 255, 0);
 	Unicode::strncpy(HMI1.ref.drive.mode[2], "SPORT", DRIVEMODE_SIZE);
+	HMI1.ref.drive.color[2] = Color::getColorFrom24BitRGB(255, 0, 0);
 	Unicode::strncpy(HMI1.ref.drive.mode[3], "PERFORMANCE", DRIVEMODE_SIZE);
+	HMI1.ref.drive.color[3] = Color::getColorFrom24BitRGB(0, 255, 255);
 	
 	Unicode::strncpy(HMI1.ref.trip.mode[0], "TRIP A", TRIPMODE_SIZE);
 	Unicode::strncpy(HMI1.ref.trip.mode[1], "TRIP B", TRIPMODE_SIZE);
@@ -79,6 +84,7 @@ void Screen1View::handleTickEvent() {
 		}		
         Unicode::snprintf(driveModeBuffer, DRIVEMODE_SIZE, "%s", 
 			HMI1.ref.drive.mode[HMI1.d.mode.val[SW_M_DRIVE]]);
+		driveMode.setColor(HMI1.ref.drive.color[HMI1.d.mode.val[SW_M_DRIVE]]);
         driveMode.invalidate();	
 		
 		if(HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_MAX) {
@@ -148,8 +154,12 @@ void Screen1View::handleTickEvent() {
         } else  {
             VCU.d.speed++;
         }
-
-        // convert Speed to RPM
         MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
+		
+		h = VCU.d.speed * 366 / 150;
+		y = 57 + 366 - h;
+		
+		leftBar.setPosition(105, y, 137, 366);
+		leftBar.invalidate();
     }
 }

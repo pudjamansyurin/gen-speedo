@@ -65,6 +65,7 @@ typedef struct {
     struct {
         struct {
             Unicode::UnicodeChar mode[SW_M_DRIVE_MAX+1][12];
+			colortype color[SW_M_DRIVE_MAX+1];
         } drive;
         struct {
             Unicode::UnicodeChar mode[SW_M_TRIP_MAX+1][7];
