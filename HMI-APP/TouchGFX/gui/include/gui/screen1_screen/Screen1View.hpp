@@ -64,14 +64,14 @@ typedef struct {
 typedef struct {
     struct {
         struct {
-            char mode[SW_M_DRIVE_MAX+1][12];
+            Unicode::UnicodeChar mode[SW_M_DRIVE_MAX+1][12];
         } drive;
         struct {
-            char mode[SW_M_TRIP_MAX+1][7];
+            Unicode::UnicodeChar mode[SW_M_TRIP_MAX+1][7];
         } trip;
         struct {
-            char mode[SW_M_REPORT_MAX+1][6];
-            char unit[SW_M_REPORT_MAX+1][11];
+            Unicode::UnicodeChar mode[SW_M_REPORT_MAX+1][6];
+            Unicode::UnicodeChar unit[SW_M_REPORT_MAX+1][11];
         } report;
     } ref;
     struct {

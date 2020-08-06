@@ -23,13 +23,13 @@ Screen1ViewBase::Screen1ViewBase()
     tripUnit.setTypedText(touchgfx::TypedText(T_SINGLEUSEID1));
     frame.add(tripUnit);
 
-    signalPercent.setXY(485, 59);
+    signalPercent.setXY(485, 61);
     signalPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     signalPercent.setLinespacing(0);
     signalPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID9));
     frame.add(signalPercent);
 
-    batteryPercent.setXY(377, 59);
+    batteryPercent.setXY(377, 61);
     batteryPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     batteryPercent.setLinespacing(0);
     batteryPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID10));
@@ -128,21 +128,22 @@ Screen1ViewBase::Screen1ViewBase()
     circleRight.setPainter(circleRightPainter);
     indicator.add(circleRight);
 
-    reportValue.setPosition(380, 406, 122, 20);
+    reportValue.setPosition(361, 406, 151, 18);
     reportValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     reportValue.setLinespacing(0);
     Unicode::snprintf(reportValueBuffer, REPORTVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID17).getText());
     reportValue.setWildcard(reportValueBuffer);
     reportValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID8));
 
-    reportMode.setPosition(297, 406, 81, 20);
+    reportMode.setXY(285, 406);
     reportMode.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     reportMode.setLinespacing(0);
     Unicode::snprintf(reportModeBuffer, REPORTMODE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID16).getText());
     reportMode.setWildcard(reportModeBuffer);
+    reportMode.resizeToCurrentText();
     reportMode.setTypedText(touchgfx::TypedText(T_SINGLEUSEID7));
 
-    driveMode.setPosition(288, 368, 222, 23);
+    driveMode.setPosition(288, 369, 222, 19);
     driveMode.setColor(touchgfx::Color::getColorFrom24BitRGB(17, 170, 212));
     driveMode.setLinespacing(0);
     Unicode::snprintf(driveModeBuffer, DRIVEMODE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID15).getText());
@@ -156,21 +157,21 @@ Screen1ViewBase::Screen1ViewBase()
     tripValue.setWildcard(tripValueBuffer);
     tripValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID3));
 
-    tripLabel.setPosition(269, 93, 79, 20);
-    tripLabel.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
-    tripLabel.setLinespacing(0);
-    Unicode::snprintf(tripLabelBuffer, TRIPLABEL_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID14).getText());
-    tripLabel.setWildcard(tripLabelBuffer);
-    tripLabel.setTypedText(touchgfx::TypedText(T_SINGLEUSEID6));
+    tripMode.setPosition(269, 93, 79, 20);
+    tripMode.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
+    tripMode.setLinespacing(0);
+    Unicode::snprintf(tripModeBuffer, TRIPMODE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID14).getText());
+    tripMode.setWildcard(tripModeBuffer);
+    tripMode.setTypedText(touchgfx::TypedText(T_SINGLEUSEID6));
 
-    signalValue.setPosition(445, 59, 39, 20);
+    signalValue.setPosition(445, 61, 39, 20);
     signalValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     signalValue.setLinespacing(0);
     Unicode::snprintf(signalValueBuffer, SIGNALVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID13).getText());
     signalValue.setWildcard(signalValueBuffer);
     signalValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID4));
 
-    batteryValue.setPosition(337, 59, 39, 20);
+    batteryValue.setPosition(337, 61, 39, 20);
     batteryValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     batteryValue.setLinespacing(0);
     Unicode::snprintf(batteryValueBuffer, BATTERYVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID12).getText());
@@ -195,7 +196,7 @@ Screen1ViewBase::Screen1ViewBase()
     add(reportMode);
     add(driveMode);
     add(tripValue);
-    add(tripLabel);
+    add(tripMode);
     add(signalValue);
     add(batteryValue);
     add(speedLevel);
