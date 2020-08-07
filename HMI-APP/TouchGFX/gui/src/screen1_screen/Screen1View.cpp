@@ -19,20 +19,20 @@ bms_t BMS;
 mcu_t MCU;
 hmi1_t HMI1;
 #endif
-uint16_t y,h;
 
 Screen1View::Screen1View() :
         ticker(0),
 		indicatorItem(0)
 {	
-	Unicode::strncpy(HMI1.ref.drive.mode[0], "ECONOMIC", DRIVEMODE_SIZE);
 	HMI1.ref.drive.color[0] = Color::getColorFrom24BitRGB(255, 255, 0);
-	Unicode::strncpy(HMI1.ref.drive.mode[1], "STANDARD", DRIVEMODE_SIZE);
 	HMI1.ref.drive.color[1] = Color::getColorFrom24BitRGB(0, 255, 0);
-	Unicode::strncpy(HMI1.ref.drive.mode[2], "SPORT", DRIVEMODE_SIZE);
 	HMI1.ref.drive.color[2] = Color::getColorFrom24BitRGB(255, 0, 0);
-	Unicode::strncpy(HMI1.ref.drive.mode[3], "PERFORMANCE", DRIVEMODE_SIZE);
 	HMI1.ref.drive.color[3] = Color::getColorFrom24BitRGB(0, 255, 255);
+	
+	Unicode::strncpy(HMI1.ref.drive.mode[0], "ECONOMIC", DRIVEMODE_SIZE);
+	Unicode::strncpy(HMI1.ref.drive.mode[1], "STANDARD", DRIVEMODE_SIZE);
+	Unicode::strncpy(HMI1.ref.drive.mode[2], "SPORT", DRIVEMODE_SIZE);
+	Unicode::strncpy(HMI1.ref.drive.mode[3], "PERFORMANCE", DRIVEMODE_SIZE);
 	
 	Unicode::strncpy(HMI1.ref.trip.mode[0], "TRIP A", TRIPMODE_SIZE);
 	Unicode::strncpy(HMI1.ref.trip.mode[1], "TRIP B", TRIPMODE_SIZE);
@@ -43,6 +43,18 @@ Screen1View::Screen1View() :
 	
 	Unicode::strncpy(HMI1.ref.report.unit[0], "KM", REPORTVALUE_SIZE);
 	Unicode::strncpy(HMI1.ref.report.unit[1], "KM/KWH", REPORTVALUE_SIZE);
+	
+	// indicator list
+	indicatorList[0] = BITMAP_MAINREVERSE_ID;
+	indicatorList[1] = BITMAP_MAINGO_ID;
+	indicatorList[2] = BITMAP_BATTERYDRAINOUT_ID;
+	indicatorList[3] = BITMAP_BRAKESYSTEMALERT_ID;
+	indicatorList[4] = BITMAP_COOLANTTEMPERATUREWARNING_ID;
+	indicatorList[5] = BITMAP_ELECTRONICERRORMESSAGE_ID;
+	indicatorList[6] = BITMAP_FINGERSCANLOGINSTATUS_ID;
+	indicatorList[7] = BITMAP_HIGHBEAMACTIVATED_ID;
+	indicatorList[8] = BITMAP_KEYLESSIGNITIONKEYDETECTION_ID;
+	indicatorList[9] = BITMAP_SMARTPHONEMIRRORINGSTATUS_ID;
 }
 
 void Screen1View::setupScreen()
@@ -56,51 +68,42 @@ void Screen1View::tearDownScreen()
 }
 
 void Screen1View::scrollWheelUpdateItem(imageContainer& item, int16_t itemIndex)
-{
-    switch (itemIndex)
-    {
-    case 0:
-        item.updateImage(Bitmap(BITMAP_MAINGO_ID));
-        break;
-    case 1:
-        item.updateImage(Bitmap(BITMAP_MAINREVERSE_ID));
-        break;
-    case 2:
-        item.updateImage(Bitmap(BITMAP_KEYLESSIGNITIONKEYDETECTION_ID));
-        break;
-    }
+{	
+    item.updateImage(Bitmap(indicatorList[itemIndex]));
 }
 
 // void Screen1View::scrollWheelUpdateCenterItem(centerContainer& item, int16_t itemIndex)
 // {
 // }
 
-
 void Screen1View::handleTickEvent() {
     ticker++;
 
     if(ticker % 60 == 0) {
-        // // indicator
-        // HMI1.d.status.abs = rand() & 1;
-        // HMI1.d.status.mirror = rand() & 1;
-        // HMI1.d.status.lamp = rand() & 1;
-        // HMI1.d.status.warning = rand() & 1;
-        // HMI1.d.status.overheat = rand() & 1;
-        // HMI1.d.status.finger = rand() & 1;
-        // HMI1.d.status.keyless = rand() & 1;
-        // HMI1.d.status.daylight = rand() & 1;
-        if(indicatorItem >= 2) {
+        // indicator
+        HMI1.d.status.abs = rand() & 1;
+        HMI1.d.status.mirror = rand() & 1;
+        HMI1.d.status.lamp = rand() & 1;
+        HMI1.d.status.warning = rand() & 1;
+        HMI1.d.status.overheat = rand() & 1;
+        HMI1.d.status.finger = rand() & 1;
+        HMI1.d.status.keyless = rand() & 1;
+        HMI1.d.status.daylight = rand() & 1;
+        HMI1.d.mode.reverse = rand() & 1;
+		
+        if(indicatorItem >= INDICATOR_MAX) {
             indicatorItem = 0;
         } else  {
             indicatorItem++;
         }
-		scrollWheel.animateToItem(indicatorItem, 100);
+		// indicatorItem = rand() % INDICATOR_MAX;
+		
+		scrollWheel.animateToItem(indicatorItem, 50);
 		scrollWheel.invalidate();
 
         // sein
         HMI1.d.status.sein_left =!HMI1.d.status.sein_left;
         HMI1.d.status.sein_right = !HMI1.d.status.sein_right;
-        HMI1.d.mode.reverse = rand() & 1;
 
 		if(HMI1.d.status.sein_left) {
 			if(!seinLeft.isVisible()){				

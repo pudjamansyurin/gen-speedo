@@ -8,7 +8,7 @@ imageContainerBase::imageContainerBase()
 {
     setWidth(230);
     setHeight(230);
-    image.setXY(0, 0);
+    image.setXY(10, 75);
     image.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
 
     add(image);

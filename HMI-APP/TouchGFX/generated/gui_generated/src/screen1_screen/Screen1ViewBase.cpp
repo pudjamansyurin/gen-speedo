@@ -104,14 +104,14 @@ Screen1ViewBase::Screen1ViewBase() :
     scrollWheel.setPosition(285, 132, 230, 230);
     scrollWheel.setHorizontal(true);
     scrollWheel.setCircular(true);
-    scrollWheel.setEasingEquation(touchgfx::EasingEquations::expoEaseInOut);
+    scrollWheel.setEasingEquation(touchgfx::EasingEquations::expoEaseOut);
     scrollWheel.setSwipeAcceleration(10);
     scrollWheel.setDragAcceleration(10);
-    scrollWheel.setNumberOfItems(3);
+    scrollWheel.setNumberOfItems(10);
     scrollWheel.setSelectedItemOffset(0);
     scrollWheel.setDrawableSize(230, 0);
     scrollWheel.setDrawables(scrollWheelListItems, updateItemCallback);
-    scrollWheel.animateToItem(0, 0);
+    scrollWheel.animateToItem(1, 0);
 
     seinLeftContainer.setPosition(152, 67, 80, 355);
 

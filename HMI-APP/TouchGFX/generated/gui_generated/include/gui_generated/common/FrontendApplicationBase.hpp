@@ -15,16 +15,22 @@ public:
     FrontendApplicationBase(Model& m, FrontendHeap& heap);
     virtual ~FrontendApplicationBase() { }
 
+    // Screen2
+    void gotoScreen2ScreenNoTransition();
+
     // Screen1
-    void gotoScreen1ScreenNoTransition();
+    void gotoScreen1ScreenCoverTransitionSouth();
 
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
     FrontendHeap& frontendHeap;
     Model& model;
 
+    // Screen2
+    void gotoScreen2ScreenNoTransitionImpl();
+
     // Screen1
-    void gotoScreen1ScreenNoTransitionImpl();
+    void gotoScreen1ScreenCoverTransitionSouthImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP

@@ -4,6 +4,84 @@
       {
         "Components": [
           {
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "Name": "box1",
+            "X": 0,
+            "Y": 0,
+            "Width": 800,
+            "Height": 480,
+            "Type": "Box",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "UseAnimation": true,
+            "RenderingAlgorithm": "Bilinear Interpolation",
+            "FileNameImage": "icon.png",
+            "LockBitmapToCenter": true,
+            "XBitmapPosition": 0.0,
+            "YBitmapPosition": 0.0,
+            "XAngle": 0.0,
+            "YAngle": 0.0,
+            "ZAngle": 0.0,
+            "Scale": 1.0,
+            "LockOrigoToCenter": true,
+            "XOrigo": 100.0,
+            "YOrigo": 115.0,
+            "ZOrigo": 1000.0,
+            "CameraDistance": 1000.0,
+            "Alpha": 255,
+            "Name": "mainLogo",
+            "X": 300,
+            "Y": 140,
+            "Width": 200,
+            "Height": 230,
+            "Type": "TextureMapper",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "ActionCustomTypeName": "Call Screen2 switchScreen",
+              "Type": "TriggerWhen"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionCover",
+              "ScreenTransitionDirection": "South",
+              "ActionComponent": "Screen1",
+              "Type": "ActionGotoScreen"
+            }
+          }
+        ],
+        "CustomActions": [
+          {
+            "Name": "switchScreen",
+            "Description": "Switch to dashboard screen",
+            "HasValue": false
+          }
+        ],
+        "Name": "Screen2",
+        "OverrideDefaultBufferSize": false,
+        "CanvasBufferSize": 0
+      },
+      {
+        "Components": [
+          {
             "Components": [
               {
                 "Color": {
@@ -373,11 +451,11 @@
             "IsHorizontal": true,
             "IsCircular": true,
             "ItemTemplateName": "imageContainer",
-            "NumberofItems": 3,
-            "InitialElement": 0,
+            "NumberofItems": 10,
+            "InitialElement": 1,
             "ItemMargin": 0,
             "Easing": "Expo",
-            "EasingOption": "InOut",
+            "EasingOption": "Out",
             "SwipeAcceleration": 1.0,
             "DragAcceleration": 1.0,
             "Name": "scrollWheel",
@@ -716,8 +794,8 @@
             "RelativeFilename": "MainGo.png",
             "Alpha": 255,
             "Name": "image",
-            "X": 0,
-            "Y": 0,
+            "X": 10,
+            "Y": 75,
             "Width": 210,
             "Height": 81,
             "Type": "Image",
@@ -812,7 +890,7 @@
       "Height": 480
     },
     "SelectedColorDepth": 16,
-    "StartupScreenName": "Screen1",
+    "StartupScreenName": "Screen2",
     "SelectedStartupLanguage": "GB",
     "Skin": "Blue",
     "TouchGfxPath": "../Middlewares/ST/touchgfx",
