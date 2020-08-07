@@ -61,7 +61,7 @@
               "Type": "TriggerWhen"
             },
             "Action": {
-              "ScreenTransitionType": "ScreenTransitionCover",
+              "ScreenTransitionType": "ScreenTransitionSlide",
               "ScreenTransitionDirection": "South",
               "ActionComponent": "Screen1",
               "Type": "ActionGotoScreen"

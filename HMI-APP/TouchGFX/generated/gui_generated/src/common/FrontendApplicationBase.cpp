@@ -46,13 +46,13 @@ void FrontendApplicationBase::gotoScreen2ScreenNoTransitionImpl()
 
 // Screen1
 
-void FrontendApplicationBase::gotoScreen1ScreenCoverTransitionSouth()
+void FrontendApplicationBase::gotoScreen1ScreenSlideTransitionSouth()
 {
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoScreen1ScreenCoverTransitionSouthImpl);
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoScreen1ScreenSlideTransitionSouthImpl);
     pendingScreenTransitionCallback = &transitionCallback;
 }
 
-void FrontendApplicationBase::gotoScreen1ScreenCoverTransitionSouthImpl()
+void FrontendApplicationBase::gotoScreen1ScreenSlideTransitionSouthImpl()
 {
-    touchgfx::makeTransition<Screen1View, Screen1Presenter, touchgfx::CoverTransition<SOUTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    touchgfx::makeTransition<Screen1View, Screen1Presenter, touchgfx::SlideTransition<SOUTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
