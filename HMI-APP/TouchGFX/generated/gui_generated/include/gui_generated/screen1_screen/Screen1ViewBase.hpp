@@ -7,12 +7,12 @@
 #include <gui/common/FrontendApplication.hpp>
 #include <mvp/View.hpp>
 #include <gui/screen1_screen/Screen1Presenter.hpp>
-#include <touchgfx/containers/Container.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/widgets/TextArea.hpp>
+#include <touchgfx/containers/Container.hpp>
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/containers/scrollers/ScrollWheel.hpp>
 #include <gui/containers/imageContainer.hpp>
+#include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/progress_indicators/ImageProgress.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/EasingEquations.hpp>
@@ -38,17 +38,7 @@ protected:
     /*
      * Member Declarations
      */
-    touchgfx::Container frame;
     touchgfx::Box background;
-    touchgfx::TextArea tripUnit;
-    touchgfx::TextArea signalPercent;
-    touchgfx::TextArea batteryPercent;
-    touchgfx::Image signalIcon;
-    touchgfx::Image batteryIcon;
-    touchgfx::Image backgroundRight;
-    touchgfx::Image backgroundLeft;
-    touchgfx::Image tripContainer;
-    touchgfx::Image modeContainer;
     touchgfx::Container indicator;
     touchgfx::Image batteryLow;
     touchgfx::Image brakeAlert;
@@ -61,7 +51,17 @@ protected:
     touchgfx::Image mainGo;
     touchgfx::Image mainReverse;
     touchgfx::ScrollWheel scrollWheel;
-    touchgfx::DrawableListItems<imageContainer, 2> scrollWheelListItems;
+    touchgfx::DrawableListItems<imageContainer, 3> scrollWheelListItems;
+    touchgfx::Container frame;
+    touchgfx::TextArea tripUnit;
+    touchgfx::TextArea signalPercent;
+    touchgfx::TextArea batteryPercent;
+    touchgfx::Image signalIcon;
+    touchgfx::Image batteryIcon;
+    touchgfx::Image backgroundRight;
+    touchgfx::Image backgroundLeft;
+    touchgfx::Image tripContainer;
+    touchgfx::Image modeContainer;
     touchgfx::Container seinLeftContainer;
     touchgfx::MoveAnimator< touchgfx::Image > seinLeft;
     touchgfx::Container seinRightContainer;

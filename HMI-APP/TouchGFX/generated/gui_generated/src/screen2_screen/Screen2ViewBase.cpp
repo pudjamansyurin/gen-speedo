@@ -36,6 +36,6 @@ void Screen2ViewBase::switchScreen()
 {
     //Interaction1
     //When switchScreen is called change screen to Screen1
-    //Go to Screen1 with screen transition towards South
-    application().gotoScreen1ScreenSlideTransitionSouth();
+    //Go to Screen1 with screen transition towards North
+    application().gotoScreen1ScreenSlideTransitionNorth();
 }

@@ -3,60 +3,15 @@
 /*********************************************************************************/
 #include <gui_generated/screen1_screen/Screen1ViewBase.hpp>
 #include <touchgfx/Color.hpp>
-#include <texts/TextKeysAndLanguages.hpp>
 #include "BitmapDatabase.hpp"
+#include <texts/TextKeysAndLanguages.hpp>
 
 Screen1ViewBase::Screen1ViewBase() :
     updateItemCallback(this, &Screen1ViewBase::updateItemCallbackHandler)
 {
 
-    frame.setPosition(0, 0, 800, 480);
-
     background.setPosition(-1, -1, 800, 480);
     background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-    frame.add(background);
-
-    tripUnit.setXY(292, 114);
-    tripUnit.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
-    tripUnit.setLinespacing(0);
-    tripUnit.setTypedText(touchgfx::TypedText(T_SINGLEUSEID1));
-    frame.add(tripUnit);
-
-    signalPercent.setXY(485, 61);
-    signalPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
-    signalPercent.setLinespacing(0);
-    signalPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID9));
-    frame.add(signalPercent);
-
-    batteryPercent.setXY(377, 61);
-    batteryPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
-    batteryPercent.setLinespacing(0);
-    batteryPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID10));
-    frame.add(batteryPercent);
-
-    signalIcon.setXY(412, 62);
-    signalIcon.setBitmap(touchgfx::Bitmap(BITMAP_SIGNALICON_ID));
-    frame.add(signalIcon);
-
-    batteryIcon.setXY(302, 63);
-    batteryIcon.setBitmap(touchgfx::Bitmap(BITMAP_BATTERYICON_ID));
-    frame.add(batteryIcon);
-
-    backgroundRight.setXY(556, 54);
-    backgroundRight.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUNDRIGHT_ID));
-    frame.add(backgroundRight);
-
-    backgroundLeft.setXY(0, 54);
-    backgroundLeft.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUNDLEFT_ID));
-    frame.add(backgroundLeft);
-
-    tripContainer.setXY(364, 98);
-    tripContainer.setBitmap(touchgfx::Bitmap(BITMAP_TRIPCONTAINER_ID));
-    frame.add(tripContainer);
-
-    modeContainer.setXY(277, 364);
-    modeContainer.setBitmap(touchgfx::Bitmap(BITMAP_MODECONTAINER_ID));
-    frame.add(modeContainer);
 
     indicator.setPosition(274, 114, 250, 250);
     indicator.setVisible(false);
@@ -101,7 +56,7 @@ Screen1ViewBase::Screen1ViewBase() :
     mainReverse.setBitmap(touchgfx::Bitmap(BITMAP_MAINREVERSE_ID));
     indicator.add(mainReverse);
 
-    scrollWheel.setPosition(285, 132, 230, 230);
+    scrollWheel.setPosition(146, 132, 508, 230);
     scrollWheel.setHorizontal(true);
     scrollWheel.setCircular(true);
     scrollWheel.setEasingEquation(touchgfx::EasingEquations::expoEaseOut);
@@ -109,9 +64,53 @@ Screen1ViewBase::Screen1ViewBase() :
     scrollWheel.setDragAcceleration(10);
     scrollWheel.setNumberOfItems(10);
     scrollWheel.setSelectedItemOffset(0);
-    scrollWheel.setDrawableSize(230, 0);
+    scrollWheel.setDrawableSize(230, 139);
     scrollWheel.setDrawables(scrollWheelListItems, updateItemCallback);
     scrollWheel.animateToItem(1, 0);
+
+    frame.setPosition(0, 0, 800, 480);
+
+    tripUnit.setXY(292, 114);
+    tripUnit.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
+    tripUnit.setLinespacing(0);
+    tripUnit.setTypedText(touchgfx::TypedText(T_SINGLEUSEID1));
+    frame.add(tripUnit);
+
+    signalPercent.setXY(485, 61);
+    signalPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    signalPercent.setLinespacing(0);
+    signalPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID9));
+    frame.add(signalPercent);
+
+    batteryPercent.setXY(377, 61);
+    batteryPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    batteryPercent.setLinespacing(0);
+    batteryPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID10));
+    frame.add(batteryPercent);
+
+    signalIcon.setXY(412, 62);
+    signalIcon.setBitmap(touchgfx::Bitmap(BITMAP_SIGNALICON_ID));
+    frame.add(signalIcon);
+
+    batteryIcon.setXY(302, 63);
+    batteryIcon.setBitmap(touchgfx::Bitmap(BITMAP_BATTERYICON_ID));
+    frame.add(batteryIcon);
+
+    backgroundRight.setXY(556, 57);
+    backgroundRight.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUNDRIGHT_ID));
+    frame.add(backgroundRight);
+
+    backgroundLeft.setXY(0, 57);
+    backgroundLeft.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUNDLEFT_ID));
+    frame.add(backgroundLeft);
+
+    tripContainer.setXY(364, 98);
+    tripContainer.setBitmap(touchgfx::Bitmap(BITMAP_TRIPCONTAINER_ID));
+    frame.add(tripContainer);
+
+    modeContainer.setXY(277, 364);
+    modeContainer.setBitmap(touchgfx::Bitmap(BITMAP_MODECONTAINER_ID));
+    frame.add(modeContainer);
 
     seinLeftContainer.setPosition(152, 67, 80, 355);
 
@@ -191,9 +190,10 @@ Screen1ViewBase::Screen1ViewBase() :
     batteryValue.setWildcard(batteryValueBuffer);
     batteryValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
 
-    add(frame);
+    add(background);
     add(indicator);
     add(scrollWheel);
+    add(frame);
     add(seinLeftContainer);
     add(seinRightContainer);
     add(engineProgress);
