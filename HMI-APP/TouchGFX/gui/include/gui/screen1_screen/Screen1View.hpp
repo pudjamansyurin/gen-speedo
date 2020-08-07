@@ -3,14 +3,17 @@
 
 #include <gui_generated/screen1_screen/Screen1ViewBase.hpp>
 #include <gui/screen1_screen/Screen1Presenter.hpp>
+#ifndef SIMULATOR
+#include "_defines_shared.h"
+#endif
 
-#ifdef SIMULATOR
 /* Macro prototypes ------------------------------------------------------- */
 #define MCU_SPEED_MAX             (uint8_t) 255
 #define MCU_RPM_MAX              (uint32_t) 99999
 #define VCU_ODOMETER_MAX         (uint32_t) 99999
 #define INDICATOR_MAX						10
 
+#ifdef SIMULATOR
 /* Enum prototypes ------------------------------------------------------- */
 typedef enum {
     SW_M_DRIVE = 0,
@@ -65,19 +68,6 @@ typedef struct {
 typedef struct {
     struct {
         struct {
-            Unicode::UnicodeChar mode[SW_M_DRIVE_MAX+1][12];
-			colortype color[SW_M_DRIVE_MAX+1];
-        } drive;
-        struct {
-            Unicode::UnicodeChar mode[SW_M_TRIP_MAX+1][7];
-        } trip;
-        struct {
-            Unicode::UnicodeChar mode[SW_M_REPORT_MAX+1][6];
-            Unicode::UnicodeChar unit[SW_M_REPORT_MAX+1][11];
-        } report;
-    } ref;
-    struct {
-        struct {
             uint8_t abs;
             uint8_t mirror;
             uint8_t lamp;
@@ -101,6 +91,20 @@ typedef struct {
     } d;
 } hmi1_t;
 #endif
+
+typedef struct {
+    struct {
+        Unicode::UnicodeChar mode[SW_M_DRIVE_MAX+1][12];
+        colortype color[SW_M_DRIVE_MAX+1];
+    } drive;
+    struct {
+        Unicode::UnicodeChar mode[SW_M_TRIP_MAX+1][7];
+    } trip;
+    struct {
+        Unicode::UnicodeChar mode[SW_M_REPORT_MAX+1][6];
+        Unicode::UnicodeChar unit[SW_M_REPORT_MAX+1][11];
+    } report;
+} text_database_t;
 
 class Screen1View : public Screen1ViewBase
 {

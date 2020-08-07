@@ -19,31 +19,32 @@ bms_t BMS;
 mcu_t MCU;
 hmi1_t HMI1;
 #endif
+text_database_t TDB;
 
 Screen1View::Screen1View() :
         ticker(0),
 		indicatorItem(0)
-{	
-	HMI1.ref.drive.color[0] = Color::getColorFrom24BitRGB(255, 255, 0);
-	HMI1.ref.drive.color[1] = Color::getColorFrom24BitRGB(0, 255, 0);
-	HMI1.ref.drive.color[2] = Color::getColorFrom24BitRGB(255, 0, 0);
-	HMI1.ref.drive.color[3] = Color::getColorFrom24BitRGB(0, 255, 255);
-	
-	Unicode::strncpy(HMI1.ref.drive.mode[0], "ECONOMIC", DRIVEMODE_SIZE);
-	Unicode::strncpy(HMI1.ref.drive.mode[1], "STANDARD", DRIVEMODE_SIZE);
-	Unicode::strncpy(HMI1.ref.drive.mode[2], "SPORT", DRIVEMODE_SIZE);
-	Unicode::strncpy(HMI1.ref.drive.mode[3], "PERFORMANCE", DRIVEMODE_SIZE);
-	
-	Unicode::strncpy(HMI1.ref.trip.mode[0], "TRIP A", TRIPMODE_SIZE);
-	Unicode::strncpy(HMI1.ref.trip.mode[1], "TRIP B", TRIPMODE_SIZE);
-	Unicode::strncpy(HMI1.ref.trip.mode[2], "ODO", TRIPMODE_SIZE);
-	
-	Unicode::strncpy(HMI1.ref.report.mode[0], "RANGE", REPORTMODE_SIZE);
-	Unicode::strncpy(HMI1.ref.report.mode[1], "AVG", REPORTMODE_SIZE);
-	
-	Unicode::strncpy(HMI1.ref.report.unit[0], "KM", REPORTVALUE_SIZE);
-	Unicode::strncpy(HMI1.ref.report.unit[1], "KM/KWH", REPORTVALUE_SIZE);
-	
+{
+	TDB.drive.color[0] = Color::getColorFrom24BitRGB(255, 255, 0);
+	TDB.drive.color[1] = Color::getColorFrom24BitRGB(0, 255, 0);
+	TDB.drive.color[2] = Color::getColorFrom24BitRGB(255, 0, 0);
+	TDB.drive.color[3] = Color::getColorFrom24BitRGB(0, 255, 255);
+
+	Unicode::strncpy(TDB.drive.mode[0], "ECONOMIC", DRIVEMODE_SIZE);
+	Unicode::strncpy(TDB.drive.mode[1], "STANDARD", DRIVEMODE_SIZE);
+	Unicode::strncpy(TDB.drive.mode[2], "SPORT", DRIVEMODE_SIZE);
+	Unicode::strncpy(TDB.drive.mode[3], "PERFORMANCE", DRIVEMODE_SIZE);
+
+	Unicode::strncpy(TDB.trip.mode[0], "TRIP A", TRIPMODE_SIZE);
+	Unicode::strncpy(TDB.trip.mode[1], "TRIP B", TRIPMODE_SIZE);
+	Unicode::strncpy(TDB.trip.mode[2], "ODO", TRIPMODE_SIZE);
+
+	Unicode::strncpy(TDB.report.mode[0], "RANGE", REPORTMODE_SIZE);
+	Unicode::strncpy(TDB.report.mode[1], "AVG", REPORTMODE_SIZE);
+
+	Unicode::strncpy(TDB.report.unit[0], "KM", REPORTVALUE_SIZE);
+	Unicode::strncpy(TDB.report.unit[1], "KM/KWH", REPORTVALUE_SIZE);
+
 	// indicator list
 	indicatorList[0] = BITMAP_MAINREVERSE_ID;
 	indicatorList[1] = BITMAP_MAINGO_ID;
@@ -68,7 +69,7 @@ void Screen1View::tearDownScreen()
 }
 
 void Screen1View::scrollWheelUpdateItem(imageContainer& item, int16_t itemIndex)
-{	
+{
     item.updateImage(Bitmap(indicatorList[itemIndex]));
 }
 
@@ -90,14 +91,14 @@ void Screen1View::handleTickEvent() {
         HMI1.d.status.keyless = rand() & 1;
         HMI1.d.status.daylight = rand() & 1;
         HMI1.d.mode.reverse = rand() & 1;
-		
+
         if(indicatorItem >= INDICATOR_MAX) {
             indicatorItem = 0;
         } else  {
             indicatorItem++;
         }
 		// indicatorItem = rand() % INDICATOR_MAX;
-		
+
 		scrollWheel.animateToItem(indicatorItem, 50);
 		scrollWheel.invalidate();
 
@@ -106,31 +107,31 @@ void Screen1View::handleTickEvent() {
         HMI1.d.status.sein_right = !HMI1.d.status.sein_right;
 
 		if(HMI1.d.status.sein_left) {
-			if(!seinLeft.isVisible()){				
+			if(!seinLeft.isVisible()){
 				seinLeft.setVisible(true);
 				seinLeft.startMoveAnimation(0, 0, 20, EasingEquations::linearEaseOut, EasingEquations::linearEaseOut);
-				seinLeft.invalidate();	
+				seinLeft.invalidate();
 			}
 		} else {
 			if(seinLeft.isVisible()){
 				seinLeft.setVisible(false);
 				seinLeft.setXY(80, 0);
 				seinLeft.invalidate();
-			}			
+			}
 		}
-		
+
 		if(HMI1.d.status.sein_right) {
 			if(!seinRight.isVisible()){
 				seinRight.setVisible(true);
 				seinRight.startMoveAnimation(0, 0, 20, EasingEquations::linearEaseOut, EasingEquations::linearEaseOut);
-				seinRight.invalidate();				
+				seinRight.invalidate();
 			}
 		} else {
 			if(seinRight.isVisible()){
 				seinRight.setVisible(false);
 				seinRight.setXY(-80, 0);
 				seinRight.invalidate();
-			}			
+			}
 		}
 
         // mode
@@ -138,28 +139,28 @@ void Screen1View::handleTickEvent() {
 			HMI1.d.mode.val[SW_M_DRIVE] = 0;
 		} else {
 			HMI1.d.mode.val[SW_M_DRIVE]++;
-		}		
-        Unicode::snprintf(driveModeBuffer, DRIVEMODE_SIZE, "%s", 
-			HMI1.ref.drive.mode[HMI1.d.mode.val[SW_M_DRIVE]]);
-		driveMode.setColor(HMI1.ref.drive.color[HMI1.d.mode.val[SW_M_DRIVE]]);
-        driveMode.invalidate();	
-		
+		}
+        Unicode::snprintf(driveModeBuffer, DRIVEMODE_SIZE, "%s",
+			TDB.drive.mode[HMI1.d.mode.val[SW_M_DRIVE]]);
+		driveMode.setColor(TDB.drive.color[HMI1.d.mode.val[SW_M_DRIVE]]);
+        driveMode.invalidate();
+
 		if(HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_MAX) {
 			HMI1.d.mode.val[SW_M_TRIP] = 0;
 		} else {
 			HMI1.d.mode.val[SW_M_TRIP]++;
-		}		
-        Unicode::snprintf(tripModeBuffer, TRIPMODE_SIZE, "%s", 
-			HMI1.ref.trip.mode[HMI1.d.mode.val[SW_M_TRIP]]);
-        tripMode.invalidate();	
-		
+		}
+        Unicode::snprintf(tripModeBuffer, TRIPMODE_SIZE, "%s",
+			TDB.trip.mode[HMI1.d.mode.val[SW_M_TRIP]]);
+        tripMode.invalidate();
+
 		if(HMI1.d.mode.val[SW_M_REPORT] == SW_M_REPORT_MAX) {
 			HMI1.d.mode.val[SW_M_REPORT] = 0;
 		} else {
 			HMI1.d.mode.val[SW_M_REPORT]++;
-		}		
-        Unicode::snprintf(reportModeBuffer, REPORTMODE_SIZE, "%s", 
-			HMI1.ref.report.mode[HMI1.d.mode.val[SW_M_REPORT]]);
+		}
+        Unicode::snprintf(reportModeBuffer, REPORTMODE_SIZE, "%s",
+			TDB.report.mode[HMI1.d.mode.val[SW_M_REPORT]]);
         reportMode.invalidate();
     }
     if(ticker % 50 == 0) {
@@ -189,9 +190,9 @@ void Screen1View::handleTickEvent() {
             HMI1.d.mode.report++;
         }
 
-        Unicode::snprintf(reportValueBuffer, REPORTVALUE_SIZE, "%03d %s", 
+        Unicode::snprintf(reportValueBuffer, REPORTVALUE_SIZE, "%03d %s",
 			HMI1.d.mode.report,
-			HMI1.ref.report.unit[HMI1.d.mode.val[SW_M_REPORT]]);
+			TDB.report.unit[HMI1.d.mode.val[SW_M_REPORT]]);
         reportValue.invalidate();
     }
     if(ticker % 10 == 0) {
@@ -212,10 +213,10 @@ void Screen1View::handleTickEvent() {
             VCU.d.speed++;
         }
         MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
-				
+
 		speedProgress.setValue(VCU.d.speed * 100 / 150);
 		speedProgress.invalidate();
-		
+
 		engineProgress.setValue(MCU.d.rpm * 100 / MCU_RPM_MAX);
 		engineProgress.invalidate();
     }
