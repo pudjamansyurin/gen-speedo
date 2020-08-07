@@ -110,8 +110,11 @@ public:
     virtual void tearDownScreen();
 
     virtual void handleTickEvent();
+    virtual void scrollWheelUpdateItem(imageContainer& item, int16_t itemIndex);
+    // virtual void scrollWheelUpdateCenterItem(centerContainer& item, int16_t itemIndex);
 protected:
     uint32_t ticker;
+	uint8_t indicatorItem;
 };
 
 #endif // SCREEN1VIEW_HPP

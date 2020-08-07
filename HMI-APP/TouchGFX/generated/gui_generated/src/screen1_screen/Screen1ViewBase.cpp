@@ -6,10 +6,9 @@
 #include <texts/TextKeysAndLanguages.hpp>
 #include "BitmapDatabase.hpp"
 
-Screen1ViewBase::Screen1ViewBase()
+Screen1ViewBase::Screen1ViewBase() :
+    updateItemCallback(this, &Screen1ViewBase::updateItemCallbackHandler)
 {
-
-    touchgfx::CanvasWidgetRenderer::setupBuffer(canvasBuffer, CANVAS_BUFFER_SIZE);
 
     frame.setPosition(0, 0, 800, 480);
 
@@ -60,44 +59,37 @@ Screen1ViewBase::Screen1ViewBase()
     frame.add(modeContainer);
 
     indicator.setPosition(274, 114, 250, 250);
+    indicator.setVisible(false);
 
     batteryLow.setXY(24, 67);
-    batteryLow.setVisible(false);
     batteryLow.setBitmap(touchgfx::Bitmap(BITMAP_BATTERYDRAINOUT_ID));
     indicator.add(batteryLow);
 
     brakeAlert.setXY(28, 48);
-    brakeAlert.setVisible(false);
     brakeAlert.setBitmap(touchgfx::Bitmap(BITMAP_BRAKESYSTEMALERT_ID));
     indicator.add(brakeAlert);
 
     temperatureWarning.setXY(52, 71);
-    temperatureWarning.setVisible(false);
     temperatureWarning.setBitmap(touchgfx::Bitmap(BITMAP_COOLANTTEMPERATUREWARNING_ID));
     indicator.add(temperatureWarning);
 
     errorMessage.setXY(52, 63);
-    errorMessage.setVisible(false);
     errorMessage.setBitmap(touchgfx::Bitmap(BITMAP_ELECTRONICERRORMESSAGE_ID));
     indicator.add(errorMessage);
 
     fingerScan.setXY(55, 50);
-    fingerScan.setVisible(false);
     fingerScan.setBitmap(touchgfx::Bitmap(BITMAP_FINGERSCANLOGINSTATUS_ID));
     indicator.add(fingerScan);
 
     beamActivated.setXY(33, 64);
-    beamActivated.setVisible(false);
     beamActivated.setBitmap(touchgfx::Bitmap(BITMAP_HIGHBEAMACTIVATED_ID));
     indicator.add(beamActivated);
 
     keylessKey.setXY(34, 55);
-    keylessKey.setVisible(false);
     keylessKey.setBitmap(touchgfx::Bitmap(BITMAP_KEYLESSIGNITIONKEYDETECTION_ID));
     indicator.add(keylessKey);
 
     phoneMirroring.setXY(33, 63);
-    phoneMirroring.setVisible(false);
     phoneMirroring.setBitmap(touchgfx::Bitmap(BITMAP_SMARTPHONEMIRRORINGSTATUS_ID));
     indicator.add(phoneMirroring);
 
@@ -106,33 +98,48 @@ Screen1ViewBase::Screen1ViewBase()
     indicator.add(mainGo);
 
     mainReverse.setXY(76, 86);
-    mainReverse.setVisible(false);
     mainReverse.setBitmap(touchgfx::Bitmap(BITMAP_MAINREVERSE_ID));
     indicator.add(mainReverse);
 
-    circleLeft.setPosition(-126, 124, 2, 2);
-    circleLeft.setCenter(40, 40);
-    circleLeft.setRadius(40);
-    circleLeft.setLineWidth(0);
-    circleLeft.setArc(0, 360);
-    circleLeftPainter.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
-    circleLeft.setPainter(circleLeftPainter);
-    indicator.add(circleLeft);
+    scrollWheel.setPosition(285, 132, 230, 230);
+    scrollWheel.setHorizontal(true);
+    scrollWheel.setCircular(true);
+    scrollWheel.setEasingEquation(touchgfx::EasingEquations::expoEaseInOut);
+    scrollWheel.setSwipeAcceleration(10);
+    scrollWheel.setDragAcceleration(10);
+    scrollWheel.setNumberOfItems(3);
+    scrollWheel.setSelectedItemOffset(0);
+    scrollWheel.setDrawableSize(230, 0);
+    scrollWheel.setDrawables(scrollWheelListItems, updateItemCallback);
+    scrollWheel.animateToItem(0, 0);
 
-    circleRight.setPosition(376, 124, 2, 2);
-    circleRight.setCenter(40, 40);
-    circleRight.setRadius(40);
-    circleRight.setLineWidth(0);
-    circleRight.setArc(0, 360);
-    circleRightPainter.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
-    circleRight.setPainter(circleRightPainter);
-    indicator.add(circleRight);
+    seinLeftContainer.setPosition(152, 67, 80, 355);
 
-    leftBar.setPosition(105, 57, 137, 0);
+    seinLeft.setXY(80, 0);
+    seinLeft.setBitmap(touchgfx::Bitmap(BITMAP_SEINLEFT_ID));
+    seinLeftContainer.add(seinLeft);
 
-    speedLevel.setXY(0, 0);
-    speedLevel.setBitmap(touchgfx::Bitmap(BITMAP_SPEEDLEVEL_ID));
-    leftBar.add(speedLevel);
+    seinRightContainer.setPosition(567, 67, 80, 355);
+
+    seinRight.setXY(-80, 0);
+    seinRight.setBitmap(touchgfx::Bitmap(BITMAP_SEINRIGHTFLIPPED_ID));
+    seinRightContainer.add(seinRight);
+
+    engineProgress.setXY(558, 57);
+    engineProgress.setProgressIndicatorPosition(0, 0, 137, 366);
+    engineProgress.setRange(0, 100);
+    engineProgress.setDirection(touchgfx::AbstractDirectionProgress::UP);
+    engineProgress.setBitmap(BITMAP_ENGINEROTATIONFLIPPED_ID);
+    engineProgress.setValue(100);
+    engineProgress.setAnchorAtZero(true);
+
+    speedProgress.setXY(105, 57);
+    speedProgress.setProgressIndicatorPosition(0, 0, 137, 366);
+    speedProgress.setRange(0, 100);
+    speedProgress.setDirection(touchgfx::AbstractDirectionProgress::UP);
+    speedProgress.setBitmap(BITMAP_SPEEDLEVEL_ID);
+    speedProgress.setValue(100);
+    speedProgress.setAnchorAtZero(true);
 
     reportValue.setPosition(361, 406, 151, 18);
     reportValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
@@ -184,18 +191,13 @@ Screen1ViewBase::Screen1ViewBase()
     batteryValue.setWildcard(batteryValueBuffer);
     batteryValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
 
-    engineRotation.setXY(558, 57);
-    engineRotation.setBitmap(touchgfx::Bitmap(BITMAP_ENGINEROTATIONFLIPPED_ID));
-
-    seinLeft.setXY(152, 67);
-    seinLeft.setBitmap(touchgfx::Bitmap(BITMAP_SEINLEFT_ID));
-
-    seinRight.setXY(567, 67);
-    seinRight.setBitmap(touchgfx::Bitmap(BITMAP_SEINRIGHTFLIPPED_ID));
-
     add(frame);
     add(indicator);
-    add(leftBar);
+    add(scrollWheel);
+    add(seinLeftContainer);
+    add(seinRightContainer);
+    add(engineProgress);
+    add(speedProgress);
     add(reportValue);
     add(reportMode);
     add(driveMode);
@@ -203,12 +205,23 @@ Screen1ViewBase::Screen1ViewBase()
     add(tripMode);
     add(signalValue);
     add(batteryValue);
-    add(engineRotation);
-    add(seinLeft);
-    add(seinRight);
 }
 
 void Screen1ViewBase::setupScreen()
 {
+    scrollWheel.initialize();
+    for (int i = 0; i < scrollWheelListItems.getNumberOfDrawables(); i++)
+    {
+        scrollWheelListItems[i].initialize();
+    }
+}
 
+void Screen1ViewBase::updateItemCallbackHandler(touchgfx::DrawableListItemsInterface* items, int16_t containerIndex, int16_t itemIndex)
+{
+    if (items == &scrollWheelListItems)
+    {
+        touchgfx::Drawable* d = items->getDrawable(containerIndex);
+        imageContainer* cc = (imageContainer*)d;
+        scrollWheelUpdateItem(*cc, itemIndex);
+    }
 }

@@ -1,5 +1,7 @@
 #include <gui/screen1_screen/Screen1View.hpp>
 #include <touchgfx/Color.hpp>
+#include "BitmapDatabase.hpp"
+
 #include <stdlib.h>
 #ifndef SIMULATOR
 #include "Nodes/VCU.h"
@@ -20,7 +22,8 @@ hmi1_t HMI1;
 uint16_t y,h;
 
 Screen1View::Screen1View() :
-        ticker(0)
+        ticker(0),
+		indicatorItem(0)
 {	
 	Unicode::strncpy(HMI1.ref.drive.mode[0], "ECONOMIC", DRIVEMODE_SIZE);
 	HMI1.ref.drive.color[0] = Color::getColorFrom24BitRGB(255, 255, 0);
@@ -52,6 +55,27 @@ void Screen1View::tearDownScreen()
     Screen1ViewBase::tearDownScreen();
 }
 
+void Screen1View::scrollWheelUpdateItem(imageContainer& item, int16_t itemIndex)
+{
+    switch (itemIndex)
+    {
+    case 0:
+        item.updateImage(Bitmap(BITMAP_MAINGO_ID));
+        break;
+    case 1:
+        item.updateImage(Bitmap(BITMAP_MAINREVERSE_ID));
+        break;
+    case 2:
+        item.updateImage(Bitmap(BITMAP_KEYLESSIGNITIONKEYDETECTION_ID));
+        break;
+    }
+}
+
+// void Screen1View::scrollWheelUpdateCenterItem(centerContainer& item, int16_t itemIndex)
+// {
+// }
+
+
 void Screen1View::handleTickEvent() {
     ticker++;
 
@@ -65,16 +89,46 @@ void Screen1View::handleTickEvent() {
         // HMI1.d.status.finger = rand() & 1;
         // HMI1.d.status.keyless = rand() & 1;
         // HMI1.d.status.daylight = rand() & 1;
+        if(indicatorItem >= 2) {
+            indicatorItem = 0;
+        } else  {
+            indicatorItem++;
+        }
+		scrollWheel.animateToItem(indicatorItem, 100);
+		scrollWheel.invalidate();
 
         // sein
-        HMI1.d.status.sein_left = rand() & 1;
-        HMI1.d.status.sein_right = rand() & 1;
+        HMI1.d.status.sein_left =!HMI1.d.status.sein_left;
+        HMI1.d.status.sein_right = !HMI1.d.status.sein_right;
         HMI1.d.mode.reverse = rand() & 1;
 
-        seinLeft.setVisible(HMI1.d.status.sein_left);
-        seinLeft.invalidate();
-        seinRight.setVisible(HMI1.d.status.sein_right);
-        seinRight.invalidate();
+		if(HMI1.d.status.sein_left) {
+			if(!seinLeft.isVisible()){				
+				seinLeft.setVisible(true);
+				seinLeft.startMoveAnimation(0, 0, 20, EasingEquations::linearEaseOut, EasingEquations::linearEaseOut);
+				seinLeft.invalidate();	
+			}
+		} else {
+			if(seinLeft.isVisible()){
+				seinLeft.setVisible(false);
+				seinLeft.setXY(80, 0);
+				seinLeft.invalidate();
+			}			
+		}
+		
+		if(HMI1.d.status.sein_right) {
+			if(!seinRight.isVisible()){
+				seinRight.setVisible(true);
+				seinRight.startMoveAnimation(0, 0, 20, EasingEquations::linearEaseOut, EasingEquations::linearEaseOut);
+				seinRight.invalidate();				
+			}
+		} else {
+			if(seinRight.isVisible()){
+				seinRight.setVisible(false);
+				seinRight.setXY(-80, 0);
+				seinRight.invalidate();
+			}			
+		}
 
         // mode
 		if(HMI1.d.mode.val[SW_M_DRIVE] == SW_M_DRIVE_MAX) {
@@ -148,18 +202,18 @@ void Screen1View::handleTickEvent() {
         tripValue.invalidate();
     }
 
-    if(ticker % 40 == 0) {
-        if(VCU.d.speed > 150) {
+    if(ticker % 1 == 0) {
+        if(VCU.d.speed >= MCU_SPEED_MAX) {
             VCU.d.speed = 0;
         } else  {
             VCU.d.speed++;
         }
         MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
+				
+		speedProgress.setValue(VCU.d.speed * 100 / 150);
+		speedProgress.invalidate();
 		
-		h = VCU.d.speed * 366 / 150;
-		y = 57 + 366 - h;
-		
-		leftBar.setPosition(105, y, 137, 366);
-		leftBar.invalidate();
+		engineProgress.setValue(MCU.d.rpm * 100 / MCU_RPM_MAX);
+		engineProgress.invalidate();
     }
 }

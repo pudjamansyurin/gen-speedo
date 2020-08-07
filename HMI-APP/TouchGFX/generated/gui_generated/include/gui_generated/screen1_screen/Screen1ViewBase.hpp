@@ -11,9 +11,12 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/widgets/Image.hpp>
-#include <touchgfx/widgets/canvas/Circle.hpp>
-#include <touchgfx/widgets/canvas/PainterRGB565.hpp>
+#include <touchgfx/containers/scrollers/ScrollWheel.hpp>
+#include <gui/containers/imageContainer.hpp>
+#include <touchgfx/containers/progress_indicators/ImageProgress.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
+#include <touchgfx/EasingEquations.hpp>
+#include <touchgfx/mixins/MoveAnimator.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -21,6 +24,11 @@ public:
     Screen1ViewBase();
     virtual ~Screen1ViewBase() {}
     virtual void setupScreen();
+
+    virtual void scrollWheelUpdateItem(imageContainer& item, int16_t itemIndex)
+    {
+        // Override and implement this function in Screen1
+    }
 
 protected:
     FrontendApplication& application() {
@@ -52,12 +60,14 @@ protected:
     touchgfx::Image phoneMirroring;
     touchgfx::Image mainGo;
     touchgfx::Image mainReverse;
-    touchgfx::Circle circleLeft;
-    touchgfx::PainterRGB565 circleLeftPainter;
-    touchgfx::Circle circleRight;
-    touchgfx::PainterRGB565 circleRightPainter;
-    touchgfx::Container leftBar;
-    touchgfx::Image speedLevel;
+    touchgfx::ScrollWheel scrollWheel;
+    touchgfx::DrawableListItems<imageContainer, 2> scrollWheelListItems;
+    touchgfx::Container seinLeftContainer;
+    touchgfx::MoveAnimator< touchgfx::Image > seinLeft;
+    touchgfx::Container seinRightContainer;
+    touchgfx::MoveAnimator< touchgfx::Image > seinRight;
+    touchgfx::ImageProgress engineProgress;
+    touchgfx::ImageProgress speedProgress;
     touchgfx::TextAreaWithOneWildcard reportValue;
     touchgfx::TextAreaWithOneWildcard reportMode;
     touchgfx::TextAreaWithOneWildcard driveMode;
@@ -65,9 +75,6 @@ protected:
     touchgfx::TextAreaWithOneWildcard tripMode;
     touchgfx::TextAreaWithOneWildcard signalValue;
     touchgfx::TextAreaWithOneWildcard batteryValue;
-    touchgfx::Image engineRotation;
-    touchgfx::Image seinLeft;
-    touchgfx::Image seinRight;
 
     /*
      * Wildcard Buffers
@@ -88,12 +95,9 @@ protected:
     touchgfx::Unicode::UnicodeChar batteryValueBuffer[BATTERYVALUE_SIZE];
 
 private:
+    touchgfx::Callback<Screen1ViewBase, touchgfx::DrawableListItemsInterface*, int16_t, int16_t> updateItemCallback;
+    void updateItemCallbackHandler(touchgfx::DrawableListItemsInterface* items, int16_t containerIndex, int16_t itemIndex);
 
-    /*
-     * Canvas Buffer Size
-     */
-    static const uint16_t CANVAS_BUFFER_SIZE = 12000;
-    uint8_t canvasBuffer[CANVAS_BUFFER_SIZE];
 };
 
 #endif // SCREEN1VIEWBASE_HPP

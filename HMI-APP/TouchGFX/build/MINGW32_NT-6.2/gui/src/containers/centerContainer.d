@@ -1,7 +1,7 @@
-build/MINGW32_NT-6.2/gui/src/screen1_screen/Screen1Presenter.o: \
- gui/src/screen1_screen/Screen1Presenter.cpp \
- gui/include/gui/screen1_screen/Screen1View.hpp \
- generated/gui_generated/include/gui_generated/screen1_screen/Screen1ViewBase.hpp \
+build/MINGW32_NT-6.2/gui/src/containers/centerContainer.o: \
+ gui/src/containers/centerContainer.cpp \
+ gui/include/gui/containers/centerContainer.hpp \
+ generated/gui_generated/include/gui_generated/containers/centerContainerBase.hpp \
  gui/include/gui/common/FrontendApplication.hpp \
  generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp \
  ../Middlewares/ST/touchgfx/framework/include/mvp/MVPApplication.hpp \
@@ -42,32 +42,12 @@ build/MINGW32_NT-6.2/gui/src/screen1_screen/Screen1Presenter.o: \
  ../Middlewares/ST/touchgfx/framework/include/mvp/Presenter.hpp \
  ../Middlewares/ST/touchgfx/framework/include/mvp/MVPHeap.hpp \
  gui/include/gui/model/Model.hpp \
- gui/include/gui/screen1_screen/Screen1Presenter.hpp \
- gui/include/gui/model/ModelListener.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Widget.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/FontManager.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/TypedText.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/Texts.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheel.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheelBase.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp \
- gui/include/gui/containers/imageContainer.hpp \
- generated/gui_generated/include/gui_generated/containers/imageContainerBase.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractDirectionProgress.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Widget.hpp
 
-gui/include/gui/screen1_screen/Screen1View.hpp:
+gui/include/gui/containers/centerContainer.hpp:
 
-generated/gui_generated/include/gui_generated/screen1_screen/Screen1ViewBase.hpp:
+generated/gui_generated/include/gui_generated/containers/centerContainerBase.hpp:
 
 gui/include/gui/common/FrontendApplication.hpp:
 
@@ -149,46 +129,6 @@ generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp
 
 gui/include/gui/model/Model.hpp:
 
-gui/include/gui/screen1_screen/Screen1Presenter.hpp:
-
-gui/include/gui/model/ModelListener.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Widget.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/FontManager.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/TypedText.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/Texts.hpp:
-
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheel.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheelBase.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp:
-
-gui/include/gui/containers/imageContainer.hpp:
-
-generated/gui_generated/include/gui_generated/containers/imageContainerBase.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractDirectionProgress.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Widget.hpp:

@@ -50,22 +50,19 @@ build/MINGW32_NT-6.2/generated/gui_generated/src/screen1_screen/Screen1ViewBase.
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/TypedText.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Texts.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/Circle.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/Canvas.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/transforms/DisplayTransformation.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/CWRUtil.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/Rasterizer.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/Outline.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/Cell.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/Renderer.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/RenderingBuffer.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/Scanline.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/AbstractPainter.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/CanvasWidget.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/PainterRGB565.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/AbstractPainterRGB565.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheel.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheelBase.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp \
+ gui/include/gui/containers/imageContainer.hpp \
+ generated/gui_generated/include/gui_generated/containers/imageContainerBase.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractDirectionProgress.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Color.hpp \
  generated/texts/include/texts/TextKeysAndLanguages.hpp \
  generated/images/include/BitmapDatabase.hpp
@@ -170,37 +167,31 @@ gui/include/gui/model/ModelListener.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/Circle.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheel.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/Canvas.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheelBase.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/transforms/DisplayTransformation.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/CWRUtil.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/Rasterizer.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/Outline.hpp:
+gui/include/gui/containers/imageContainer.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/Cell.hpp:
+generated/gui_generated/include/gui_generated/containers/imageContainerBase.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/Renderer.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/RenderingBuffer.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractDirectionProgress.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/Scanline.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/AbstractPainter.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/CanvasWidget.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/PainterRGB565.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/canvas/AbstractPainterRGB565.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
+
+../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Color.hpp:
 
