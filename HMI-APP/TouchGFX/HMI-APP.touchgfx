@@ -43,12 +43,12 @@
             "InteractionName": "Interaction1",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "ActionCustomTypeName": "Call Screen2 switchScreen",
+              "ActionCustomTypeName": "Call welcomeScreen switchScreen",
               "Type": "TriggerWhen"
             },
             "Action": {
               "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "Screen1",
+              "ActionComponent": "dashboardScreen",
               "Type": "ActionGotoScreen"
             }
           }
@@ -60,7 +60,7 @@
             "HasValue": false
           }
         ],
-        "Name": "Screen2",
+        "Name": "welcomeScreen",
         "OverrideDefaultBufferSize": false,
         "CanvasBufferSize": 0
       },
@@ -239,7 +239,7 @@
               }
             ],
             "IsCacheableContainer": false,
-            "Name": "indicator",
+            "Name": "indicatorContainer",
             "X": 274,
             "Y": 114,
             "Width": 250,
@@ -260,15 +260,15 @@
             "MarginAfter": 0,
             "IsHorizontal": true,
             "IsCircular": true,
-            "ItemTemplateName": "imageContainer",
+            "ItemTemplateName": "indicatorWheelContainer",
             "NumberofItems": 10,
             "InitialElement": 1,
             "ItemMargin": 139,
             "Easing": "Expo",
-            "EasingOption": "Out",
+            "EasingOption": "In",
             "SwipeAcceleration": 1.0,
             "DragAcceleration": 1.0,
-            "Name": "scrollWheel",
+            "Name": "indicatorWheel",
             "X": 146,
             "Y": 132,
             "Width": 508,
@@ -414,7 +414,7 @@
               {
                 "RelativeFilename": "TripContainer.png",
                 "Alpha": 255,
-                "Name": "tripContainer",
+                "Name": "tripBox",
                 "X": 364,
                 "Y": 98,
                 "Width": 143,
@@ -429,7 +429,7 @@
               {
                 "RelativeFilename": "ModeContainer.png",
                 "Alpha": 255,
-                "Name": "modeContainer",
+                "Name": "driveBox",
                 "X": 277,
                 "Y": 364,
                 "Width": 245,
@@ -443,7 +443,7 @@
               }
             ],
             "IsCacheableContainer": false,
-            "Name": "frame",
+            "Name": "frameContainer",
             "X": 0,
             "Y": 0,
             "Width": 800,
@@ -626,27 +626,28 @@
             "Moveable": false
           },
           {
-            "TextId": "SingleUseId2",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 0,
-              "Green": 255,
-              "Blue": 0
-            },
-            "Alpha": 255,
-            "AutoSize": false,
-            "LineSpacing": 0,
-            "Wildcard1": {
-              "TextId": "SingleUseId15",
-              "UseBuffer": true,
-              "BufferSize": 12
-            },
-            "Name": "driveMode",
+            "SelectedItemOffset": 0,
+            "UseSelectedStyle": false,
+            "ExtraSizeBefore": 0,
+            "ExtraSizeAfter": 0,
+            "MarginBefore": 0,
+            "MarginAfter": 0,
+            "IsHorizontal": false,
+            "IsCircular": true,
+            "ItemTemplateName": "driveWheelContainer",
+            "NumberofItems": 4,
+            "InitialElement": 1,
+            "ItemMargin": 0,
+            "Easing": "Expo",
+            "EasingOption": "In",
+            "SwipeAcceleration": 1.0,
+            "DragAcceleration": 1.0,
+            "Name": "driveWheel",
             "X": 288,
             "Y": 369,
             "Width": 222,
             "Height": 19,
-            "Type": "TextArea",
+            "Type": "ScrollWheel",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -767,7 +768,7 @@
           }
         ],
         "Interactions": [],
-        "Name": "Screen1",
+        "Name": "dashboardScreen",
         "OverrideDefaultBufferSize": false,
         "CanvasBufferSize": 0
       }
@@ -778,7 +779,7 @@
           {
             "RelativeFilename": "MainGo.png",
             "Alpha": 255,
-            "Name": "image",
+            "Name": "indicatorImage",
             "X": 10,
             "Y": 75,
             "Width": 210,
@@ -792,20 +793,54 @@
           }
         ],
         "Interactions": [],
-        "Name": "imageContainer",
+        "Name": "indicatorWheelContainer",
         "X": 0,
         "Y": 0,
         "Width": 230,
         "Height": 230
+      },
+      {
+        "Components": [
+          {
+            "TextId": "SingleUseId18",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 255,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId19",
+              "UseBuffer": true,
+              "BufferSize": 12
+            },
+            "Name": "driveMode",
+            "X": 0,
+            "Y": 0,
+            "Width": 222,
+            "Height": 19,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          }
+        ],
+        "Interactions": [],
+        "Name": "driveWheelContainer",
+        "X": 0,
+        "Y": 0,
+        "Width": 222,
+        "Height": 19
       }
     ],
     "TextEntries": [
       {
         "TextEntryId": "SingleUseId1",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId2",
         "IsResource": false
       },
       {
@@ -857,15 +892,19 @@
         "IsResource": false
       },
       {
-        "TextEntryId": "SingleUseId15",
-        "IsResource": false
-      },
-      {
         "TextEntryId": "SingleUseId16",
         "IsResource": false
       },
       {
         "TextEntryId": "SingleUseId17",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId18",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId19",
         "IsResource": false
       }
     ],
@@ -875,7 +914,7 @@
       "Height": 480
     },
     "SelectedColorDepth": 16,
-    "StartupScreenName": "Screen2",
+    "StartupScreenName": "welcomeScreen",
     "SelectedStartupLanguage": "GB",
     "Skin": "Blue",
     "TouchGfxPath": "../Middlewares/ST/touchgfx",
