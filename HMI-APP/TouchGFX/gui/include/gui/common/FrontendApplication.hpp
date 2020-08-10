@@ -6,6 +6,7 @@
 #include "_defines_shared.h"
 #endif
 
+#define INDICATOR_MAX                       10
 #ifdef SIMULATOR
 /* Macro prototypes ------------------------------------------------------- */
 #define MCU_SPEED_MAX             (uint8_t) 255
@@ -29,9 +30,9 @@ typedef enum {
 } SW_MODE_DRIVE;
 
 typedef enum {
-    SW_M_TRIP_A = 0,
+    SW_M_TRIP_ODO = 0,
+    SW_M_TRIP_A,
     SW_M_TRIP_B,
-    SW_M_TRIP_ODO,
     SW_M_TRIP_MAX = 2,
 } SW_MODE_TRIP;
 
@@ -89,17 +90,6 @@ typedef struct {
     } d;
 } hmi1_t;
 #endif
-
-#define INDICATOR_MAX                       10
-typedef struct {
-    struct {
-        touchgfx::Unicode::UnicodeChar mode[SW_M_TRIP_MAX+1][7];
-    } trip;
-    struct {
-        touchgfx::Unicode::UnicodeChar mode[SW_M_REPORT_MAX+1][6];
-        touchgfx::Unicode::UnicodeChar unit[SW_M_REPORT_MAX+1][11];
-    } report;
-} text_database_t;
 
 class FrontendHeap;
 

@@ -10,8 +10,9 @@ public:
     virtual ~indicatorWheelContainer() {}
 
     virtual void initialize();
-    void updateImage(Bitmap icon);
+    void updateImage(uint8_t index);
 protected:
+	uint16_t indicatorList[INDICATOR_MAX];
 };
 
 #endif // INDICATORWHEELCONTAINER_HPP

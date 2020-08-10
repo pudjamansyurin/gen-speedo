@@ -62,9 +62,13 @@ build/MINGW32_NT-6.2/gui/src/dashboardscreen_screen/dashboardScreenPresenter.o: 
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractDirectionProgress.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp \
+ gui/include/gui/containers/reportWheelContainer.hpp \
+ generated/gui_generated/include/gui_generated/containers/reportWheelContainerBase.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
  gui/include/gui/containers/driveWheelContainer.hpp \
  generated/gui_generated/include/gui_generated/containers/driveWheelContainerBase.hpp \
+ gui/include/gui/containers/tripWheelContainer.hpp \
+ generated/gui_generated/include/gui_generated/containers/tripWheelContainerBase.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp
 
 gui/include/gui/dashboardscreen_screen/dashboardScreenView.hpp:
@@ -191,10 +195,18 @@ generated/gui_generated/include/gui_generated/containers/indicatorWheelContainer
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp:
 
+gui/include/gui/containers/reportWheelContainer.hpp:
+
+generated/gui_generated/include/gui_generated/containers/reportWheelContainerBase.hpp:
+
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
 
 gui/include/gui/containers/driveWheelContainer.hpp:
 
 generated/gui_generated/include/gui_generated/containers/driveWheelContainerBase.hpp:
+
+gui/include/gui/containers/tripWheelContainer.hpp:
+
+generated/gui_generated/include/gui_generated/containers/tripWheelContainerBase.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp:

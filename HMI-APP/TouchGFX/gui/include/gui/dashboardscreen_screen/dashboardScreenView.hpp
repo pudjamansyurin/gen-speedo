@@ -15,10 +15,11 @@ public:
     virtual void handleTickEvent();
     virtual void driveWheelUpdateItem(driveWheelContainer& item, int16_t itemIndex);
     virtual void indicatorWheelUpdateItem(indicatorWheelContainer& item, int16_t itemIndex);
+    virtual void tripWheelUpdateItem(tripWheelContainer& item, int16_t itemIndex);
+    virtual void reportWheelUpdateItem(reportWheelContainer& item, int16_t itemIndex);
 protected:
     uint32_t ticker;
 	uint8_t indicatorItem;
-	uint16_t indicatorList[INDICATOR_MAX];
 };
 
 #endif // DASHBOARDVIEW_HPP

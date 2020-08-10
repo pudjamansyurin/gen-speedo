@@ -1,5 +1,4 @@
 #include <gui/dashboardscreen_screen/dashboardScreenView.hpp>
-#include "BitmapDatabase.hpp"
 
 #include <stdlib.h>
 #ifndef SIMULATOR
@@ -18,33 +17,12 @@ bms_t BMS;
 mcu_t MCU;
 hmi1_t HMI1;
 #endif
-text_database_t TXT;
 
 dashboardScreenView::dashboardScreenView() :
 	ticker(0),
-	indicatorItem(0),
-	indicatorList{
-		BITMAP_MAINREVERSE_ID,
-		BITMAP_MAINGO_ID,			
-		BITMAP_BATTERYDRAINOUT_ID,
-		BITMAP_BRAKESYSTEMALERT_ID,
-		BITMAP_COOLANTTEMPERATUREWARNING_ID,
-		BITMAP_ELECTRONICERRORMESSAGE_ID,
-		BITMAP_FINGERSCANLOGINSTATUS_ID,
-		BITMAP_HIGHBEAMACTIVATED_ID,
-		BITMAP_KEYLESSIGNITIONKEYDETECTION_ID,
-		BITMAP_SMARTPHONEMIRRORINGSTATUS_ID
-	}
+	indicatorItem(0)
 {
-	Unicode::strncpy(TXT.trip.mode[0], "TRIP A", TRIPMODE_SIZE);
-	Unicode::strncpy(TXT.trip.mode[1], "TRIP B", TRIPMODE_SIZE);
-	Unicode::strncpy(TXT.trip.mode[2], "ODO", TRIPMODE_SIZE);
-
-	Unicode::strncpy(TXT.report.mode[0], "RANGE", REPORTMODE_SIZE);
-	Unicode::strncpy(TXT.report.mode[1], "AVG", REPORTMODE_SIZE);
-
-	Unicode::strncpy(TXT.report.unit[0], "KM", REPORTVALUE_SIZE);
-	Unicode::strncpy(TXT.report.unit[1], "KM/KWH", REPORTVALUE_SIZE);
+	
 }
 
 void dashboardScreenView::setupScreen()
@@ -64,7 +42,17 @@ void dashboardScreenView::driveWheelUpdateItem(driveWheelContainer& item, int16_
 
 void dashboardScreenView::indicatorWheelUpdateItem(indicatorWheelContainer& item, int16_t itemIndex)
 {
-    item.updateImage(Bitmap(indicatorList[itemIndex]));
+    item.updateImage(itemIndex);
+}
+
+void dashboardScreenView::tripWheelUpdateItem(tripWheelContainer& item, int16_t itemIndex) 
+{
+    item.updateText(itemIndex);
+}
+
+void dashboardScreenView::reportWheelUpdateItem(reportWheelContainer& item, int16_t itemIndex)
+{
+    item.updateText(itemIndex);
 }
 
 void dashboardScreenView::handleTickEvent() {
@@ -130,32 +118,27 @@ void dashboardScreenView::handleTickEvent() {
 			// HMI1.d.mode.val[SW_M_DRIVE]++;
 		// }
 		HMI1.d.mode.val[SW_M_DRIVE] = rand() % (SW_M_DRIVE_MAX + 1);
-		
-        // Unicode::snprintf(driveModeBuffer, DRIVEMODE_SIZE, "%s",
-			// TXT.drive.mode[HMI1.d.mode.val[SW_M_DRIVE]]);
-		// driveMode.setColor(TXT.drive.color[HMI1.d.mode.val[SW_M_DRIVE]]);
-        // driveMode.invalidate();
 		driveWheel.animateToItem(HMI1.d.mode.val[SW_M_DRIVE]);
 		driveWheel.invalidate();
 
 
-		if(HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_MAX) {
-			HMI1.d.mode.val[SW_M_TRIP] = 0;
-		} else {
-			HMI1.d.mode.val[SW_M_TRIP]++;
-		}
-        Unicode::snprintf(tripModeBuffer, TRIPMODE_SIZE, "%s",
-			TXT.trip.mode[HMI1.d.mode.val[SW_M_TRIP]]);
-        tripMode.invalidate();
+		// if(HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_MAX) {
+			// HMI1.d.mode.val[SW_M_TRIP] = 0;
+		// } else {
+			// HMI1.d.mode.val[SW_M_TRIP]++;
+		// }
+		HMI1.d.mode.val[SW_M_TRIP] = rand() % (SW_M_TRIP_MAX + 1);
+		tripWheel.animateToItem(HMI1.d.mode.val[SW_M_TRIP]);
+		tripWheel.invalidate();
 
-		if(HMI1.d.mode.val[SW_M_REPORT] == SW_M_REPORT_MAX) {
-			HMI1.d.mode.val[SW_M_REPORT] = 0;
-		} else {
-			HMI1.d.mode.val[SW_M_REPORT]++;
-		}
-        Unicode::snprintf(reportModeBuffer, REPORTMODE_SIZE, "%s",
-			TXT.report.mode[HMI1.d.mode.val[SW_M_REPORT]]);
-        reportMode.invalidate();
+		// if(HMI1.d.mode.val[SW_M_REPORT] == SW_M_REPORT_MAX) {
+			// HMI1.d.mode.val[SW_M_REPORT] = 0;
+		// } else {
+			// HMI1.d.mode.val[SW_M_REPORT]++;
+		// }
+		HMI1.d.mode.val[SW_M_REPORT] = rand() % (SW_M_REPORT_MAX + 1);
+		reportWheel.animateToItem(HMI1.d.mode.val[SW_M_REPORT]);
+		reportWheel.invalidate();
     }
     if(ticker % 50 == 0) {
         if(BMS.d.soc > 99) {
@@ -183,11 +166,6 @@ void dashboardScreenView::handleTickEvent() {
         } else  {
             HMI1.d.mode.report++;
         }
-
-        Unicode::snprintf(reportValueBuffer, REPORTVALUE_SIZE, "%03d %s",
-			HMI1.d.mode.report,
-			TXT.report.unit[HMI1.d.mode.val[SW_M_REPORT]]);
-        reportValue.invalidate();
     }
     if(ticker % 10 == 0) {
         if(HMI1.d.mode.trip > 999999) {

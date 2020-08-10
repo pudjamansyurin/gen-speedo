@@ -26,5 +26,4 @@ void driveWheelContainer::updateText(uint8_t index)
 	touchgfx::Unicode::snprintf(driveModeBuffer, DRIVEMODE_SIZE, "%s", M_DRIVE.mode[index]);
 	driveMode.setColor(M_DRIVE.color[index]);
 	driveMode.invalidate();
-	touchgfx_printf("%d\n", index);
 }

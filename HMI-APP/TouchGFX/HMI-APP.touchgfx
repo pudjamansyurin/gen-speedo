@@ -570,55 +570,28 @@
             "Moveable": false
           },
           {
-            "TextId": "SingleUseId8",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 179,
-              "Green": 179,
-              "Blue": 179
-            },
-            "Alpha": 255,
-            "AutoSize": false,
-            "LineSpacing": 0,
-            "Wildcard1": {
-              "TextId": "SingleUseId17",
-              "UseBuffer": true,
-              "BufferSize": 11
-            },
-            "Name": "reportValue",
-            "X": 361,
-            "Y": 406,
-            "Width": 151,
-            "Height": 18,
-            "Type": "TextArea",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "TextId": "SingleUseId7",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 179,
-              "Green": 179,
-              "Blue": 179
-            },
-            "Alpha": 255,
-            "AutoSize": true,
-            "LineSpacing": 0,
-            "Wildcard1": {
-              "TextId": "SingleUseId16",
-              "UseBuffer": true,
-              "BufferSize": 6
-            },
-            "Name": "reportMode",
+            "SelectedItemOffset": 0,
+            "UseSelectedStyle": false,
+            "ExtraSizeBefore": 0,
+            "ExtraSizeAfter": 0,
+            "MarginBefore": 0,
+            "MarginAfter": 0,
+            "IsHorizontal": false,
+            "IsCircular": true,
+            "ItemTemplateName": "reportWheelContainer",
+            "NumberofItems": 2,
+            "InitialElement": 0,
+            "ItemMargin": 0,
+            "Easing": "Quart",
+            "EasingOption": "Out",
+            "SwipeAcceleration": 1.0,
+            "DragAcceleration": 1.0,
+            "Name": "reportWheel",
             "X": 285,
             "Y": 406,
-            "Width": 48,
+            "Width": 227,
             "Height": 18,
-            "Type": "TextArea",
+            "Type": "ScrollWheel",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -683,27 +656,28 @@
             "Moveable": false
           },
           {
-            "TextId": "SingleUseId6",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 128,
-              "Green": 128,
-              "Blue": 128
-            },
-            "Alpha": 255,
-            "AutoSize": false,
-            "LineSpacing": 0,
-            "Wildcard1": {
-              "TextId": "SingleUseId14",
-              "UseBuffer": true,
-              "BufferSize": 7
-            },
-            "Name": "tripMode",
+            "SelectedItemOffset": 0,
+            "UseSelectedStyle": false,
+            "ExtraSizeBefore": 0,
+            "ExtraSizeAfter": 0,
+            "MarginBefore": 0,
+            "MarginAfter": 0,
+            "IsHorizontal": false,
+            "IsCircular": true,
+            "ItemTemplateName": "tripWheelContainer",
+            "NumberofItems": 3,
+            "InitialElement": 0,
+            "ItemMargin": 0,
+            "Easing": "Expo",
+            "EasingOption": "Out",
+            "SwipeAcceleration": 1.0,
+            "DragAcceleration": 1.0,
+            "Name": "tripWheel",
             "X": 269,
             "Y": 93,
             "Width": 79,
             "Height": 20,
-            "Type": "TextArea",
+            "Type": "ScrollWheel",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -836,6 +810,138 @@
         "Y": 0,
         "Width": 222,
         "Height": 19
+      },
+      {
+        "Components": [
+          {
+            "TextId": "SingleUseId20",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 128,
+              "Green": 128,
+              "Blue": 128
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId21",
+              "UseBuffer": true,
+              "BufferSize": 7
+            },
+            "Name": "tripMode",
+            "X": 0,
+            "Y": 0,
+            "Width": 79,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          }
+        ],
+        "Interactions": [],
+        "Name": "tripWheelContainer",
+        "X": 0,
+        "Y": 0,
+        "Width": 79,
+        "Height": 20
+      },
+      {
+        "Components": [
+          {
+            "TextId": "SingleUseId26",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 179,
+              "Green": 179,
+              "Blue": 179
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId27",
+              "UseBuffer": true,
+              "BufferSize": 11
+            },
+            "Name": "reportUnit",
+            "X": 121,
+            "Y": 0,
+            "Width": 105,
+            "Height": 18,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId24",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 179,
+              "Green": 179,
+              "Blue": 179
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId25",
+              "UseBuffer": true,
+              "BufferSize": 11
+            },
+            "Name": "reportValue",
+            "X": 138,
+            "Y": 0,
+            "Width": 50,
+            "Height": 18,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId22",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 179,
+              "Green": 179,
+              "Blue": 179
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId23",
+              "UseBuffer": true,
+              "BufferSize": 6
+            },
+            "Name": "reportMode",
+            "X": 0,
+            "Y": 0,
+            "Width": 48,
+            "Height": 18,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          }
+        ],
+        "Interactions": [],
+        "Name": "reportWheelContainer",
+        "X": 0,
+        "Y": 0,
+        "Width": 227,
+        "Height": 18
       }
     ],
     "TextEntries": [
@@ -853,18 +959,6 @@
       },
       {
         "TextEntryId": "SingleUseId5",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId6",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId7",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId8",
         "IsResource": false
       },
       {
@@ -888,23 +982,43 @@
         "IsResource": false
       },
       {
-        "TextEntryId": "SingleUseId14",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId16",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId17",
-        "IsResource": false
-      },
-      {
         "TextEntryId": "SingleUseId18",
         "IsResource": false
       },
       {
         "TextEntryId": "SingleUseId19",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId20",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId21",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId22",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId23",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId24",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId25",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId26",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId27",
         "IsResource": false
       }
     ],

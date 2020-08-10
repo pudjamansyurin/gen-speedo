@@ -140,20 +140,17 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     speedProgress.setValue(100);
     speedProgress.setAnchorAtZero(true);
 
-    reportValue.setPosition(361, 406, 151, 18);
-    reportValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
-    reportValue.setLinespacing(0);
-    Unicode::snprintf(reportValueBuffer, REPORTVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID17).getText());
-    reportValue.setWildcard(reportValueBuffer);
-    reportValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID8));
-
-    reportMode.setXY(285, 406);
-    reportMode.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
-    reportMode.setLinespacing(0);
-    Unicode::snprintf(reportModeBuffer, REPORTMODE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID16).getText());
-    reportMode.setWildcard(reportModeBuffer);
-    reportMode.resizeToCurrentText();
-    reportMode.setTypedText(touchgfx::TypedText(T_SINGLEUSEID7));
+    reportWheel.setPosition(285, 406, 227, 18);
+    reportWheel.setHorizontal(false);
+    reportWheel.setCircular(true);
+    reportWheel.setEasingEquation(touchgfx::EasingEquations::quartEaseOut);
+    reportWheel.setSwipeAcceleration(10);
+    reportWheel.setDragAcceleration(10);
+    reportWheel.setNumberOfItems(2);
+    reportWheel.setSelectedItemOffset(0);
+    reportWheel.setDrawableSize(18, 0);
+    reportWheel.setDrawables(reportWheelListItems, updateItemCallback);
+    reportWheel.animateToItem(0, 0);
 
     driveWheel.setPosition(288, 369, 222, 19);
     driveWheel.setHorizontal(false);
@@ -174,12 +171,17 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     tripValue.setWildcard(tripValueBuffer);
     tripValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID3));
 
-    tripMode.setPosition(269, 93, 79, 20);
-    tripMode.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
-    tripMode.setLinespacing(0);
-    Unicode::snprintf(tripModeBuffer, TRIPMODE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID14).getText());
-    tripMode.setWildcard(tripModeBuffer);
-    tripMode.setTypedText(touchgfx::TypedText(T_SINGLEUSEID6));
+    tripWheel.setPosition(269, 93, 79, 20);
+    tripWheel.setHorizontal(false);
+    tripWheel.setCircular(true);
+    tripWheel.setEasingEquation(touchgfx::EasingEquations::expoEaseOut);
+    tripWheel.setSwipeAcceleration(10);
+    tripWheel.setDragAcceleration(10);
+    tripWheel.setNumberOfItems(3);
+    tripWheel.setSelectedItemOffset(0);
+    tripWheel.setDrawableSize(20, 0);
+    tripWheel.setDrawables(tripWheelListItems, updateItemCallback);
+    tripWheel.animateToItem(0, 0);
 
     signalValue.setPosition(443, 61, 39, 20);
     signalValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
@@ -203,11 +205,10 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     add(seinRightContainer);
     add(engineProgress);
     add(speedProgress);
-    add(reportValue);
-    add(reportMode);
+    add(reportWheel);
     add(driveWheel);
     add(tripValue);
-    add(tripMode);
+    add(tripWheel);
     add(signalValue);
     add(batteryValue);
 }
@@ -219,10 +220,20 @@ void dashboardScreenViewBase::setupScreen()
     {
         indicatorWheelListItems[i].initialize();
     }
+    reportWheel.initialize();
+    for (int i = 0; i < reportWheelListItems.getNumberOfDrawables(); i++)
+    {
+        reportWheelListItems[i].initialize();
+    }
     driveWheel.initialize();
     for (int i = 0; i < driveWheelListItems.getNumberOfDrawables(); i++)
     {
         driveWheelListItems[i].initialize();
+    }
+    tripWheel.initialize();
+    for (int i = 0; i < tripWheelListItems.getNumberOfDrawables(); i++)
+    {
+        tripWheelListItems[i].initialize();
     }
 }
 
@@ -234,10 +245,22 @@ void dashboardScreenViewBase::updateItemCallbackHandler(touchgfx::DrawableListIt
         indicatorWheelContainer* cc = (indicatorWheelContainer*)d;
         indicatorWheelUpdateItem(*cc, itemIndex);
     }
+    if (items == &reportWheelListItems)
+    {
+        touchgfx::Drawable* d = items->getDrawable(containerIndex);
+        reportWheelContainer* cc = (reportWheelContainer*)d;
+        reportWheelUpdateItem(*cc, itemIndex);
+    }
     if (items == &driveWheelListItems)
     {
         touchgfx::Drawable* d = items->getDrawable(containerIndex);
         driveWheelContainer* cc = (driveWheelContainer*)d;
         driveWheelUpdateItem(*cc, itemIndex);
+    }
+    if (items == &tripWheelListItems)
+    {
+        touchgfx::Drawable* d = items->getDrawable(containerIndex);
+        tripWheelContainer* cc = (tripWheelContainer*)d;
+        tripWheelUpdateItem(*cc, itemIndex);
     }
 }
