@@ -11,22 +11,9 @@ Screen2ViewBase::Screen2ViewBase()
     box1.setPosition(0, 0, 800, 480);
     box1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
 
-    genMotor.setPosition(169, 143, 462, 195);
-
-    genMotorCopy.setXY(416, 128);
-    genMotorCopy.setBitmap(touchgfx::Bitmap(BITMAP_GEN_MOTOR_COPYRIGHT_ID));
-    genMotorCopy.setAlpha(0);
-    genMotor.add(genMotorCopy);
-
-    genMotorText.setXY(0, 150);
-    genMotorText.setBitmap(touchgfx::Bitmap(BITMAP_GEN_MOTOR_TITLE_ID));
-    genMotorText.setAlpha(0);
-    genMotor.add(genMotorText);
-
-    genMotorLogo.setXY(0, 0);
-    genMotorLogo.setBitmap(touchgfx::Bitmap(BITMAP_GEN_MOTOR_LOGO_ID));
-    genMotorLogo.setAlpha(0);
-    genMotor.add(genMotorLogo);
+    genMotor.setXY(169, 143);
+    genMotor.setBitmap(touchgfx::Bitmap(BITMAP_GEN_MOTORCYCLE_ID));
+    genMotor.setAlpha(0);
 
     add(box1);
     add(genMotor);

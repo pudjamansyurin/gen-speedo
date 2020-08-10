@@ -49,10 +49,6 @@ void Screen2View::handleTickEvent() {
 	}
 
 	// trigger screen
-	genMotorLogo.setAlpha(alpha);
-	genMotorText.setAlpha(alpha);
-	genMotorCopy.setAlpha(alpha);
-	genMotorLogo.invalidate();
-	genMotorText.invalidate();
-	genMotorCopy.invalidate();
+	genMotor.setAlpha(alpha);
+	genMotor.invalidate();
 }
