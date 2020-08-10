@@ -4,8 +4,8 @@
 #include <gui_generated/containers/driveWheelContainerBase.hpp>
 
 typedef struct {
-	Unicode::UnicodeChar mode[SW_M_DRIVE_MAX][12];
-	colortype color[SW_M_DRIVE_MAX];
+	Unicode::UnicodeChar mode[SW_M_DRIVE_MAX+1][12];
+	colortype color[SW_M_DRIVE_MAX+1];
 } drive_t;
 
 class driveWheelContainer : public driveWheelContainerBase

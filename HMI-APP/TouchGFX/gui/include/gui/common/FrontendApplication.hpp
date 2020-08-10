@@ -11,7 +11,6 @@
 #define MCU_SPEED_MAX             (uint8_t) 255
 #define MCU_RPM_MAX              (uint32_t) 99999
 #define VCU_ODOMETER_MAX         (uint32_t) 99999
-#define INDICATOR_MAX						10
 
 /* Enum prototypes ------------------------------------------------------- */
 typedef enum {
@@ -91,13 +90,14 @@ typedef struct {
 } hmi1_t;
 #endif
 
+#define INDICATOR_MAX                       10
 typedef struct {
     struct {
-        touchgfx::Unicode::UnicodeChar mode[SW_M_TRIP_MAX][7];
+        touchgfx::Unicode::UnicodeChar mode[SW_M_TRIP_MAX+1][7];
     } trip;
     struct {
-        touchgfx::Unicode::UnicodeChar mode[SW_M_REPORT_MAX][6];
-        touchgfx::Unicode::UnicodeChar unit[SW_M_REPORT_MAX][11];
+        touchgfx::Unicode::UnicodeChar mode[SW_M_REPORT_MAX+1][6];
+        touchgfx::Unicode::UnicodeChar unit[SW_M_REPORT_MAX+1][11];
     } report;
 } text_database_t;
 
