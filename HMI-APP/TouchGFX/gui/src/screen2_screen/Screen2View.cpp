@@ -1,8 +1,7 @@
 #include <gui/screen2_screen/Screen2View.hpp>
-#include <math.h>
 
 Screen2View::Screen2View() : 
-    ticker(0.0f)
+    ticker(0)
 {
 
 }
@@ -19,17 +18,41 @@ void Screen2View::tearDownScreen()
 
 
 void Screen2View::handleTickEvent() {
-    ticker += 0.0174f;
+	uint8_t alpha;
 	
-	if((ticker*ticker*ticker) < (M_PI * 20)) {
-		mainLogo.updateAngles(0.000f, (ticker*ticker*ticker) , 0.000f);
-		mainLogo.setAlpha(ticker*50 >= 0xFF ? 0xFF : ticker*50);
-		mainLogo.invalidate();
+	// increment the ticker
+	if(ticker < 200) {
+		ticker += 3;
+	}
+	else if(ticker < 350) {
+		ticker += 2;
 	} 
-	else if((ticker*ticker*ticker) < (M_PI*40)) {
-		mainLogo.updateAngles(0.000f, 0.000f , 0.000f);
-		mainLogo.invalidate();		
+	else {
+		ticker += 25;
+	}
+	
+	// calculate the alpha value
+	if(ticker < 200){
+		alpha = ticker;
+	} 
+	else if (ticker < 350) {
+		alpha = 400-ticker;
+	}
+	else if (ticker < 555) {
+		alpha = ticker-300;
+	}
+	else if (ticker < 555+1000) {
+		alpha = 255;
 	} else {
 		switchScreen();
+		return;
 	}
+
+	// trigger screen
+	genMotorLogo.setAlpha(alpha);
+	genMotorText.setAlpha(alpha);
+	genMotorCopy.setAlpha(alpha);
+	genMotorLogo.invalidate();
+	genMotorText.invalidate();
+	genMotorCopy.invalidate();
 }

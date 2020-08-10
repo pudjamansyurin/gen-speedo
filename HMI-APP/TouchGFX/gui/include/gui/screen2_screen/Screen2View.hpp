@@ -14,7 +14,7 @@ public:
 	
     virtual void handleTickEvent();
 protected:
-    float ticker;
+    uint32_t ticker;
 };
 
 #endif // SCREEN2VIEW_HPP

@@ -11,20 +11,25 @@ Screen2ViewBase::Screen2ViewBase()
     box1.setPosition(0, 0, 800, 480);
     box1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
 
-    mainLogo.setXY(300, 140);
-    mainLogo.setBitmap(touchgfx::Bitmap(BITMAP_ICON_ID));
-    mainLogo.setWidth(200);
-    mainLogo.setHeight(230);
-    mainLogo.setBitmapPosition(0.000f, 0.000f);
-    mainLogo.setScale(1.000f);
-    mainLogo.setCameraDistance(1000.000f);
-    mainLogo.setOrigo(100.000f, 115.000f, 1000.000f);
-    mainLogo.setCamera(100.000f, 115.000f);
-    mainLogo.updateAngles(0.000f, 0.000f, 0.000f);
-    mainLogo.setRenderingAlgorithm(touchgfx::TextureMapper::BILINEAR_INTERPOLATION);
+    genMotor.setPosition(169, 143, 462, 195);
+
+    genMotorCopy.setXY(416, 128);
+    genMotorCopy.setBitmap(touchgfx::Bitmap(BITMAP_GEN_MOTOR_COPYRIGHT_ID));
+    genMotorCopy.setAlpha(0);
+    genMotor.add(genMotorCopy);
+
+    genMotorText.setXY(0, 150);
+    genMotorText.setBitmap(touchgfx::Bitmap(BITMAP_GEN_MOTOR_TITLE_ID));
+    genMotorText.setAlpha(0);
+    genMotor.add(genMotorText);
+
+    genMotorLogo.setXY(0, 0);
+    genMotorLogo.setBitmap(touchgfx::Bitmap(BITMAP_GEN_MOTOR_LOGO_ID));
+    genMotorLogo.setAlpha(0);
+    genMotor.add(genMotorLogo);
 
     add(box1);
-    add(mainLogo);
+    add(genMotor);
 }
 
 void Screen2ViewBase::setupScreen()
@@ -36,6 +41,6 @@ void Screen2ViewBase::switchScreen()
 {
     //Interaction1
     //When switchScreen is called change screen to Screen1
-    //Go to Screen1 with screen transition towards North
-    application().gotoScreen1ScreenSlideTransitionNorth();
+    //Go to Screen1 with no screen transition
+    application().gotoScreen1ScreenNoTransition();
 }

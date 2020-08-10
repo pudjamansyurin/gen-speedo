@@ -8,7 +8,8 @@
 #include <mvp/View.hpp>
 #include <gui/screen2_screen/Screen2Presenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/widgets/AnimationTextureMapper.hpp>
+#include <touchgfx/containers/Container.hpp>
+#include <touchgfx/widgets/Image.hpp>
 
 class Screen2ViewBase : public touchgfx::View<Screen2Presenter>
 {
@@ -31,7 +32,10 @@ protected:
      * Member Declarations
      */
     touchgfx::Box box1;
-    touchgfx::AnimationTextureMapper mainLogo;
+    touchgfx::Container genMotor;
+    touchgfx::Image genMotorCopy;
+    touchgfx::Image genMotorText;
+    touchgfx::Image genMotorLogo;
 
 private:
 
