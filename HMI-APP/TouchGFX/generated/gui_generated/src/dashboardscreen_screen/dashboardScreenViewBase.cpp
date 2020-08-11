@@ -140,6 +140,13 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     speedProgress.setValue(100);
     speedProgress.setAnchorAtZero(true);
 
+    reportValue.setPosition(423, 406, 50, 18);
+    reportValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    reportValue.setLinespacing(0);
+    Unicode::snprintf(reportValueBuffer, REPORTVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID29).getText());
+    reportValue.setWildcard(reportValueBuffer);
+    reportValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID28));
+
     reportWheel.setPosition(285, 406, 227, 18);
     reportWheel.setHorizontal(false);
     reportWheel.setCircular(true);
@@ -205,6 +212,7 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     add(seinRightContainer);
     add(engineProgress);
     add(speedProgress);
+    add(reportValue);
     add(reportWheel);
     add(driveWheel);
     add(tripValue);

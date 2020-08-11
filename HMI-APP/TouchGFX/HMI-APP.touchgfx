@@ -570,6 +570,34 @@
             "Moveable": false
           },
           {
+            "TextId": "SingleUseId28",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 179,
+              "Green": 179,
+              "Blue": 179
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId29",
+              "UseBuffer": true,
+              "BufferSize": 11
+            },
+            "Name": "reportValue",
+            "X": 423,
+            "Y": 406,
+            "Width": 50,
+            "Height": 18,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
             "SelectedItemOffset": 0,
             "UseSelectedStyle": false,
             "ExtraSizeBefore": 0,
@@ -880,34 +908,6 @@
             "Moveable": false
           },
           {
-            "TextId": "SingleUseId24",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 179,
-              "Green": 179,
-              "Blue": 179
-            },
-            "Alpha": 255,
-            "AutoSize": false,
-            "LineSpacing": 0,
-            "Wildcard1": {
-              "TextId": "SingleUseId25",
-              "UseBuffer": true,
-              "BufferSize": 11
-            },
-            "Name": "reportValue",
-            "X": 138,
-            "Y": 0,
-            "Width": 50,
-            "Height": 18,
-            "Type": "TextArea",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
             "TextId": "SingleUseId22",
             "TextRotation": "0",
             "Color": {
@@ -1006,19 +1006,19 @@
         "IsResource": false
       },
       {
-        "TextEntryId": "SingleUseId24",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId25",
-        "IsResource": false
-      },
-      {
         "TextEntryId": "SingleUseId26",
         "IsResource": false
       },
       {
         "TextEntryId": "SingleUseId27",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId28",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId29",
         "IsResource": false
       }
     ],

@@ -24,7 +24,6 @@ protected:
      * Member Declarations
      */
     touchgfx::TextAreaWithOneWildcard reportUnit;
-    touchgfx::TextAreaWithOneWildcard reportValue;
     touchgfx::TextAreaWithOneWildcard reportMode;
 
     /*
@@ -32,8 +31,6 @@ protected:
      */
     static const uint16_t REPORTUNIT_SIZE = 11;
     touchgfx::Unicode::UnicodeChar reportUnitBuffer[REPORTUNIT_SIZE];
-    static const uint16_t REPORTVALUE_SIZE = 11;
-    touchgfx::Unicode::UnicodeChar reportValueBuffer[REPORTVALUE_SIZE];
     static const uint16_t REPORTMODE_SIZE = 6;
     touchgfx::Unicode::UnicodeChar reportModeBuffer[REPORTMODE_SIZE];
 

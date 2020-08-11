@@ -16,13 +16,6 @@ reportWheelContainerBase::reportWheelContainerBase()
     reportUnit.setWildcard(reportUnitBuffer);
     reportUnit.setTypedText(touchgfx::TypedText(T_SINGLEUSEID26));
 
-    reportValue.setPosition(138, 0, 50, 18);
-    reportValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
-    reportValue.setLinespacing(0);
-    Unicode::snprintf(reportValueBuffer, REPORTVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID25).getText());
-    reportValue.setWildcard(reportValueBuffer);
-    reportValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID24));
-
     reportMode.setXY(0, 0);
     reportMode.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     reportMode.setLinespacing(0);
@@ -32,7 +25,6 @@ reportWheelContainerBase::reportWheelContainerBase()
     reportMode.setTypedText(touchgfx::TypedText(T_SINGLEUSEID22));
 
     add(reportUnit);
-    add(reportValue);
     add(reportMode);
 }
 

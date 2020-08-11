@@ -76,7 +76,7 @@ void dashboardScreenView::handleTickEvent() {
             // indicatorItem++;
         // }
 		indicatorItem = rand() % (INDICATOR_MAX + 1);
-		indicatorWheel.animateToItem(indicatorItem);
+		indicatorWheel.animateToItem(indicatorItem, 0);
 		indicatorWheel.invalidate();
 
         // sein
@@ -118,7 +118,7 @@ void dashboardScreenView::handleTickEvent() {
 			// HMI1.d.mode.val[SW_M_DRIVE]++;
 		// }
 		HMI1.d.mode.val[SW_M_DRIVE] = rand() % (SW_M_DRIVE_MAX + 1);
-		driveWheel.animateToItem(HMI1.d.mode.val[SW_M_DRIVE]);
+		driveWheel.animateToItem(HMI1.d.mode.val[SW_M_DRIVE], 0);
 		driveWheel.invalidate();
 
 
@@ -128,7 +128,7 @@ void dashboardScreenView::handleTickEvent() {
 			// HMI1.d.mode.val[SW_M_TRIP]++;
 		// }
 		HMI1.d.mode.val[SW_M_TRIP] = rand() % (SW_M_TRIP_MAX + 1);
-		tripWheel.animateToItem(HMI1.d.mode.val[SW_M_TRIP]);
+		tripWheel.animateToItem(HMI1.d.mode.val[SW_M_TRIP], 0);
 		tripWheel.invalidate();
 
 		// if(HMI1.d.mode.val[SW_M_REPORT] == SW_M_REPORT_MAX) {
@@ -137,6 +137,8 @@ void dashboardScreenView::handleTickEvent() {
 			// HMI1.d.mode.val[SW_M_REPORT]++;
 		// }
 		HMI1.d.mode.val[SW_M_REPORT] = rand() % (SW_M_REPORT_MAX + 1);
+		reportValue.setX(!HMI1.d.mode.val[SW_M_REPORT] ? 423 : 362);
+		reportValue.invalidate();
 		reportWheel.animateToItem(HMI1.d.mode.val[SW_M_REPORT]);
 		reportWheel.invalidate();
     }
@@ -166,6 +168,9 @@ void dashboardScreenView::handleTickEvent() {
         } else  {
             HMI1.d.mode.report++;
         }
+		
+		Unicode::snprintf(reportValueBuffer, REPORTVALUE_SIZE, "%03d", HMI1.d.mode.report);
+		reportValue.invalidate();
     }
     if(ticker % 10 == 0) {
         if(HMI1.d.mode.trip > 999999) {

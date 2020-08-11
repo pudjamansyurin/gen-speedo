@@ -14,9 +14,9 @@
 #include <gui/containers/indicatorWheelContainer.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/progress_indicators/ImageProgress.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <gui/containers/reportWheelContainer.hpp>
 #include <gui/containers/driveWheelContainer.hpp>
-#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <gui/containers/tripWheelContainer.hpp>
 #include <touchgfx/EasingEquations.hpp>
 #include <touchgfx/mixins/MoveAnimator.hpp>
@@ -86,6 +86,7 @@ protected:
     touchgfx::MoveAnimator< touchgfx::Image > seinRight;
     touchgfx::ImageProgress engineProgress;
     touchgfx::ImageProgress speedProgress;
+    touchgfx::TextAreaWithOneWildcard reportValue;
     touchgfx::ScrollWheel reportWheel;
     touchgfx::DrawableListItems<reportWheelContainer, 2> reportWheelListItems;
     touchgfx::ScrollWheel driveWheel;
@@ -99,6 +100,8 @@ protected:
     /*
      * Wildcard Buffers
      */
+    static const uint16_t REPORTVALUE_SIZE = 11;
+    touchgfx::Unicode::UnicodeChar reportValueBuffer[REPORTVALUE_SIZE];
     static const uint16_t TRIPVALUE_SIZE = 7;
     touchgfx::Unicode::UnicodeChar tripValueBuffer[TRIPVALUE_SIZE];
     static const uint16_t SIGNALVALUE_SIZE = 4;
