@@ -19,6 +19,10 @@ mcu_t MCU;
 hmi1_t HMI1;
 #endif
 
+#ifndef SIMULATOR
+static uint32_t notif;
+static uint16_t timeout = 0;
+#endif
 static uint8_t indicatorItem = 0;
 	
 Model::Model() 
@@ -30,6 +34,24 @@ Model::Model()
 void Model::tick()
 {
 	ticker++;
+	
+#ifndef SIMULATOR
+	// Check if it needs update
+	notif = osThreadFlagsWait(EVT_MASK, osFlagsWaitAny, 0);
+	if (_RTOS_ValidThreadFlag(notif) && (notif & EVT_DISPLAY_UPDATE)) {
+		timeout = 0;
+	} else {
+		timeout++;
+	}
+	
+	// Handle timeout
+	if(timeout > 500) {
+		timeout = 0;
+		_FlushData();
+
+		LOG_StrLn("GUI:Canbus timeout");
+	}
+#endif
 	
     if(ticker % 60 == 0) {
         // indicator
