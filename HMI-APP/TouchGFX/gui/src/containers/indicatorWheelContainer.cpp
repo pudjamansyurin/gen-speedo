@@ -4,15 +4,15 @@
 indicatorWheelContainer::indicatorWheelContainer() :
 	indicatorList{
 		BITMAP_MAINREVERSE_ID,
-		BITMAP_MAINGO_ID,			
+		BITMAP_MAINGO_ID,
+        BITMAP_BRAKESYSTEMALERT_ID,
+        BITMAP_SMARTPHONEMIRRORINGSTATUS_ID,
+        BITMAP_HIGHBEAMACTIVATED_ID,
+        BITMAP_ELECTRONICERRORMESSAGE_ID,
+        BITMAP_COOLANTTEMPERATUREWARNING_ID,
+        BITMAP_FINGERSCANLOGINSTATUS_ID,
+        BITMAP_KEYLESSIGNITIONKEYDETECTION_ID,
 		BITMAP_BATTERYDRAINOUT_ID,
-		BITMAP_BRAKESYSTEMALERT_ID,
-		BITMAP_COOLANTTEMPERATUREWARNING_ID,
-		BITMAP_ELECTRONICERRORMESSAGE_ID,
-		BITMAP_FINGERSCANLOGINSTATUS_ID,
-		BITMAP_HIGHBEAMACTIVATED_ID,
-		BITMAP_KEYLESSIGNITIONKEYDETECTION_ID,
-		BITMAP_SMARTPHONEMIRRORINGSTATUS_ID
 	}
 {
 
@@ -26,9 +26,9 @@ void indicatorWheelContainer::initialize()
 void indicatorWheelContainer::updateImage(uint8_t index)
 {
 	Bitmap icon = Bitmap(indicatorList[index]);
-	
+
     indicatorImage.setXY(
-		(getWidth() - icon.getWidth()) / 2, 
+		(getWidth() - icon.getWidth()) / 2,
 		(getHeight() - icon.getHeight()) / 2
 	);
     indicatorImage.setBitmap(icon);

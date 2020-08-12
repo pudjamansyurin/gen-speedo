@@ -7,7 +7,21 @@
 #include "_defines_shared.h"
 #endif
 
-#define INDICATOR_MAX                       10
+/* Exported enum  ------------------------------------------------------------*/
+typedef enum {
+    INDICATOR_REVERSE = 0,
+    INDICATOR_GO,
+    INDICATOR_ABS,
+    INDICATOR_MIRRORING,
+    INDICATOR_LAMP,
+    INDICATOR_WARNING,
+    INDICATOR_OVERHEAT,
+    INDICATOR_FINGER,
+    INDICATOR_KEYLESS,
+    INDICATOR_LOWBAT,
+    INDICATOR_MAX = 9
+} INDICATOR;
+
 #ifdef SIMULATOR
 /* Macro prototypes ------------------------------------------------------- */
 #define MCU_SPEED_MAX             (uint8_t) 255
@@ -69,16 +83,18 @@ typedef struct {
     struct {
         struct {
             uint8_t abs;
-            uint8_t mirror;
+            uint8_t mirroring;
             uint8_t lamp;
             uint8_t warning;
             uint8_t overheat;
             uint8_t finger;
             uint8_t keyless;
             uint8_t daylight;
-            uint8_t sein_left;
-            uint8_t sein_right;
         } status;
+        struct {
+            uint8_t left;
+            uint8_t right;
+        } sein;
         struct {
             uint8_t reverse;
             uint8_t hide;
@@ -105,7 +121,9 @@ public:
     }
 
     void tick();
-protected:	
+
+    void refreshIndicators();
+protected:
     ModelListener* modelListener;
     uint32_t ticker;
 };

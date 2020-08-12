@@ -12,7 +12,7 @@ public:
     virtual void initialize();
     void updateImage(uint8_t index);
 protected:
-	uint16_t indicatorList[INDICATOR_MAX];
+	uint16_t indicatorList[INDICATOR_MAX + 1];
 };
 
 #endif // INDICATORWHEELCONTAINER_HPP

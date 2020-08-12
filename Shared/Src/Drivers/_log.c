@@ -121,7 +121,7 @@ void LOG_Str(char *str) {
     unlock();
 }
 
-void LOG_StrLn(char *str) {
+void LOG_StrLn(const char *str) {
     lock();
 
     while (*str != '\0')
