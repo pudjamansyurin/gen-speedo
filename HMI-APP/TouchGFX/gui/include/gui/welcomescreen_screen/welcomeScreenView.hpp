@@ -13,6 +13,7 @@ public:
     virtual void tearDownScreen();
 	
     virtual void handleTickEvent();
+	virtual void setLogoTransparency(uint8_t alpha);
 protected:
     uint32_t ticker;
 };
