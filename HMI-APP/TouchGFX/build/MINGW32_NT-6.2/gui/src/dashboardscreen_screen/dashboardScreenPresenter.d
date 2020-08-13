@@ -54,7 +54,6 @@ build/MINGW32_NT-6.2/gui/src/dashboardscreen_screen/dashboardScreenPresenter.o: 
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp \
  gui/include/gui/containers/indicatorWheelContainer.hpp \
  generated/gui_generated/include/gui_generated/containers/indicatorWheelContainerBase.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/FontManager.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/TypedText.hpp \
@@ -69,7 +68,8 @@ build/MINGW32_NT-6.2/gui/src/dashboardscreen_screen/dashboardScreenPresenter.o: 
  gui/include/gui/containers/driveWheelContainer.hpp \
  generated/gui_generated/include/gui_generated/containers/driveWheelContainerBase.hpp \
  gui/include/gui/containers/tripWheelContainer.hpp \
- generated/gui_generated/include/gui_generated/containers/tripWheelContainerBase.hpp
+ generated/gui_generated/include/gui_generated/containers/tripWheelContainerBase.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp
 
 gui/include/gui/dashboardscreen_screen/dashboardScreenView.hpp:
 
@@ -179,8 +179,6 @@ gui/include/gui/containers/indicatorWheelContainer.hpp:
 
 generated/gui_generated/include/gui_generated/containers/indicatorWheelContainerBase.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp:
-
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/FontManager.hpp:
@@ -210,3 +208,5 @@ generated/gui_generated/include/gui_generated/containers/driveWheelContainerBase
 gui/include/gui/containers/tripWheelContainer.hpp:
 
 generated/gui_generated/include/gui_generated/containers/tripWheelContainerBase.hpp:
+
+../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp:

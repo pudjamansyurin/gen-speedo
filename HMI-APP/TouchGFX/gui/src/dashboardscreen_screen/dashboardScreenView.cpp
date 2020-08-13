@@ -17,7 +17,7 @@ void dashboardScreenView::tearDownScreen()
 
 void dashboardScreenView::indicatorWheelUpdateItem(indicatorWheelContainer& item, int16_t itemIndex)
 {
-	item.updateImage(itemIndex, presenter->getIndicatorSelected());
+	item.updateImage(itemIndex);
 }
 
 void dashboardScreenView::driveWheelUpdateItem(driveWheelContainer& item, int16_t itemIndex)
@@ -41,11 +41,13 @@ void dashboardScreenView::writeSein(uint8_t leftSide, uint8_t state)
 	
 	sein = leftSide ? &seinLeft : &seinRight;
 	
-	if(!sein->isVisible()){
+	if (!sein->isVisible() && state){
 		sein->setVisible(true);
 		sein->startMoveAnimation(0, 0, 20, EasingEquations::linearEaseOut, EasingEquations::linearEaseOut);
 		sein->invalidate();
-	} else {
+	} 
+	
+	if (sein->isVisible() && !state) {
 		sein->setVisible(false);
 		sein->setXY(80 * (leftSide ? 1 : -1), 0);
 		sein->invalidate();
@@ -78,14 +80,11 @@ void dashboardScreenView::writeSignal(uint8_t percent)
 
 void dashboardScreenView::writeIndicator(uint8_t index)
 {
-	// touchgfx_printf("animateToItem %d\n", index);
 	indicatorWheel.animateToItem(index, 0);
 	indicatorWheel.invalidate();
 	
-    // indicatorImage.clearMoveAnimationEndedAction();
     // indicatorImage.startMoveAnimation(-100, -100, 60, touchgfx::EasingEquations::expoEaseOut, touchgfx::EasingEquations::expoEaseOut);
 	// indicatorImage.startMoveAnimation(-100, -100, 60, touchgfx::EasingEquations::expoEaseIn, touchgfx::EasingEquations::expoEaseIn);
-
 }
 
 void dashboardScreenView::writeDriveMode(uint8_t index)

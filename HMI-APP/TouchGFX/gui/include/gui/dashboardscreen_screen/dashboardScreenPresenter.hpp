@@ -40,7 +40,6 @@ public:
 	virtual void setReportValue(uint16_t value);
 	
 	virtual uint8_t getIndicatorState(uint8_t index);
-	virtual uint8_t getIndicatorSelected();
 private:
     dashboardScreenPresenter();
 

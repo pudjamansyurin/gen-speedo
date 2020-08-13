@@ -10,7 +10,7 @@ public:
     virtual ~indicatorWheelContainer() {}
 
     virtual void initialize();
-    void updateImage(uint8_t index, uint8_t selectedIndex);
+    void updateImage(uint8_t index);
 protected:
 	uint16_t indicatorIcons[INDICATOR_MAX + 1];
 };

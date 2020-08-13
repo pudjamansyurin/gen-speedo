@@ -123,9 +123,9 @@ public:
     void tick();
 
 	void generateRandomIndicators();
-    void refreshIndicators();
+	void reloadIndicators();
+    void nextIndicator();
 	uint8_t readIndicatorState(uint8_t index);
-	uint8_t readIndicatorSelected();
 protected:
     ModelListener* modelListener;
     uint32_t ticker;

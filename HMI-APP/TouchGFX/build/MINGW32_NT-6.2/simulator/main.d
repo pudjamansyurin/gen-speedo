@@ -83,7 +83,6 @@ build/MINGW32_NT-6.2/simulator/main.o: simulator/main.cpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp \
  gui/include/gui/containers/indicatorWheelContainer.hpp \
  generated/gui_generated/include/gui_generated/containers/indicatorWheelContainerBase.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractDirectionProgress.hpp \
@@ -96,6 +95,7 @@ build/MINGW32_NT-6.2/simulator/main.o: simulator/main.cpp \
  generated/gui_generated/include/gui_generated/containers/driveWheelContainerBase.hpp \
  gui/include/gui/containers/tripWheelContainer.hpp \
  generated/gui_generated/include/gui_generated/containers/tripWheelContainerBase.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp \
  generated/gui_generated/include/gui_generated/common/SimConstants.hpp \
  ../Middlewares/ST/touchgfx/framework/include/platform/driver/touch/SDL2TouchController.hpp \
  generated/simulator/include/simulator/mainBase.hpp
@@ -268,8 +268,6 @@ gui/include/gui/containers/indicatorWheelContainer.hpp:
 
 generated/gui_generated/include/gui_generated/containers/indicatorWheelContainerBase.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp:
-
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp:
@@ -293,6 +291,8 @@ generated/gui_generated/include/gui_generated/containers/driveWheelContainerBase
 gui/include/gui/containers/tripWheelContainer.hpp:
 
 generated/gui_generated/include/gui_generated/containers/tripWheelContainerBase.hpp:
+
+../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp:
 
 generated/gui_generated/include/gui_generated/common/SimConstants.hpp:
 

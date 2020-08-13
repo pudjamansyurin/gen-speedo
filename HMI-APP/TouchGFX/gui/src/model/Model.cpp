@@ -26,13 +26,14 @@ hmi1_t HMI1;
 Model::Model()
     : modelListener(0), ticker(0), indicator(1), indicators {0}
 {
-	generateRandomIndicators();
+	
 }
 
 void Model::tick()
 {
     ticker++;
 
+#ifdef SIMULATOR
     if (ticker % 1 == 0) {
         if (VCU.d.speed >= MCU_SPEED_MAX) {
             VCU.d.speed = 0;
@@ -41,8 +42,6 @@ void Model::tick()
         }
         MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
 
-        modelListener->setSpeed(VCU.d.speed);
-        modelListener->setEngineRotation(MCU.d.rpm);
     }
 
     if (ticker % 10 == 0) {
@@ -51,7 +50,6 @@ void Model::tick()
         } else {
             HMI1.d.mode.trip++;
         }
-        modelListener->setTripValue(HMI1.d.mode.trip);
     }
 
     if (ticker % 20 == 0) {
@@ -60,7 +58,6 @@ void Model::tick()
         } else {
             HMI1.d.mode.report++;
         }
-        modelListener->setReportValue(HMI1.d.mode.report);
     }
 
     if(ticker % 30 == 0) {
@@ -69,7 +66,6 @@ void Model::tick()
         } else {
             VCU.d.signal++;
         }
-        modelListener->setSignal(VCU.d.signal);
     }
 
     if (ticker % 50 == 0) {
@@ -78,59 +74,39 @@ void Model::tick()
         } else {
             BMS.d.soc++;
         }
-        modelListener->setBattery(BMS.d.soc);
     }
 
     if (ticker % 60 == 0) {
-        // sein
         HMI1.d.sein.left =!HMI1.d.sein.left;
         HMI1.d.sein.right = !HMI1.d.sein.right;
-
-        modelListener->setSein(1, HMI1.d.sein.left);
-        modelListener->setSein(0, HMI1.d.sein.right);
-
-
-        // if(HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_MAX) {
-            // HMI1.d.mode.val[SW_M_TRIP] = 0;
-        // } else {
-            // HMI1.d.mode.val[SW_M_TRIP]++;
-        // }
         HMI1.d.mode.val[SW_M_TRIP] = rand() % (SW_M_TRIP_MAX + 1);
-
-        // mode
-        // if(HMI1.d.mode.val[SW_M_DRIVE] > SW_M_DRIVE_MAX) {
-            // HMI1.d.mode.val[SW_M_DRIVE] = 0;
-        // } else {
-            // HMI1.d.mode.val[SW_M_DRIVE]++;
-        // }
         HMI1.d.mode.val[SW_M_DRIVE] = rand() % (SW_M_DRIVE_MAX + 1);
-
-        // if(HMI1.d.mode.val[SW_M_REPORT] == SW_M_REPORT_MAX) {
-            // HMI1.d.mode.val[SW_M_REPORT] = 0;
-        // } else {
-            // HMI1.d.mode.val[SW_M_REPORT]++;
-        // }
         HMI1.d.mode.val[SW_M_REPORT] = rand() % (SW_M_REPORT_MAX + 1);
-
-        modelListener->setTripMode(HMI1.d.mode.val[SW_M_TRIP]);
-        modelListener->setDriveMode(HMI1.d.mode.val[SW_M_DRIVE]);
-        modelListener->setReportMode(HMI1.d.mode.val[SW_M_REPORT]);
-
-
-        // if(indicator >= INDICATOR_MAX) {
-            // indicator = 0;
-        // } else  {
-            // indicator++;
-        // }
-        // indicator = rand() % (INDICATOR_MAX+1);
-        
-        refreshIndicators();
-		modelListener->setIndicator(indicator);
+        nextIndicator();
     }
 
     if (ticker % (60*60) == 0) {
 		generateRandomIndicators();
     }
+#endif
+
+    // write to LCD
+    modelListener->setSpeed(VCU.d.speed);
+    modelListener->setEngineRotation(MCU.d.rpm);
+
+    modelListener->setTripValue(HMI1.d.mode.trip);
+    modelListener->setReportValue(HMI1.d.mode.report);
+    modelListener->setSignal(VCU.d.signal);
+    modelListener->setBattery(BMS.d.soc);
+
+    modelListener->setSein(1, HMI1.d.sein.left);
+    modelListener->setSein(0, HMI1.d.sein.right);
+
+    modelListener->setTripMode(HMI1.d.mode.val[SW_M_TRIP]);
+    modelListener->setDriveMode(HMI1.d.mode.val[SW_M_DRIVE]);
+    modelListener->setReportMode(HMI1.d.mode.val[SW_M_REPORT]);
+
+    modelListener->setIndicator(indicator);
 }
 
 void Model::generateRandomIndicators()
@@ -146,11 +122,8 @@ void Model::generateRandomIndicators()
 	HMI1.d.status.daylight = rand() & 1;
 }
 
-void Model::refreshIndicators()
+void Model::reloadIndicators() 
 {
-    uint8_t i, found = 0;
-    
-    // reload data
     indicators[INDICATOR_REVERSE] = HMI1.d.mode.reverse;
     indicators[INDICATOR_GO] = !HMI1.d.mode.reverse;
     indicators[INDICATOR_ABS] = HMI1.d.status.abs;
@@ -160,8 +133,16 @@ void Model::refreshIndicators()
     indicators[INDICATOR_OVERHEAT] = HMI1.d.status.overheat;
     indicators[INDICATOR_FINGER] = HMI1.d.status.finger;
     indicators[INDICATOR_KEYLESS] = HMI1.d.status.keyless;
-    indicators[INDICATOR_LOWBAT] = BMS.d.soc < 20;
-    
+    indicators[INDICATOR_LOWBAT] = BMS.d.soc < 20;	
+}
+
+void Model::nextIndicator()
+{
+    uint8_t i, found = 0;
+	
+    // reload data
+	reloadIndicators();
+
     // current -> up
     for (i = indicator+1; i <= INDICATOR_MAX; i++) {
         if (indicators[i]) {
@@ -186,12 +167,7 @@ void Model::refreshIndicators()
     }
 }
 
-uint8_t Model::readIndicatorState(uint8_t index) 
+uint8_t Model::readIndicatorState(uint8_t index)
 {
     return indicators[index];
-}
-
-uint8_t Model::readIndicatorSelected() 
-{
-    return indicator;
 }

@@ -23,21 +23,14 @@ void indicatorWheelContainer::initialize()
     indicatorWheelContainerBase::initialize();
 }
 
-void indicatorWheelContainer::updateImage(uint8_t index, uint8_t selectedIndex)
+void indicatorWheelContainer::updateImage(uint8_t index)
 {
-	// if (index == selectedIndex) {
-		Bitmap icon = Bitmap(indicatorIcons[index]);
+	Bitmap icon = Bitmap(indicatorIcons[index]);
 
-		indicatorImage.setXY(
-			(getWidth() - icon.getWidth()) / 2,
-			(getHeight() - icon.getHeight()) / 2
-		);
-		indicatorImage.setBitmap(icon);
-		// indicatorImage.setVisible(true);
-	// } else {
-		// indicatorImage.setVisible(false);
-	// }
+	indicatorImage.setXY(
+		(getWidth() - icon.getWidth()) / 2,
+		(getHeight() - icon.getHeight()) / 2
+	);
+	indicatorImage.setBitmap(icon);
 	indicatorImage.invalidate();
-	
-	// touchgfx_printf("updateImage %d = %d\n", index, selectedIndex);
 }
