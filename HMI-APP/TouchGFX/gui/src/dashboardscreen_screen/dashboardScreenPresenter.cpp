@@ -17,47 +17,55 @@ void dashboardScreenPresenter::deactivate()
 
 }
 
-void dashboardScreenPresenter::indicatorChanged(uint8_t index) 
+void dashboardScreenPresenter::setSein(uint8_t leftSide, uint8_t state)
 {
-	view.setIndicator(index);
+	view.writeSein(leftSide, state);
 }
-void dashboardScreenPresenter::seinChanged(uint8_t leftSide, uint8_t state)
+void dashboardScreenPresenter::setSpeed(uint8_t value) 
 {
-	view.setSein(leftSide, state);
+	view.writeSpeed(value * 100 / MCU_SPEED_MAX);
 }
-void dashboardScreenPresenter::speedChanged(uint8_t value) 
+void dashboardScreenPresenter::setEngineRotation(uint32_t value)
 {
-	view.setSpeed(value * 100 / MCU_SPEED_MAX);
+	view.writeEngineRotation(value * 100 / MCU_RPM_MAX);
 }
-void dashboardScreenPresenter::engineRotationChanged(uint32_t value)
+void dashboardScreenPresenter::setBattery(uint8_t percent)
 {
-	view.setEngineRotation(value * 100 / MCU_RPM_MAX);
+	view.writeBattery(percent);
 }
-void dashboardScreenPresenter::batteryChanged(uint8_t percent)
+void dashboardScreenPresenter::setSignal(uint8_t percent)
 {
-	view.setBattery(percent);
+	view.writeSignal(percent);
 }
-void dashboardScreenPresenter::signalChanged(uint8_t percent)
+void dashboardScreenPresenter::setIndicator(uint8_t index) 
 {
-	view.setSignal(percent);
+	view.writeIndicator(index);
 }
-void dashboardScreenPresenter::driveModeChanged(uint8_t index)
+void dashboardScreenPresenter::setDriveMode(uint8_t index)
 {
-	view.setDriveMode(index);
+	view.writeDriveMode(index);
 }
-void dashboardScreenPresenter::tripModeChanged(uint8_t index)
+void dashboardScreenPresenter::setTripMode(uint8_t index)
 {
-	view.setTripMode(index);
+	view.writeTripMode(index);
 }
-void dashboardScreenPresenter::tripValueChanged(uint32_t value)
+void dashboardScreenPresenter::setTripValue(uint32_t value)
 {
-	view.setTripValue(value);
+	view.writeTripValue(value);
 }
-void dashboardScreenPresenter::reportModeChanged(uint8_t index)
+void dashboardScreenPresenter::setReportMode(uint8_t index)
 {
-	view.setReportMode(index);
+	view.writeReportMode(index);
 }
-void dashboardScreenPresenter::reportValueChanged(uint16_t value)
+void dashboardScreenPresenter::setReportValue(uint16_t value)
 {
-	view.setReportValue(value);
+	view.writeReportValue(value);
+}
+uint8_t dashboardScreenPresenter::getIndicatorState(uint8_t index) 
+{
+	return model->readIndicatorState(index);
+}
+uint8_t dashboardScreenPresenter::getIndicatorSelected() 
+{
+	return model->readIndicatorSelected();
 }

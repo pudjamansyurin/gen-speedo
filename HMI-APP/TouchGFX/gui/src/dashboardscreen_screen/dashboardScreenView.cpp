@@ -15,14 +15,14 @@ void dashboardScreenView::tearDownScreen()
     dashboardScreenViewBase::tearDownScreen();
 }
 
+void dashboardScreenView::indicatorWheelUpdateItem(indicatorWheelContainer& item, int16_t itemIndex)
+{
+	item.updateImage(itemIndex, presenter->getIndicatorSelected());
+}
+
 void dashboardScreenView::driveWheelUpdateItem(driveWheelContainer& item, int16_t itemIndex)
 {
     item.updateText(itemIndex);
-}
-
-void dashboardScreenView::indicatorWheelUpdateItem(indicatorWheelContainer& item, int16_t itemIndex)
-{
-    item.updateImage(itemIndex);
 }
 
 void dashboardScreenView::tripWheelUpdateItem(tripWheelContainer& item, int16_t itemIndex) 
@@ -35,13 +35,7 @@ void dashboardScreenView::reportWheelUpdateItem(reportWheelContainer& item, int1
     item.updateText(itemIndex);
 }
 
-void dashboardScreenView::setIndicator(uint8_t index)
-{
-	indicatorWheel.animateToItem(index, 0);
-	indicatorWheel.invalidate();
-}
-
-void dashboardScreenView::setSein(uint8_t leftSide, uint8_t state)
+void dashboardScreenView::writeSein(uint8_t leftSide, uint8_t state)
 {
     touchgfx::MoveAnimator< touchgfx::Image > *sein;
 	
@@ -58,57 +52,69 @@ void dashboardScreenView::setSein(uint8_t leftSide, uint8_t state)
 	}
 }
 
-void dashboardScreenView::setSpeed(uint8_t percent)
+void dashboardScreenView::writeSpeed(uint8_t percent)
 {
 	speedProgress.setValue(percent);
 	speedProgress.invalidate();
 }
 
-void dashboardScreenView::setEngineRotation(uint8_t percent)
+void dashboardScreenView::writeEngineRotation(uint8_t percent)
 {
 	engineProgress.setValue(percent);
 	engineProgress.invalidate();
 }
 
-void dashboardScreenView::setBattery(uint8_t percent)
+void dashboardScreenView::writeBattery(uint8_t percent)
 {
 	Unicode::snprintf(batteryValueBuffer, BATTERYVALUE_SIZE, "%3d", percent);
 	batteryValue.invalidate();
 }
 
-void dashboardScreenView::setSignal(uint8_t percent)
+void dashboardScreenView::writeSignal(uint8_t percent)
 {
 	Unicode::snprintf(signalValueBuffer, SIGNALVALUE_SIZE, "%3d", percent);
 	signalValue.invalidate();
 }
 
-void dashboardScreenView::setDriveMode(uint8_t index)
+void dashboardScreenView::writeIndicator(uint8_t index)
+{
+	// touchgfx_printf("animateToItem %d\n", index);
+	indicatorWheel.animateToItem(index, 0);
+	indicatorWheel.invalidate();
+	
+    // indicatorImage.clearMoveAnimationEndedAction();
+    // indicatorImage.startMoveAnimation(-100, -100, 60, touchgfx::EasingEquations::expoEaseOut, touchgfx::EasingEquations::expoEaseOut);
+	// indicatorImage.startMoveAnimation(-100, -100, 60, touchgfx::EasingEquations::expoEaseIn, touchgfx::EasingEquations::expoEaseIn);
+
+}
+
+void dashboardScreenView::writeDriveMode(uint8_t index)
 {
 	driveWheel.animateToItem(index, 0);
 	driveWheel.invalidate();
 }
 
-void dashboardScreenView::setTripMode(uint8_t index)
+void dashboardScreenView::writeTripMode(uint8_t index)
 {
 	tripWheel.animateToItem(index, 0);
 	tripWheel.invalidate();
 }
 
-void dashboardScreenView::setTripValue(uint32_t value)
+void dashboardScreenView::writeTripValue(uint32_t value)
 {
 	Unicode::snprintf(tripValueBuffer, TRIPVALUE_SIZE, "%06d", value);
 	tripValue.invalidate();
 }
 
-void dashboardScreenView::setReportMode(uint8_t index)
+void dashboardScreenView::writeReportMode(uint8_t index)
 {
 	reportValue.setX(index ? 362 : 423);
 	reportValue.invalidate();
-	reportWheel.animateToItem(index);
+	reportWheel.animateToItem(index, 0);
 	reportWheel.invalidate();
 }
 
-void dashboardScreenView::setReportValue(uint16_t value)
+void dashboardScreenView::writeReportValue(uint16_t value)
 {
 	Unicode::snprintf(reportValueBuffer, REPORTVALUE_SIZE, "%03d", value);
 	reportValue.invalidate();

@@ -12,22 +12,22 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
 
-    virtual void driveWheelUpdateItem(driveWheelContainer& item, int16_t itemIndex);
     virtual void indicatorWheelUpdateItem(indicatorWheelContainer& item, int16_t itemIndex);
+    virtual void driveWheelUpdateItem(driveWheelContainer& item, int16_t itemIndex);
     virtual void tripWheelUpdateItem(tripWheelContainer& item, int16_t itemIndex);
     virtual void reportWheelUpdateItem(reportWheelContainer& item, int16_t itemIndex);	
 	
-    virtual void setIndicator(uint8_t index);
-	virtual void setSein(uint8_t leftSide, uint8_t state);
-	virtual void setSpeed(uint8_t percent);
-	virtual void setEngineRotation(uint8_t percent);
-	virtual void setBattery(uint8_t percent);
-	virtual void setSignal(uint8_t percent);
-	virtual void setDriveMode(uint8_t index);
-	virtual void setTripMode(uint8_t index);
-	virtual void setTripValue(uint32_t value);
-	virtual void setReportMode(uint8_t index);
-	virtual void setReportValue(uint16_t value);
+	virtual void writeSein(uint8_t leftSide, uint8_t state);
+	virtual void writeSpeed(uint8_t percent);
+	virtual void writeEngineRotation(uint8_t percent);
+	virtual void writeBattery(uint8_t percent);
+	virtual void writeSignal(uint8_t percent);
+    virtual void writeIndicator(uint8_t index);
+	virtual void writeDriveMode(uint8_t index);
+	virtual void writeTripMode(uint8_t index);
+	virtual void writeTripValue(uint32_t value);
+	virtual void writeReportMode(uint8_t index);
+	virtual void writeReportValue(uint16_t value);
 protected:
 };
 

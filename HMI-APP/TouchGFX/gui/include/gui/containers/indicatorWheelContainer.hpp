@@ -10,9 +10,9 @@ public:
     virtual ~indicatorWheelContainer() {}
 
     virtual void initialize();
-    void updateImage(uint8_t index);
+    void updateImage(uint8_t index, uint8_t selectedIndex);
 protected:
-	uint16_t indicatorList[INDICATOR_MAX + 1];
+	uint16_t indicatorIcons[INDICATOR_MAX + 1];
 };
 
 #endif // INDICATORWHEELCONTAINER_HPP

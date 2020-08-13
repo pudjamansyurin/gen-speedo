@@ -2,7 +2,7 @@
 #include "BitmapDatabase.hpp"
 
 indicatorWheelContainer::indicatorWheelContainer() :
-	indicatorList{
+	indicatorIcons{
 		BITMAP_MAINREVERSE_ID,
 		BITMAP_MAINGO_ID,
         BITMAP_BRAKESYSTEMALERT_ID,
@@ -23,14 +23,21 @@ void indicatorWheelContainer::initialize()
     indicatorWheelContainerBase::initialize();
 }
 
-void indicatorWheelContainer::updateImage(uint8_t index)
+void indicatorWheelContainer::updateImage(uint8_t index, uint8_t selectedIndex)
 {
-	Bitmap icon = Bitmap(indicatorList[index]);
+	// if (index == selectedIndex) {
+		Bitmap icon = Bitmap(indicatorIcons[index]);
 
-    indicatorImage.setXY(
-		(getWidth() - icon.getWidth()) / 2,
-		(getHeight() - icon.getHeight()) / 2
-	);
-    indicatorImage.setBitmap(icon);
-    indicatorImage.invalidate();
+		indicatorWheelImage.setXY(
+			(getWidth() - icon.getWidth()) / 2,
+			(getHeight() - icon.getHeight()) / 2
+		);
+		indicatorWheelImage.setBitmap(icon);
+		// indicatorWheelImage.setVisible(true);
+	// } else {
+		// indicatorWheelImage.setVisible(false);
+	// }
+	indicatorWheelImage.invalidate();
+	
+	// touchgfx_printf("updateImage %d = %d\n", index, selectedIndex);
 }

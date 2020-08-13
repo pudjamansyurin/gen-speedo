@@ -57,7 +57,7 @@ protected:
      * Member Declarations
      */
     touchgfx::Box background;
-    touchgfx::Container indicatorContainer;
+    touchgfx::Container indicatorImages;
     touchgfx::Image batteryLow;
     touchgfx::Image brakeAlert;
     touchgfx::Image temperatureWarning;
@@ -68,6 +68,8 @@ protected:
     touchgfx::Image phoneMirroring;
     touchgfx::Image mainGo;
     touchgfx::Image mainReverse;
+    touchgfx::Container indicatorContainer;
+    touchgfx::MoveAnimator< touchgfx::Image > indicatorImage;
     touchgfx::ScrollWheel indicatorWheel;
     touchgfx::DrawableListItems<indicatorWheelContainer, 3> indicatorWheelListItems;
     touchgfx::Container frameContainer;

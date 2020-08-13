@@ -13,53 +13,60 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     background.setPosition(-1, -1, 800, 480);
     background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
 
-    indicatorContainer.setPosition(274, 114, 250, 250);
-    indicatorContainer.setVisible(false);
+    indicatorImages.setPosition(274, 114, 250, 250);
+    indicatorImages.setVisible(false);
 
     batteryLow.setXY(24, 67);
     batteryLow.setBitmap(touchgfx::Bitmap(BITMAP_BATTERYDRAINOUT_ID));
-    indicatorContainer.add(batteryLow);
+    indicatorImages.add(batteryLow);
 
     brakeAlert.setXY(28, 48);
     brakeAlert.setBitmap(touchgfx::Bitmap(BITMAP_BRAKESYSTEMALERT_ID));
-    indicatorContainer.add(brakeAlert);
+    indicatorImages.add(brakeAlert);
 
     temperatureWarning.setXY(52, 71);
     temperatureWarning.setBitmap(touchgfx::Bitmap(BITMAP_COOLANTTEMPERATUREWARNING_ID));
-    indicatorContainer.add(temperatureWarning);
+    indicatorImages.add(temperatureWarning);
 
     errorMessage.setXY(52, 63);
     errorMessage.setBitmap(touchgfx::Bitmap(BITMAP_ELECTRONICERRORMESSAGE_ID));
-    indicatorContainer.add(errorMessage);
+    indicatorImages.add(errorMessage);
 
     fingerScan.setXY(55, 50);
     fingerScan.setBitmap(touchgfx::Bitmap(BITMAP_FINGERSCANLOGINSTATUS_ID));
-    indicatorContainer.add(fingerScan);
+    indicatorImages.add(fingerScan);
 
     beamActivated.setXY(33, 64);
     beamActivated.setBitmap(touchgfx::Bitmap(BITMAP_HIGHBEAMACTIVATED_ID));
-    indicatorContainer.add(beamActivated);
+    indicatorImages.add(beamActivated);
 
     keylessKey.setXY(34, 55);
     keylessKey.setBitmap(touchgfx::Bitmap(BITMAP_KEYLESSIGNITIONKEYDETECTION_ID));
-    indicatorContainer.add(keylessKey);
+    indicatorImages.add(keylessKey);
 
     phoneMirroring.setXY(33, 63);
     phoneMirroring.setBitmap(touchgfx::Bitmap(BITMAP_SMARTPHONEMIRRORINGSTATUS_ID));
-    indicatorContainer.add(phoneMirroring);
+    indicatorImages.add(phoneMirroring);
 
     mainGo.setXY(21, 86);
     mainGo.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
-    indicatorContainer.add(mainGo);
+    indicatorImages.add(mainGo);
 
     mainReverse.setXY(76, 86);
     mainReverse.setBitmap(touchgfx::Bitmap(BITMAP_MAINREVERSE_ID));
-    indicatorContainer.add(mainReverse);
+    indicatorImages.add(mainReverse);
+
+    indicatorContainer.setPosition(146, 132, 508, 230);
+    indicatorContainer.setVisible(false);
+
+    indicatorImage.setXY(149, 75);
+    indicatorImage.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
+    indicatorContainer.add(indicatorImage);
 
     indicatorWheel.setPosition(146, 132, 508, 230);
     indicatorWheel.setHorizontal(true);
     indicatorWheel.setCircular(true);
-    indicatorWheel.setEasingEquation(touchgfx::EasingEquations::expoEaseIn);
+    indicatorWheel.setEasingEquation(touchgfx::EasingEquations::expoEaseOut);
     indicatorWheel.setSwipeAcceleration(10);
     indicatorWheel.setDragAcceleration(10);
     indicatorWheel.setNumberOfItems(10);
@@ -205,6 +212,7 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     batteryValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
 
     add(background);
+    add(indicatorImages);
     add(indicatorContainer);
     add(indicatorWheel);
     add(frameContainer);

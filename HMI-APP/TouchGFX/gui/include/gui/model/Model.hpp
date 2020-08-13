@@ -122,10 +122,15 @@ public:
 
     void tick();
 
+	void generateRandomIndicators();
     void refreshIndicators();
+	uint8_t readIndicatorState(uint8_t index);
+	uint8_t readIndicatorSelected();
 protected:
     ModelListener* modelListener;
     uint32_t ticker;
+	uint8_t indicator;
+	uint8_t indicators[INDICATOR_MAX+1];
 };
 
 #endif // MODEL_HPP
