@@ -23,7 +23,7 @@ protected:
     /*
      * Member Declarations
      */
-    touchgfx::Image indicatorWheelImage;
+    touchgfx::Image indicatorImage;
 
 private:
 

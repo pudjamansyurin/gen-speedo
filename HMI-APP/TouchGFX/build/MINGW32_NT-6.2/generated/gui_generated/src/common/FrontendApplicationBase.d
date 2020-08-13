@@ -59,6 +59,7 @@ build/MINGW32_NT-6.2/generated/gui_generated/src/common/FrontendApplicationBase.
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp \
  gui/include/gui/containers/indicatorWheelContainer.hpp \
  generated/gui_generated/include/gui_generated/containers/indicatorWheelContainerBase.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/FontManager.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/TypedText.hpp \
@@ -74,7 +75,6 @@ build/MINGW32_NT-6.2/generated/gui_generated/src/common/FrontendApplicationBase.
  generated/gui_generated/include/gui_generated/containers/driveWheelContainerBase.hpp \
  gui/include/gui/containers/tripWheelContainer.hpp \
  generated/gui_generated/include/gui_generated/containers/tripWheelContainerBase.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp \
  generated/texts/include/texts/TextKeysAndLanguages.hpp \
  ../Middlewares/ST/touchgfx/framework/include/platform/driver/lcd/LCD16bpp.hpp
 
@@ -198,6 +198,8 @@ gui/include/gui/containers/indicatorWheelContainer.hpp:
 
 generated/gui_generated/include/gui_generated/containers/indicatorWheelContainerBase.hpp:
 
+../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp:
+
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/FontManager.hpp:
@@ -227,8 +229,6 @@ generated/gui_generated/include/gui_generated/containers/driveWheelContainerBase
 gui/include/gui/containers/tripWheelContainer.hpp:
 
 generated/gui_generated/include/gui_generated/containers/tripWheelContainerBase.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp:
 
 generated/texts/include/texts/TextKeysAndLanguages.hpp:
 

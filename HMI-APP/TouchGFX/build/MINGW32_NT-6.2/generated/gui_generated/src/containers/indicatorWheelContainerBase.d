@@ -43,6 +43,8 @@ build/MINGW32_NT-6.2/generated/gui_generated/src/containers/indicatorWheelContai
  gui/include/gui/model/Model.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Widget.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp \
  generated/images/include/BitmapDatabase.hpp
 
 generated/gui_generated/include/gui_generated/containers/indicatorWheelContainerBase.hpp:
@@ -130,5 +132,9 @@ gui/include/gui/model/Model.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Widget.hpp:
+
+../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp:
+
+../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp:
 
 generated/images/include/BitmapDatabase.hpp:

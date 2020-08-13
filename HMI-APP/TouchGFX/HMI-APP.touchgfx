@@ -252,37 +252,6 @@
             "Moveable": false
           },
           {
-            "Components": [
-              {
-                "RelativeFilename": "MainGo.png",
-                "Alpha": 255,
-                "Name": "indicatorImage",
-                "X": 149,
-                "Y": 75,
-                "Width": 210,
-                "Height": 81,
-                "Type": "Image",
-                "Visible": true,
-                "Draggable": false,
-                "Clickable": false,
-                "Fadeable": false,
-                "Moveable": true
-              }
-            ],
-            "IsCacheableContainer": false,
-            "Name": "indicatorContainer",
-            "X": 146,
-            "Y": 132,
-            "Width": 508,
-            "Height": 230,
-            "Type": "Container",
-            "Visible": false,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
             "SelectedItemOffset": 0,
             "UseSelectedStyle": false,
             "ExtraSizeBefore": 0,
@@ -294,7 +263,7 @@
             "ItemTemplateName": "indicatorWheelContainer",
             "NumberofItems": 10,
             "InitialElement": 1,
-            "ItemMargin": 139,
+            "ItemMargin": 0,
             "Easing": "Expo",
             "EasingOption": "Out",
             "SwipeAcceleration": 1.0,
@@ -812,8 +781,8 @@
           {
             "RelativeFilename": "MainGo.png",
             "Alpha": 255,
-            "Name": "indicatorWheelImage",
-            "X": 10,
+            "Name": "indicatorImage",
+            "X": 149,
             "Y": 75,
             "Width": 210,
             "Height": 81,
@@ -829,7 +798,7 @@
         "Name": "indicatorWheelContainer",
         "X": 0,
         "Y": 0,
-        "Width": 230,
+        "Width": 508,
         "Height": 230
       },
       {

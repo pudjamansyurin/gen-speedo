@@ -56,13 +56,6 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     mainReverse.setBitmap(touchgfx::Bitmap(BITMAP_MAINREVERSE_ID));
     indicatorImages.add(mainReverse);
 
-    indicatorContainer.setPosition(146, 132, 508, 230);
-    indicatorContainer.setVisible(false);
-
-    indicatorImage.setXY(149, 75);
-    indicatorImage.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
-    indicatorContainer.add(indicatorImage);
-
     indicatorWheel.setPosition(146, 132, 508, 230);
     indicatorWheel.setHorizontal(true);
     indicatorWheel.setCircular(true);
@@ -71,7 +64,7 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     indicatorWheel.setDragAcceleration(10);
     indicatorWheel.setNumberOfItems(10);
     indicatorWheel.setSelectedItemOffset(0);
-    indicatorWheel.setDrawableSize(230, 139);
+    indicatorWheel.setDrawableSize(508, 0);
     indicatorWheel.setDrawables(indicatorWheelListItems, updateItemCallback);
     indicatorWheel.animateToItem(1, 0);
 
@@ -213,7 +206,6 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
 
     add(background);
     add(indicatorImages);
-    add(indicatorContainer);
     add(indicatorWheel);
     add(frameContainer);
     add(seinLeftContainer);

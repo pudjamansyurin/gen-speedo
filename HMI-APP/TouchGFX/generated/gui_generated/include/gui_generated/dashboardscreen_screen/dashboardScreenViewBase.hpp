@@ -68,10 +68,8 @@ protected:
     touchgfx::Image phoneMirroring;
     touchgfx::Image mainGo;
     touchgfx::Image mainReverse;
-    touchgfx::Container indicatorContainer;
-    touchgfx::MoveAnimator< touchgfx::Image > indicatorImage;
     touchgfx::ScrollWheel indicatorWheel;
-    touchgfx::DrawableListItems<indicatorWheelContainer, 3> indicatorWheelListItems;
+    touchgfx::DrawableListItems<indicatorWheelContainer, 2> indicatorWheelListItems;
     touchgfx::Container frameContainer;
     touchgfx::TextArea tripUnit;
     touchgfx::TextArea signalPercent;

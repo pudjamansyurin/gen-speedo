@@ -6,12 +6,12 @@
 
 indicatorWheelContainerBase::indicatorWheelContainerBase()
 {
-    setWidth(230);
+    setWidth(508);
     setHeight(230);
-    indicatorWheelImage.setXY(10, 75);
-    indicatorWheelImage.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
+    indicatorImage.setXY(149, 75);
+    indicatorImage.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
 
-    add(indicatorWheelImage);
+    add(indicatorImage);
 }
 
 void indicatorWheelContainerBase::initialize()

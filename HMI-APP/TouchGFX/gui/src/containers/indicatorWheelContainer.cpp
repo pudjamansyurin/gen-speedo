@@ -28,16 +28,16 @@ void indicatorWheelContainer::updateImage(uint8_t index, uint8_t selectedIndex)
 	// if (index == selectedIndex) {
 		Bitmap icon = Bitmap(indicatorIcons[index]);
 
-		indicatorWheelImage.setXY(
+		indicatorImage.setXY(
 			(getWidth() - icon.getWidth()) / 2,
 			(getHeight() - icon.getHeight()) / 2
 		);
-		indicatorWheelImage.setBitmap(icon);
-		// indicatorWheelImage.setVisible(true);
+		indicatorImage.setBitmap(icon);
+		// indicatorImage.setVisible(true);
 	// } else {
-		// indicatorWheelImage.setVisible(false);
+		// indicatorImage.setVisible(false);
 	// }
-	indicatorWheelImage.invalidate();
+	indicatorImage.invalidate();
 	
 	// touchgfx_printf("updateImage %d = %d\n", index, selectedIndex);
 }
