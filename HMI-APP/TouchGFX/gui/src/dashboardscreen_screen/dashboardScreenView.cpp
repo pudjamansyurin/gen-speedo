@@ -226,7 +226,7 @@ void dashboardScreenView::writeReportMode(uint8_t index)
 {
 	reportValue.setX(index ? 362 : 423);
 	reportValue.invalidate();
-	reportWheel.animateToItem(index, 0);
+	reportWheel.animateToItem(index, 50);
 	reportWheel.invalidate();
 }
 

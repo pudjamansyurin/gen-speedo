@@ -82,9 +82,30 @@ void Model::tick()
     }
 
     if (ticker % 60 == 0) {
-        HMI1.d.mode.val[SW_M_TRIP] = rand() % (SW_M_TRIP_MAX + 1);
-        HMI1.d.mode.val[SW_M_DRIVE] = rand() % (SW_M_DRIVE_MAX + 1);
-        HMI1.d.mode.val[SW_M_REPORT] = rand() % (SW_M_REPORT_MAX + 1);
+        // HMI1.d.mode.val[SW_M_TRIP] = rand() % (SW_M_TRIP_MAX + 1);
+        // HMI1.d.mode.val[SW_M_DRIVE] = rand() % (SW_M_DRIVE_MAX + 1);
+        // HMI1.d.mode.val[SW_M_REPORT] = rand() % (SW_M_REPORT_MAX + 1);
+		if (HMI1.d.mode.sel == SW_M_TRIP) {
+			if (HMI1.d.mode.val[SW_M_TRIP] >= SW_M_TRIP_MAX) {
+				HMI1.d.mode.val[SW_M_TRIP] = 0;
+			} else {
+				HMI1.d.mode.val[SW_M_TRIP]++;
+			}
+		}
+		if (HMI1.d.mode.sel == SW_M_DRIVE) {
+			if (HMI1.d.mode.val[SW_M_DRIVE] >= SW_M_DRIVE_MAX) {
+				HMI1.d.mode.val[SW_M_DRIVE] = 0;
+			} else {
+				HMI1.d.mode.val[SW_M_DRIVE]++;
+			}
+		}
+		if (HMI1.d.mode.sel == SW_M_REPORT) {
+			if (HMI1.d.mode.val[SW_M_REPORT] >= SW_M_REPORT_MAX) {
+				HMI1.d.mode.val[SW_M_REPORT] = 0;
+			} else {
+				HMI1.d.mode.val[SW_M_REPORT]++;
+			}
+		}
     }
 
     if (ticker % (60*2) == 0) {
