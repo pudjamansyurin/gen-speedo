@@ -72,7 +72,7 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     prevIconContainer.add(prevIconImage);
     iconContainer.add(prevIconContainer);
 
-    frameContainer.setPosition(0, -1, 800, 480);
+    frameContainer.setPosition(0, 0, 800, 480);
 
     tripUnit.setXY(292, 114);
     tripUnit.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
@@ -151,6 +151,11 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     reportValue.setWildcard(reportValueBuffer);
     reportValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID28));
 
+    reportWheelBox.setPosition(283, 405, 231, 20);
+    reportWheelBox.setVisible(false);
+    reportWheelBox.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 0));
+    reportWheelBox.setAlpha(80);
+
     reportWheel.setPosition(285, 406, 227, 18);
     reportWheel.setHorizontal(false);
     reportWheel.setCircular(true);
@@ -162,6 +167,11 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     reportWheel.setDrawableSize(18, 0);
     reportWheel.setDrawables(reportWheelListItems, updateItemCallback);
     reportWheel.animateToItem(0, 0);
+
+    driveWheelBox.setPosition(288, 368, 222, 23);
+    driveWheelBox.setVisible(false);
+    driveWheelBox.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 0));
+    driveWheelBox.setAlpha(80);
 
     driveWheel.setPosition(288, 369, 222, 19);
     driveWheel.setHorizontal(false);
@@ -181,6 +191,11 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     Unicode::snprintf(tripValueBuffer, TRIPVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID11).getText());
     tripValue.setWildcard(tripValueBuffer);
     tripValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID3));
+
+    tripWheelBox.setPosition(267, 93, 83, 20);
+    tripWheelBox.setVisible(false);
+    tripWheelBox.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 0));
+    tripWheelBox.setAlpha(80);
 
     tripWheel.setPosition(269, 93, 79, 20);
     tripWheel.setHorizontal(false);
@@ -217,9 +232,12 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     add(engineProgress);
     add(speedProgress);
     add(reportValue);
+    add(reportWheelBox);
     add(reportWheel);
+    add(driveWheelBox);
     add(driveWheel);
     add(tripValue);
+    add(tripWheelBox);
     add(tripWheel);
     add(signalValue);
     add(batteryValue);

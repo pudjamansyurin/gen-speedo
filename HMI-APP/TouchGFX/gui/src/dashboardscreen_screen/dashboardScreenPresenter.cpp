@@ -61,6 +61,15 @@ void dashboardScreenPresenter::setReportValue(uint16_t value)
 {
 	view.writeReportValue(value);
 }
+void dashboardScreenPresenter::setModeSelector(uint8_t mode)
+{
+	view.writeModeSelector(mode);
+}
+void dashboardScreenPresenter::setModeVisible(uint8_t state)
+{
+	view.writeModeVisible(state);
+}
+
 uint8_t dashboardScreenPresenter::getIndicatorState(uint8_t index) 
 {
 	return model->readIndicatorState(index);

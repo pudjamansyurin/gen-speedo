@@ -84,11 +84,14 @@ protected:
     touchgfx::ImageProgress engineProgress;
     touchgfx::ImageProgress speedProgress;
     touchgfx::TextAreaWithOneWildcard reportValue;
+    touchgfx::Box reportWheelBox;
     touchgfx::ScrollWheel reportWheel;
     touchgfx::DrawableListItems<reportWheelContainer, 2> reportWheelListItems;
+    touchgfx::Box driveWheelBox;
     touchgfx::ScrollWheel driveWheel;
     touchgfx::DrawableListItems<driveWheelContainer, 2> driveWheelListItems;
     touchgfx::TextAreaWithOneWildcard tripValue;
+    touchgfx::Box tripWheelBox;
     touchgfx::ScrollWheel tripWheel;
     touchgfx::DrawableListItems<tripWheelContainer, 2> tripWheelListItems;
     touchgfx::TextAreaWithOneWildcard signalValue;

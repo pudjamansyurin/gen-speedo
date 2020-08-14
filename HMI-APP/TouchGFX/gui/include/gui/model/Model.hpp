@@ -98,7 +98,7 @@ typedef struct {
         struct {
             uint8_t reverse;
             uint8_t hide;
-            SW_MODE sel;
+            uint8_t sel;
 
             uint8_t val[SW_M_MAX+1];
             uint8_t report;
@@ -126,7 +126,7 @@ public:
 	uint8_t readIndicatorState(uint8_t index);
 	void generateRandomIndicators();
 	void reloadIndicators();
-    void nextIndicator();
+    void swipeIndicator();
 protected:
     ModelListener* modelListener;
     uint32_t ticker;

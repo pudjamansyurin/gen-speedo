@@ -10,8 +10,8 @@ typedef struct {
 } icon_t;
 
 typedef struct {
-	uint32_t x;
-	uint32_t y;
+	int16_t x;
+	int16_t y;
 } coordinate_t;
 
 typedef struct {
@@ -45,6 +45,9 @@ public:
 	virtual void writeTripValue(uint32_t value);
 	virtual void writeReportMode(uint8_t index);
 	virtual void writeReportValue(uint16_t value);
+	
+	virtual void writeModeSelector(uint8_t mode);
+	virtual void writeModeVisible(uint8_t state);
 protected:
     uint32_t ticker;
 	uint16_t iconAssets[INDICATOR_MAX + 1];

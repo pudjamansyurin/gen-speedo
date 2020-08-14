@@ -27,7 +27,7 @@ void welcomeScreenView::setLogoTransparency(uint8_t alpha)
 void welcomeScreenView::handleTickEvent() {	
 	// increment the ticker
 	if(ticker < 200) {
-		ticker += 1;
+		ticker += 2;
 	}
 	else if(ticker < 350) {
 		ticker += 2;

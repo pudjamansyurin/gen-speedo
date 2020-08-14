@@ -494,7 +494,7 @@
             "IsCacheableContainer": false,
             "Name": "frameContainer",
             "X": 0,
-            "Y": -1,
+            "Y": 0,
             "Width": 800,
             "Height": 480,
             "Type": "Container",
@@ -647,6 +647,25 @@
             "Moveable": false
           },
           {
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 0
+            },
+            "Alpha": 80,
+            "Name": "reportWheelBox",
+            "X": 283,
+            "Y": 405,
+            "Width": 231,
+            "Height": 20,
+            "Type": "Box",
+            "Visible": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
             "SelectedItemOffset": 0,
             "UseSelectedStyle": false,
             "ExtraSizeBefore": 0,
@@ -670,6 +689,25 @@
             "Height": 18,
             "Type": "ScrollWheel",
             "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 0
+            },
+            "Alpha": 80,
+            "Name": "driveWheelBox",
+            "X": 288,
+            "Y": 368,
+            "Width": 222,
+            "Height": 23,
+            "Type": "Box",
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -727,6 +765,25 @@
             "Height": 20,
             "Type": "TextArea",
             "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 0
+            },
+            "Alpha": 80,
+            "Name": "tripWheelBox",
+            "X": 267,
+            "Y": 93,
+            "Width": 83,
+            "Height": 20,
+            "Type": "Box",
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,

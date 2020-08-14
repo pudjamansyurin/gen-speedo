@@ -47,6 +47,7 @@ void Model::tick()
     }
 
     if (ticker % 10 == 0) {
+		HMI1.d.mode.hide = !HMI1.d.mode.hide;
         if (HMI1.d.mode.trip > 999999) {
             HMI1.d.mode.trip = 0;
         } else {
@@ -55,7 +56,7 @@ void Model::tick()
     }
 
     if (ticker % 20 == 0) {
-        if (HMI1.d.mode.report >= 0xFF) {
+        if (HMI1.d.mode.report >= 255) {
             HMI1.d.mode.report = 0;
         } else {
             HMI1.d.mode.report++;
@@ -84,12 +85,29 @@ void Model::tick()
         HMI1.d.mode.val[SW_M_TRIP] = rand() % (SW_M_TRIP_MAX + 1);
         HMI1.d.mode.val[SW_M_DRIVE] = rand() % (SW_M_DRIVE_MAX + 1);
         HMI1.d.mode.val[SW_M_REPORT] = rand() % (SW_M_REPORT_MAX + 1);
-        nextIndicator();
     }
 
+    if (ticker % (60*2) == 0) {
+		// if (indicator >= INDICATOR_MAX) {
+			// indicator = 0;
+		// } else {
+			// indicator++;
+		// }
+        swipeIndicator();
+		modelListener->setIndicator(indicator);
+	}
+	
+    if (ticker % (60*5) == 0) {
+		if (HMI1.d.mode.sel >= SW_M_MAX) {
+			HMI1.d.mode.sel = 0;
+		} else {
+			HMI1.d.mode.sel++;
+		}
+	}
+	
     if (ticker % (60*60) == 0) {
 		generateRandomIndicators();
-    }
+    }	
 #endif
 
     // write to LCD
@@ -109,6 +127,8 @@ void Model::tick()
     modelListener->setReportMode(HMI1.d.mode.val[SW_M_REPORT]);
 
     // modelListener->setIndicator(indicator);
+	modelListener->setModeVisible(!HMI1.d.mode.hide);
+	modelListener->setModeSelector(HMI1.d.mode.sel);
 }
 
 uint8_t Model::readCurrentIndicator()
@@ -123,7 +143,6 @@ uint8_t Model::readIndicatorState(uint8_t index)
 
 void Model::generateRandomIndicators()
 {
-	HMI1.d.mode.reverse = rand() & 1;
 	HMI1.d.status.abs = rand() & 1;
 	HMI1.d.status.mirroring = rand() & 1;
 	HMI1.d.status.lamp = rand() & 1;
@@ -132,6 +151,7 @@ void Model::generateRandomIndicators()
 	HMI1.d.status.finger = rand() & 1;
 	HMI1.d.status.keyless = rand() & 1;
 	HMI1.d.status.daylight = rand() & 1;
+	HMI1.d.mode.reverse = rand() & 1;
 }
 
 void Model::reloadIndicators() 
@@ -148,7 +168,7 @@ void Model::reloadIndicators()
     indicators[INDICATOR_LOWBAT] = BMS.d.soc < 20;	
 }
 
-void Model::nextIndicator()
+void Model::swipeIndicator()
 {
     uint8_t i, found = 0;
 	
@@ -177,7 +197,5 @@ void Model::nextIndicator()
     if (!found) {
         indicator = 1;
     }
-	
-	modelListener->setIndicator(indicator);
 }
 

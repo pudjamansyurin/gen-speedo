@@ -26,6 +26,9 @@ public:
 	virtual void setTripValue(uint32_t value) {};
 	virtual void setReportMode(uint8_t index) {};
 	virtual void setReportValue(uint16_t value) {};
+	
+	virtual void setModeSelector(uint8_t mode) {};
+	virtual void setModeVisible(uint8_t state) {};
 protected:
     Model* model;
 };

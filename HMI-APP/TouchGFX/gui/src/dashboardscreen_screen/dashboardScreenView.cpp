@@ -1,8 +1,11 @@
 #include <gui/dashboardscreen_screen/dashboardScreenView.hpp>
 #include "BitmapDatabase.hpp"
 
-uint8_t iconImage = 0;
 position_t pos;
+icon_t prev, next;
+uint8_t iconImage = 0;
+uint8_t modeVisible = 1;
+touchgfx::Box *modeBox;
 
 dashboardScreenView::dashboardScreenView() : 
 	ticker(0), 
@@ -53,18 +56,81 @@ void dashboardScreenView::reportWheelUpdateItem(reportWheelContainer& item, int1
 }
 
 void dashboardScreenView::handleTickEvent()
-{
-	ticker++;
+{	
+	uint8_t curIndicator = presenter->getCurrentIndicator();
 	
-	// if (ticker % 20 == 0) {
-		// if (presenter->getCurrentIndicator() == INDICATOR_WARNING) {
-			// if (indicatorContainer != NULL) {
-				
-			// }
-		// }
-	// }	
+	if(next.container != NULL) {
+		if (!next.container->isRunning()){
+			ticker++;
+			
+			if (curIndicator == INDICATOR_LOWBAT ||
+				curIndicator == INDICATOR_WARNING
+			) {
+				if (ticker % 15 == 0) {
+					next.container->setVisible(!next.container->isVisible());
+					next.container->invalidate();
+				}
+			}
+			
+			if (curIndicator == INDICATOR_FINGER ||
+				curIndicator == INDICATOR_MIRRORING ||
+				curIndicator == INDICATOR_KEYLESS
+			) {
+				if (ticker == 40) {
+					next.container->setVisible(false);
+					next.container->invalidate();
+				}
+				if (ticker == 60) {
+					next.container->setVisible(true);
+					next.container->invalidate();
+				}
+			}				
+		} else {
+			ticker = 0;
+			
+			if (!next.container->isVisible()) {
+				next.container->setVisible(true);
+			}
+		}
+	}
 }
 	
+void dashboardScreenView::writeModeSelector(uint8_t mode)
+{
+	switch (mode) {
+		case SW_M_DRIVE  : 
+			modeBox = &driveWheelBox; 
+			tripWheelBox.setVisible(false);
+			tripWheelBox.invalidate();
+			reportWheelBox.setVisible(false);
+			reportWheelBox.invalidate();
+			break;
+		case SW_M_TRIP 	 : 
+			modeBox = &tripWheelBox; 
+			driveWheelBox.setVisible(false);
+			driveWheelBox.invalidate();
+			reportWheelBox.setVisible(false);
+			reportWheelBox.invalidate();
+			break;
+		case SW_M_REPORT : 
+			modeBox = &reportWheelBox; 
+			tripWheelBox.setVisible(false);
+			tripWheelBox.invalidate();
+			driveWheelBox.setVisible(false);
+			driveWheelBox.invalidate();
+			break;		
+		default: 
+			break;
+	}
+}
+void dashboardScreenView::writeModeVisible(uint8_t state)
+{
+	if (modeBox != NULL) {
+		modeBox->setVisible(state);
+		modeBox->invalidate();
+	}
+}
+
 void dashboardScreenView::writeSein(uint8_t leftSide, uint8_t state)
 {
     touchgfx::MoveAnimator< touchgfx::Image > *sein;
@@ -109,9 +175,7 @@ void dashboardScreenView::writeSignal(uint8_t percent)
 }
 
 void dashboardScreenView::writeIndicator(uint8_t index)
-{	
-	icon_t prev, next;
-	
+{		
 	prev.container = iconImage ? &prevIconContainer : &nextIconContainer;
 	prev.image = iconImage ? &prevIconImage : &nextIconImage;
 	next.container = iconImage ? &nextIconContainer : &prevIconContainer;

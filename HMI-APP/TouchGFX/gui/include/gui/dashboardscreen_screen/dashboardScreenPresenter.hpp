@@ -37,7 +37,10 @@ public:
 	virtual void setTripMode(uint8_t index);
 	virtual void setTripValue(uint32_t value);
 	virtual void setReportMode(uint8_t index);
-	virtual void setReportValue(uint16_t value);
+	virtual void setReportValue(uint16_t value);	
+	
+	virtual void setModeSelector(uint8_t mode);
+	virtual void setModeVisible(uint8_t state);
 	
 	uint8_t getCurrentIndicator();
 	virtual uint8_t getIndicatorState(uint8_t index);
