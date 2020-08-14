@@ -10,11 +10,10 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/containers/Container.hpp>
 #include <touchgfx/widgets/Image.hpp>
-#include <touchgfx/containers/scrollers/ScrollWheel.hpp>
-#include <gui/containers/indicatorWheelContainer.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/progress_indicators/ImageProgress.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
+#include <touchgfx/containers/scrollers/ScrollWheel.hpp>
 #include <gui/containers/reportWheelContainer.hpp>
 #include <gui/containers/driveWheelContainer.hpp>
 #include <gui/containers/tripWheelContainer.hpp>
@@ -27,11 +26,6 @@ public:
     dashboardScreenViewBase();
     virtual ~dashboardScreenViewBase() {}
     virtual void setupScreen();
-
-    virtual void indicatorWheelUpdateItem(indicatorWheelContainer& item, int16_t itemIndex)
-    {
-        // Override and implement this function in dashboardScreen
-    }
 
     virtual void reportWheelUpdateItem(reportWheelContainer& item, int16_t itemIndex)
     {
@@ -68,8 +62,11 @@ protected:
     touchgfx::Image phoneMirroring;
     touchgfx::Image mainGo;
     touchgfx::Image mainReverse;
-    touchgfx::ScrollWheel indicatorWheel;
-    touchgfx::DrawableListItems<indicatorWheelContainer, 2> indicatorWheelListItems;
+    touchgfx::Container iconContainer;
+    touchgfx::MoveAnimator< touchgfx::Container > nextIconContainer;
+    touchgfx::Image nextIconImage;
+    touchgfx::MoveAnimator< touchgfx::Container > prevIconContainer;
+    touchgfx::Image prevIconImage;
     touchgfx::Container frameContainer;
     touchgfx::TextArea tripUnit;
     touchgfx::TextArea signalPercent;

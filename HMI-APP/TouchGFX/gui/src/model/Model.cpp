@@ -26,7 +26,9 @@ hmi1_t HMI1;
 Model::Model()
     : modelListener(0), ticker(0), indicator(1), indicators {0}
 {
-	
+#ifdef SIMULATOR
+	generateRandomIndicators();
+#endif
 }
 
 void Model::tick()
@@ -61,6 +63,8 @@ void Model::tick()
     }
 
     if(ticker % 30 == 0) {
+        HMI1.d.sein.left =!HMI1.d.sein.left;
+        HMI1.d.sein.right = !HMI1.d.sein.right;
         if (VCU.d.signal > 99) {
             VCU.d.signal = 0;
         } else {
@@ -77,8 +81,6 @@ void Model::tick()
     }
 
     if (ticker % 60 == 0) {
-        HMI1.d.sein.left =!HMI1.d.sein.left;
-        HMI1.d.sein.right = !HMI1.d.sein.right;
         HMI1.d.mode.val[SW_M_TRIP] = rand() % (SW_M_TRIP_MAX + 1);
         HMI1.d.mode.val[SW_M_DRIVE] = rand() % (SW_M_DRIVE_MAX + 1);
         HMI1.d.mode.val[SW_M_REPORT] = rand() % (SW_M_REPORT_MAX + 1);
@@ -106,7 +108,17 @@ void Model::tick()
     modelListener->setDriveMode(HMI1.d.mode.val[SW_M_DRIVE]);
     modelListener->setReportMode(HMI1.d.mode.val[SW_M_REPORT]);
 
-    modelListener->setIndicator(indicator);
+    // modelListener->setIndicator(indicator);
+}
+
+uint8_t Model::readCurrentIndicator()
+{
+    return indicator;
+}
+
+uint8_t Model::readIndicatorState(uint8_t index)
+{
+    return indicators[index];
 }
 
 void Model::generateRandomIndicators()
@@ -165,9 +177,7 @@ void Model::nextIndicator()
     if (!found) {
         indicator = 1;
     }
+	
+	modelListener->setIndicator(indicator);
 }
 
-uint8_t Model::readIndicatorState(uint8_t index)
-{
-    return indicators[index];
-}

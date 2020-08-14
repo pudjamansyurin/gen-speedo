@@ -4,6 +4,22 @@
 #include <gui_generated/dashboardscreen_screen/dashboardScreenViewBase.hpp>
 #include <gui/dashboardscreen_screen/dashboardScreenPresenter.hpp>
 
+typedef struct {
+	touchgfx::Image *image;
+	MoveAnimator< touchgfx::Container > *container;
+} icon_t;
+
+typedef struct {
+	uint32_t x;
+	uint32_t y;
+} coordinate_t;
+
+typedef struct {
+	coordinate_t prev;
+	coordinate_t current;
+	coordinate_t next;
+} position_t;
+
 class dashboardScreenView : public dashboardScreenViewBase
 {
 public:
@@ -11,8 +27,9 @@ public:
     virtual ~dashboardScreenView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+	
+    virtual void handleTickEvent();
 
-    virtual void indicatorWheelUpdateItem(indicatorWheelContainer& item, int16_t itemIndex);
     virtual void driveWheelUpdateItem(driveWheelContainer& item, int16_t itemIndex);
     virtual void tripWheelUpdateItem(tripWheelContainer& item, int16_t itemIndex);
     virtual void reportWheelUpdateItem(reportWheelContainer& item, int16_t itemIndex);	
@@ -29,6 +46,8 @@ public:
 	virtual void writeReportMode(uint8_t index);
 	virtual void writeReportValue(uint16_t value);
 protected:
+    uint32_t ticker;
+	uint16_t iconAssets[INDICATOR_MAX + 1];
 };
 
 #endif // DASHBOARDVIEW_HPP

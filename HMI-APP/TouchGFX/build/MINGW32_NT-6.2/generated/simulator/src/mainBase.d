@@ -77,19 +77,17 @@ build/MINGW32_NT-6.2/generated/simulator/src/mainBase.o: \
  gui/include/gui/dashboardscreen_screen/dashboardScreenView.hpp \
  generated/gui_generated/include/gui_generated/dashboardscreen_screen/dashboardScreenViewBase.hpp \
  gui/include/gui/dashboardscreen_screen/dashboardScreenPresenter.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheel.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheelBase.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp \
- gui/include/gui/containers/indicatorWheelContainer.hpp \
- generated/gui_generated/include/gui_generated/containers/indicatorWheelContainerBase.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractDirectionProgress.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheel.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheelBase.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp \
  gui/include/gui/containers/reportWheelContainer.hpp \
  generated/gui_generated/include/gui_generated/containers/reportWheelContainerBase.hpp \
  gui/include/gui/containers/driveWheelContainer.hpp \
@@ -253,20 +251,6 @@ generated/gui_generated/include/gui_generated/dashboardscreen_screen/dashboardSc
 
 gui/include/gui/dashboardscreen_screen/dashboardScreenPresenter.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheel.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheelBase.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp:
-
-gui/include/gui/containers/indicatorWheelContainer.hpp:
-
-generated/gui_generated/include/gui_generated/containers/indicatorWheelContainerBase.hpp:
-
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp:
@@ -278,6 +262,16 @@ generated/gui_generated/include/gui_generated/containers/indicatorWheelContainer
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
+
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheel.hpp:
+
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheelBase.hpp:
+
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp:
+
+../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp:
+
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp:
 
 gui/include/gui/containers/reportWheelContainer.hpp:
 

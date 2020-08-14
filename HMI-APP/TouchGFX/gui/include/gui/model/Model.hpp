@@ -122,10 +122,11 @@ public:
 
     void tick();
 
+	uint8_t readCurrentIndicator();
+	uint8_t readIndicatorState(uint8_t index);
 	void generateRandomIndicators();
 	void reloadIndicators();
     void nextIndicator();
-	uint8_t readIndicatorState(uint8_t index);
 protected:
     ModelListener* modelListener;
     uint32_t ticker;

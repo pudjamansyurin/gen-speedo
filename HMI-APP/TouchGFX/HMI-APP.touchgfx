@@ -252,28 +252,77 @@
             "Moveable": false
           },
           {
-            "SelectedItemOffset": 0,
-            "UseSelectedStyle": false,
-            "ExtraSizeBefore": 0,
-            "ExtraSizeAfter": 0,
-            "MarginBefore": 0,
-            "MarginAfter": 0,
-            "IsHorizontal": true,
-            "IsCircular": true,
-            "ItemTemplateName": "indicatorWheelContainer",
-            "NumberofItems": 10,
-            "InitialElement": 1,
-            "ItemMargin": 0,
-            "Easing": "Expo",
-            "EasingOption": "Out",
-            "SwipeAcceleration": 1.0,
-            "DragAcceleration": 1.0,
-            "Name": "indicatorWheel",
+            "Components": [
+              {
+                "Components": [
+                  {
+                    "RelativeFilename": "MainGo.png",
+                    "Alpha": 255,
+                    "Name": "nextIconImage",
+                    "X": 9,
+                    "Y": 75,
+                    "Width": 210,
+                    "Height": 81,
+                    "Type": "Image",
+                    "Visible": true,
+                    "Draggable": false,
+                    "Clickable": false,
+                    "Fadeable": false,
+                    "Moveable": false
+                  }
+                ],
+                "IsCacheableContainer": false,
+                "Name": "nextIconContainer",
+                "X": 139,
+                "Y": 0,
+                "Width": 230,
+                "Height": 230,
+                "Type": "Container",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": true
+              },
+              {
+                "Components": [
+                  {
+                    "RelativeFilename": "MainGo.png",
+                    "Alpha": 255,
+                    "Name": "prevIconImage",
+                    "X": 9,
+                    "Y": 75,
+                    "Width": 210,
+                    "Height": 81,
+                    "Type": "Image",
+                    "Visible": true,
+                    "Draggable": false,
+                    "Clickable": false,
+                    "Fadeable": false,
+                    "Moveable": false
+                  }
+                ],
+                "IsCacheableContainer": false,
+                "Name": "prevIconContainer",
+                "X": 139,
+                "Y": 0,
+                "Width": 230,
+                "Height": 230,
+                "Type": "Container",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": true
+              }
+            ],
+            "IsCacheableContainer": false,
+            "Name": "iconContainer",
             "X": 146,
             "Y": 132,
             "Width": 508,
             "Height": 230,
-            "Type": "ScrollWheel",
+            "Type": "Container",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -445,7 +494,7 @@
             "IsCacheableContainer": false,
             "Name": "frameContainer",
             "X": 0,
-            "Y": 0,
+            "Y": -1,
             "Width": 800,
             "Height": 480,
             "Type": "Container",
@@ -776,31 +825,6 @@
       }
     ],
     "CustomContainerDefinitions": [
-      {
-        "Components": [
-          {
-            "RelativeFilename": "MainGo.png",
-            "Alpha": 255,
-            "Name": "indicatorImage",
-            "X": 149,
-            "Y": 75,
-            "Width": 210,
-            "Height": 81,
-            "Type": "Image",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          }
-        ],
-        "Interactions": [],
-        "Name": "indicatorWheelContainer",
-        "X": 0,
-        "Y": 0,
-        "Width": 508,
-        "Height": 230
-      },
       {
         "Components": [
           {

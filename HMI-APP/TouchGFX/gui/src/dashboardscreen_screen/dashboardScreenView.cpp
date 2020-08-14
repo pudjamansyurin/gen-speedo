@@ -1,8 +1,30 @@
 #include <gui/dashboardscreen_screen/dashboardScreenView.hpp>
+#include "BitmapDatabase.hpp"
 
-dashboardScreenView::dashboardScreenView()
+uint8_t iconImage = 0;
+position_t pos;
+
+dashboardScreenView::dashboardScreenView() : 
+	ticker(0), 
+	iconAssets {
+		BITMAP_MAINREVERSE_ID,
+		BITMAP_MAINGO_ID,
+        BITMAP_BRAKESYSTEMALERT_ID,
+        BITMAP_SMARTPHONEMIRRORINGSTATUS_ID,
+        BITMAP_HIGHBEAMACTIVATED_ID,
+        BITMAP_ELECTRONICERRORMESSAGE_ID,
+        BITMAP_COOLANTTEMPERATUREWARNING_ID,
+        BITMAP_FINGERSCANLOGINSTATUS_ID,
+        BITMAP_KEYLESSIGNITIONKEYDETECTION_ID,
+		BITMAP_BATTERYDRAINOUT_ID,
+	}
 {
-	
+	pos.prev.x = 0 - prevIconContainer.getWidth() - 200;
+	pos.prev.y = iconContainer.getHeight() / 5;
+	pos.current.x = (iconContainer.getWidth() - prevIconContainer.getWidth()) / 2;
+	pos.current.y = (iconContainer.getHeight() - prevIconContainer.getHeight()) / 2;
+	pos.next.x = iconContainer.getWidth() - prevIconContainer.getWidth() + 200;
+	pos.next.y = iconContainer.getHeight() / 5;
 }
 
 void dashboardScreenView::setupScreen()
@@ -13,11 +35,6 @@ void dashboardScreenView::setupScreen()
 void dashboardScreenView::tearDownScreen()
 {
     dashboardScreenViewBase::tearDownScreen();
-}
-
-void dashboardScreenView::indicatorWheelUpdateItem(indicatorWheelContainer& item, int16_t itemIndex)
-{
-	item.updateImage(itemIndex);
 }
 
 void dashboardScreenView::driveWheelUpdateItem(driveWheelContainer& item, int16_t itemIndex)
@@ -35,6 +52,19 @@ void dashboardScreenView::reportWheelUpdateItem(reportWheelContainer& item, int1
     item.updateText(itemIndex);
 }
 
+void dashboardScreenView::handleTickEvent()
+{
+	ticker++;
+	
+	// if (ticker % 20 == 0) {
+		// if (presenter->getCurrentIndicator() == INDICATOR_WARNING) {
+			// if (indicatorContainer != NULL) {
+				
+			// }
+		// }
+	// }	
+}
+	
 void dashboardScreenView::writeSein(uint8_t leftSide, uint8_t state)
 {
     touchgfx::MoveAnimator< touchgfx::Image > *sein;
@@ -79,12 +109,35 @@ void dashboardScreenView::writeSignal(uint8_t percent)
 }
 
 void dashboardScreenView::writeIndicator(uint8_t index)
-{
-	indicatorWheel.animateToItem(index, 0);
-	indicatorWheel.invalidate();
+{	
+	icon_t prev, next;
 	
-    // indicatorImage.startMoveAnimation(-100, -100, 60, touchgfx::EasingEquations::expoEaseOut, touchgfx::EasingEquations::expoEaseOut);
-	// indicatorImage.startMoveAnimation(-100, -100, 60, touchgfx::EasingEquations::expoEaseIn, touchgfx::EasingEquations::expoEaseIn);
+	prev.container = iconImage ? &prevIconContainer : &nextIconContainer;
+	prev.image = iconImage ? &prevIconImage : &nextIconImage;
+	next.container = iconImage ? &nextIconContainer : &prevIconContainer;
+	next.image = iconImage ? &nextIconImage : &prevIconImage;
+	
+	next.image->setBitmap(Bitmap(iconAssets[index]));
+	next.image->setXY(
+		(next.container->getWidth() - next.image->getWidth()) / 2,
+		(next.container->getHeight() - next.image->getHeight()) / 2
+	);
+	next.image->invalidate();
+	
+	next.container->setXY(pos.next.x, pos.next.y);
+	next.container->startMoveAnimation(
+		pos.current.x, pos.current.y, 20, 
+		touchgfx::EasingEquations::linearEaseOut, touchgfx::EasingEquations::linearEaseOut
+	);
+	next.container->invalidate();
+		
+    prev.container->startMoveAnimation(
+		pos.prev.x, pos.prev.y, 20, 
+		touchgfx::EasingEquations::linearEaseOut, touchgfx::EasingEquations::linearEaseOut
+	);
+	prev.container->invalidate();
+	
+	iconImage = !iconImage;
 }
 
 void dashboardScreenView::writeDriveMode(uint8_t index)

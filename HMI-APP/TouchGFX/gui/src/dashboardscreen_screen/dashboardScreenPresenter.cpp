@@ -65,3 +65,7 @@ uint8_t dashboardScreenPresenter::getIndicatorState(uint8_t index)
 {
 	return model->readIndicatorState(index);
 }
+uint8_t dashboardScreenPresenter::getCurrentIndicator() 
+{
+	return model->readCurrentIndicator();
+}

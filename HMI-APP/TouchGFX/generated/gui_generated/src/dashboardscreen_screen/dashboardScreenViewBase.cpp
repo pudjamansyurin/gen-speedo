@@ -56,19 +56,23 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     mainReverse.setBitmap(touchgfx::Bitmap(BITMAP_MAINREVERSE_ID));
     indicatorImages.add(mainReverse);
 
-    indicatorWheel.setPosition(146, 132, 508, 230);
-    indicatorWheel.setHorizontal(true);
-    indicatorWheel.setCircular(true);
-    indicatorWheel.setEasingEquation(touchgfx::EasingEquations::expoEaseOut);
-    indicatorWheel.setSwipeAcceleration(10);
-    indicatorWheel.setDragAcceleration(10);
-    indicatorWheel.setNumberOfItems(10);
-    indicatorWheel.setSelectedItemOffset(0);
-    indicatorWheel.setDrawableSize(508, 0);
-    indicatorWheel.setDrawables(indicatorWheelListItems, updateItemCallback);
-    indicatorWheel.animateToItem(1, 0);
+    iconContainer.setPosition(146, 132, 508, 230);
 
-    frameContainer.setPosition(0, 0, 800, 480);
+    nextIconContainer.setPosition(139, 0, 230, 230);
+
+    nextIconImage.setXY(9, 75);
+    nextIconImage.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
+    nextIconContainer.add(nextIconImage);
+    iconContainer.add(nextIconContainer);
+
+    prevIconContainer.setPosition(139, 0, 230, 230);
+
+    prevIconImage.setXY(9, 75);
+    prevIconImage.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
+    prevIconContainer.add(prevIconImage);
+    iconContainer.add(prevIconContainer);
+
+    frameContainer.setPosition(0, -1, 800, 480);
 
     tripUnit.setXY(292, 114);
     tripUnit.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
@@ -206,7 +210,7 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
 
     add(background);
     add(indicatorImages);
-    add(indicatorWheel);
+    add(iconContainer);
     add(frameContainer);
     add(seinLeftContainer);
     add(seinRightContainer);
@@ -223,11 +227,6 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
 
 void dashboardScreenViewBase::setupScreen()
 {
-    indicatorWheel.initialize();
-    for (int i = 0; i < indicatorWheelListItems.getNumberOfDrawables(); i++)
-    {
-        indicatorWheelListItems[i].initialize();
-    }
     reportWheel.initialize();
     for (int i = 0; i < reportWheelListItems.getNumberOfDrawables(); i++)
     {
@@ -247,12 +246,6 @@ void dashboardScreenViewBase::setupScreen()
 
 void dashboardScreenViewBase::updateItemCallbackHandler(touchgfx::DrawableListItemsInterface* items, int16_t containerIndex, int16_t itemIndex)
 {
-    if (items == &indicatorWheelListItems)
-    {
-        touchgfx::Drawable* d = items->getDrawable(containerIndex);
-        indicatorWheelContainer* cc = (indicatorWheelContainer*)d;
-        indicatorWheelUpdateItem(*cc, itemIndex);
-    }
     if (items == &reportWheelListItems)
     {
         touchgfx::Drawable* d = items->getDrawable(containerIndex);

@@ -252,12 +252,6 @@
     <ClCompile Include="..\..\generated\gui_generated\src\containers\driveWheelContainerBase.cpp">
       <Filter>Source Files\generated\gui_generated\containers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\indicatorWheelContainer.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\indicatorWheelContainerBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gui\src\containers\tripWheelContainer.cpp">
       <Filter>Source Files\gui\containers</Filter>
     </ClCompile>
@@ -725,12 +719,6 @@
       <Filter>Header Files\gui\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\driveWheelContainerBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\indicatorWheelContainer.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\indicatorWheelContainerBase.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\containers\tripWheelContainer.hpp">
