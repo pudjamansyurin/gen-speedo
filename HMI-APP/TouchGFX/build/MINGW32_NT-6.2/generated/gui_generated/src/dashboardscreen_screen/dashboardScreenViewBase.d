@@ -55,17 +55,7 @@ build/MINGW32_NT-6.2/generated/gui_generated/src/dashboardscreen_screen/dashboar
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheel.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheelBase.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp \
- gui/include/gui/containers/reportWheelContainer.hpp \
- generated/gui_generated/include/gui_generated/containers/reportWheelContainerBase.hpp \
- gui/include/gui/containers/driveWheelContainer.hpp \
- generated/gui_generated/include/gui_generated/containers/driveWheelContainerBase.hpp \
- gui/include/gui/containers/tripWheelContainer.hpp \
- generated/gui_generated/include/gui_generated/containers/tripWheelContainerBase.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Color.hpp \
  generated/images/include/BitmapDatabase.hpp \
@@ -181,27 +171,7 @@ gui/include/gui/model/ModelListener.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
 
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheel.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollWheelBase.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp:
-
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp:
-
-gui/include/gui/containers/reportWheelContainer.hpp:
-
-generated/gui_generated/include/gui_generated/containers/reportWheelContainerBase.hpp:
-
-gui/include/gui/containers/driveWheelContainer.hpp:
-
-generated/gui_generated/include/gui_generated/containers/driveWheelContainerBase.hpp:
-
-gui/include/gui/containers/tripWheelContainer.hpp:
-
-generated/gui_generated/include/gui_generated/containers/tripWheelContainerBase.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp:
 

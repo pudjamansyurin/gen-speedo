@@ -6,8 +6,7 @@
 #include "BitmapDatabase.hpp"
 #include <texts/TextKeysAndLanguages.hpp>
 
-dashboardScreenViewBase::dashboardScreenViewBase() :
-    updateItemCallback(this, &dashboardScreenViewBase::updateItemCallbackHandler)
+dashboardScreenViewBase::dashboardScreenViewBase()
 {
 
     background.setPosition(-1, -1, 800, 480);
@@ -144,46 +143,71 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     speedProgress.setValue(100);
     speedProgress.setAnchorAtZero(true);
 
-    reportValue.setPosition(423, 406, 50, 18);
-    reportValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
-    reportValue.setLinespacing(0);
-    Unicode::snprintf(reportValueBuffer, REPORTVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID29).getText());
-    reportValue.setWildcard(reportValueBuffer);
-    reportValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID28));
+    reportModeContainer.setPosition(285, 406, 227, 18);
 
-    reportWheelBox.setPosition(283, 405, 231, 20);
-    reportWheelBox.setVisible(false);
-    reportWheelBox.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 0));
-    reportWheelBox.setAlpha(80);
+    nextReportModeContainer.setPosition(0, -18, 227, 18);
 
-    reportWheel.setPosition(285, 406, 227, 18);
-    reportWheel.setHorizontal(false);
-    reportWheel.setCircular(true);
-    reportWheel.setEasingEquation(touchgfx::EasingEquations::quartEaseOut);
-    reportWheel.setSwipeAcceleration(10);
-    reportWheel.setDragAcceleration(10);
-    reportWheel.setNumberOfItems(2);
-    reportWheel.setSelectedItemOffset(0);
-    reportWheel.setDrawableSize(18, 0);
-    reportWheel.setDrawables(reportWheelListItems, updateItemCallback);
-    reportWheel.animateToItem(0, 0);
+    nextReportUnitText.setPosition(121, 0, 105, 18);
+    nextReportUnitText.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    nextReportUnitText.setLinespacing(0);
+    nextReportUnitText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID42));
+    nextReportModeContainer.add(nextReportUnitText);
 
-    driveWheelBox.setPosition(288, 368, 222, 23);
-    driveWheelBox.setVisible(false);
-    driveWheelBox.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 0));
-    driveWheelBox.setAlpha(80);
+    nextReportModeText.setXY(0, 0);
+    nextReportModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    nextReportModeText.setLinespacing(0);
+    nextReportModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID44));
+    nextReportModeContainer.add(nextReportModeText);
 
-    driveWheel.setPosition(288, 369, 222, 19);
-    driveWheel.setHorizontal(false);
-    driveWheel.setCircular(true);
-    driveWheel.setEasingEquation(touchgfx::EasingEquations::expoEaseIn);
-    driveWheel.setSwipeAcceleration(10);
-    driveWheel.setDragAcceleration(10);
-    driveWheel.setNumberOfItems(4);
-    driveWheel.setSelectedItemOffset(0);
-    driveWheel.setDrawableSize(19, 0);
-    driveWheel.setDrawables(driveWheelListItems, updateItemCallback);
-    driveWheel.animateToItem(1, 0);
+    nextReportValueText.setPosition(76, 0, 50, 18);
+    nextReportValueText.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    nextReportValueText.setLinespacing(0);
+    Unicode::snprintf(nextReportValueTextBuffer, NEXTREPORTVALUETEXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID29).getText());
+    nextReportValueText.setWildcard(nextReportValueTextBuffer);
+    nextReportValueText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID28));
+    nextReportModeContainer.add(nextReportValueText);
+    reportModeContainer.add(nextReportModeContainer);
+
+    prevReportModeContainer.setPosition(0, 0, 227, 18);
+
+    prevReportUnitText.setPosition(121, 0, 105, 18);
+    prevReportUnitText.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    prevReportUnitText.setLinespacing(0);
+    prevReportUnitText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID40));
+    prevReportModeContainer.add(prevReportUnitText);
+
+    prevReportModeText.setXY(0, 0);
+    prevReportModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    prevReportModeText.setLinespacing(0);
+    prevReportModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID38));
+    prevReportModeContainer.add(prevReportModeText);
+
+    prevReportValueText.setPosition(137, 0, 50, 18);
+    prevReportValueText.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    prevReportValueText.setLinespacing(0);
+    Unicode::snprintf(prevReportValueTextBuffer, PREVREPORTVALUETEXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID46).getText());
+    prevReportValueText.setWildcard(prevReportValueTextBuffer);
+    prevReportValueText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID45));
+    prevReportModeContainer.add(prevReportValueText);
+    reportModeContainer.add(prevReportModeContainer);
+
+    driveModeContainer.setPosition(288, 369, 222, 19);
+
+    nextDriveModeText.setPosition(0, -19, 222, 19);
+    nextDriveModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 255, 0));
+    nextDriveModeText.setLinespacing(0);
+    Unicode::snprintf(nextDriveModeTextBuffer, NEXTDRIVEMODETEXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID33).getText());
+    nextDriveModeText.setWildcard(nextDriveModeTextBuffer);
+    nextDriveModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID32));
+    driveModeContainer.add(nextDriveModeText);
+
+    prevDriveModeText.setPosition(0, 0, 222, 19);
+    prevDriveModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 255, 0));
+    prevDriveModeText.setLinespacing(0);
+    Unicode::snprintf(prevDriveModeTextBuffer, PREVDRIVEMODETEXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID31).getText());
+    prevDriveModeText.setWildcard(prevDriveModeTextBuffer);
+    prevDriveModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID30));
+    driveModeContainer.add(prevDriveModeText);
 
     tripValue.setPosition(374, 102, 119, 20);
     tripValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
@@ -192,22 +216,23 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     tripValue.setWildcard(tripValueBuffer);
     tripValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID3));
 
-    tripWheelBox.setPosition(267, 93, 83, 20);
-    tripWheelBox.setVisible(false);
-    tripWheelBox.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 0));
-    tripWheelBox.setAlpha(80);
+    tripModeContainer.setPosition(269, 93, 79, 20);
 
-    tripWheel.setPosition(269, 93, 79, 20);
-    tripWheel.setHorizontal(false);
-    tripWheel.setCircular(true);
-    tripWheel.setEasingEquation(touchgfx::EasingEquations::expoEaseOut);
-    tripWheel.setSwipeAcceleration(10);
-    tripWheel.setDragAcceleration(10);
-    tripWheel.setNumberOfItems(3);
-    tripWheel.setSelectedItemOffset(0);
-    tripWheel.setDrawableSize(20, 0);
-    tripWheel.setDrawables(tripWheelListItems, updateItemCallback);
-    tripWheel.animateToItem(0, 0);
+    nextTripModeText.setPosition(0, -20, 79, 20);
+    nextTripModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
+    nextTripModeText.setLinespacing(0);
+    Unicode::snprintf(nextTripModeTextBuffer, NEXTTRIPMODETEXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID35).getText());
+    nextTripModeText.setWildcard(nextTripModeTextBuffer);
+    nextTripModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID34));
+    tripModeContainer.add(nextTripModeText);
+
+    prevTripModeText.setPosition(0, 0, 79, 20);
+    prevTripModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
+    prevTripModeText.setLinespacing(0);
+    Unicode::snprintf(prevTripModeTextBuffer, PREVTRIPMODETEXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID37).getText());
+    prevTripModeText.setWildcard(prevTripModeTextBuffer);
+    prevTripModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID36));
+    tripModeContainer.add(prevTripModeText);
 
     signalValue.setPosition(443, 61, 39, 20);
     signalValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
@@ -231,55 +256,15 @@ dashboardScreenViewBase::dashboardScreenViewBase() :
     add(seinRightContainer);
     add(engineProgress);
     add(speedProgress);
-    add(reportValue);
-    add(reportWheelBox);
-    add(reportWheel);
-    add(driveWheelBox);
-    add(driveWheel);
+    add(reportModeContainer);
+    add(driveModeContainer);
     add(tripValue);
-    add(tripWheelBox);
-    add(tripWheel);
+    add(tripModeContainer);
     add(signalValue);
     add(batteryValue);
 }
 
 void dashboardScreenViewBase::setupScreen()
 {
-    reportWheel.initialize();
-    for (int i = 0; i < reportWheelListItems.getNumberOfDrawables(); i++)
-    {
-        reportWheelListItems[i].initialize();
-    }
-    driveWheel.initialize();
-    for (int i = 0; i < driveWheelListItems.getNumberOfDrawables(); i++)
-    {
-        driveWheelListItems[i].initialize();
-    }
-    tripWheel.initialize();
-    for (int i = 0; i < tripWheelListItems.getNumberOfDrawables(); i++)
-    {
-        tripWheelListItems[i].initialize();
-    }
-}
 
-void dashboardScreenViewBase::updateItemCallbackHandler(touchgfx::DrawableListItemsInterface* items, int16_t containerIndex, int16_t itemIndex)
-{
-    if (items == &reportWheelListItems)
-    {
-        touchgfx::Drawable* d = items->getDrawable(containerIndex);
-        reportWheelContainer* cc = (reportWheelContainer*)d;
-        reportWheelUpdateItem(*cc, itemIndex);
-    }
-    if (items == &driveWheelListItems)
-    {
-        touchgfx::Drawable* d = items->getDrawable(containerIndex);
-        driveWheelContainer* cc = (driveWheelContainer*)d;
-        driveWheelUpdateItem(*cc, itemIndex);
-    }
-    if (items == &tripWheelListItems)
-    {
-        touchgfx::Drawable* d = items->getDrawable(containerIndex);
-        tripWheelContainer* cc = (tripWheelContainer*)d;
-        tripWheelUpdateItem(*cc, itemIndex);
-    }
 }

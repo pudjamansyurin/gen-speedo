@@ -26,12 +26,6 @@
     <ClCompile Include="..\..\gui\src\welcomescreen_screen\welcomeScreenPresenter.cpp"/>
     <ClCompile Include="..\..\gui\src\welcomescreen_screen\welcomeScreenView.cpp"/>
     <ClCompile Include="..\..\generated\gui_generated\src\welcomescreen_screen\welcomeScreenViewBase.cpp"/>
-    <ClCompile Include="..\..\gui\src\containers\driveWheelContainer.cpp"/>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\driveWheelContainerBase.cpp"/>
-    <ClCompile Include="..\..\gui\src\containers\tripWheelContainer.cpp"/>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\tripWheelContainerBase.cpp"/>
-    <ClCompile Include="..\..\gui\src\containers\reportWheelContainer.cpp"/>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\reportWheelContainerBase.cpp"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(ApplicationRoot)\assets\texts\texts.xlsx"/>
@@ -185,12 +179,6 @@
     <ClInclude Include="..\..\gui\include\gui\welcomescreen_screen\welcomeScreenPresenter.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\welcomescreen_screen\welcomeScreenView.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\welcomescreen_screen\welcomeScreenViewBase.hpp"/>
-    <ClInclude Include="..\..\gui\include\gui\containers\driveWheelContainer.hpp"/>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\driveWheelContainerBase.hpp"/>
-    <ClInclude Include="..\..\gui\include\gui\containers\tripWheelContainer.hpp"/>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\tripWheelContainerBase.hpp"/>
-    <ClInclude Include="..\..\gui\include\gui\containers\reportWheelContainer.hpp"/>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\reportWheelContainerBase.hpp"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(ApplicationRoot)\generated\simulator\touchgfx.rc"/>

@@ -47,8 +47,7 @@ build/MINGW32_NT-6.2/gui/src/containers/driveWheelContainer.o: \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/FontManager.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/TypedText.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Texts.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Widget.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/Color.hpp
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Widget.hpp
 
 gui/include/gui/containers/driveWheelContainer.hpp:
 
@@ -145,5 +144,3 @@ gui/include/gui/model/Model.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Texts.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Widget.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/Color.hpp:

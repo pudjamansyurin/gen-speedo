@@ -5,8 +5,17 @@
 #include <gui/dashboardscreen_screen/dashboardScreenPresenter.hpp>
 
 typedef struct {
-	touchgfx::Image *image;
-	MoveAnimator< touchgfx::Container > *container;
+	Unicode::UnicodeChar mode[SW_M_DRIVE_MAX+1][12];
+	colortype color[SW_M_DRIVE_MAX+1];
+} drive_t;
+
+typedef struct {
+	touchgfx::Unicode::UnicodeChar mode[SW_M_TRIP_MAX+1][7];
+} trip_t;
+
+typedef struct {
+	Image *image;
+	MoveAnimator< Container > *container;
 } icon_t;
 
 typedef struct {
@@ -29,10 +38,6 @@ public:
     virtual void tearDownScreen();
 	
     virtual void handleTickEvent();
-
-    virtual void driveWheelUpdateItem(driveWheelContainer& item, int16_t itemIndex);
-    virtual void tripWheelUpdateItem(tripWheelContainer& item, int16_t itemIndex);
-    virtual void reportWheelUpdateItem(reportWheelContainer& item, int16_t itemIndex);	
 	
 	virtual void writeSein(uint8_t leftSide, uint8_t state);
 	virtual void writeSpeed(uint8_t percent);

@@ -169,12 +169,6 @@
     <Filter Include="Header Files\generated\gui_generated\containers">
       <UniqueIdentifier>B6BE911D-77F3-FEA7-8AFD-334FB715762B</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\containers">
-      <UniqueIdentifier>56420C48-5475-1E47-E377-6F83C48CD519</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\containers">
-      <UniqueIdentifier>E81A3BDA-6B6E-8667-EE45-E0B335651186</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\gui\welcomescreen_screen">
       <UniqueIdentifier>5B4F8846-19C0-BC20-CAED-46E932C8C236</UniqueIdentifier>
     </Filter>
@@ -245,24 +239,6 @@
     </ClCompile>
     <ClCompile Include="..\..\generated\gui_generated\src\welcomescreen_screen\welcomeScreenViewBase.cpp">
       <Filter>Source Files\generated\gui_generated\welcomescreen_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\driveWheelContainer.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\driveWheelContainerBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\tripWheelContainer.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\tripWheelContainerBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\containers\reportWheelContainer.cpp">
-      <Filter>Source Files\gui\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\containers\reportWheelContainerBase.cpp">
-      <Filter>Source Files\generated\gui_generated\containers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -714,24 +690,6 @@
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\welcomescreen_screen\welcomeScreenViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\welcomescreen_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\driveWheelContainer.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\driveWheelContainerBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\tripWheelContainer.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\tripWheelContainerBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\containers\reportWheelContainer.hpp">
-      <Filter>Header Files\gui\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\reportWheelContainerBase.hpp">
-      <Filter>Header Files\generated\gui_generated\containers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

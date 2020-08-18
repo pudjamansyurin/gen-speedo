@@ -13,10 +13,6 @@
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/progress_indicators/ImageProgress.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
-#include <touchgfx/containers/scrollers/ScrollWheel.hpp>
-#include <gui/containers/reportWheelContainer.hpp>
-#include <gui/containers/driveWheelContainer.hpp>
-#include <gui/containers/tripWheelContainer.hpp>
 #include <touchgfx/EasingEquations.hpp>
 #include <touchgfx/mixins/MoveAnimator.hpp>
 
@@ -26,21 +22,6 @@ public:
     dashboardScreenViewBase();
     virtual ~dashboardScreenViewBase() {}
     virtual void setupScreen();
-
-    virtual void reportWheelUpdateItem(reportWheelContainer& item, int16_t itemIndex)
-    {
-        // Override and implement this function in dashboardScreen
-    }
-
-    virtual void driveWheelUpdateItem(driveWheelContainer& item, int16_t itemIndex)
-    {
-        // Override and implement this function in dashboardScreen
-    }
-
-    virtual void tripWheelUpdateItem(tripWheelContainer& item, int16_t itemIndex)
-    {
-        // Override and implement this function in dashboardScreen
-    }
 
 protected:
     FrontendApplication& application() {
@@ -83,35 +64,48 @@ protected:
     touchgfx::MoveAnimator< touchgfx::Image > seinRight;
     touchgfx::ImageProgress engineProgress;
     touchgfx::ImageProgress speedProgress;
-    touchgfx::TextAreaWithOneWildcard reportValue;
-    touchgfx::Box reportWheelBox;
-    touchgfx::ScrollWheel reportWheel;
-    touchgfx::DrawableListItems<reportWheelContainer, 2> reportWheelListItems;
-    touchgfx::Box driveWheelBox;
-    touchgfx::ScrollWheel driveWheel;
-    touchgfx::DrawableListItems<driveWheelContainer, 2> driveWheelListItems;
+    touchgfx::Container reportModeContainer;
+    touchgfx::MoveAnimator< touchgfx::Container > nextReportModeContainer;
+    touchgfx::TextArea nextReportUnitText;
+    touchgfx::TextArea nextReportModeText;
+    touchgfx::TextAreaWithOneWildcard nextReportValueText;
+    touchgfx::MoveAnimator< touchgfx::Container > prevReportModeContainer;
+    touchgfx::TextArea prevReportUnitText;
+    touchgfx::TextArea prevReportModeText;
+    touchgfx::TextAreaWithOneWildcard prevReportValueText;
+    touchgfx::Container driveModeContainer;
+    touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > nextDriveModeText;
+    touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > prevDriveModeText;
     touchgfx::TextAreaWithOneWildcard tripValue;
-    touchgfx::Box tripWheelBox;
-    touchgfx::ScrollWheel tripWheel;
-    touchgfx::DrawableListItems<tripWheelContainer, 2> tripWheelListItems;
+    touchgfx::Container tripModeContainer;
+    touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > nextTripModeText;
+    touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > prevTripModeText;
     touchgfx::TextAreaWithOneWildcard signalValue;
     touchgfx::TextAreaWithOneWildcard batteryValue;
 
     /*
      * Wildcard Buffers
      */
-    static const uint16_t REPORTVALUE_SIZE = 11;
-    touchgfx::Unicode::UnicodeChar reportValueBuffer[REPORTVALUE_SIZE];
+    static const uint16_t NEXTREPORTVALUETEXT_SIZE = 11;
+    touchgfx::Unicode::UnicodeChar nextReportValueTextBuffer[NEXTREPORTVALUETEXT_SIZE];
+    static const uint16_t PREVREPORTVALUETEXT_SIZE = 11;
+    touchgfx::Unicode::UnicodeChar prevReportValueTextBuffer[PREVREPORTVALUETEXT_SIZE];
+    static const uint16_t NEXTDRIVEMODETEXT_SIZE = 12;
+    touchgfx::Unicode::UnicodeChar nextDriveModeTextBuffer[NEXTDRIVEMODETEXT_SIZE];
+    static const uint16_t PREVDRIVEMODETEXT_SIZE = 12;
+    touchgfx::Unicode::UnicodeChar prevDriveModeTextBuffer[PREVDRIVEMODETEXT_SIZE];
     static const uint16_t TRIPVALUE_SIZE = 7;
     touchgfx::Unicode::UnicodeChar tripValueBuffer[TRIPVALUE_SIZE];
+    static const uint16_t NEXTTRIPMODETEXT_SIZE = 7;
+    touchgfx::Unicode::UnicodeChar nextTripModeTextBuffer[NEXTTRIPMODETEXT_SIZE];
+    static const uint16_t PREVTRIPMODETEXT_SIZE = 7;
+    touchgfx::Unicode::UnicodeChar prevTripModeTextBuffer[PREVTRIPMODETEXT_SIZE];
     static const uint16_t SIGNALVALUE_SIZE = 4;
     touchgfx::Unicode::UnicodeChar signalValueBuffer[SIGNALVALUE_SIZE];
     static const uint16_t BATTERYVALUE_SIZE = 4;
     touchgfx::Unicode::UnicodeChar batteryValueBuffer[BATTERYVALUE_SIZE];
 
 private:
-    touchgfx::Callback<dashboardScreenViewBase, touchgfx::DrawableListItemsInterface*, int16_t, int16_t> updateItemCallback;
-    void updateItemCallbackHandler(touchgfx::DrawableListItemsInterface* items, int16_t containerIndex, int16_t itemIndex);
 
 };
 
