@@ -49,6 +49,7 @@ void Model::tick()
         } else {
             VCU.d.speed++;
         }
+		
         MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
     }
 
@@ -90,30 +91,39 @@ void Model::tick()
     }
 
     if (ticker % 60 == 0) {
-		if (HMI1.d.mode.val[SW_M_TRIP] >= SW_M_TRIP_MAX) {
-			HMI1.d.mode.val[SW_M_TRIP] = 0;
-		} else {
-			HMI1.d.mode.val[SW_M_TRIP]++;
+		uint8_t max, *mode;
+		
+		switch (HMI1.d.mode.sel) {
+			case SW_M_TRIP : 
+				mode = &HMI1.d.mode.val[SW_M_TRIP];	
+				max = SW_M_TRIP_MAX;
+				break;
+			case SW_M_DRIVE:	
+				mode = &HMI1.d.mode.val[SW_M_DRIVE];
+				max = SW_M_DRIVE_MAX;	
+				break;
+			case SW_M_REPORT:
+				mode = &HMI1.d.mode.val[SW_M_REPORT];	
+				max = SW_M_REPORT_MAX;
+				break;			
+			default: 
+				break;
 		}
-		if (HMI1.d.mode.val[SW_M_DRIVE] >= SW_M_DRIVE_MAX) {
-			HMI1.d.mode.val[SW_M_DRIVE] = 0;
+		
+		if (*mode >= max) {
+			*mode = 0;
 		} else {
-			HMI1.d.mode.val[SW_M_DRIVE]++;
-		}
-		if (HMI1.d.mode.val[SW_M_REPORT] >= SW_M_REPORT_MAX) {
-			HMI1.d.mode.val[SW_M_REPORT] = 0;
-		} else {
-			HMI1.d.mode.val[SW_M_REPORT]++;
+			(*mode)++;
 		}
     }
 
     if (ticker % (60*2) == 0) {
-		// if (indicator >= INDICATOR_MAX) {
-			// indicator = 0;
-		// } else {
-			// indicator++;
-		// }
-        swipeIndicator();
+		if (indicator >= INDICATOR_MAX) {
+			indicator = 0;
+		} else {
+			indicator++;
+		}
+        // swipeIndicator();
 	}
 	
     if (ticker % (60*3) == 0) {
