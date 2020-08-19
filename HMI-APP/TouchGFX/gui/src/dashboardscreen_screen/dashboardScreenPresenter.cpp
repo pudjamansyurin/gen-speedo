@@ -87,6 +87,7 @@ void dashboardScreenPresenter::setDriveMode(uint8_t index)
 		_index = index;
 		init = 0;
 		view.writeDriveMode(index);
+		// touchgfx_printf("D = %d\n", index);
 	}
 }
 void dashboardScreenPresenter::setTripMode(uint8_t index)
@@ -97,6 +98,7 @@ void dashboardScreenPresenter::setTripMode(uint8_t index)
 		_index = index;
 		init = 0;
 		view.writeTripMode(index);
+		// touchgfx_printf("T = %d\n", index);
 	}
 }
 void dashboardScreenPresenter::setTripValue(uint32_t value)
@@ -118,6 +120,7 @@ void dashboardScreenPresenter::setReportMode(uint8_t index)
 		_index = index;
 		init = 0;
 		view.writeReportMode(index);
+		// touchgfx_printf("R = %d\n", index);
 	}
 }
 void dashboardScreenPresenter::setReportValue(uint16_t value)
