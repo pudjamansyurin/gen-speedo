@@ -2,7 +2,7 @@
 #include <gui/model/ModelListener.hpp>
 #include <stdlib.h>
 
-#ifndef SIMULATOR
+#if !defined(SIMULATOR) || defined(LCD_TESTING)
 extern "C"
 {
     #include "Libs/_utils.h"
@@ -28,10 +28,10 @@ Model::Model()
 {
 #ifdef SIMULATOR
 	generateRandomIndicators();
-	
+
 	HMI1.d.mode.sel = SW_M_DRIVE;
 	HMI1.d.mode.hide = 0;
-	
+
 	HMI1.d.mode.val[SW_M_TRIP] = SW_M_TRIP_ODO;
 	HMI1.d.mode.val[SW_M_DRIVE] = SW_M_DRIVE_STANDARD;
 	HMI1.d.mode.val[SW_M_REPORT] = SW_M_REPORT_RANGE;
@@ -47,7 +47,7 @@ void Model::tick()
         if (VCU.d.speed >= MCU_SPEED_MAX) {
             VCU.d.speed = 0;
         } else {
-            VCU.d.speed++;
+            VCU.d.speed += 5;
         }
         MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
     }
@@ -66,7 +66,7 @@ void Model::tick()
         } else {
             HMI1.d.mode.report++;
         }
-		
+
 		HMI1.d.mode.hide = !HMI1.d.mode.hide;
     }
 
@@ -76,7 +76,7 @@ void Model::tick()
         } else {
             VCU.d.signal++;
         }
-		
+
         HMI1.d.sein.left =!HMI1.d.sein.left;
         HMI1.d.sein.right = !HMI1.d.sein.right;
     }
@@ -108,14 +108,14 @@ void Model::tick()
     }
 
     if (ticker % (60*2) == 0) {
-		// if (indicator >= INDICATOR_MAX) {
-			// indicator = 0;
-		// } else {
-			// indicator++;
-		// }
-        swipeIndicator();
+		 if (indicator >= INDICATOR_MAX) {
+			 indicator = 0;
+		 } else {
+			 indicator++;
+		 }
+        // swipeIndicator();
 	}
-	
+
     if (ticker % (60*3) == 0) {
 		if (HMI1.d.mode.sel >= SW_M_MAX) {
 			HMI1.d.mode.sel = 0;
@@ -123,10 +123,10 @@ void Model::tick()
 			HMI1.d.mode.sel++;
 		}
 	}
-	
+
     if (ticker % (60*60) == 0) {
 		generateRandomIndicators();
-    }	
+    }
 #endif
 
     // write to LCD
@@ -135,6 +135,7 @@ void Model::tick()
 
     modelListener->setTripValue(HMI1.d.mode.trip);
     modelListener->setReportValue(HMI1.d.mode.report);
+
     modelListener->setSignal(VCU.d.signal);
     modelListener->setBattery(BMS.d.soc);
 
@@ -142,21 +143,21 @@ void Model::tick()
     modelListener->setSein(0, HMI1.d.sein.right);
 
     modelListener->setIndicator(indicator);
-	
+
 	modelListener->setModeSelector(HMI1.d.mode.sel);
 	modelListener->setModeVisible(!HMI1.d.mode.hide);
-	
+
 	switch (HMI1.d.mode.sel) {
-		case SW_M_TRIP : 
-			modelListener->setTripMode(HMI1.d.mode.val[SW_M_TRIP]);		
+		case SW_M_TRIP :
+			modelListener->setTripMode(HMI1.d.mode.val[SW_M_TRIP]);
 			break;
 		case SW_M_DRIVE:
-			modelListener->setDriveMode(HMI1.d.mode.val[SW_M_DRIVE]);		
+			modelListener->setDriveMode(HMI1.d.mode.val[SW_M_DRIVE]);
 			break;
 		case SW_M_REPORT:
 			modelListener->setReportMode(HMI1.d.mode.val[SW_M_REPORT]);
-			break;			
-		default: 
+			break;
+		default:
 			break;
 	}
 }
@@ -184,10 +185,10 @@ void Model::generateRandomIndicators()
 	HMI1.d.mode.reverse = rand() & 1;
 }
 
-void Model::reloadIndicators() 
+void Model::reloadIndicators()
 {
 	uint8_t errors = 0;
-	
+
     indicators[INDICATOR_ABS] = HMI1.d.status.abs;
     indicators[INDICATOR_MIRRORING] = HMI1.d.status.mirroring;
     indicators[INDICATOR_LAMP] = HMI1.d.status.lamp;
@@ -195,15 +196,15 @@ void Model::reloadIndicators()
     indicators[INDICATOR_OVERHEAT] = HMI1.d.status.overheat;
     indicators[INDICATOR_FINGER] = HMI1.d.status.finger;
     indicators[INDICATOR_KEYLESS] = HMI1.d.status.keyless;
-    indicators[INDICATOR_LOWBAT] = BMS.d.soc < 20;	
-	
+    indicators[INDICATOR_LOWBAT] = BMS.d.soc < 20;
+
 	for (uint8_t i=INDICATOR_GO; i<INDICATOR_MAX; ++i) {
 		if (indicators[i]) {
 			errors = 1;
 			break;
 		}
 	}
-	
+
     indicators[INDICATOR_REVERSE] = HMI1.d.mode.reverse;
     indicators[INDICATOR_GO] = !HMI1.d.mode.reverse && !errors;
 }
@@ -211,7 +212,7 @@ void Model::reloadIndicators()
 void Model::swipeIndicator()
 {
     uint8_t i, found = 0;
-	
+
     // reload data
 	reloadIndicators();
 

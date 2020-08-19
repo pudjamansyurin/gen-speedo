@@ -61,8 +61,10 @@ void Error_Handler(void);
 #define LEFT_LD1_GPIO_Port GPIOE
 #define LEFT_LD2_Pin GPIO_PIN_3
 #define LEFT_LD2_GPIO_Port GPIOE
-#define RIGHT_BACKLIGHT_Pin GPIO_PIN_14
-#define RIGHT_BACKLIGHT_GPIO_Port GPIOC
+#define LCD_POWER_Pin GPIO_PIN_13
+#define LCD_POWER_GPIO_Port GPIOC
+#define LCD_BACKLIGHT_Pin GPIO_PIN_14
+#define LCD_BACKLIGHT_GPIO_Port GPIOC
 #define BOOT1_Pin GPIO_PIN_2
 #define BOOT1_GPIO_Port GPIOB
 #define RIGHT_LD1_Pin GPIO_PIN_2

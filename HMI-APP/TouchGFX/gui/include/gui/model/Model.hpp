@@ -3,7 +3,10 @@
 
 #include <stdint.h>
 
-#ifndef SIMULATOR
+#define LCD_TESTING
+#define SIMULATOR
+
+#if !defined(SIMULATOR) || defined(LCD_TESTING)
 #include "_defines_shared.h"
 #endif
 
@@ -22,7 +25,7 @@ typedef enum {
     INDICATOR_MAX = 9
 } INDICATOR;
 
-#ifdef SIMULATOR
+#if defined(SIMULATOR) && !defined(LCD_TESTING)
 /* Macro prototypes ------------------------------------------------------- */
 #define MCU_SPEED_MAX             (uint8_t) 255
 #define MCU_RPM_MAX              (uint32_t) 99999

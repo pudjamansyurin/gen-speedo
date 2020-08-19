@@ -21,6 +21,11 @@
 #include "stm32f4xx.h"
 #include <touchgfx/hal/OSWrappers.hpp>
 
+extern "C"
+{
+    #include "Libs/_utils.h"
+}
+
 using namespace touchgfx;
 
 void TouchGFXHAL::initialize()
@@ -39,6 +44,9 @@ void TouchGFXHAL::taskEntry()
 {
     enableLCDControllerInterrupt();
     enableInterrupts();
+
+    // turn on LCD
+    _LcdPower(1);
 
     OSWrappers::waitForVSync();
     backPorchExited();

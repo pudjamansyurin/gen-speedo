@@ -66,9 +66,6 @@ void VCU_CAN_RX_SwitchModeControl(can_rx_t *Rx) {
     // convert Speed to RPM
     MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
     //  MCU.d.temperature = ?
-
-    // update backlight state
-    _SetBacklight(HMI1.d.status.daylight);
 }
 
 void VCU_CAN_RX_MixedData(can_rx_t *Rx) {

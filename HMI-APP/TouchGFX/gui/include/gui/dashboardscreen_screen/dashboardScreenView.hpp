@@ -4,6 +4,10 @@
 #include <gui_generated/dashboardscreen_screen/dashboardScreenViewBase.hpp>
 #include <gui/dashboardscreen_screen/dashboardScreenPresenter.hpp>
 
+#if !defined(SIMULATOR) || defined(LCD_TESTING)
+#include "_defines_shared.h"
+#endif
+
 typedef struct {
 	Unicode::UnicodeChar mode[SW_M_DRIVE_MAX+1][12];
 	colortype color[SW_M_DRIVE_MAX+1];
@@ -36,9 +40,9 @@ public:
     virtual ~dashboardScreenView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
-	
+
     virtual void handleTickEvent();
-	
+
 	virtual void writeSein(uint8_t leftSide, uint8_t state);
 	virtual void writeSpeed(uint8_t percent);
 	virtual void writeEngineRotation(uint8_t percent);
@@ -50,7 +54,7 @@ public:
 	virtual void writeTripValue(uint32_t value);
 	virtual void writeReportMode(uint8_t index);
 	virtual void writeReportValue(uint16_t value);
-	
+
 	virtual void writeModeSelector(uint8_t mode);
 	virtual void writeModeVisible(uint8_t state);
 protected:

@@ -63,10 +63,12 @@ void _Error(char msg[50]) {
     }
 }
 
-void _SetBacklight(uint8_t state) {
-#if !USE_HMI_LEFT
-    HAL_GPIO_WritePin(RIGHT_BACKLIGHT_GPIO_Port, RIGHT_BACKLIGHT_Pin, state);
-#endif
+void _LcdBacklight(uint8_t state) {
+    HAL_GPIO_WritePin(LCD_BACKLIGHT_GPIO_Port, LCD_BACKLIGHT_Pin, state);
+}
+
+void _LcdPower(uint8_t state) {
+    HAL_GPIO_WritePin(LCD_POWER_GPIO_Port, LCD_POWER_Pin, state);
 }
 
 #if (!BOOTLOADER)
@@ -105,7 +107,7 @@ void _FlushData(void) {
     BMS.Init();
 
     // default backlight is ON
-    _SetBacklight(1);
+    _LcdBacklight(1);
 }
 
 float _D2R(uint16_t deg) {

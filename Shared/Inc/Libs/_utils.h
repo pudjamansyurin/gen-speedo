@@ -18,7 +18,8 @@ uint32_t _GetTickMS(void);
 void _LedWrite(uint8_t state);
 void _LedToggle(void);
 void _Error(char msg[50]);
-void _SetBacklight(uint8_t state);
+void _LcdBacklight(uint8_t state);
+void _LcdPower(uint8_t state);
 
 #if (!BOOTLOADER)
 uint8_t _RTOS_ValidThreadFlag(uint32_t flag);

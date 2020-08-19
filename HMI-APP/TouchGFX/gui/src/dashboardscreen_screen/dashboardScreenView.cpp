@@ -6,6 +6,8 @@ touchgfx::Container *modeContainer[SW_M_MAX+1];
 uint8_t modeSelected = SW_M_DRIVE;
 uint8_t modeVisible = 1;
 
+uint8_t animationSpeed = 10;
+
 uint8_t iconImageSwiper = 0;
 uint8_t tripModeSwiper = 0;
 uint8_t driveModeSwiper = 0;
@@ -20,8 +22,8 @@ drive_t M_DRIVE;
 trip_t M_TRIP;
 
 
-dashboardScreenView::dashboardScreenView() : 
-	ticker(0), 
+dashboardScreenView::dashboardScreenView() :
+	ticker(0),
 	iconAssets {
 		BITMAP_MAINREVERSE_ID,
 		BITMAP_MAINGO_ID,
@@ -41,11 +43,11 @@ dashboardScreenView::dashboardScreenView() :
 	pos.current.y = (iconContainer.getHeight() - prevIconContainer.getHeight()) / 2;
 	pos.next.x = iconContainer.getWidth() - prevIconContainer.getWidth() + 200;
 	pos.next.y = iconContainer.getHeight() / 5;
-	
+
 	modeContainer[SW_M_TRIP] = &tripModeContainer;
 	modeContainer[SW_M_DRIVE] = &driveModeContainer;
-	modeContainer[SW_M_REPORT] = &reportModeContainer;	
-		
+	modeContainer[SW_M_REPORT] = &reportModeContainer;
+
 	M_DRIVE.color[0] = Color::getColorFrom24BitRGB(255, 255, 0);
 	M_DRIVE.color[1] = Color::getColorFrom24BitRGB(0, 255, 0);
 	M_DRIVE.color[2] = Color::getColorFrom24BitRGB(255, 0, 0);
@@ -54,11 +56,11 @@ dashboardScreenView::dashboardScreenView() :
 	touchgfx::Unicode::strncpy(M_DRIVE.mode[1], "STANDARD", NEXTDRIVEMODETEXT_SIZE);
 	touchgfx::Unicode::strncpy(M_DRIVE.mode[2], "SPORT", NEXTDRIVEMODETEXT_SIZE);
 	touchgfx::Unicode::strncpy(M_DRIVE.mode[3], "PERFORMANCE", NEXTDRIVEMODETEXT_SIZE);
-	
+
 	touchgfx::Unicode::strncpy(M_TRIP.mode[0], "ODO", NEXTTRIPMODETEXT_SIZE);
 	touchgfx::Unicode::strncpy(M_TRIP.mode[1], "TRIP A", NEXTTRIPMODETEXT_SIZE);
 	touchgfx::Unicode::strncpy(M_TRIP.mode[2], "TRIP B", NEXTTRIPMODETEXT_SIZE);
-	
+
 }
 
 void dashboardScreenView::setupScreen()
@@ -72,45 +74,46 @@ void dashboardScreenView::tearDownScreen()
 }
 
 void dashboardScreenView::handleTickEvent()
-{	
+{
 	uint8_t curIndicator = presenter->getCurrentIndicator();
-	
+
 	if(next.container != NULL) {
-		if (!next.container->isRunning()){
+		if (!next.container->isRunning()) {
 			ticker++;
-			
+
 			if (curIndicator == INDICATOR_LOWBAT ||
 				curIndicator == INDICATOR_WARNING
 			) {
-				if (ticker % 15 == 0) {
+				if (ticker % 10 == 0) {
 					next.container->setVisible(!next.container->isVisible());
 					next.container->invalidate();
 				}
 			}
-			
+
 			if (curIndicator == INDICATOR_FINGER ||
 				curIndicator == INDICATOR_MIRRORING ||
 				curIndicator == INDICATOR_KEYLESS
 			) {
-				if (ticker == 40) {
+				if (ticker == 45) {
 					next.container->setVisible(false);
 					next.container->invalidate();
 				}
-				if (ticker == 60) {
+				if (ticker == 55) {
 					next.container->setVisible(true);
 					next.container->invalidate();
 				}
-			}				
+			}
 		} else {
 			ticker = 0;
-			
+
 			if (!next.container->isVisible()) {
 				next.container->setVisible(true);
+                next.container->invalidate();
 			}
 		}
 	}
 }
-	
+
 void dashboardScreenView::writeModeSelector(uint8_t mode)
 {
 	for (uint8_t i=0; i<=SW_M_MAX; i++) {
@@ -131,15 +134,15 @@ void dashboardScreenView::writeModeVisible(uint8_t state)
 void dashboardScreenView::writeSein(uint8_t leftSide, uint8_t state)
 {
     MoveAnimator< Image > *sein;
-	
+
 	sein = leftSide ? &seinLeft : &seinRight;
-	
+
 	if (!sein->isVisible() && state){
 		sein->setVisible(true);
-		sein->startMoveAnimation(0, 0, 20, EasingEquations::linearEaseOut, EasingEquations::linearEaseOut);
+		sein->startMoveAnimation(0, 0, animationSpeed, EasingEquations::linearEaseOut, EasingEquations::linearEaseOut);
 		sein->invalidate();
-	} 
-	
+	}
+
 	if (sein->isVisible() && !state) {
 		sein->setVisible(false);
 		sein->setXY(80 * (leftSide ? 1 : -1), 0);
@@ -172,31 +175,32 @@ void dashboardScreenView::writeSignal(uint8_t percent)
 }
 
 void dashboardScreenView::writeIndicator(uint8_t index)
-{			
+{
 	prev.container = iconImageSwiper ? &prevIconContainer : &nextIconContainer;
 	prev.image = iconImageSwiper ? &prevIconImage : &nextIconImage;
 	next.container = iconImageSwiper ? &nextIconContainer : &prevIconContainer;
 	next.image = iconImageSwiper ? &nextIconImage : &prevIconImage;
-	
+
 	next.image->setBitmap(Bitmap(iconAssets[index]));
 	next.image->setXY(
 		(next.container->getWidth() - next.image->getWidth()) / 2,
 		(next.container->getHeight() - next.image->getHeight()) / 2
 	);
-	
+
 	next.container->setXY(pos.next.x, pos.next.y);
 	next.container->startMoveAnimation(
-		pos.current.x, pos.current.y, 20, 
+		pos.current.x, pos.current.y, animationSpeed,
 		EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
 	);
 	next.container->invalidate();
-		
+
+	prev.container->setVisible(true);
     prev.container->startMoveAnimation(
-		pos.prev.x, pos.prev.y, 20, 
+		pos.prev.x, pos.prev.y, animationSpeed,
 		EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
 	);
 	prev.container->invalidate();
-	
+
 	iconImageSwiper = !iconImageSwiper;
 }
 
@@ -205,24 +209,24 @@ void dashboardScreenView::writeDriveMode(uint8_t index)
 	MoveAnimator< touchgfx::TextAreaWithOneWildcard > *prevText = driveModeSwiper ? &prevDriveModeText : &nextDriveModeText;
 	MoveAnimator< touchgfx::TextAreaWithOneWildcard > *nextText = driveModeSwiper ? &nextDriveModeText : &prevDriveModeText;
 	Unicode::UnicodeChar *nextBuffer = driveModeSwiper ? nextDriveModeTextBuffer : prevDriveModeTextBuffer;
-		
+
 	touchgfx::Unicode::snprintf(nextBuffer, NEXTDRIVEMODETEXT_SIZE, "%s", M_DRIVE.mode[index]);
 	nextText->setColor(M_DRIVE.color[index]);
-	
+
 	nextText->setXY(0, 0 - driveModeContainer.getHeight());
 	nextText->startMoveAnimation(
-		0, 0, 20, 
+		0, 0, animationSpeed,
 		EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
 	);
 	nextText->invalidate();
-		
+
 	prevText->startMoveAnimation(
-		0, driveModeContainer.getHeight(), 20, 
+		0, driveModeContainer.getHeight(), animationSpeed,
 		EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
 	);
 	prevText->invalidate();
-	
-	driveModeSwiper = !driveModeSwiper;	
+
+	driveModeSwiper = !driveModeSwiper;
 }
 
 void dashboardScreenView::writeTripMode(uint8_t index)
@@ -230,23 +234,23 @@ void dashboardScreenView::writeTripMode(uint8_t index)
 	MoveAnimator< touchgfx::TextAreaWithOneWildcard > *prevText = tripModeSwiper ? &prevTripModeText : &nextTripModeText;
 	MoveAnimator< touchgfx::TextAreaWithOneWildcard > *nextText = tripModeSwiper ? &nextTripModeText : &prevTripModeText;
 	Unicode::UnicodeChar *nextBuffer = tripModeSwiper ? nextTripModeTextBuffer : prevTripModeTextBuffer;
-		
+
 	touchgfx::Unicode::snprintf(nextBuffer, NEXTTRIPMODETEXT_SIZE, "%s", M_TRIP.mode[index]);
-	
+
 	nextText->setXY(0, 0 - tripModeContainer.getHeight());
 	nextText->startMoveAnimation(
-		0, 0, 20, 
+		0, 0, animationSpeed,
 		EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
 	);
 	nextText->invalidate();
-		
+
 	prevText->startMoveAnimation(
-		0, tripModeContainer.getHeight(), 20, 
+		0, tripModeContainer.getHeight(), animationSpeed,
 		EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
 	);
 	prevText->invalidate();
-	
-	tripModeSwiper = !tripModeSwiper;	
+
+	tripModeSwiper = !tripModeSwiper;
 }
 
 void dashboardScreenView::writeTripValue(uint32_t value)
@@ -261,20 +265,20 @@ void dashboardScreenView::writeReportMode(uint8_t index)
 	MoveAnimator< touchgfx::Container > *nextContainer = reportModeSwiper ? &nextReportModeContainer : &prevReportModeContainer;
 	pReportValueText = reportModeSwiper ? &nextReportValueText : &prevReportValueText;
 	pReportValueTextBuffer = reportModeSwiper ? nextReportValueTextBuffer : prevReportValueTextBuffer;
-	
+
 	nextContainer->setXY(0, 0 - reportModeContainer.getHeight());
 	nextContainer->startMoveAnimation(
-		0, 0, 20, 
+		0, 0, animationSpeed,
 		EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
 	);
 	nextContainer->invalidate();
-		
+
 	prevContainer->startMoveAnimation(
-		0, reportModeContainer.getHeight(), 20, 
+		0, reportModeContainer.getHeight(), animationSpeed,
 		EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
 	);
 	prevContainer->invalidate();
-	
+
 	reportModeSwiper = !reportModeSwiper;
 }
 

@@ -43,7 +43,7 @@ typedef struct {
     struct {
         uint8_t reverse;
         uint8_t hide;
-        SW_MODE sel;
+        uint8_t sel;
 
         uint8_t val[SW_M_MAX+1];
         uint8_t report;

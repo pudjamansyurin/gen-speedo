@@ -1,8 +1,8 @@
 #include <gui/welcomescreen_screen/welcomeScreenView.hpp>
 
 static uint8_t alpha;
-	
-welcomeScreenView::welcomeScreenView()  
+
+welcomeScreenView::welcomeScreenView()
 	: ticker(0)
 {
 
@@ -24,22 +24,22 @@ void welcomeScreenView::setLogoTransparency(uint8_t alpha)
 	genMotor.invalidate();
 }
 
-void welcomeScreenView::handleTickEvent() {	
+void welcomeScreenView::handleTickEvent() {
 	// increment the ticker
 	if(ticker < 200) {
-		ticker += 2;
+		ticker += 4;
 	}
 	else if(ticker < 350) {
-		ticker += 2;
-	} 
+		ticker += 4;
+	}
 	else {
 		ticker += 25;
 	}
-	
+
 	// calculate the alpha value
 	if(ticker < 200){
 		alpha = ticker;
-	} 
+	}
 	else if (ticker < 350) {
 		alpha = 400-ticker;
 	}
