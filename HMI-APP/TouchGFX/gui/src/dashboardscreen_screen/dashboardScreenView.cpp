@@ -15,8 +15,8 @@ uint8_t reportModeSwiper = 0;
 touchgfx::TextAreaWithOneWildcard *pReportValueText;
 touchgfx::Unicode::UnicodeChar *pReportValueTextBuffer;
 
-position_t pos;
-icon_t prev, next;
+position_t posIndicator;
+icon_t prevIndicator, nextIndicator;
 
 drive_t M_DRIVE;
 trip_t M_TRIP;
@@ -37,12 +37,12 @@ dashboardScreenView::dashboardScreenView() :
 		BITMAP_BATTERYDRAINOUT_ID,
 	}
 {
-	pos.prev.x = 0 - prevIconContainer.getWidth() - 200;
-	pos.prev.y = iconContainer.getHeight() / 5;
-	pos.current.x = (iconContainer.getWidth() - prevIconContainer.getWidth()) / 2;
-	pos.current.y = (iconContainer.getHeight() - prevIconContainer.getHeight()) / 2;
-	pos.next.x = iconContainer.getWidth() - prevIconContainer.getWidth() + 200;
-	pos.next.y = iconContainer.getHeight() / 5;
+	posIndicator.prev.x = 0 - prevIconContainer.getWidth() - 200;
+	posIndicator.prev.y = iconContainer.getHeight() / 5;
+	posIndicator.current.x = (iconContainer.getWidth() - prevIconContainer.getWidth()) / 2;
+	posIndicator.current.y = (iconContainer.getHeight() - prevIconContainer.getHeight()) / 2;
+	posIndicator.next.x = iconContainer.getWidth() - prevIconContainer.getWidth() + 200;
+	posIndicator.next.y = iconContainer.getHeight() / 5;
 
 	modeContainer[SW_M_TRIP] = &tripModeContainer;
 	modeContainer[SW_M_DRIVE] = &driveModeContainer;
@@ -77,16 +77,16 @@ void dashboardScreenView::handleTickEvent()
 {
 	uint8_t curIndicator = presenter->getCurrentIndicator();
 
-	if(next.container != NULL) {
-		if (!next.container->isRunning()) {
+	if(nextIndicator.container != NULL) {
+		if (!nextIndicator.container->isRunning()) {
 			ticker++;
 
 			if (curIndicator == INDICATOR_LOWBAT ||
 				curIndicator == INDICATOR_WARNING
 			) {
 				if (ticker % 10 == 0) {
-					next.container->setVisible(!next.container->isVisible());
-					next.container->invalidate();
+					nextIndicator.container->setVisible(!nextIndicator.container->isVisible());
+					nextIndicator.container->invalidate();
 				}
 			}
 
@@ -95,20 +95,20 @@ void dashboardScreenView::handleTickEvent()
 				curIndicator == INDICATOR_KEYLESS
 			) {
 				if (ticker == 45) {
-					next.container->setVisible(false);
-					next.container->invalidate();
+					nextIndicator.container->setVisible(false);
+					nextIndicator.container->invalidate();
 				}
 				if (ticker == 55) {
-					next.container->setVisible(true);
-					next.container->invalidate();
+					nextIndicator.container->setVisible(true);
+					nextIndicator.container->invalidate();
 				}
 			}
 		} else {
 			ticker = 0;
 
-			if (!next.container->isVisible()) {
-				next.container->setVisible(true);
-                next.container->invalidate();
+			if (!nextIndicator.container->isVisible()) {
+				nextIndicator.container->setVisible(true);
+                nextIndicator.container->invalidate();
 			}
 		}
 	}
@@ -176,30 +176,30 @@ void dashboardScreenView::writeSignal(uint8_t percent)
 
 void dashboardScreenView::writeIndicator(uint8_t index)
 {
-	prev.container = iconImageSwiper ? &prevIconContainer : &nextIconContainer;
-	prev.image = iconImageSwiper ? &prevIconImage : &nextIconImage;
-	next.container = iconImageSwiper ? &nextIconContainer : &prevIconContainer;
-	next.image = iconImageSwiper ? &nextIconImage : &prevIconImage;
+	prevIndicator.container = iconImageSwiper ? &prevIconContainer : &nextIconContainer;
+	prevIndicator.image = iconImageSwiper ? &prevIconImage : &nextIconImage;
+	nextIndicator.container = iconImageSwiper ? &nextIconContainer : &prevIconContainer;
+	nextIndicator.image = iconImageSwiper ? &nextIconImage : &prevIconImage;
 
-	next.image->setBitmap(Bitmap(iconAssets[index]));
-	next.image->setXY(
-		(next.container->getWidth() - next.image->getWidth()) / 2,
-		(next.container->getHeight() - next.image->getHeight()) / 2
+	nextIndicator.image->setBitmap(Bitmap(iconAssets[index]));
+	nextIndicator.image->setXY(
+		(nextIndicator.container->getWidth() - nextIndicator.image->getWidth()) / 2,
+		(nextIndicator.container->getHeight() - nextIndicator.image->getHeight()) / 2
 	);
 
-	next.container->setXY(pos.next.x, pos.next.y);
-	next.container->startMoveAnimation(
-		pos.current.x, pos.current.y, animationSpeed,
+	nextIndicator.container->setXY(posIndicator.next.x, posIndicator.next.y);
+	nextIndicator.container->startMoveAnimation(
+		posIndicator.current.x, posIndicator.current.y, animationSpeed,
 		EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
 	);
-	next.container->invalidate();
+	nextIndicator.container->invalidate();
 
-	prev.container->setVisible(true);
-    prev.container->startMoveAnimation(
-		pos.prev.x, pos.prev.y, animationSpeed,
+	prevIndicator.container->setVisible(true);
+    prevIndicator.container->startMoveAnimation(
+		posIndicator.prev.x, posIndicator.prev.y, animationSpeed,
 		EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
 	);
-	prev.container->invalidate();
+	prevIndicator.container->invalidate();
 
 	iconImageSwiper = !iconImageSwiper;
 }

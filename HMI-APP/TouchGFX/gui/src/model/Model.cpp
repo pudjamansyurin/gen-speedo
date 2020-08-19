@@ -61,6 +61,10 @@ void Model::tick()
         }
     }
 
+    if (ticker % 15 == 0) {
+        HMI1.d.mode.hide = !HMI1.d.mode.hide;
+    }
+
     if (ticker % 20 == 0) {
         if (HMI1.d.mode.report >= 255) {
             HMI1.d.mode.report = 0;
@@ -68,7 +72,6 @@ void Model::tick()
             HMI1.d.mode.report++;
         }
 
-		HMI1.d.mode.hide = !HMI1.d.mode.hide;
     }
 
     if(ticker % 30 == 0) {
