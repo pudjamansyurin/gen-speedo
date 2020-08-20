@@ -10,7 +10,7 @@ extern "C"
 static uint8_t alpha;
 
 welcomeScreenView::welcomeScreenView()
-	: ticker(0)
+	: ticker(-100)
 {
 
 }
@@ -39,13 +39,16 @@ void welcomeScreenView::setLogoTransparency(uint8_t alpha)
 
 void welcomeScreenView::handleTickEvent() {
 #if !defined(SIMULATOR) || defined(LCD_TESTING)
-    if (ticker == 0) {
+    if (ticker == -100) {
         _LcdPower(1);
     }
 #endif
 
 	// increment the ticker
-	if(ticker < 200) {
+    if (ticker < 0) {
+        ticker++;
+    }
+    else if (ticker < 200) {
 		ticker += 4;
 	}
 	else if(ticker < 350) {

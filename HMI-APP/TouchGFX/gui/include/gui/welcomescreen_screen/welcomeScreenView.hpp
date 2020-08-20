@@ -11,11 +11,11 @@ public:
     virtual ~welcomeScreenView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
-	
+
     virtual void handleTickEvent();
 	virtual void setLogoTransparency(uint8_t alpha);
 protected:
-    uint32_t ticker;
+    int16_t ticker;
 };
 
 #endif // WELCOMEVIEW_HPP
