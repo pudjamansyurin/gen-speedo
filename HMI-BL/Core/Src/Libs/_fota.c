@@ -48,21 +48,21 @@ uint8_t FOTA_ValidImage(uint32_t address) {
     /* Check beginning stack pointer */
     p = IS_VALID_SP(APP_START_ADDR);
 
-//    /* Check the size */
-//    if (p) {
-//        /* Get the stored size information */
-//        size = *(uint32_t*) (address + SIZE_OFFSET);
-//        p = (size < APP_MAX_SIZE );
-//    }
-//
-//    /* Check the checksum */
-//    if (p) {
-//        /* Get the stored checksum information */
-//        checksum = *(uint32_t*) (address + CHECKSUM_OFFSET);
-//
-//        /* Validate checksum */
-//        p = FOTA_ValidateChecksum(checksum, size, address);
-//    }
+    /* Check the size */
+    if (p) {
+        /* Get the stored size information */
+        size = *(uint32_t*) (address + SIZE_OFFSET);
+        p = (size < APP_MAX_SIZE );
+    }
+
+    /* Check the checksum */
+    if (p) {
+        /* Get the stored checksum information */
+        checksum = *(uint32_t*) (address + CHECKSUM_OFFSET);
+
+        /* Validate checksum */
+        p = FOTA_ValidateChecksum(checksum, size, address);
+    }
 
     return p;
 }
