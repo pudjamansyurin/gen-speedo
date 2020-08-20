@@ -10,7 +10,7 @@ extern "C"
 static uint8_t alpha;
 
 welcomeScreenView::welcomeScreenView()
-	: ticker(-100)
+	: ticker(-10)
 {
 
 }
@@ -38,42 +38,43 @@ void welcomeScreenView::setLogoTransparency(uint8_t alpha)
 }
 
 void welcomeScreenView::handleTickEvent() {
-#if !defined(SIMULATOR) || defined(LCD_TESTING)
-    if (ticker == -100) {
-        _LcdPower(1);
-    }
-#endif
-
 	// increment the ticker
     if (ticker < 0) {
         ticker++;
+
+#if !defined(SIMULATOR) || defined(LCD_TESTING)
+        if (ticker == -5) {
+            _LcdPower(1);
+        }
+#endif
+    } else {
+        if (ticker < 200) {
+            ticker += 4;
+        }
+        else if(ticker < 350) {
+            ticker += 4;
+        }
+        else {
+            ticker += 25;
+        }
+
+        // calculate the alpha value
+        if(ticker < 200){
+            alpha = ticker;
+        }
+        else if (ticker < 350) {
+            alpha = 400-ticker;
+        }
+        else if (ticker < 555) {
+            alpha = ticker-300;
+        }
+        else if (ticker < 555+1000) {
+            alpha = 255;
+        } else {
+            switchScreen();
+            return;
+        }
+
+        setLogoTransparency(alpha);
     }
-    else if (ticker < 200) {
-		ticker += 4;
-	}
-	else if(ticker < 350) {
-		ticker += 4;
-	}
-	else {
-		ticker += 25;
-	}
-
-	// calculate the alpha value
-	if(ticker < 200){
-		alpha = ticker;
-	}
-	else if (ticker < 350) {
-		alpha = 400-ticker;
-	}
-	else if (ticker < 555) {
-		alpha = ticker-300;
-	}
-	else if (ticker < 555+1000) {
-		alpha = 255;
-	} else {
-		switchScreen();
-		return;
-	}
-
-	setLogoTransparency(alpha);
 }
