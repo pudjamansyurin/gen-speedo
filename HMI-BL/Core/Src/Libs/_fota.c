@@ -130,14 +130,14 @@ void FOTA_DisplayDevice(IAP_TYPE type) {
     // decide the node
     strcpy(title, type == IAP_HMI ? "Device: HMI-1" : "Device: VCU");
 
-    BSP_LCD_SetFont(&Font12);
+    BSP_LCD_SetFont(&Font24);
     // clear
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     BSP_LCD_FillRect(
             0,
             0,
             BSP_LCD_GetXSize() - 1,
-            0 + Font12.Height);
+            0 + Font24.Height);
     // set
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     BSP_LCD_DisplayStringAt(
@@ -148,19 +148,19 @@ void FOTA_DisplayDevice(IAP_TYPE type) {
 }
 
 void FOTA_DisplayStatus(char *status) {
-    BSP_LCD_SetFont(&Font16);
+    BSP_LCD_SetFont(&Font24);
     // clear
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     BSP_LCD_FillRect(
             0,
-            15,
+            25,
             BSP_LCD_GetXSize() - 1,
-            15 + Font16.Height);
+            25 + Font24.Height);
     // set
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     BSP_LCD_DisplayStringAt(
             0,
-            15,
+            25,
             (uint8_t*) status,
             LEFT_MODE);
 }

@@ -108,8 +108,8 @@ typedef enum
 #define LCD_LAYER0_FRAME_BUFFER  ((uint32_t)0xC0000000)
 #define LCD_LAYER1_FRAME_BUFFER  ((uint32_t)0xC0400000)
 
-#define XSIZE_PHYS               320
-#define YSIZE_PHYS               240
+#define XSIZE_PHYS               800
+#define YSIZE_PHYS               480
 
 /**
  * @brief  LCD color

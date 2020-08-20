@@ -79,6 +79,7 @@
 #include "../../Assets/font16.c"
 #include "../../Assets/font12.c"
 #include "../../Assets/font8.c"
+#include "Libs/_utils.h"
 
 /** @addtogroup BSP
  * @{
@@ -175,21 +176,21 @@ uint8_t BSP_LCD_Init(void)
      */
 
     /* Configure horizontal synchronization width */
-    LtdcHandler.Init.HorizontalSync = 3;
+    LtdcHandler.Init.HorizontalSync = 47;
     /* Configure vertical synchronization height */
-    LtdcHandler.Init.VerticalSync = 3;
+    LtdcHandler.Init.VerticalSync = 2;
     /* Configure accumulated horizontal back porch */
-    LtdcHandler.Init.AccumulatedHBP = 46;
+    LtdcHandler.Init.AccumulatedHBP = 87;
     /* Configure accumulated vertical back porch */
-    LtdcHandler.Init.AccumulatedVBP = 15;
+    LtdcHandler.Init.AccumulatedVBP = 31;
     /* Configure accumulated active width */
-    LtdcHandler.Init.AccumulatedActiveW = 366;
+    LtdcHandler.Init.AccumulatedActiveW = 887;
     /* Configure accumulated active height */
-    LtdcHandler.Init.AccumulatedActiveH = 255;
+    LtdcHandler.Init.AccumulatedActiveH = 511;
     /* Configure total width */
-    LtdcHandler.Init.TotalWidth = 374;
+    LtdcHandler.Init.TotalWidth = 927;
     /* Configure total height */
-    LtdcHandler.Init.TotalHeigh = 263;
+    LtdcHandler.Init.TotalHeigh = 524;
 
     /* Configure R,G,B component values for LCD background color */
     LtdcHandler.Init.Backcolor.Red = 0;
@@ -1227,6 +1228,8 @@ void BSP_LCD_FillEllipse(int Xpos, int Ypos, int XRadius, int YRadius)
 void BSP_LCD_DisplayOn(void)
 {
     // no controller yet
+    _LcdBacklight(1);
+    _LcdPower(1);
 }
 
 /**
@@ -1235,6 +1238,8 @@ void BSP_LCD_DisplayOn(void)
 void BSP_LCD_DisplayOff(void)
 {
     // no controller yet
+    _LcdPower(0);
+    _LcdBacklight(0);
 }
 
 /*******************************************************************************

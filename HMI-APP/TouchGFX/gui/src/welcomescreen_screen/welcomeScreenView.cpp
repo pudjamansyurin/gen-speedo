@@ -1,5 +1,12 @@
 #include <gui/welcomescreen_screen/welcomeScreenView.hpp>
 
+#if !defined(SIMULATOR) || defined(LCD_TESTING)
+extern "C"
+{
+    #include "Libs/_utils.h"
+}
+#endif
+
 static uint8_t alpha;
 
 welcomeScreenView::welcomeScreenView()
@@ -20,11 +27,23 @@ void welcomeScreenView::tearDownScreen()
 
 void welcomeScreenView::setLogoTransparency(uint8_t alpha)
 {
-	genMotor.setAlpha(alpha);
-	genMotor.invalidate();
+    static uint8_t init = 1, _alpha;
+
+    if (init || _alpha != alpha) {
+        _alpha = alpha;
+        init = 0;
+        genMotor.setAlpha(alpha);
+        genMotor.invalidate();
+    }
 }
 
 void welcomeScreenView::handleTickEvent() {
+#if !defined(SIMULATOR) || defined(LCD_TESTING)
+    if (ticker == 0) {
+        _LcdPower(1);
+    }
+#endif
+
 	// increment the ticker
 	if(ticker < 200) {
 		ticker += 4;
