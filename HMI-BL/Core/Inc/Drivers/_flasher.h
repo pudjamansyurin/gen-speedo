@@ -41,7 +41,7 @@
 #define ADDR_FLASH_SECTOR_23     ((uint32_t)0x081E0000) /* Base @ of Sector 11, 128 Kbytes */
 
 /* User defined */
-#define APP_MAX_SIZE            (uint32_t)0x80000       /* 4 x 128K */
+#define APP_MAX_SIZE            (uint32_t)0xE0000       /* 7 x 128K */
 #define APP_START_ADDR          ADDR_FLASH_SECTOR_5
 #define APP_END_ADDR            (ADDR_FLASH_SECTOR_5 + APP_MAX_SIZE - 1)
 #define BKP_START_ADDR          ADDR_FLASH_SECTOR_17

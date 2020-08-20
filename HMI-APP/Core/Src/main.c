@@ -699,9 +699,9 @@ void StartManagerTask(void *argument)
     _FlushData();
 
     // suspend other threads
-    //    osThreadSuspend(DisplayTaskHandle);
-    osThreadSuspend(CanTxTaskHandle);
-    osThreadSuspend(CanRxTaskHandle);
+//    osThreadSuspend(DisplayTaskHandle);
+//    osThreadSuspend(CanTxTaskHandle);
+//    osThreadSuspend(CanRxTaskHandle);
 
     // Release other threads
     osEventFlagsSet(GlobalEventHandle, EVENT_READY);
@@ -792,7 +792,7 @@ void StartCanRxTask(void *argument)
     for (;;) {
         updateDisplay = 0;
         // get can rx in queue
-        status = osMessageQueueGet(CanRxQueueHandle, &Rx, NULL, pdMS_TO_TICKS(500));
+        status = osMessageQueueGet(CanRxQueueHandle, &Rx, NULL, pdMS_TO_TICKS(1000));
         // wait forever
         if (status == osOK) {
             updateDisplay = 1;
@@ -813,14 +813,15 @@ void StartCanRxTask(void *argument)
                     FW_EnterModeIAP();
                     break;
                 default:
-                    updateDisplay = 0;
                     break;
             }
         }
         // update display
         if (!updateDisplay) {
             _FlushData();
-            LOG_StrLn("GUI:Canbus timeout");
+            LOG_StrLn("CANBUS: Timeout");
+        } else {
+//            LOG_StrLn("CANBUS: Received");
         }
     }
   /* USER CODE END StartCanRxTask */
