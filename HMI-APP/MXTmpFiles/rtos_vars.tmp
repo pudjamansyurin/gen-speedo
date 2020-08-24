@@ -1,0 +1,43 @@
+/* Definitions for ManagerTask */
+osThreadId_t ManagerTaskHandle;
+const osThreadAttr_t ManagerTask_attributes = {
+#t.name = "ManagerTask",
+#t.priority = (osPriority_t) osPriorityRealtime7,
+#t.stack_size = 128 * 4
+};
+/* Definitions for DisplayTask */
+osThreadId_t DisplayTaskHandle;
+const osThreadAttr_t DisplayTask_attributes = {
+#t.name = "DisplayTask",
+#t.priority = (osPriority_t) osPriorityNormal,
+#t.stack_size = 4096 * 4
+};
+/* Definitions for CanTxTask */
+osThreadId_t CanTxTaskHandle;
+const osThreadAttr_t CanTxTask_attributes = {
+#t.name = "CanTxTask",
+#t.priority = (osPriority_t) osPriorityHigh,
+#t.stack_size = 192 * 4
+};
+/* Definitions for CanRxTask */
+osThreadId_t CanRxTaskHandle;
+const osThreadAttr_t CanRxTask_attributes = {
+#t.name = "CanRxTask",
+#t.priority = (osPriority_t) osPriorityAboveNormal,
+#t.stack_size = 192 * 4
+};
+/* Definitions for CanRxQueue */
+osMessageQueueId_t CanRxQueueHandle;
+const osMessageQueueAttr_t CanRxQueue_attributes = {
+#t.name = "CanRxQueue"
+};
+/* Definitions for CanTxMutex */
+osMutexId_t CanTxMutexHandle;
+const osMutexAttr_t CanTxMutex_attributes = {
+#t.name = "CanTxMutex"
+};
+/* Definitions for LogMutex */
+osMutexId_t LogMutexHandle;
+const osMutexAttr_t LogMutex_attributes = {
+#t.name = "LogMutex"
+};

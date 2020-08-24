@@ -1,0 +1,4 @@
+void StartManagerTask(void *argument);
+void StartDisplayTask(void *argument);
+void StartCanTxTask(void *argument);
+void StartCanRxTask(void *argument);#n
