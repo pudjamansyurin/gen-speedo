@@ -26,8 +26,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "_defines.h"
-//#include "Drivers/_stemwin.h"
-//#include "Libs/_guiapp.h"
 #include "Libs/_firmware.h"
 #include "Drivers/_sdram.h"
 #include "Drivers/_canbus.h"
@@ -818,10 +816,10 @@ void StartCanRxTask(void *argument)
         }
         // update display
         if (!updateDisplay) {
+#if !defined(SIMULATOR) || defined(LCD_TESTING)
             _FlushData();
+#endif
             LOG_StrLn("CANBUS: Timeout");
-        } else {
-//            LOG_StrLn("CANBUS: Received");
         }
     }
   /* USER CODE END StartCanRxTask */

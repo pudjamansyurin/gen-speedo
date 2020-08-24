@@ -126,11 +126,9 @@ uint8_t FOTA_NeedBackup(void) {
 
 void FOTA_DisplayDevice(IAP_TYPE type) {
     char title[20];
-
     // decide the node
     strcpy(title, type == IAP_HMI ? "Device: HMI-1" : "Device: VCU");
 
-    BSP_LCD_SetFont(&Font24);
     // clear
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     BSP_LCD_FillRect(
@@ -148,7 +146,6 @@ void FOTA_DisplayDevice(IAP_TYPE type) {
 }
 
 void FOTA_DisplayStatus(char *status) {
-    BSP_LCD_SetFont(&Font24);
     // clear
     BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
     BSP_LCD_FillRect(
@@ -167,7 +164,6 @@ void FOTA_DisplayStatus(char *status) {
 void FOTA_DisplayPercent(uint8_t progress) {
     char percent[6];
 
-    BSP_LCD_SetFont(&Font24);
     sprintf(percent, "%03d %%", progress);
     BSP_LCD_DisplayStringAt(
             (BSP_LCD_GetXSize() / 2) - 30,

@@ -225,17 +225,18 @@ uint8_t BSP_LCD_Init(void)
     BSP_LCD_SetFont(&LCD_DEFAULT_FONT);
 
     /* Initialize the Layers */
-    for (uint8_t i = 0; i < MAX_LAYER_NUMBER; i++) {
-        BSP_LCD_LayerDefaultInit(i, FrameBuffer[i]);
-    }
-
-    /* Enable the LCD */
-    BSP_LCD_DisplayOn();
+    BSP_LCD_LayerDefaultInit(0, FrameBuffer[0]);
+//    for (uint8_t i = 0; i < MAX_LAYER_NUMBER; i++) {
+//        BSP_LCD_LayerDefaultInit(i, FrameBuffer[i]);
+//    }
 
     /* Set Foreground Layer */
     BSP_LCD_SelectLayer(0);
     BSP_LCD_Clear(LCD_COLOR_BLACK);
     BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+
+    /* Enable the LCD */
+    BSP_LCD_DisplayOn();
 
     return LCD_OK;
 }
@@ -479,7 +480,7 @@ void BSP_LCD_ResetColorKeying_NoReload(uint32_t LayerIndex)
 }
 
 /**
- * @brief  Disables the color keying without reloading.
+ * @brief  Reload LTDC Layers configuration.
  * @param  ReloadType: can be one of the following values
  *         - LCD_RELOAD_IMMEDIATE
  *         - LCD_RELOAD_VERTICAL_BLANKING

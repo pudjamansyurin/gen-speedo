@@ -3,9 +3,6 @@
 
 #include <stdint.h>
 
-//#define LCD_TESTING
-//#define SIMULATOR
-
 #if !defined(SIMULATOR) || defined(LCD_TESTING)
 #include "_defines_shared.h"
 #endif

@@ -17,13 +17,13 @@ static void MX_GPIO_Init(void)
 #t__HAL_RCC_GPIOG_CLK_ENABLE();
 #t__HAL_RCC_GPIOD_CLK_ENABLE();
 #n#t/*Configure GPIO pin Output Level */
-#tHAL_GPIO_WritePin(GPIOE, LEFT_LD1_Pin|LEFT_LD2_Pin, GPIO_PIN_RESET);
+#tHAL_GPIO_WritePin(GPIOE, GPIO_1_Pin|GPIO_2_Pin, GPIO_PIN_RESET);
 #n#t/*Configure GPIO pin Output Level */
 #tHAL_GPIO_WritePin(GPIOC, LCD_POWER_Pin|LCD_BACKLIGHT_Pin, GPIO_PIN_RESET);
 #n#t/*Configure GPIO pin Output Level */
-#tHAL_GPIO_WritePin(GPIOG, RIGHT_LD1_Pin|RIGHT_LD2_Pin, GPIO_PIN_RESET);
-#n#t/*Configure GPIO pins : LEFT_LD1_Pin LEFT_LD2_Pin */
-#tGPIO_InitStruct.Pin = LEFT_LD1_Pin|LEFT_LD2_Pin;
+#tHAL_GPIO_WritePin(SYS_LED_GPIO_Port, SYS_LED_Pin, GPIO_PIN_RESET);
+#n#t/*Configure GPIO pins : GPIO_1_Pin GPIO_2_Pin */
+#tGPIO_InitStruct.Pin = GPIO_1_Pin|GPIO_2_Pin;
 #tGPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 #tGPIO_InitStruct.Pull = GPIO_NOPULL;
 #tGPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -69,14 +69,14 @@ static void MX_GPIO_Init(void)
 #tGPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 #tGPIO_InitStruct.Pull = GPIO_NOPULL;
 #tHAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
-#n#t/*Configure GPIO pins : RIGHT_LD1_Pin RIGHT_LD2_Pin */
-#tGPIO_InitStruct.Pin = RIGHT_LD1_Pin|RIGHT_LD2_Pin;
+#n#t/*Configure GPIO pin : SYS_LED_Pin */
+#tGPIO_InitStruct.Pin = SYS_LED_Pin;
 #tGPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 #tGPIO_InitStruct.Pull = GPIO_NOPULL;
 #tGPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-#tHAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
-#n#t/*Configure GPIO pins : PG9 PG13 PG14 */
-#tGPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_13|GPIO_PIN_14;
+#tHAL_GPIO_Init(SYS_LED_GPIO_Port, &GPIO_InitStruct);
+#n#t/*Configure GPIO pins : PG3 PG9 PG13 PG14 */
+#tGPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_9|GPIO_PIN_13|GPIO_PIN_14;
 #tGPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 #tGPIO_InitStruct.Pull = GPIO_NOPULL;
 #tHAL_GPIO_Init(GPIOG, &GPIO_InitStruct);

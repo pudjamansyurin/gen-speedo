@@ -18,15 +18,9 @@
 
 #if (!BOOTLOADER)
 #include "cmsis_os.h"
-//#include "GUI.h"
 #endif
 
 /* Exported constants --------------------------------------------------------*/
-#define LD1_PORT                            (USE_HMI_LEFT ? LEFT_LD1_GPIO_Port : RIGHT_LD1_GPIO_Port)
-#define LD1_PIN                             (USE_HMI_LEFT ? LEFT_LD1_Pin : RIGHT_LD1_Pin)
-#define LD2_PORT                            (USE_HMI_LEFT ? LEFT_LD2_GPIO_Port : RIGHT_LD2_GPIO_Port)
-#define LD2_PIN                             (USE_HMI_LEFT ? LEFT_LD2_Pin : RIGHT_LD2_Pin)
-
 // macro to manipulate bit
 #define BIT(x)                              (1ULL << x)
 #define BV(var, x)                          (var |= (1ULL << x))

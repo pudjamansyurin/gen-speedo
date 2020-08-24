@@ -38,13 +38,11 @@ uint32_t _GetTickMS(void) {
 }
 
 void _LedWrite(uint8_t state) {
-    HAL_GPIO_WritePin(LD1_PORT, LD1_PIN, state);
-    HAL_GPIO_WritePin(LD2_PORT, LD2_PIN, state);
+//    HAL_GPIO_WritePin(LD1_PORT, LD1_PIN, state);
 }
 
 void _LedToggle(void) {
-    HAL_GPIO_TogglePin(LD1_PORT, LD1_PIN);
-    HAL_GPIO_TogglePin(LD2_PORT, LD2_PIN);
+//    HAL_GPIO_TogglePin(LD1_PORT, LD1_PIN);
 }
 
 void _Error(char msg[50]) {
