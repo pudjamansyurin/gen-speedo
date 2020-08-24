@@ -38,11 +38,11 @@ uint32_t _GetTickMS(void) {
 }
 
 void _LedWrite(uint8_t state) {
-//    HAL_GPIO_WritePin(LD1_PORT, LD1_PIN, state);
+    HAL_GPIO_WritePin(SYS_LED_GPIO_Port, SYS_LED_Pin, state);
 }
 
 void _LedToggle(void) {
-//    HAL_GPIO_TogglePin(LD1_PORT, LD1_PIN);
+    HAL_GPIO_TogglePin(SYS_LED_GPIO_Port, SYS_LED_Pin);
 }
 
 void _Error(char msg[50]) {
@@ -76,7 +76,7 @@ uint8_t _RTOS_ValidThreadFlag(uint32_t flag) {
     // check is empty
     if (!flag) {
         ret = 0;
-    } else if (flag & (~EVT_MASK)) {
+    } else if (flag & (~EVT_MASK )) {
         // error
         ret = 0;
     }
@@ -90,7 +90,7 @@ uint8_t _RTOS_ValidEventFlag(uint32_t flag) {
     // check is empty
     if (!flag) {
         ret = 0;
-    } else if (flag & (~EVENT_MASK)) {
+    } else if (flag & (~EVENT_MASK )) {
         // error
         ret = 0;
     }
