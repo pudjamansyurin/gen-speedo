@@ -1160,7 +1160,7 @@
     "SelectedColorDepth": 16,
     "StartupScreenName": "welcomeScreen",
     "SelectedStartupLanguage": "GB",
-    "Skin": "Blue",
+    "Skin": "Dark",
     "TouchGfxPath": "../Middlewares/ST/touchgfx",
     "UIPath": ".",
     "AvailableColorDepths": [
