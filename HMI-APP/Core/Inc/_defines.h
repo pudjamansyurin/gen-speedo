@@ -8,9 +8,6 @@
 #ifndef DEFINES_H_
 #define DEFINES_H_
 
-#define LCD_TESTING
-#define SIMULATOR
-
 /* Choose between VCU or Boot-loader mode */
 #define BOOTLOADER                          0
 

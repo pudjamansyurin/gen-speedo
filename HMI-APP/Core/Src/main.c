@@ -479,16 +479,16 @@ static void MX_LTDC_Init(void)
     Error_Handler();
   }
   pLayerCfg1.WindowX0 = 0;
-  pLayerCfg1.WindowX1 = 320;
+  pLayerCfg1.WindowX1 = 0;
   pLayerCfg1.WindowY0 = 0;
-  pLayerCfg1.WindowY1 = 240;
-  pLayerCfg1.Alpha = 255;
+  pLayerCfg1.WindowY1 = 0;
+  pLayerCfg1.Alpha = 0;
   pLayerCfg1.Alpha0 = 0;
   pLayerCfg1.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
   pLayerCfg1.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
-  pLayerCfg1.FBStartAdress = 0xC0400000;
-  pLayerCfg1.ImageWidth = 800;
-  pLayerCfg1.ImageHeight = 480;
+  pLayerCfg1.FBStartAdress = 0;
+  pLayerCfg1.ImageWidth = 0;
+  pLayerCfg1.ImageHeight = 0;
   pLayerCfg1.Backcolor.Blue = 0;
   pLayerCfg1.Backcolor.Green = 0;
   pLayerCfg1.Backcolor.Red = 0;
@@ -682,8 +682,8 @@ void StartManagerTask(void *argument)
 
     // suspend other threads
 //    osThreadSuspend(DisplayTaskHandle);
-    osThreadSuspend(CanTxTaskHandle);
-    osThreadSuspend(CanRxTaskHandle);
+//    osThreadSuspend(CanTxTaskHandle);
+//    osThreadSuspend(CanRxTaskHandle);
 
     // Release other threads
     osEventFlagsSet(GlobalEventHandle, EVENT_READY);
@@ -800,9 +800,7 @@ void StartCanRxTask(void *argument)
         }
         // update display
         if (!updateDisplay) {
-#if !defined(SIMULATOR) || defined(LCD_TESTING)
             _FlushData();
-#endif
             LOG_StrLn("CANBUS: Timeout");
         }
     }
