@@ -11,9 +11,6 @@
 #include "Drivers/_canbus.h"
 #include "BSP/_lcd.h"
 
-/* External variables --------------------------------------------------------*/
-extern IWDG_HandleTypeDef hiwdg;
-
 /* Private functions prototypes -----------------------------------------------*/
 static uint8_t FOCAN_SendResponse(uint32_t address, FOCAN response);
 static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size);
@@ -39,9 +36,6 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
     tick = _GetTickMS();
     iTick = tick;
     do {
-        // feed watchdog
-        HAL_IWDG_Refresh(&hiwdg);
-
         // read
         if (CANBUS_Read(&Rx)) {
             switch (CANBUS_ReadID(&(Rx.header))) {

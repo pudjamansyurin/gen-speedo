@@ -13,5 +13,6 @@
 
 /* Public functions prototypes -----------------------------------------------*/
 void MX_SDRAM_InitEx(void);
+void MX_SDRAM_DeInitEx(void);
 
 #endif /* INC_DRIVERS__SDRAM_H_ */

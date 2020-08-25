@@ -11,18 +11,6 @@
 
 /* Public variables -----------------------------------------------------------*/
 hmi1_t HMI1 = {
-        .ref = {
-                .drive = {
-                        .mode = { "ECONOMIC", "STANDARD", "SPORT", "PERFORMANCE" }
-                },
-                .trip = {
-                        .mode = { "TRIP A", "TRIP B", "ODO" }
-                },
-                .report = {
-                        .mode = { "RANGE", "AVG" },
-                        .unit = { "KM", "KM/KWH" },
-                },
-        },
         .d = {
                 .status = { 0 },
                 .mode = { 0 },

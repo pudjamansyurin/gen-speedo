@@ -87,3 +87,8 @@ void MX_SDRAM_InitEx(void) {
     /* Set the device refresh rate */
     HAL_SDRAM_ProgramRefreshRate(&hsdram1, REFRESH_COUNT);
 }
+
+void MX_SDRAM_DeInitEx(void) {
+    HAL_SDRAM_MspDeInit(&hsdram1);
+}
+

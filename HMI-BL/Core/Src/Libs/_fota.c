@@ -78,7 +78,7 @@ void FOTA_JumpToApplication(void) {
     HAL_CAN_MspDeInit(&hcan2);
     HAL_CRC_MspDeInit(&hcrc);
     BSP_LCD_DeInit();
-    BSP_SDRAM_DeInit();
+    MX_SDRAM_DeInitEx();
     HAL_RCC_DeInit();
     HAL_DeInit();
 
@@ -102,7 +102,6 @@ void FOTA_JumpToApplication(void) {
 void FOTA_Reboot(void) {
     /* Clear backup area */
     FLASHER_EraseBkpArea();
-
     HAL_NVIC_SystemReset();
 }
 
@@ -126,48 +125,30 @@ uint8_t FOTA_NeedBackup(void) {
 
 void FOTA_DisplayDevice(IAP_TYPE type) {
     char title[20];
-    // decide the node
-    strcpy(title, type == IAP_HMI ? "Device: HMI-1" : "Device: VCU");
 
-    // clear
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_FillRect(
-            0,
-            0,
-            BSP_LCD_GetXSize() - 1,
-            0 + Font24.Height);
-    // set
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(
-            0,
-            0,
-            (uint8_t*) title,
-            LEFT_MODE);
+    // decide the node
+    strcpy(title, type == IAP_HMI ? "Device: HMI" : "Device: VCU");
+
+    BSP_LCD_DisplayStringAtLine(1, (uint8_t*) title);
 }
 
 void FOTA_DisplayStatus(char *status) {
-    // clear
-    BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-    BSP_LCD_FillRect(
-            0,
-            25,
-            BSP_LCD_GetXSize() - 1,
-            25 + Font24.Height);
-    // set
-    BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    BSP_LCD_DisplayStringAt(
-            0,
-            25,
-            (uint8_t*) status,
-            LEFT_MODE);
+    char status_str[20];
+
+    memset(status_str, 0x00, 20);
+    strcpy(status_str, status);
+
+    BSP_LCD_DisplayStringAtLine(2, (uint8_t*) status_str);
 }
 void FOTA_DisplayPercent(uint8_t progress) {
-    char percent[6];
+    char progress_str[6];
 
-    sprintf(percent, "%03d %%", progress);
+    sprintf(progress_str, "%03d %%", progress);
+//    BSP_LCD_DisplayStringAtLine(3, (uint8_t*) progress_str);
+
     BSP_LCD_DisplayStringAt(
             (BSP_LCD_GetXSize() / 2) - 30,
             (BSP_LCD_GetYSize() / 2) - 10,
-            (uint8_t*) percent,
+            (uint8_t*) progress_str,
             LEFT_MODE);
 }

@@ -58,7 +58,6 @@ typedef struct {
 } hmi1_can_t;
 
 typedef struct {
-    sw_mode_t ref;
 	hmi1_data_t d;
 	hmi1_can_t can;
 	void (*Init)(void);
