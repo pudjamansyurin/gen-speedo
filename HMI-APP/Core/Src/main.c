@@ -58,8 +58,6 @@ IWDG_HandleTypeDef hiwdg;
 
 LTDC_HandleTypeDef hltdc;
 
-UART_HandleTypeDef huart1;
-
 SDRAM_HandleTypeDef hsdram1;
 
 /* Definitions for ManagerTask */
@@ -118,7 +116,6 @@ static void MX_DMA2D_Init(void);
 static void MX_FMC_Init(void);
 static void MX_IWDG_Init(void);
 static void MX_LTDC_Init(void);
-static void MX_USART1_UART_Init(void);
 void StartManagerTask(void *argument);
 void StartDisplayTask(void *argument);
 void StartCanTxTask(void *argument);
@@ -169,7 +166,6 @@ int main(void)
   MX_FMC_Init();
   MX_IWDG_Init();
   MX_LTDC_Init();
-  MX_USART1_UART_Init();
   MX_TouchGFX_Init();
   /* USER CODE BEGIN 2 */
     CANBUS_Init();
@@ -488,11 +484,11 @@ static void MX_LTDC_Init(void)
   pLayerCfg1.WindowY1 = 240;
   pLayerCfg1.Alpha = 255;
   pLayerCfg1.Alpha0 = 0;
-  pLayerCfg1.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
-  pLayerCfg1.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
+  pLayerCfg1.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
+  pLayerCfg1.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
   pLayerCfg1.FBStartAdress = 0xC0400000;
-  pLayerCfg1.ImageWidth = 320;
-  pLayerCfg1.ImageHeight = 240;
+  pLayerCfg1.ImageWidth = 800;
+  pLayerCfg1.ImageHeight = 480;
   pLayerCfg1.Backcolor.Blue = 0;
   pLayerCfg1.Backcolor.Green = 0;
   pLayerCfg1.Backcolor.Red = 0;
@@ -503,39 +499,6 @@ static void MX_LTDC_Init(void)
   /* USER CODE BEGIN LTDC_Init 2 */
 
   /* USER CODE END LTDC_Init 2 */
-
-}
-
-/**
-  * @brief USART1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART1_UART_Init(void)
-{
-
-  /* USER CODE BEGIN USART1_Init 0 */
-
-  /* USER CODE END USART1_Init 0 */
-
-  /* USER CODE BEGIN USART1_Init 1 */
-
-  /* USER CODE END USART1_Init 1 */
-  huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
-  huart1.Init.WordLength = UART_WORDLENGTH_8B;
-  huart1.Init.StopBits = UART_STOPBITS_1;
-  huart1.Init.Parity = UART_PARITY_NONE;
-  huart1.Init.Mode = UART_MODE_TX_RX;
-  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USART1_Init 2 */
-
-  /* USER CODE END USART1_Init 2 */
 
 }
 
@@ -651,9 +614,11 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PA0 PA1 PA2 PA5
-                           PA7 PA8 PA15 */
+                           PA7 PA8 PA9 PA10
+                           PA15 */
   GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_5
-                          |GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_15;
+                          |GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10
+                          |GPIO_PIN_15;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -717,8 +682,8 @@ void StartManagerTask(void *argument)
 
     // suspend other threads
 //    osThreadSuspend(DisplayTaskHandle);
-//    osThreadSuspend(CanTxTaskHandle);
-//    osThreadSuspend(CanRxTaskHandle);
+    osThreadSuspend(CanTxTaskHandle);
+    osThreadSuspend(CanRxTaskHandle);
 
     // Release other threads
     osEventFlagsSet(GlobalEventHandle, EVENT_READY);

@@ -16,11 +16,14 @@
   */
 
 #include <TouchGFXGeneratedHAL.hpp>
-#include <touchgfx/hal/GPIO.hpp>
 #include <touchgfx/hal/OSWrappers.hpp>
 #include <gui/common/FrontendHeap.hpp>
+#include <touchgfx/hal/GPIO.hpp>
+
 #include "stm32f4xx.h"
 #include "stm32f4xx_hal_ltdc.h"
+
+using namespace touchgfx;
 
 namespace {
     static uint16_t lcd_int_active_line;
@@ -31,18 +34,8 @@ void TouchGFXGeneratedHAL::initialize()
 {
     HAL::initialize();
 
-    registerEventListener(*(touchgfx::Application::getInstance()));
-
+    registerEventListener(*(Application::getInstance()));
     setFrameBufferStartAddresses((void*)0xC0000000, (void*)0xC0400000, (void*)0);
-    /*
-     * Set whether the DMA transfers are locked to the TFT update cycle. If
-     * locked, DMA transfer will not begin until the TFT controller has finished
-     * updating the display. If not locked, DMA transfers will begin as soon as
-     * possible. Default is true (DMA is locked with TFT).
-     *
-     * Setting to false to increase performance when using double buffering
-     */
-    lockDMAToFrontPorch(false);
 }
 
 void TouchGFXGeneratedHAL::configureInterrupts()
