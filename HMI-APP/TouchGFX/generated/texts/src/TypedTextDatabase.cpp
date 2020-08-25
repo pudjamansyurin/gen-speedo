@@ -9,7 +9,7 @@ extern touchgfx::GeneratedFont& getFont_venus_rising_rg_12_4bpp();
 extern touchgfx::GeneratedFont& getFont_venus_rising_rg_15_4bpp();
 extern touchgfx::GeneratedFont& getFont_venus_rising_rg_17_4bpp();
 
-const touchgfx::Font* _fonts[] =
+const touchgfx::Font* touchgfx_fonts[] =
 {
     &(getFont_venus_rising_rg_12_4bpp()),
     &(getFont_venus_rising_rg_15_4bpp()),
@@ -69,13 +69,13 @@ uint16_t getInstanceSize()
 
 const touchgfx::Font** getFonts()
 {
-    return _fonts;
+    return touchgfx_fonts;
 }
 
 const touchgfx::Font* setFont(touchgfx::FontId fontId, const touchgfx::Font* font)
 {
-    const touchgfx::Font* old = _fonts[fontId];
-    _fonts[fontId] = font;
+    const touchgfx::Font* old = touchgfx_fonts[fontId];
+    touchgfx_fonts[fontId] = font;
     return old;
 }
 
@@ -84,13 +84,13 @@ void resetFont(touchgfx::FontId fontId)
     switch (fontId)
     {
     case 0:
-        _fonts[0] = &(getFont_venus_rising_rg_12_4bpp());
+        touchgfx_fonts[0] = &(getFont_venus_rising_rg_12_4bpp());
         break;
     case 1:
-        _fonts[1] = &(getFont_venus_rising_rg_15_4bpp());
+        touchgfx_fonts[1] = &(getFont_venus_rising_rg_15_4bpp());
         break;
     case 2:
-        _fonts[2] = &(getFont_venus_rising_rg_17_4bpp());
+        touchgfx_fonts[2] = &(getFont_venus_rising_rg_17_4bpp());
         break;
     }
 }

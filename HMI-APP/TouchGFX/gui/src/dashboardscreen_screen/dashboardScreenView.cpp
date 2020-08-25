@@ -78,7 +78,7 @@ void dashboardScreenView::handleTickEvent()
 	uint8_t curIndicator = presenter->getCurrentIndicator();
 
 	if(nextIndicator.container != NULL) {
-		if (!nextIndicator.container->isRunning()) {
+		if (!nextIndicator.container->isMoveAnimationRunning()) {
 			ticker++;
 
 			if (curIndicator == INDICATOR_LOWBAT ||
