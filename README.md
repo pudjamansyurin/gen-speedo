@@ -14,12 +14,12 @@
 - [x] Migrate RTOSv1 to RTOSv2
 - [x] ~~Change LTDC from RGB565 to RGB666~~
 - [x] Fix battery indicator & percentage not shown up, and check other similar things.
-- [ ] Handle GPIO for LCD Power Control
+- [x] Handle GPIO for LCD Power Control
 - [x] Add bootloader 
 - [x] Handle bootloader's CAN for DFU mode
 - [x] ~~Use CAN Filter to ignore un-related ID~~
-- [ ] Remove any "right side" code
-- [ ] Build new revised single HMI version
+- [x] Remove any "right side" code
+- [x] Build new revised single HMI version
 
 ## Hardware Progress:
 - [x] Add line from RGB565 to RGB666 
@@ -29,5 +29,5 @@
 - [x] Add logo, module name, module version 
 - [x] ~~Add raster bellow the STM32 chip~~
 - [x] Remove all values, only labels 
-- [ ] Add LCD Power Control using MOSFET/PNP 
+- [x] Add LCD Power Control using MOSFET/PNP 
 
