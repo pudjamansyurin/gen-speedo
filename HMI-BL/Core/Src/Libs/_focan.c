@@ -19,7 +19,7 @@ static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size);
 uint8_t FOCAN_Upgrade(uint8_t factory) {
     can_rx_t Rx;
     uint8_t p, success = 0;
-    uint32_t timeout = 10000;
+    uint32_t timeout = 30000;
     uint32_t tick, iTick;
     uint32_t SIZE;
     IAP_TYPE type = IAP_HMI;
@@ -66,6 +66,8 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
                 case CAND_VCU_SWITCH :
                     if (factory) {
                         FOCAN_RequestFota();
+                    } else {
+                        p = 0;
                     }
 //                    /* VCU enter normal mode */
 //                    if (type == IAP_HMI) {

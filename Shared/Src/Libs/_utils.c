@@ -69,6 +69,12 @@ void _LcdPower(uint8_t state) {
     HAL_GPIO_WritePin(LCD_POWER_GPIO_Port, LCD_POWER_Pin, state);
 }
 
+void _RightPad(char *dest, const char *src, const char pad, uint8_t sz) {
+    memset(dest, pad, sz);
+    memcpy(dest, src, strlen(src));
+    dest[sz-1] = 0x00;
+}
+
 #if (!BOOTLOADER)
 uint8_t _RTOS_ValidThreadFlag(uint32_t flag) {
     uint8_t ret = 1;

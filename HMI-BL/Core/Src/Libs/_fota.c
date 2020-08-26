@@ -124,27 +124,37 @@ uint8_t FOTA_NeedBackup(void) {
 }
 
 void FOTA_DisplayDevice(IAP_TYPE type) {
+    uint8_t init = 1;
     char title[20];
 
-    // decide the node
-    strcpy(title, type == IAP_HMI ? "Device: HMI" : "Device: VCU");
+    if (init) {
+        init = 0;
+        BSP_LCD_DisplayStringAt(0, 0, (uint8_t*) "Device:", LEFT_MODE);
+    }
 
-    BSP_LCD_DisplayStringAtLine(1, (uint8_t*) title);
+    strcpy(title, type == IAP_HMI ? "HMI" : "VCU");
+    BSP_LCD_DisplayStringAt(130, 0, (uint8_t*) title, LEFT_MODE);
+    //    BSP_LCD_DisplayStringAtLine(1, (uint8_t*) title);
 }
 
 void FOTA_DisplayStatus(char *status) {
-    char status_str[20];
+    uint8_t init = 1;
+    char status_str[25];
 
-    memset(status_str, 0x00, 20);
-    strcpy(status_str, status);
+    if (init) {
+        init = 0;
+        BSP_LCD_DisplayStringAt(0, 25, (uint8_t*) "Status:", LEFT_MODE);
+    }
 
-    BSP_LCD_DisplayStringAtLine(2, (uint8_t*) status_str);
+    _RightPad(status_str, status, ' ', sizeof(status_str));
+
+    BSP_LCD_DisplayStringAt(130, 25, (uint8_t*) status_str, LEFT_MODE);
+//    BSP_LCD_DisplayStringAtLine(2, (uint8_t*) status_str);
 }
 void FOTA_DisplayPercent(uint8_t progress) {
     char progress_str[6];
 
     sprintf(progress_str, "%03d %%", progress);
-//    BSP_LCD_DisplayStringAtLine(3, (uint8_t*) progress_str);
 
     BSP_LCD_DisplayStringAt(
             (BSP_LCD_GetXSize() / 2) - 30,

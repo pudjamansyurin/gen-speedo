@@ -20,6 +20,7 @@ void _LedToggle(void);
 void _Error(char msg[50]);
 void _LcdBacklight(uint8_t state);
 void _LcdPower(uint8_t state);
+void _RightPad(char *dest, const char *src, const char pad, uint8_t sz);
 
 #if (!BOOTLOADER)
 uint8_t _RTOS_ValidThreadFlag(uint32_t flag);
