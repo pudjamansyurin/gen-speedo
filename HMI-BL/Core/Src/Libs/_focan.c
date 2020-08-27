@@ -11,6 +11,9 @@
 #include "Drivers/_canbus.h"
 #include "BSP/_lcd.h"
 
+/* External variables ---------------------------------------------------------*/
+extern IWDG_HandleTypeDef hiwdg;
+
 /* Private functions prototypes -----------------------------------------------*/
 static uint8_t FOCAN_SendResponse(uint32_t address, FOCAN response);
 static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size);
@@ -30,7 +33,7 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
         FOTA_DisplayStatus("No Firmware.");
         FOCAN_RequestFota();
     }
-    FOTA_DisplayPercent(0);
+//    FOTA_DisplayPercent(0);
 
     // Wait command
     tick = _GetTickMS();
@@ -91,6 +94,9 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
         if (_GetTickMS() - tick > timeout) {
             p = 0;
         }
+
+        // reset watchdog
+        HAL_IWDG_Refresh(&hiwdg);
     } while (p && !success);
 
     // Final response
