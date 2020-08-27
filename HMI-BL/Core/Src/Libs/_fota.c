@@ -46,7 +46,7 @@ uint8_t FOTA_ValidImage(uint32_t address) {
     uint8_t p;
 
     /* Check beginning stack pointer */
-    p = IS_VALID_SP(APP_START_ADDR);
+    p = IS_VALID_SP(address);
 
     /* Check the size */
     if (p) {
