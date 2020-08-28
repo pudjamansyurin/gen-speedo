@@ -14,6 +14,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "_defines_shared.h"
 
-#define HMI_VERSION              (uint16_t) 0x0126
+#define HMI_VERSION              (uint16_t) 0x0127
 
 #endif /* DEFINES_H_ */

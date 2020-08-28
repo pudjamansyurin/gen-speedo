@@ -159,6 +159,7 @@ void Model::tick()
 	modelListener->setModeSelector(HMI1.d.mode.sel);
 	modelListener->setModeVisible(!HMI1.d.mode.hide);
 
+#ifdef SIMULATOR
 	switch (HMI1.d.mode.sel) {
 		case SW_M_TRIP :
 			modelListener->setTripMode(HMI1.d.mode.val[SW_M_TRIP]);
@@ -172,6 +173,11 @@ void Model::tick()
 		default:
 			break;
 	}
+#else
+    modelListener->setTripMode(HMI1.d.mode.val[SW_M_TRIP]);
+    modelListener->setDriveMode(HMI1.d.mode.val[SW_M_DRIVE]);
+    modelListener->setReportMode(HMI1.d.mode.val[SW_M_REPORT]);
+#endif
 }
 
 uint8_t Model::readCurrentIndicator()
