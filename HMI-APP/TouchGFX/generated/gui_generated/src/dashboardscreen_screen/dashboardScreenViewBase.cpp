@@ -57,19 +57,19 @@ dashboardScreenViewBase::dashboardScreenViewBase()
 
     iconContainer.setPosition(146, 132, 508, 230);
 
-    nextIconContainer.setPosition(139, 0, 230, 230);
-
-    nextIconImage.setXY(9, 75);
-    nextIconImage.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
-    nextIconContainer.add(nextIconImage);
-    iconContainer.add(nextIconContainer);
-
-    prevIconContainer.setPosition(139, 0, 230, 230);
+    prevIconContainer.setPosition(139, 230, 230, 230);
 
     prevIconImage.setXY(9, 75);
     prevIconImage.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
     prevIconContainer.add(prevIconImage);
     iconContainer.add(prevIconContainer);
+
+    nextIconContainer.setPosition(139, -230, 230, 230);
+
+    nextIconImage.setXY(9, 75);
+    nextIconImage.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
+    nextIconContainer.add(nextIconImage);
+    iconContainer.add(nextIconContainer);
 
     frameContainer.setPosition(0, 0, 800, 480);
 
@@ -145,6 +145,29 @@ dashboardScreenViewBase::dashboardScreenViewBase()
 
     reportModeContainer.setPosition(285, 406, 227, 18);
 
+    prevReportModeContainer.setPosition(0, 18, 227, 18);
+
+    prevReportUnitText.setPosition(121, 0, 105, 18);
+    prevReportUnitText.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    prevReportUnitText.setLinespacing(0);
+    prevReportUnitText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID40));
+    prevReportModeContainer.add(prevReportUnitText);
+
+    prevReportModeText.setXY(0, 0);
+    prevReportModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    prevReportModeText.setLinespacing(0);
+    prevReportModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID38));
+    prevReportModeContainer.add(prevReportModeText);
+
+    prevReportValueText.setPosition(137, 0, 50, 18);
+    prevReportValueText.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    prevReportValueText.setLinespacing(0);
+    Unicode::snprintf(prevReportValueTextBuffer, PREVREPORTVALUETEXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID46).getText());
+    prevReportValueText.setWildcard(prevReportValueTextBuffer);
+    prevReportValueText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID45));
+    prevReportModeContainer.add(prevReportValueText);
+    reportModeContainer.add(prevReportModeContainer);
+
     nextReportModeContainer.setPosition(0, -18, 227, 18);
 
     nextReportUnitText.setPosition(121, 0, 105, 18);
@@ -168,30 +191,15 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     nextReportModeContainer.add(nextReportValueText);
     reportModeContainer.add(nextReportModeContainer);
 
-    prevReportModeContainer.setPosition(0, 0, 227, 18);
-
-    prevReportUnitText.setPosition(121, 0, 105, 18);
-    prevReportUnitText.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
-    prevReportUnitText.setLinespacing(0);
-    prevReportUnitText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID40));
-    prevReportModeContainer.add(prevReportUnitText);
-
-    prevReportModeText.setXY(0, 0);
-    prevReportModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
-    prevReportModeText.setLinespacing(0);
-    prevReportModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID38));
-    prevReportModeContainer.add(prevReportModeText);
-
-    prevReportValueText.setPosition(137, 0, 50, 18);
-    prevReportValueText.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
-    prevReportValueText.setLinespacing(0);
-    Unicode::snprintf(prevReportValueTextBuffer, PREVREPORTVALUETEXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID46).getText());
-    prevReportValueText.setWildcard(prevReportValueTextBuffer);
-    prevReportValueText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID45));
-    prevReportModeContainer.add(prevReportValueText);
-    reportModeContainer.add(prevReportModeContainer);
-
     driveModeContainer.setPosition(288, 369, 222, 19);
+
+    prevDriveModeText.setPosition(0, 19, 222, 19);
+    prevDriveModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 255, 0));
+    prevDriveModeText.setLinespacing(0);
+    Unicode::snprintf(prevDriveModeTextBuffer, PREVDRIVEMODETEXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID31).getText());
+    prevDriveModeText.setWildcard(prevDriveModeTextBuffer);
+    prevDriveModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID30));
+    driveModeContainer.add(prevDriveModeText);
 
     nextDriveModeText.setPosition(0, -19, 222, 19);
     nextDriveModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 255, 0));
@@ -200,14 +208,6 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     nextDriveModeText.setWildcard(nextDriveModeTextBuffer);
     nextDriveModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID32));
     driveModeContainer.add(nextDriveModeText);
-
-    prevDriveModeText.setPosition(0, 0, 222, 19);
-    prevDriveModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 255, 0));
-    prevDriveModeText.setLinespacing(0);
-    Unicode::snprintf(prevDriveModeTextBuffer, PREVDRIVEMODETEXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID31).getText());
-    prevDriveModeText.setWildcard(prevDriveModeTextBuffer);
-    prevDriveModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID30));
-    driveModeContainer.add(prevDriveModeText);
 
     tripValue.setPosition(374, 102, 119, 20);
     tripValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
@@ -218,6 +218,14 @@ dashboardScreenViewBase::dashboardScreenViewBase()
 
     tripModeContainer.setPosition(269, 93, 79, 20);
 
+    prevTripModeText.setPosition(0, 20, 79, 20);
+    prevTripModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
+    prevTripModeText.setLinespacing(0);
+    Unicode::snprintf(prevTripModeTextBuffer, PREVTRIPMODETEXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID37).getText());
+    prevTripModeText.setWildcard(prevTripModeTextBuffer);
+    prevTripModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID36));
+    tripModeContainer.add(prevTripModeText);
+
     nextTripModeText.setPosition(0, -20, 79, 20);
     nextTripModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
     nextTripModeText.setLinespacing(0);
@@ -225,14 +233,6 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     nextTripModeText.setWildcard(nextTripModeTextBuffer);
     nextTripModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID34));
     tripModeContainer.add(nextTripModeText);
-
-    prevTripModeText.setPosition(0, 0, 79, 20);
-    prevTripModeText.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
-    prevTripModeText.setLinespacing(0);
-    Unicode::snprintf(prevTripModeTextBuffer, PREVTRIPMODETEXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID37).getText());
-    prevTripModeText.setWildcard(prevTripModeTextBuffer);
-    prevTripModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID36));
-    tripModeContainer.add(prevTripModeText);
 
     signalValue.setPosition(443, 61, 39, 20);
     signalValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));

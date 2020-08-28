@@ -258,37 +258,6 @@
                   {
                     "RelativeFilename": "MainGo.png",
                     "Alpha": 255,
-                    "Name": "nextIconImage",
-                    "X": 9,
-                    "Y": 75,
-                    "Width": 210,
-                    "Height": 81,
-                    "Type": "Image",
-                    "Visible": true,
-                    "Draggable": false,
-                    "Clickable": false,
-                    "Fadeable": false,
-                    "Moveable": false
-                  }
-                ],
-                "IsCacheableContainer": false,
-                "Name": "nextIconContainer",
-                "X": 139,
-                "Y": 0,
-                "Width": 230,
-                "Height": 230,
-                "Type": "Container",
-                "Visible": true,
-                "Draggable": false,
-                "Clickable": false,
-                "Fadeable": false,
-                "Moveable": true
-              },
-              {
-                "Components": [
-                  {
-                    "RelativeFilename": "MainGo.png",
-                    "Alpha": 255,
                     "Name": "prevIconImage",
                     "X": 9,
                     "Y": 75,
@@ -305,7 +274,38 @@
                 "IsCacheableContainer": false,
                 "Name": "prevIconContainer",
                 "X": 139,
-                "Y": 0,
+                "Y": 230,
+                "Width": 230,
+                "Height": 230,
+                "Type": "Container",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": true
+              },
+              {
+                "Components": [
+                  {
+                    "RelativeFilename": "MainGo.png",
+                    "Alpha": 255,
+                    "Name": "nextIconImage",
+                    "X": 9,
+                    "Y": 75,
+                    "Width": 210,
+                    "Height": 81,
+                    "Type": "Image",
+                    "Visible": true,
+                    "Draggable": false,
+                    "Clickable": false,
+                    "Fadeable": false,
+                    "Moveable": false
+                  }
+                ],
+                "IsCacheableContainer": false,
+                "Name": "nextIconContainer",
+                "X": 139,
+                "Y": -230,
                 "Width": 230,
                 "Height": 230,
                 "Type": "Container",
@@ -623,6 +623,96 @@
               {
                 "Components": [
                   {
+                    "TextId": "SingleUseId40",
+                    "TextRotation": "0",
+                    "Color": {
+                      "Red": 179,
+                      "Green": 179,
+                      "Blue": 179
+                    },
+                    "Alpha": 255,
+                    "AutoSize": false,
+                    "LineSpacing": 0,
+                    "Name": "prevReportUnitText",
+                    "X": 121,
+                    "Y": 0,
+                    "Width": 105,
+                    "Height": 18,
+                    "Type": "TextArea",
+                    "Visible": true,
+                    "Draggable": false,
+                    "Clickable": false,
+                    "Fadeable": false,
+                    "Moveable": false
+                  },
+                  {
+                    "TextId": "SingleUseId38",
+                    "TextRotation": "0",
+                    "Color": {
+                      "Red": 179,
+                      "Green": 179,
+                      "Blue": 179
+                    },
+                    "Alpha": 255,
+                    "AutoSize": true,
+                    "LineSpacing": 0,
+                    "Name": "prevReportModeText",
+                    "X": 0,
+                    "Y": 0,
+                    "Width": 48,
+                    "Height": 18,
+                    "Type": "TextArea",
+                    "Visible": true,
+                    "Draggable": false,
+                    "Clickable": false,
+                    "Fadeable": false,
+                    "Moveable": false
+                  },
+                  {
+                    "TextId": "SingleUseId45",
+                    "TextRotation": "0",
+                    "Color": {
+                      "Red": 179,
+                      "Green": 179,
+                      "Blue": 179
+                    },
+                    "Alpha": 255,
+                    "AutoSize": false,
+                    "LineSpacing": 0,
+                    "Wildcard1": {
+                      "TextId": "SingleUseId46",
+                      "UseBuffer": true,
+                      "BufferSize": 11
+                    },
+                    "Name": "prevReportValueText",
+                    "X": 137,
+                    "Y": 0,
+                    "Width": 50,
+                    "Height": 18,
+                    "Type": "TextArea",
+                    "Visible": true,
+                    "Draggable": false,
+                    "Clickable": false,
+                    "Fadeable": false,
+                    "Moveable": false
+                  }
+                ],
+                "IsCacheableContainer": false,
+                "Name": "prevReportModeContainer",
+                "X": 0,
+                "Y": 18,
+                "Width": 227,
+                "Height": 18,
+                "Type": "Container",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": true
+              },
+              {
+                "Components": [
+                  {
                     "TextId": "SingleUseId42",
                     "TextRotation": "0",
                     "Color": {
@@ -709,96 +799,6 @@
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": true
-              },
-              {
-                "Components": [
-                  {
-                    "TextId": "SingleUseId40",
-                    "TextRotation": "0",
-                    "Color": {
-                      "Red": 179,
-                      "Green": 179,
-                      "Blue": 179
-                    },
-                    "Alpha": 255,
-                    "AutoSize": false,
-                    "LineSpacing": 0,
-                    "Name": "prevReportUnitText",
-                    "X": 121,
-                    "Y": 0,
-                    "Width": 105,
-                    "Height": 18,
-                    "Type": "TextArea",
-                    "Visible": true,
-                    "Draggable": false,
-                    "Clickable": false,
-                    "Fadeable": false,
-                    "Moveable": false
-                  },
-                  {
-                    "TextId": "SingleUseId38",
-                    "TextRotation": "0",
-                    "Color": {
-                      "Red": 179,
-                      "Green": 179,
-                      "Blue": 179
-                    },
-                    "Alpha": 255,
-                    "AutoSize": true,
-                    "LineSpacing": 0,
-                    "Name": "prevReportModeText",
-                    "X": 0,
-                    "Y": 0,
-                    "Width": 48,
-                    "Height": 18,
-                    "Type": "TextArea",
-                    "Visible": true,
-                    "Draggable": false,
-                    "Clickable": false,
-                    "Fadeable": false,
-                    "Moveable": false
-                  },
-                  {
-                    "TextId": "SingleUseId45",
-                    "TextRotation": "0",
-                    "Color": {
-                      "Red": 179,
-                      "Green": 179,
-                      "Blue": 179
-                    },
-                    "Alpha": 255,
-                    "AutoSize": false,
-                    "LineSpacing": 0,
-                    "Wildcard1": {
-                      "TextId": "SingleUseId46",
-                      "UseBuffer": true,
-                      "BufferSize": 11
-                    },
-                    "Name": "prevReportValueText",
-                    "X": 137,
-                    "Y": 0,
-                    "Width": 50,
-                    "Height": 18,
-                    "Type": "TextArea",
-                    "Visible": true,
-                    "Draggable": false,
-                    "Clickable": false,
-                    "Fadeable": false,
-                    "Moveable": false
-                  }
-                ],
-                "IsCacheableContainer": false,
-                "Name": "prevReportModeContainer",
-                "X": 0,
-                "Y": 0,
-                "Width": 227,
-                "Height": 18,
-                "Type": "Container",
-                "Visible": true,
-                "Draggable": false,
-                "Clickable": false,
-                "Fadeable": false,
-                "Moveable": true
               }
             ],
             "IsCacheableContainer": false,
@@ -816,6 +816,34 @@
           },
           {
             "Components": [
+              {
+                "TextId": "SingleUseId30",
+                "TextRotation": "0",
+                "Color": {
+                  "Red": 0,
+                  "Green": 255,
+                  "Blue": 0
+                },
+                "Alpha": 255,
+                "AutoSize": false,
+                "LineSpacing": 0,
+                "Wildcard1": {
+                  "TextId": "SingleUseId31",
+                  "UseBuffer": true,
+                  "BufferSize": 12
+                },
+                "Name": "prevDriveModeText",
+                "X": 0,
+                "Y": 19,
+                "Width": 222,
+                "Height": 19,
+                "Type": "TextArea",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": true
+              },
               {
                 "TextId": "SingleUseId32",
                 "TextRotation": "0",
@@ -835,34 +863,6 @@
                 "Name": "nextDriveModeText",
                 "X": 0,
                 "Y": -19,
-                "Width": 222,
-                "Height": 19,
-                "Type": "TextArea",
-                "Visible": true,
-                "Draggable": false,
-                "Clickable": false,
-                "Fadeable": false,
-                "Moveable": true
-              },
-              {
-                "TextId": "SingleUseId30",
-                "TextRotation": "0",
-                "Color": {
-                  "Red": 0,
-                  "Green": 255,
-                  "Blue": 0
-                },
-                "Alpha": 255,
-                "AutoSize": false,
-                "LineSpacing": 0,
-                "Wildcard1": {
-                  "TextId": "SingleUseId31",
-                  "UseBuffer": true,
-                  "BufferSize": 12
-                },
-                "Name": "prevDriveModeText",
-                "X": 0,
-                "Y": 0,
                 "Width": 222,
                 "Height": 19,
                 "Type": "TextArea",
@@ -917,6 +917,34 @@
           {
             "Components": [
               {
+                "TextId": "SingleUseId36",
+                "TextRotation": "0",
+                "Color": {
+                  "Red": 128,
+                  "Green": 128,
+                  "Blue": 128
+                },
+                "Alpha": 255,
+                "AutoSize": false,
+                "LineSpacing": 0,
+                "Wildcard1": {
+                  "TextId": "SingleUseId37",
+                  "UseBuffer": true,
+                  "BufferSize": 7
+                },
+                "Name": "prevTripModeText",
+                "X": 0,
+                "Y": 20,
+                "Width": 79,
+                "Height": 20,
+                "Type": "TextArea",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": true
+              },
+              {
                 "TextId": "SingleUseId34",
                 "TextRotation": "0",
                 "Color": {
@@ -935,34 +963,6 @@
                 "Name": "nextTripModeText",
                 "X": 0,
                 "Y": -20,
-                "Width": 79,
-                "Height": 20,
-                "Type": "TextArea",
-                "Visible": true,
-                "Draggable": false,
-                "Clickable": false,
-                "Fadeable": false,
-                "Moveable": true
-              },
-              {
-                "TextId": "SingleUseId36",
-                "TextRotation": "0",
-                "Color": {
-                  "Red": 128,
-                  "Green": 128,
-                  "Blue": 128
-                },
-                "Alpha": 255,
-                "AutoSize": false,
-                "LineSpacing": 0,
-                "Wildcard1": {
-                  "TextId": "SingleUseId37",
-                  "UseBuffer": true,
-                  "BufferSize": 7
-                },
-                "Name": "prevTripModeText",
-                "X": 0,
-                "Y": 0,
                 "Width": 79,
                 "Height": 20,
                 "Type": "TextArea",

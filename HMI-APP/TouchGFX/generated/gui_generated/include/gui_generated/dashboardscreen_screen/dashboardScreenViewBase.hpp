@@ -44,10 +44,10 @@ protected:
     touchgfx::Image mainGo;
     touchgfx::Image mainReverse;
     touchgfx::Container iconContainer;
-    touchgfx::MoveAnimator< touchgfx::Container > nextIconContainer;
-    touchgfx::Image nextIconImage;
     touchgfx::MoveAnimator< touchgfx::Container > prevIconContainer;
     touchgfx::Image prevIconImage;
+    touchgfx::MoveAnimator< touchgfx::Container > nextIconContainer;
+    touchgfx::Image nextIconImage;
     touchgfx::Container frameContainer;
     touchgfx::TextArea tripUnit;
     touchgfx::TextArea signalPercent;
@@ -65,41 +65,41 @@ protected:
     touchgfx::ImageProgress engineProgress;
     touchgfx::ImageProgress speedProgress;
     touchgfx::Container reportModeContainer;
-    touchgfx::MoveAnimator< touchgfx::Container > nextReportModeContainer;
-    touchgfx::TextArea nextReportUnitText;
-    touchgfx::TextArea nextReportModeText;
-    touchgfx::TextAreaWithOneWildcard nextReportValueText;
     touchgfx::MoveAnimator< touchgfx::Container > prevReportModeContainer;
     touchgfx::TextArea prevReportUnitText;
     touchgfx::TextArea prevReportModeText;
     touchgfx::TextAreaWithOneWildcard prevReportValueText;
+    touchgfx::MoveAnimator< touchgfx::Container > nextReportModeContainer;
+    touchgfx::TextArea nextReportUnitText;
+    touchgfx::TextArea nextReportModeText;
+    touchgfx::TextAreaWithOneWildcard nextReportValueText;
     touchgfx::Container driveModeContainer;
-    touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > nextDriveModeText;
     touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > prevDriveModeText;
+    touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > nextDriveModeText;
     touchgfx::TextAreaWithOneWildcard tripValue;
     touchgfx::Container tripModeContainer;
-    touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > nextTripModeText;
     touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > prevTripModeText;
+    touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > nextTripModeText;
     touchgfx::TextAreaWithOneWildcard signalValue;
     touchgfx::TextAreaWithOneWildcard batteryValue;
 
     /*
      * Wildcard Buffers
      */
-    static const uint16_t NEXTREPORTVALUETEXT_SIZE = 11;
-    touchgfx::Unicode::UnicodeChar nextReportValueTextBuffer[NEXTREPORTVALUETEXT_SIZE];
     static const uint16_t PREVREPORTVALUETEXT_SIZE = 11;
     touchgfx::Unicode::UnicodeChar prevReportValueTextBuffer[PREVREPORTVALUETEXT_SIZE];
-    static const uint16_t NEXTDRIVEMODETEXT_SIZE = 12;
-    touchgfx::Unicode::UnicodeChar nextDriveModeTextBuffer[NEXTDRIVEMODETEXT_SIZE];
+    static const uint16_t NEXTREPORTVALUETEXT_SIZE = 11;
+    touchgfx::Unicode::UnicodeChar nextReportValueTextBuffer[NEXTREPORTVALUETEXT_SIZE];
     static const uint16_t PREVDRIVEMODETEXT_SIZE = 12;
     touchgfx::Unicode::UnicodeChar prevDriveModeTextBuffer[PREVDRIVEMODETEXT_SIZE];
+    static const uint16_t NEXTDRIVEMODETEXT_SIZE = 12;
+    touchgfx::Unicode::UnicodeChar nextDriveModeTextBuffer[NEXTDRIVEMODETEXT_SIZE];
     static const uint16_t TRIPVALUE_SIZE = 7;
     touchgfx::Unicode::UnicodeChar tripValueBuffer[TRIPVALUE_SIZE];
-    static const uint16_t NEXTTRIPMODETEXT_SIZE = 7;
-    touchgfx::Unicode::UnicodeChar nextTripModeTextBuffer[NEXTTRIPMODETEXT_SIZE];
     static const uint16_t PREVTRIPMODETEXT_SIZE = 7;
     touchgfx::Unicode::UnicodeChar prevTripModeTextBuffer[PREVTRIPMODETEXT_SIZE];
+    static const uint16_t NEXTTRIPMODETEXT_SIZE = 7;
+    touchgfx::Unicode::UnicodeChar nextTripModeTextBuffer[NEXTTRIPMODETEXT_SIZE];
     static const uint16_t SIGNALVALUE_SIZE = 4;
     touchgfx::Unicode::UnicodeChar signalValueBuffer[SIGNALVALUE_SIZE];
     static const uint16_t BATTERYVALUE_SIZE = 4;
