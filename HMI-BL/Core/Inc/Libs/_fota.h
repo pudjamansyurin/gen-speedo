@@ -22,5 +22,5 @@ uint8_t FOTA_NeedBackup(void);
 
 void FOTA_DisplayDevice(IAP_TYPE type);
 void FOTA_DisplayStatus(char *status);
-void FOTA_DisplayPercent(uint8_t progress);
+void FOTA_DisplayPercent(float percent);
 #endif /* INC_LIBS__FOTA_H_ */

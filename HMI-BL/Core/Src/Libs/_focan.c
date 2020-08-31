@@ -24,7 +24,7 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
     uint8_t p, success = 0;
     uint32_t timeout = 30000;
     uint32_t tick, iTick;
-    uint32_t SIZE;
+    uint32_t SIZE = 0;;
     IAP_TYPE type = IAP_HMI;
 
     // Empty Firmware
@@ -53,12 +53,18 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
                     break;
                 case CAND_INIT_DOWNLOAD :
                     tick = _GetTickMS();
-                    p = FOCAN_xDownloadFlash(&Rx, &SIZE, timeout, &tick);
+                    p = SIZE;
+                    if (p) {
+                        p = FOCAN_xDownloadFlash(&Rx, &SIZE, timeout, &tick);
+                    }
                     break;
                 case CAND_PASCA_DOWNLOAD :
                     tick = _GetTickMS();
                     FOTA_DisplayStatus("Pasca-Download");
-                    p = FOCAN_xPascaDownload(&Rx, &SIZE);
+                    p = SIZE;
+                    if (p) {
+                        p = FOCAN_xPascaDownload(&Rx, &SIZE);
+                    }
                     /* Handle success DFU */
                     success = p;
                     break;
@@ -133,15 +139,16 @@ uint8_t FOCAN_xGetChecksum(void) {
 }
 
 uint8_t FOCAN_xSetProgress(can_rx_t *Rx, IAP_TYPE *type) {
-    uint8_t p, percent;
+    uint8_t p;
+    float percent;
 
     // Get
     *type = Rx->data.u32[0];
-    percent = Rx->data.u8[4];
+    percent = Rx->data.FLOAT[1];
 
     // Handle
     FOTA_DisplayDevice(*type);
-    FOTA_DisplayStatus(percent ? "Downloading..." : "Connecting...");
+    FOTA_DisplayStatus(percent > 0.0f ? "Downloading..." : "Connecting...");
     FOTA_DisplayPercent(percent);
 
     // Send response

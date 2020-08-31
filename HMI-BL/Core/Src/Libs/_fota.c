@@ -151,14 +151,14 @@ void FOTA_DisplayStatus(char *status) {
     BSP_LCD_DisplayStringAt(130, 25, (uint8_t*) status_str, LEFT_MODE);
 //    BSP_LCD_DisplayStringAtLine(2, (uint8_t*) status_str);
 }
-void FOTA_DisplayPercent(uint8_t progress) {
-    char progress_str[6];
+void FOTA_DisplayPercent(float percent) {
+    char percent_str[9];
 
-    sprintf(progress_str, "%03d %%", progress);
+    sprintf(percent_str, "%06.2f %%", percent);
 
     BSP_LCD_DisplayStringAt(
-            (BSP_LCD_GetXSize() / 2) - 30,
+            (BSP_LCD_GetXSize() / 2) - 50,
             (BSP_LCD_GetYSize() / 2) - 10,
-            (uint8_t*) progress_str,
+            (uint8_t*) percent_str,
             LEFT_MODE);
 }
