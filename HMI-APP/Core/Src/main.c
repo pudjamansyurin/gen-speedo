@@ -783,7 +783,6 @@ void StartCanRxTask(void *argument)
             switch (CANBUS_ReadID(&(Rx.header))) {
                 case CAND_VCU_SWITCH :
                     VCU.can.r.SwitchModeControl(&Rx);
-                    // update backlight state
                     _LcdBacklight(HMI1.d.status.daylight);
                     break;
                 case CAND_VCU_SELECT_SET :

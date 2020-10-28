@@ -12,15 +12,23 @@
 #include "Nodes/HMI1.h"
 #include "Nodes/MCU.h"
 #include "Nodes/BMS.h"
+#endif
 
 /* External variables --------------------------------------------------------*/
+#if (!BOOTLOADER)
 extern vcu_t VCU;
 extern hmi1_t HMI1;
 extern mcu_t MCU;
 extern bms_t BMS;
 #endif
 
-/* Functions -----------------------------------------------------------------*/
+/* Private functions declarations --------------------------------------------*/
+#if (!BOOTLOADER)
+static uint8_t _RTOS_ValidThreadFlag(uint32_t flag);
+static uint8_t _RTOS_ValidEventFlag(uint32_t flag);
+#endif
+
+/* Public functions implementations ------------------------------------------*/
 void _DelayMS(uint32_t ms) {
 #if RTOS_ENABLE
     osDelay(ms);
@@ -76,34 +84,6 @@ void _RightPad(char *dest, const char *src, const char pad, uint8_t sz) {
 }
 
 #if (!BOOTLOADER)
-uint8_t _RTOS_ValidThreadFlag(uint32_t flag) {
-    uint8_t ret = 1;
-
-    // check is empty
-    if (!flag) {
-        ret = 0;
-    } else if (flag & (~EVT_MASK )) {
-        // error
-        ret = 0;
-    }
-
-    return ret;
-}
-
-uint8_t _RTOS_ValidEventFlag(uint32_t flag) {
-    uint8_t ret = 1;
-
-    // check is empty
-    if (!flag) {
-        ret = 0;
-    } else if (flag & (~EVENT_MASK )) {
-        // error
-        ret = 0;
-    }
-
-    return ret;
-}
-
 void _FlushData(void) {
     VCU.Init();
     HMI1.Init();
@@ -117,6 +97,13 @@ void _FlushData(void) {
 float _D2R(uint16_t deg) {
     return deg * M_PI / 180.0;
 }
+
+uint8_t _osThreadFlagsWait(uint32_t* notif, uint32_t flags, uint32_t options, uint32_t timeout) {
+	*notif = osThreadFlagsWait(flags, options, timeout);
+
+	return _RTOS_ValidThreadFlag(*notif);
+}
+
 #else
 uint32_t _ByteSwap32(uint32_t x) {
     uint32_t y = (x >> 24) & 0xff;
@@ -128,3 +115,33 @@ uint32_t _ByteSwap32(uint32_t x) {
 }
 #endif
 
+/* Private functions implementation --------------------------------------------*/
+#if (!BOOTLOADER)
+static uint8_t _RTOS_ValidThreadFlag(uint32_t flag) {
+	uint8_t ret = 1;
+
+	// check is empty
+	if (!flag) {
+		ret = 0;
+	} else if (flag & (~EVT_MASK )) {
+		// error
+		ret = 0;
+	}
+
+	return ret;
+}
+
+static uint8_t _RTOS_ValidEventFlag(uint32_t flag) {
+	uint8_t ret = 1;
+
+	// check is empty
+	if (!flag) {
+		ret = 0;
+	} else if (flag & (~EVENT_MASK )) {
+		// error
+		ret = 0;
+	}
+
+	return ret;
+}
+#endif
