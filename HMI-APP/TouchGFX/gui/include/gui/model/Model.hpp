@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-//#define LCD_TESTING
+#define LCD_TESTING
 //#define SIMULATOR
 
 #if !defined(SIMULATOR) || defined(LCD_TESTING)
@@ -13,17 +13,17 @@
 
 /* Exported enum  ------------------------------------------------------------*/
 typedef enum {
-    INDICATOR_REVERSE = 0,
-    INDICATOR_GO,
-    INDICATOR_ABS,
-    INDICATOR_MIRRORING,
-    INDICATOR_LAMP,
-    INDICATOR_WARNING,
-    INDICATOR_OVERHEAT,
-    INDICATOR_FINGER,
-    INDICATOR_KEYLESS,
-    INDICATOR_LOWBAT,
-    INDICATOR_MAX = 9
+	INDICATOR_REVERSE = 0,
+	INDICATOR_GO,
+	INDICATOR_ABS,
+	INDICATOR_MIRRORING,
+	INDICATOR_LAMP,
+	INDICATOR_WARNING,
+	INDICATOR_OVERHEAT,
+	INDICATOR_FINGER,
+	INDICATOR_KEYLESS,
+	INDICATOR_LOWBAT,
+	INDICATOR_MAX = 9
 } INDICATOR;
 
 #if defined(SIMULATOR) && !defined(LCD_TESTING)
@@ -117,25 +117,25 @@ class ModelListener;
 class Model
 {
 public:
-    Model();
+	Model();
 
-    void bind(ModelListener* listener)
-    {
-        modelListener = listener;
-    }
+	void bind(ModelListener *listener)
+			{
+		modelListener = listener;
+	}
 
-    void tick();
+	void tick();
 
 	uint8_t readCurrentIndicator();
 	uint8_t readIndicatorState(uint8_t index);
 	void generateRandomIndicators();
 	void reloadIndicators();
-    void swipeIndicator();
-protected:
-    ModelListener* modelListener;
-    uint32_t ticker;
+	void swipeIndicator();
+	protected:
+	ModelListener *modelListener;
+	uint32_t ticker;
 	uint8_t indicator;
-	uint8_t indicators[INDICATOR_MAX+1];
+	uint8_t indicators[INDICATOR_MAX + 1];
 };
 
 #endif // MODEL_HPP
