@@ -44,7 +44,7 @@
 
 // Some constants
 #if (!BOOTLOADER)
-#define MCU_SPEED_MAX 			      (uint8_t) 255
+#define MCU_SPEED_MAX 			      (uint8_t) 150
 #define MCU_RPM_MAX 			     (uint32_t) 99999
 #define VCU_ODOMETER_MAX		     (uint32_t) 99999
 
