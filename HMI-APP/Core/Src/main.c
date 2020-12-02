@@ -763,17 +763,14 @@ void StartCanRxTask(void *argument)
 {
 	/* USER CODE BEGIN StartCanRxTask */
 	can_rx_t Rx;
-	uint8_t updateDisplay;
 
 	// wait until ManagerTask done
 	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
 	/* Infinite loop */
 	for (;;) {
-		updateDisplay = 0;
 		// get can rx in queue
 		if (osMessageQueueGet(CanRxQueueHandle, &Rx, NULL, pdMS_TO_TICKS(1000)) == osOK) {
-			updateDisplay = 1;
 			// handle message
 			switch (CANBUS_ReadID(&(Rx.header))) {
 				case CAND_VCU_SWITCH :
@@ -792,9 +789,8 @@ void StartCanRxTask(void *argument)
 				default:
 					break;
 			}
-		}
-		// update display
-		if (!updateDisplay) {
+    } else {
+      // update display
 			_FlushData();
 			LOG_StrLn("CANBUS: Timeout");
 		}

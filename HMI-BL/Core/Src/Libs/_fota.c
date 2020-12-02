@@ -129,12 +129,11 @@ void FOTA_DisplayDevice(IAP_TYPE type) {
 
     if (init) {
         init = 0;
-        BSP_LCD_DisplayStringAt(0, 0, (uint8_t*) "Device:", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(30, 125, (uint8_t*) "Device:", LEFT_MODE);
     }
 
     strcpy(title, type == IAP_HMI ? "HMI" : "VCU");
-    BSP_LCD_DisplayStringAt(130, 0, (uint8_t*) title, LEFT_MODE);
-    //    BSP_LCD_DisplayStringAtLine(1, (uint8_t*) title);
+  BSP_LCD_DisplayStringAt(160, 125, (uint8_t*) title, LEFT_MODE);
 }
 
 void FOTA_DisplayStatus(char *status) {
@@ -143,13 +142,12 @@ void FOTA_DisplayStatus(char *status) {
 
     if (init) {
         init = 0;
-        BSP_LCD_DisplayStringAt(0, 25, (uint8_t*) "Status:", LEFT_MODE);
+    BSP_LCD_DisplayStringAt(30, 150, (uint8_t*) "Status:", LEFT_MODE);
     }
 
     _RightPad(status_str, status, ' ', sizeof(status_str));
 
-    BSP_LCD_DisplayStringAt(130, 25, (uint8_t*) status_str, LEFT_MODE);
-//    BSP_LCD_DisplayStringAtLine(2, (uint8_t*) status_str);
+  BSP_LCD_DisplayStringAt(160, 150, (uint8_t*) status_str, LEFT_MODE);
 }
 void FOTA_DisplayPercent(float percent) {
     char percent_str[9];

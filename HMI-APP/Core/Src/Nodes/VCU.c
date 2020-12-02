@@ -74,25 +74,21 @@ void VCU_CAN_RX_MixedData(can_rx_t *Rx) {
     BMS.d.soc = Rx->data.u8[1];
 
     // decide report value according to mode
-    if (HMI1.d.mode.val[SW_M_REPORT]  == SW_M_REPORT_RANGE) {
+  if (HMI1.d.mode.val[SW_M_REPORT] == SW_M_REPORT_RANGE)
         HMI1.d.mode.report = Rx->data.u8[2];
-    } else {
+  else
         HMI1.d.mode.report = Rx->data.u8[3];
-    }
 
     // odometer
     VCU.d.odometer = Rx->data.u32[1];
-    if (HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_ODO) {
+  if (HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_ODO)
         HMI1.d.mode.trip = VCU.d.odometer;
-    }
 }
 
 void VCU_CAN_RX_SubTripData(can_rx_t *Rx) {
     // read message
-    if (HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_A) {
+  if (HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_A)
         HMI1.d.mode.trip = Rx->data.u32[0];
-    }
-    else if (HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_B) {
+  else if (HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_B)
         HMI1.d.mode.trip = Rx->data.u32[1];
-    }
 }
