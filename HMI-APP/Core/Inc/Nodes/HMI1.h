@@ -35,7 +35,7 @@ typedef struct {
         uint8_t finger;
         uint8_t keyless;
         uint8_t daylight;
-    } status;
+  } state;
     struct {
         uint8_t left;
         uint8_t right;

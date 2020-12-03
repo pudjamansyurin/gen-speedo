@@ -196,14 +196,14 @@ uint8_t Model::readIndicatorState(uint8_t index)
 
 void Model::generateRandomIndicators()
 {
-  HMI1.d.status.abs = rand() & 1;
-  HMI1.d.status.mirroring = rand() & 1;
-  HMI1.d.status.lamp = rand() & 1;
-  HMI1.d.status.warning = rand() & 1;
-  HMI1.d.status.overheat = rand() & 1;
-  HMI1.d.status.finger = rand() & 1;
-  HMI1.d.status.keyless = rand() & 1;
-  HMI1.d.status.daylight = rand() & 1;
+  HMI1.d.state.abs = rand() & 1;
+  HMI1.d.state.mirroring = rand() & 1;
+  HMI1.d.state.lamp = rand() & 1;
+  HMI1.d.state.warning = rand() & 1;
+  HMI1.d.state.overheat = rand() & 1;
+  HMI1.d.state.finger = rand() & 1;
+  HMI1.d.state.keyless = rand() & 1;
+  HMI1.d.state.daylight = rand() & 1;
   HMI1.d.mode.reverse = rand() & 1;
 }
 
@@ -211,13 +211,13 @@ void Model::reloadIndicators()
 {
   uint8_t errors = 0;
 
-  indicators[INDICATOR_ABS] = HMI1.d.status.abs;
-  indicators[INDICATOR_MIRRORING] = HMI1.d.status.mirroring;
-  indicators[INDICATOR_LAMP] = HMI1.d.status.lamp;
-  indicators[INDICATOR_WARNING] = HMI1.d.status.warning;
-  indicators[INDICATOR_OVERHEAT] = HMI1.d.status.overheat;
-  indicators[INDICATOR_FINGER] = HMI1.d.status.finger;
-  indicators[INDICATOR_KEYLESS] = HMI1.d.status.keyless;
+  indicators[INDICATOR_ABS] = HMI1.d.state.abs;
+  indicators[INDICATOR_MIRRORING] = HMI1.d.state.mirroring;
+  indicators[INDICATOR_LAMP] = HMI1.d.state.lamp;
+  indicators[INDICATOR_WARNING] = HMI1.d.state.warning;
+  indicators[INDICATOR_OVERHEAT] = HMI1.d.state.overheat;
+  indicators[INDICATOR_FINGER] = HMI1.d.state.finger;
+  indicators[INDICATOR_KEYLESS] = HMI1.d.state.keyless;
   indicators[INDICATOR_LOWBAT] = BMS.d.soc < 20;
 
   for (uint8_t i = INDICATOR_GO; i < INDICATOR_MAX; ++i) {
