@@ -25,7 +25,6 @@ void _RightPad(char *dest, const char *src, const char pad, uint8_t sz);
 #if (!BOOTLOADER)
 void _FlushData(void);
 float _D2R(uint16_t deg);
-uint8_t _osThreadFlagsWait(uint32_t* notif, uint32_t flags, uint32_t options, uint32_t timeout);
 #else
 uint32_t _ByteSwap32(uint32_t x);
 #endif

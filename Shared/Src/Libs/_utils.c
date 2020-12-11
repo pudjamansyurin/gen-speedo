@@ -8,6 +8,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "Libs/_utils.h"
 #if (!BOOTLOADER)
+#include "Libs/_rtos_utils.h"
 #include "Nodes/VCU.h"
 #include "Nodes/HMI1.h"
 #include "Nodes/MCU.h"
@@ -22,18 +23,12 @@ extern mcu_t MCU;
 extern bms_t BMS;
 #endif
 
-/* Private functions declarations --------------------------------------------*/
-#if (!BOOTLOADER)
-static uint8_t _RTOS_ValidThreadFlag(uint32_t flag);
-static uint8_t _RTOS_ValidEventFlag(uint32_t flag);
-#endif
-
 /* Public functions implementations ------------------------------------------*/
 void _DelayMS(uint32_t ms) {
 #if RTOS_ENABLE
     osDelay(ms);
 #else
-	HAL_Delay(ms);
+  HAL_Delay(ms);
 #endif
 }
 
@@ -41,7 +36,7 @@ uint32_t _GetTickMS(void) {
 #if RTOS_ENABLE
     return osKernelGetTickCount();
 #else
-	return HAL_GetTick();
+  return HAL_GetTick();
 #endif
 }
 
@@ -55,9 +50,8 @@ void _LedToggle(void) {
 
 void _Error(char msg[50]) {
 #if RTOS_ENABLE
-    if (osKernelGetState() == osKernelRunning) {
+    if (osKernelGetState() == osKernelRunning)
         LOG_StrLn(msg);
-    }
 #else
 	LOG_StrLn(msg);
 #endif
@@ -98,12 +92,6 @@ float _D2R(uint16_t deg) {
 	return deg * M_PI / 180.0;
 }
 
-uint8_t _osThreadFlagsWait(uint32_t *notif, uint32_t flags, uint32_t options, uint32_t timeout) {
-	*notif = osThreadFlagsWait(flags, options, timeout);
-
-	return _RTOS_ValidThreadFlag(*notif);
-}
-
 #else
 uint32_t _ByteSwap32(uint32_t x) {
     uint32_t y = (x >> 24) & 0xff;
@@ -115,33 +103,3 @@ uint32_t _ByteSwap32(uint32_t x) {
 }
 #endif
 
-/* Private functions implementation --------------------------------------------*/
-#if (!BOOTLOADER)
-static uint8_t _RTOS_ValidThreadFlag(uint32_t flag) {
-	uint8_t ret = 1;
-
-	// check is empty
-	if (!flag) {
-		ret = 0;
-	} else if (flag & (~EVT_MASK )) {
-		// error
-		ret = 0;
-	}
-
-	return ret;
-}
-
-static uint8_t _RTOS_ValidEventFlag(uint32_t flag) {
-	uint8_t ret = 1;
-
-	// check is empty
-	if (!flag) {
-		ret = 0;
-	} else if (flag & (~EVENT_MASK )) {
-		// error
-		ret = 0;
-	}
-
-	return ret;
-}
-#endif
