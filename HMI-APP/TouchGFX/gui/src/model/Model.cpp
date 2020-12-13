@@ -202,7 +202,7 @@ void Model::generateRandomIndicators()
   HMI1.d.state.warning = rand() & 1;
   HMI1.d.state.overheat = rand() & 1;
   HMI1.d.state.finger = rand() & 1;
-  HMI1.d.state.unkeyless = rand() & 1;
+  HMI1.d.state.unremote = rand() & 1;
   HMI1.d.state.daylight = rand() & 1;
   HMI1.d.mode.reverse = rand() & 1;
 }
@@ -217,7 +217,7 @@ void Model::reloadIndicators()
   indicators[INDICATOR_WARNING] = HMI1.d.state.warning;
   indicators[INDICATOR_OVERHEAT] = HMI1.d.state.overheat;
   indicators[INDICATOR_FINGER] = HMI1.d.state.finger;
-  indicators[INDICATOR_UNKEYLESS] = HMI1.d.state.unkeyless;
+  indicators[INDICATOR_UNKEYLESS] = HMI1.d.state.unremote;
   indicators[INDICATOR_LOWBAT] = BMS.d.soc < 20;
 
   for (uint8_t i = INDICATOR_GO; i < INDICATOR_MAX; ++i) {
