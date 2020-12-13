@@ -29,12 +29,12 @@ Model::Model()
 #ifdef SIMULATOR
   generateRandomIndicators();
 
-  HMI1.d.mode.sel = SW_M_DRIVE;
+  HMI1.d.mode.sel = HBAR_M_DRIVE;
   HMI1.d.mode.hide = 0;
 
-  HMI1.d.mode.val[SW_M_TRIP] = SW_M_TRIP_ODO;
-  HMI1.d.mode.val[SW_M_DRIVE] = SW_M_DRIVE_STANDARD;
-  HMI1.d.mode.val[SW_M_REPORT] = SW_M_REPORT_RANGE;
+  HMI1.d.mode.val[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
+  HMI1.d.mode.val[HBAR_M_DRIVE] = HBAR_M_DRIVE_STANDARD;
+  HMI1.d.mode.val[HBAR_M_REPORT] = HBAR_M_REPORT_RANGE;
 #endif
 }
 
@@ -97,17 +97,17 @@ void Model::tick()
     uint8_t max, *mode;
 
     switch (HMI1.d.mode.sel) {
-      case SW_M_TRIP :
-        mode = &HMI1.d.mode.val[SW_M_TRIP];
-        max = SW_M_TRIP_MAX;
+      case HBAR_M_TRIP :
+        mode = &HMI1.d.mode.val[HBAR_M_TRIP];
+        max = HBAR_M_TRIP_MAX;
         break;
-      case SW_M_DRIVE:
-        mode = &HMI1.d.mode.val[SW_M_DRIVE];
-        max = SW_M_DRIVE_MAX;
+      case HBAR_M_DRIVE:
+        mode = &HMI1.d.mode.val[HBAR_M_DRIVE];
+        max = HBAR_M_DRIVE_MAX;
         break;
-      case SW_M_REPORT:
-        mode = &HMI1.d.mode.val[SW_M_REPORT];
-        max = SW_M_REPORT_MAX;
+      case HBAR_M_REPORT:
+        mode = &HMI1.d.mode.val[HBAR_M_REPORT];
+        max = HBAR_M_REPORT_MAX;
         break;
       default:
         break;
@@ -129,7 +129,7 @@ void Model::tick()
   }
 
   if (ticker % (60*3) == 0) {
-    if (HMI1.d.mode.sel >= SW_M_MAX) {
+    if (HMI1.d.mode.sel >= HBAR_M_MAX) {
       HMI1.d.mode.sel = 0;
     } else {
       HMI1.d.mode.sel++;
@@ -165,22 +165,22 @@ void Model::tick()
 
 #ifdef SIMULATOR
   switch (HMI1.d.mode.sel) {
-    case SW_M_TRIP :
-      modelListener->setTripMode(HMI1.d.mode.val[SW_M_TRIP]);
+    case HBAR_M_TRIP :
+      modelListener->setTripMode(HMI1.d.mode.val[HBAR_M_TRIP]);
       break;
-    case SW_M_DRIVE:
-      modelListener->setDriveMode(HMI1.d.mode.val[SW_M_DRIVE]);
+    case HBAR_M_DRIVE:
+      modelListener->setDriveMode(HMI1.d.mode.val[HBAR_M_DRIVE]);
       break;
-    case SW_M_REPORT:
-      modelListener->setReportMode(HMI1.d.mode.val[SW_M_REPORT]);
+    case HBAR_M_REPORT:
+      modelListener->setReportMode(HMI1.d.mode.val[HBAR_M_REPORT]);
       break;
     default:
       break;
   }
 #else
-  modelListener->setTripMode(HMI1.d.mode.val[SW_M_TRIP]);
-  modelListener->setDriveMode(HMI1.d.mode.val[SW_M_DRIVE]);
-  modelListener->setReportMode(HMI1.d.mode.val[SW_M_REPORT]);
+  modelListener->setTripMode(HMI1.d.mode.val[HBAR_M_TRIP]);
+  modelListener->setDriveMode(HMI1.d.mode.val[HBAR_M_DRIVE]);
+  modelListener->setReportMode(HMI1.d.mode.val[HBAR_M_REPORT]);
 #endif
 }
 

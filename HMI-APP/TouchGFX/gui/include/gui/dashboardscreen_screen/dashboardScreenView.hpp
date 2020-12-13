@@ -9,12 +9,12 @@
 #endif
 
 typedef struct {
-	Unicode::UnicodeChar mode[SW_M_DRIVE_MAX+1][12];
-	colortype color[SW_M_DRIVE_MAX+1];
+	Unicode::UnicodeChar mode[HBAR_M_DRIVE_MAX+1][12];
+	colortype color[HBAR_M_DRIVE_MAX+1];
 } drive_t;
 
 typedef struct {
-	touchgfx::Unicode::UnicodeChar mode[SW_M_TRIP_MAX+1][7];
+	touchgfx::Unicode::UnicodeChar mode[HBAR_M_TRIP_MAX+1][7];
 } trip_t;
 
 typedef struct {

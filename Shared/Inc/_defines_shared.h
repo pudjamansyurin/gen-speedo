@@ -90,32 +90,32 @@ typedef enum {
 } FOCAN;
 #else
 typedef enum {
-    SW_M_DRIVE = 0,
-    SW_M_TRIP,
-    SW_M_REPORT,
-    SW_M_MAX = 2
-} SW_MODE;
+    HBAR_M_DRIVE = 0,
+    HBAR_M_TRIP,
+    HBAR_M_REPORT,
+    HBAR_M_MAX = 2
+} HBAR_MODE;
 
 typedef enum {
-    SW_M_DRIVE_ECONOMY = 0,
-    SW_M_DRIVE_STANDARD,
-    SW_M_DRIVE_SPORT,
-    SW_M_DRIVE_PERFORMANCE,
-    SW_M_DRIVE_MAX = 3,
-} SW_MODE_DRIVE;
+    HBAR_M_DRIVE_ECONOMY = 0,
+    HBAR_M_DRIVE_STANDARD,
+    HBAR_M_DRIVE_SPORT,
+    HBAR_M_DRIVE_PERFORMANCE,
+    HBAR_M_DRIVE_MAX = 3,
+} HBAR_MODE_DRIVE;
 
 typedef enum {
-    SW_M_TRIP_ODO = 0,
-    SW_M_TRIP_A,
-    SW_M_TRIP_B,
-    SW_M_TRIP_MAX = 2,
-} SW_MODE_TRIP;
+    HBAR_M_TRIP_ODO = 0,
+    HBAR_M_TRIP_A,
+    HBAR_M_TRIP_B,
+    HBAR_M_TRIP_MAX = 2,
+} HBAR_MODE_TRIP;
 
 typedef enum {
-    SW_M_REPORT_RANGE = 0,
-    SW_M_REPORT_AVERAGE,
-    SW_M_REPORT_MAX = 1,
-} SW_MODE_REPORT;
+    HBAR_M_REPORT_RANGE = 0,
+    HBAR_M_REPORT_AVERAGE,
+    HBAR_M_REPORT_MAX = 1,
+} HBAR_MODE_REPORT;
 #endif
 
 #endif /* DEFINES_SHARED_H_ */

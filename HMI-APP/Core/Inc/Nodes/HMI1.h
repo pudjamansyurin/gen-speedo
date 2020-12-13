@@ -12,18 +12,18 @@
 #include "Libs/_utils.h"
 
 /* Exported struct -----------------------------------------------------------*/
-typedef struct {
-    struct {
-        char mode[SW_M_DRIVE_MAX+1][12];
-    } drive;
-    struct {
-        char mode[SW_M_TRIP_MAX+1][7];
-    } trip;
-    struct {
-        char mode[SW_M_REPORT_MAX+1][6];
-        char unit[SW_M_REPORT_MAX+1][11];
-    } report;
-} sw_mode_t;
+// typedef struct {
+//     struct {
+//         char mode[HBAR_M_DRIVE_MAX+1][12];
+//     } drive;
+//     struct {
+//         char mode[HBAR_M_TRIP_MAX+1][7];
+//     } trip;
+//     struct {
+//         char mode[HBAR_M_REPORT_MAX+1][6];
+//         char unit[HBAR_M_REPORT_MAX+1][11];
+//     } report;
+// } sw_mode_t;
 
 typedef struct {
     struct {
@@ -45,7 +45,7 @@ typedef struct {
         uint8_t hide;
         uint8_t sel;
 
-        uint8_t val[SW_M_MAX+1];
+        uint8_t val[HBAR_M_MAX+1];
         uint8_t report;
         uint32_t trip;
     } mode;

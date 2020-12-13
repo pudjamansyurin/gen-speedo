@@ -38,11 +38,11 @@ void HMI1_Init(void) {
   HMI1.d.sein.right = 0;
 
   HMI1.d.mode.reverse = 0;
-  HMI1.d.mode.sel = SW_M_TRIP;
+  HMI1.d.mode.sel = HBAR_M_TRIP;
   HMI1.d.mode.hide = 0;
-  HMI1.d.mode.val[SW_M_DRIVE] = SW_M_DRIVE_ECONOMY;
-  HMI1.d.mode.val[SW_M_TRIP] = SW_M_TRIP_ODO;
-  HMI1.d.mode.val[SW_M_REPORT] = SW_M_REPORT_RANGE;
+  HMI1.d.mode.val[HBAR_M_DRIVE] = HBAR_M_DRIVE_ECONOMY;
+  HMI1.d.mode.val[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
+  HMI1.d.mode.val[HBAR_M_REPORT] = HBAR_M_REPORT_RANGE;
   HMI1.d.mode.trip = 0;
   HMI1.d.mode.report = 0;
 }

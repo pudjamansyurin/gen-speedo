@@ -54,9 +54,9 @@ void VCU_CAN_RX_SwitchModeControl(can_rx_t *Rx) {
   HMI1.d.mode.reverse = _R1(Rx->data.u8[1], 2);
 
   // mode
-  HMI1.d.mode.val[SW_M_DRIVE] = _R2(Rx->data.u8[2], 0);
-  HMI1.d.mode.val[SW_M_TRIP] = _R1(Rx->data.u8[2], 2);
-  HMI1.d.mode.val[SW_M_REPORT] = _R1(Rx->data.u8[2], 4);
+  HMI1.d.mode.val[HBAR_M_DRIVE] = _R2(Rx->data.u8[2], 0);
+  HMI1.d.mode.val[HBAR_M_TRIP] = _R1(Rx->data.u8[2], 2);
+  HMI1.d.mode.val[HBAR_M_REPORT] = _R1(Rx->data.u8[2], 4);
   HMI1.d.mode.sel = _R2(Rx->data.u8[2], 5);
   HMI1.d.mode.hide = _R1(Rx->data.u8[2], 7);
 
@@ -74,21 +74,21 @@ void VCU_CAN_RX_MixedData(can_rx_t *Rx) {
   BMS.d.soc = Rx->data.u8[1];
 
   // decide report value according to mode
-  if (HMI1.d.mode.val[SW_M_REPORT] == SW_M_REPORT_RANGE)
+  if (HMI1.d.mode.val[HBAR_M_REPORT] == HBAR_M_REPORT_RANGE)
     HMI1.d.mode.report = Rx->data.u8[2];
   else
     HMI1.d.mode.report = Rx->data.u8[3];
 
   // odometer
   VCU.d.odometer = Rx->data.u32[1];
-  if (HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_ODO)
+  if (HMI1.d.mode.val[HBAR_M_TRIP] == HBAR_M_TRIP_ODO)
     HMI1.d.mode.trip = VCU.d.odometer;
 }
 
 void VCU_CAN_RX_SubTripData(can_rx_t *Rx) {
   // read message
-  if (HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_A)
+  if (HMI1.d.mode.val[HBAR_M_TRIP] == HBAR_M_TRIP_A)
     HMI1.d.mode.trip = Rx->data.u32[0];
-  else if (HMI1.d.mode.val[SW_M_TRIP] == SW_M_TRIP_B)
+  else if (HMI1.d.mode.val[HBAR_M_TRIP] == HBAR_M_TRIP_B)
     HMI1.d.mode.trip = Rx->data.u32[1];
 }

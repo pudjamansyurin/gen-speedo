@@ -2,8 +2,8 @@
 #include <touchgfx/Color.hpp>
 #include "BitmapDatabase.hpp"
 
-touchgfx::Container *modeContainer[SW_M_MAX+1];
-uint8_t modeSelected = SW_M_DRIVE;
+touchgfx::Container *modeContainer[HBAR_M_MAX+1];
+uint8_t modeSelected = HBAR_M_DRIVE;
 uint8_t modeVisible = 1;
 
 uint8_t animationSpeed = 10;
@@ -44,9 +44,9 @@ dashboardScreenView::dashboardScreenView() :
   posIndicator.next.x = iconContainer.getWidth() - prevIconContainer.getWidth() + 200;
   posIndicator.next.y = iconContainer.getHeight() / 5;
 
-  modeContainer[SW_M_TRIP] = &tripModeContainer;
-  modeContainer[SW_M_DRIVE] = &driveModeContainer;
-  modeContainer[SW_M_REPORT] = &reportModeContainer;
+  modeContainer[HBAR_M_TRIP] = &tripModeContainer;
+  modeContainer[HBAR_M_DRIVE] = &driveModeContainer;
+  modeContainer[HBAR_M_REPORT] = &reportModeContainer;
 
   M_DRIVE.color[0] = Color::getColorFrom24BitRGB(255, 255, 0);
   M_DRIVE.color[1] = Color::getColorFrom24BitRGB(0, 255, 0);
@@ -116,7 +116,7 @@ void dashboardScreenView::handleTickEvent()
 
 void dashboardScreenView::writeModeSelector(uint8_t mode)
 {
-  for (uint8_t i = 0; i <= SW_M_MAX; i++) {
+  for (uint8_t i = 0; i <= HBAR_M_MAX; i++) {
     if (i == mode) {
       modeSelected = mode;
     } else {
