@@ -44,53 +44,46 @@ void Model::tick()
 
 #ifdef SIMULATOR
   if (ticker % 1 == 0) {
-    if (VCU.d.speed >= MCU_SPEED_MAX) {
+    if (VCU.d.speed >= MCU_SPEED_MAX)
       VCU.d.speed = 0;
-    } else {
+    else
       VCU.d.speed += 5;
-    }
 
     MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
   }
 
   if (ticker % 10 == 0) {
-    if (HMI1.d.mode.trip >= 999999) {
+    if (HMI1.d.mode.trip >= 999999)
       HMI1.d.mode.trip = 0;
-    } else {
+    else
       HMI1.d.mode.trip++;
-    }
   }
 
-  if (ticker % 15 == 0) {
+  if (ticker % 15 == 0)
     HMI1.d.mode.hide = !HMI1.d.mode.hide;
-  }
 
   if (ticker % 20 == 0) {
-    if (HMI1.d.mode.report >= 255) {
+    if (HMI1.d.mode.report >= 255)
       HMI1.d.mode.report = 0;
-    } else {
+    else
       HMI1.d.mode.report++;
-    }
-
   }
 
   if(ticker % 30 == 0) {
-    if (VCU.d.signal >= 100) {
+    if (VCU.d.signal >= 100)
       VCU.d.signal = 0;
-    } else {
+    else
       VCU.d.signal++;
-    }
 
     HMI1.d.sein.left =!HMI1.d.sein.left;
     HMI1.d.sein.right = !HMI1.d.sein.right;
   }
 
   if (ticker % 50 == 0) {
-    if (BMS.d.soc >= 100) {
+    if (BMS.d.soc >= 100)
       BMS.d.soc = 0;
-    } else {
+    else
       BMS.d.soc++;
-    }
   }
 
   if (ticker % 60 == 0) {
@@ -113,27 +106,24 @@ void Model::tick()
         break;
     }
 
-    if (*mode >= max) {
+    if (*mode >= max)
       *mode = 0;
-    } else {
+    else
       (*mode)++;
-    }
   }
 
   if (ticker % (60*2) == 0) {
-    if (indicator >= INDICATOR_MAX) {
+    if (indicator >= INDICATOR_MAX)
       indicator = 0;
-    } else {
+    else
       indicator++;
-    }
   }
 
   if (ticker % (60*3) == 0) {
-    if (HMI1.d.mode.sel >= HBAR_M_MAX) {
+    if (HMI1.d.mode.sel >= HBAR_M_MAX)
       HMI1.d.mode.sel = 0;
-    } else {
+    else
       HMI1.d.mode.sel++;
-    }
   }
 
   if (ticker % (60*60) == 0) {
@@ -141,9 +131,8 @@ void Model::tick()
   }
 #endif
 
-  if (ticker % (60 * 2) == 0) {
+  if (ticker % (60 * 2) == 0)
     swipeIndicator();
-  }
 
   // write to LCD
   modelListener->setSpeed(VCU.d.speed);
@@ -217,7 +206,7 @@ void Model::reloadIndicators()
   indicators[INDICATOR_WARNING] = HMI1.d.state.warning;
   indicators[INDICATOR_OVERHEAT] = HMI1.d.state.overheat;
   indicators[INDICATOR_FINGER] = HMI1.d.state.finger;
-  indicators[INDICATOR_UNKEYLESS] = HMI1.d.state.unremote;
+      indicators[INDICATOR_UNREMOTE] = HMI1.d.state.unremote;
   indicators[INDICATOR_LOWBAT] = BMS.d.soc < 20;
 
   for (uint8_t i = INDICATOR_GO; i < INDICATOR_MAX; ++i) {
@@ -257,8 +246,7 @@ void Model::swipeIndicator()
     }
   }
   // fallback
-  if (!found) {
+      if (!found)
     indicator = 1;
-  }
 }
 

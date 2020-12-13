@@ -92,7 +92,7 @@ void dashboardScreenView::handleTickEvent()
 
       if (curIndicator == INDICATOR_FINGER ||
           curIndicator == INDICATOR_MIRRORING ||
-          curIndicator == INDICATOR_UNKEYLESS
+          curIndicator == INDICATOR_UNREMOTE
               ) {
         if (ticker == 45) {
           nextIndicator.container->setVisible(false);
