@@ -133,9 +133,6 @@ void StartCanRxTask(void *argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-extern hmi1_t HMI1;
-extern vcu_t VCU;
-extern mcu_t MCU;
 /* USER CODE END 0 */
 
 /**

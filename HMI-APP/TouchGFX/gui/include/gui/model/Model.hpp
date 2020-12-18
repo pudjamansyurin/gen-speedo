@@ -4,8 +4,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-//#define LCD_TESTING
-//#define SIMULATOR
+#define LCD_TESTING
+#define SIMULATOR
 
 #if !defined(SIMULATOR) || defined(LCD_TESTING)
 #include "_defines_shared.h"
@@ -91,7 +91,7 @@ typedef struct {
       uint8_t lamp;
       uint8_t warning;
       uint8_t overheat;
-      uint8_t finger;
+      uint8_t unfinger;
       uint8_t unremote;
       uint8_t daylight;
     } state;

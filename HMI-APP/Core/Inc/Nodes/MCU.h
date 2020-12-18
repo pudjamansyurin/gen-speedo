@@ -22,6 +22,9 @@ typedef struct {
 	void (*Init)(void);
 } mcu_t;
 
+/* Exported variables ---------------------------------------------------------*/
+extern mcu_t MCU;
+
 /* Public functions implementation --------------------------------------------*/
 void MCU_Init(void);
 

@@ -15,14 +15,6 @@
 #include "Nodes/BMS.h"
 #endif
 
-/* External variables --------------------------------------------------------*/
-#if (!BOOTLOADER)
-extern vcu_t VCU;
-extern hmi1_t HMI1;
-extern mcu_t MCU;
-extern bms_t BMS;
-#endif
-
 /* Public functions implementations ------------------------------------------*/
 void _DelayMS(uint32_t ms) {
 #if RTOS_ENABLE

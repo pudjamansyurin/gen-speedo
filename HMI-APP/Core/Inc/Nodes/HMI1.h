@@ -19,7 +19,7 @@ typedef struct {
     uint8_t lamp;
     uint8_t warning;
     uint8_t overheat;
-    uint8_t finger;
+    uint8_t unfinger;
     uint8_t unremote;
     uint8_t daylight;
   } state;
@@ -49,6 +49,9 @@ typedef struct {
   hmi1_can_t can;
   void (*Init)(void);
 } hmi1_t;
+
+/* Exported variables ---------------------------------------------------------*/
+extern hmi1_t HMI1;
 
 /* Public functions implementation --------------------------------------------*/
 void HMI1_Init(void);

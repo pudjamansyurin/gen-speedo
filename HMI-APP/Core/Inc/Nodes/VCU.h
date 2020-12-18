@@ -33,6 +33,9 @@ typedef struct {
     void (*Init)(void);
 } vcu_t;
 
+/* Exported variables ---------------------------------------------------------*/
+extern vcu_t VCU;
+
 /* Public functions implementation --------------------------------------------*/
 void VCU_Init(void);
 void VCU_CAN_RX_SwitchModeControl(can_rx_t *Rx);

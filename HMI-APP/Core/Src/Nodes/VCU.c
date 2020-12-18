@@ -44,7 +44,7 @@ void VCU_CAN_RX_SwitchModeControl(can_rx_t *Rx) {
   HMI1.d.state.lamp = _R1(Rx->data.u8[0], 2);
   HMI1.d.state.warning = _R1(Rx->data.u8[0], 3);
   HMI1.d.state.overheat = _R1(Rx->data.u8[0], 4);
-  HMI1.d.state.finger = _R1(Rx->data.u8[0], 5);
+  HMI1.d.state.unfinger = _R1(Rx->data.u8[0], 5);
   HMI1.d.state.unremote = _R1(Rx->data.u8[0], 6);
   HMI1.d.state.daylight = _R1(Rx->data.u8[0], 7);
 

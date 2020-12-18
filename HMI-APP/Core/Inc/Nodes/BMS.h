@@ -21,6 +21,9 @@ typedef struct {
 	void (*Init)(void);
 } bms_t;
 
+/* Exported variables ---------------------------------------------------------*/
+extern bms_t BMS;
+
 /* Public functions implementation --------------------------------------------*/
 void BMS_Init(void);
 

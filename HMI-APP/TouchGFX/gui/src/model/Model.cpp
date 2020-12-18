@@ -10,11 +10,6 @@ extern "C"
 #include "Nodes/BMS.h"
 #include "Nodes/MCU.h"
 }
-
-extern "C" vcu_t VCU;
-extern "C" hmi1_t HMI1;
-extern "C" bms_t BMS;
-extern "C" mcu_t MCU;
 #else
 vcu_t VCU;
 bms_t BMS;
@@ -190,7 +185,7 @@ void Model::generateRandomIndicators()
   HMI1.d.state.lamp = rand() & 1;
   HMI1.d.state.warning = rand() & 1;
   HMI1.d.state.overheat = rand() & 1;
-  HMI1.d.state.finger = rand() & 1;
+  HMI1.d.state.unfinger = rand() & 1;
   HMI1.d.state.unremote = rand() & 1;
   HMI1.d.state.daylight = rand() & 1;
   HMI1.d.mode.reverse = rand() & 1;
@@ -205,8 +200,8 @@ void Model::reloadIndicators()
   indicators[INDICATOR_LAMP] = HMI1.d.state.lamp;
   indicators[INDICATOR_WARNING] = HMI1.d.state.warning;
   indicators[INDICATOR_OVERHEAT] = HMI1.d.state.overheat;
-  indicators[INDICATOR_FINGER] = HMI1.d.state.finger;
-      indicators[INDICATOR_UNREMOTE] = HMI1.d.state.unremote;
+  indicators[INDICATOR_FINGER] = HMI1.d.state.unfinger;
+  indicators[INDICATOR_UNREMOTE] = HMI1.d.state.unremote;
   indicators[INDICATOR_LOWBAT] = BMS.d.soc < 20;
 
   for (uint8_t i = INDICATOR_GO; i < INDICATOR_MAX; ++i) {
@@ -246,7 +241,7 @@ void Model::swipeIndicator()
     }
   }
   // fallback
-      if (!found)
+  if (!found)
     indicator = 1;
 }
 
