@@ -14,23 +14,26 @@
 
 /* Exported struct -----------------------------------------------------------*/
 typedef struct {
-    uint8_t signal;
-    uint8_t speed;
-    uint32_t odometer;
+  uint8_t signal;
+  uint8_t speed;
+  uint32_t odometer;
+  struct {
+    uint32_t canRx;
+  } tick;
 } vcu_data_t;
 
 typedef struct {
-    struct {
-        void (*SwitchModeControl)(can_rx_t*);
-        void (*MixedData)(can_rx_t*);
-        void (*SubTripData)(can_rx_t*);
-    } r;
+  struct {
+    void (*SwitchModeControl)(can_rx_t*);
+    void (*MixedData)(can_rx_t*);
+    void (*SubTripData)(can_rx_t*);
+  } r;
 } vcu_can_t;
 
 typedef struct {
-    vcu_data_t d;
-    vcu_can_t can;
-    void (*Init)(void);
+  vcu_data_t d;
+  vcu_can_t can;
+  void (*Init)(void);
 } vcu_t;
 
 /* Exported variables ---------------------------------------------------------*/

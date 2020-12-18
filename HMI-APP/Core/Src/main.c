@@ -65,28 +65,28 @@ SDRAM_HandleTypeDef hsdram1;
 osThreadId_t ManagerTaskHandle;
 const osThreadAttr_t ManagerTask_attributes = {
   .name = "ManagerTask",
-  .priority = (osPriority_t) osPriorityRealtime7,
+  .priority = (osPriority_t) osPriorityRealtime,
   .stack_size = 128 * 4
 };
 /* Definitions for DisplayTask */
 osThreadId_t DisplayTaskHandle;
 const osThreadAttr_t DisplayTask_attributes = {
   .name = "DisplayTask",
-  .priority = (osPriority_t) osPriorityNormal,
+  .priority = (osPriority_t) osPriorityAboveNormal,
   .stack_size = 4096 * 4
 };
 /* Definitions for CanTxTask */
 osThreadId_t CanTxTaskHandle;
 const osThreadAttr_t CanTxTask_attributes = {
   .name = "CanTxTask",
-  .priority = (osPriority_t) osPriorityHigh,
+  .priority = (osPriority_t) osPriorityBelowNormal,
   .stack_size = 192 * 4
 };
 /* Definitions for CanRxTask */
 osThreadId_t CanRxTaskHandle;
 const osThreadAttr_t CanRxTask_attributes = {
   .name = "CanRxTask",
-  .priority = (osPriority_t) osPriorityAboveNormal,
+  .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 192 * 4
 };
 /* Definitions for CanRxQueue */
@@ -184,15 +184,15 @@ int main(void)
   LogMutexHandle = osMutexNew(&LogMutex_attributes);
 
   /* USER CODE BEGIN RTOS_MUTEX */
-	/* add mutexes, ... */
+  /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
-	/* add semaphores, ... */
+  /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
-	/* start timers, add new ones, ... */
+  /* start timers, add new ones, ... */
 
   /* USER CODE END RTOS_TIMERS */
 
@@ -201,7 +201,7 @@ int main(void)
   CanRxQueueHandle = osMessageQueueNew (10, sizeof(can_rx_t), &CanRxQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
-	/* add queues, ... */
+  /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
@@ -218,7 +218,7 @@ int main(void)
   CanRxTaskHandle = osThreadNew(StartCanRxTask, NULL, &CanRxTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
-	/* add threads, ... */
+  /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
   /* creation of GlobalEvent */
@@ -234,12 +234,12 @@ int main(void)
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	while (1)
-	{
+  while (1)
+  {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	}
+  }
   /* USER CODE END 3 */
 }
 
@@ -535,7 +535,7 @@ static void MX_FMC_Init(void)
   }
 
   /* USER CODE BEGIN FMC_Init 2 */
-	MX_SDRAM_InitEx();
+  MX_SDRAM_InitEx();
   /* USER CODE END FMC_Init 2 */
 }
 
@@ -664,31 +664,35 @@ static void MX_GPIO_Init(void)
 void StartManagerTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
-	TickType_t lastWake;
+  TickType_t lastWake;
 
-	CANBUS_Init();
+  CANBUS_Init(&hcan2);
 
-	// Reset database
-	_LcdPower(0);
-	_FlushData();
+  // Reset database
+  _LcdPower(0);
+  _FlushData();
 
-	// suspend other threads
-	//    osThreadSuspend(DisplayTaskHandle);
-	//    osThreadSuspend(CanTxTaskHandle);
-	//    osThreadSuspend(CanRxTaskHandle);
+  // suspend other threads
+  //    osThreadSuspend(DisplayTaskHandle);
+  //    osThreadSuspend(CanTxTaskHandle);
+  //    osThreadSuspend(CanRxTaskHandle);
 
-	// Release other threads
-	osEventFlagsSet(GlobalEventHandle, EVENT_READY);
+  // Release other threads
+  osEventFlagsSet(GlobalEventHandle, EVENT_READY);
 
-	/* Infinite loop */
-	for (;;) {
-		lastWake = osKernelGetTickCount();
+  /* Infinite loop */
+  for (;;) {
+    lastWake = osKernelGetTickCount();
 
-		// Feed the dog
-		HAL_IWDG_Refresh(&hiwdg);
+    // Feed the dog
+    HAL_IWDG_Refresh(&hiwdg);
 
-		osDelayUntil(lastWake + pdMS_TO_TICKS(10));
-	}
+    // reset display
+    if (_GetTickMS() - VCU.d.tick.canRx > 5000)
+      _FlushData();
+
+    osDelayUntil(lastWake + 1000);
+  }
   /* USER CODE END 5 */
 }
 
@@ -702,16 +706,16 @@ void StartManagerTask(void *argument)
 void StartDisplayTask(void *argument)
 {
   /* USER CODE BEGIN StartDisplayTask */
-	// wait until ManagerTask done
-	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
+  // wait until ManagerTask done
+  osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
-	// Hand-over this thread to TouchGFX
-	MX_TouchGFX_Process();
+  // Hand-over this thread to TouchGFX
+  MX_TouchGFX_Process();
 
-	/* Infinite loop */
-	for (;;) {
-		osDelay(1);
-	}
+  /* Infinite loop */
+  for (;;) {
+    osDelay(1);
+  }
   /* USER CODE END StartDisplayTask */
 }
 
@@ -725,19 +729,19 @@ void StartDisplayTask(void *argument)
 void StartCanTxTask(void *argument)
 {
   /* USER CODE BEGIN StartCanTxTask */
-	TickType_t lastWake;
+  TickType_t lastWake;
 
-	// wait until ManagerTask done
-	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
+  // wait until ManagerTask done
+  osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
-	/* Infinite loop */
-	for (;;) {
-		lastWake = osKernelGetTickCount();
+  /* Infinite loop */
+  for (;;) {
+    lastWake = osKernelGetTickCount();
 
-		HMI1.can.t.Heartbeat();
+    HMI1.can.t.Heartbeat();
 
-		osDelayUntil(lastWake + pdMS_TO_TICKS(500));
-	}
+    osDelayUntil(lastWake + 500);
+  }
   /* USER CODE END StartCanTxTask */
 }
 
@@ -751,39 +755,37 @@ void StartCanTxTask(void *argument)
 void StartCanRxTask(void *argument)
 {
   /* USER CODE BEGIN StartCanRxTask */
-	can_rx_t Rx;
+  can_rx_t Rx;
 
-	// wait until ManagerTask done
-	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
+  // wait until ManagerTask done
+  osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
-	/* Infinite loop */
-	for (;;) {
-		// get can rx in queue
-		if (osMessageQueueGet(CanRxQueueHandle, &Rx, NULL, pdMS_TO_TICKS(1000)) == osOK) {
-			// handle message
-			switch (CANBUS_ReadID(&(Rx.header))) {
-				case CAND_VCU_SWITCH :
-					VCU.can.r.SwitchModeControl(&Rx);
-					_LcdBacklight(HMI1.d.state.daylight);
-					break;
-				case CAND_VCU_SELECT_SET :
-					VCU.can.r.MixedData(&Rx);
-					break;
-				case CAND_VCU_TRIP_MODE :
-					VCU.can.r.SubTripData(&Rx);
-					break;
-				case CAND_SET_PROGRESS :
-					FW_EnterModeIAP();
-					break;
-				default:
-					break;
-			}
-    } else {
-      // update display
-			_FlushData();
-			LOG_StrLn("CANBUS: Timeout");
-		}
-	}
+  /* Infinite loop */
+  for (;;) {
+    // get can rx in queue
+    if (osMessageQueueGet(CanRxQueueHandle, &Rx, NULL, 1000) == osOK) {
+      VCU.d.tick.canRx = _GetTickMS();
+
+      // handle message
+      switch (CANBUS_ReadID(&(Rx.header))) {
+        case CAND_VCU_SWITCH :
+          VCU.can.r.SwitchModeControl(&Rx);
+          _LcdBacklight(HMI1.d.state.daylight);
+          break;
+        case CAND_VCU_SELECT_SET :
+          VCU.can.r.MixedData(&Rx);
+          break;
+        case CAND_VCU_TRIP_MODE :
+          VCU.can.r.SubTripData(&Rx);
+          break;
+        case CAND_SET_PROGRESS :
+          FW_EnterModeIAP();
+          break;
+        default:
+          break;
+      }
+    }
+  }
   /* USER CODE END StartCanRxTask */
 }
 
@@ -814,8 +816,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-	/* User can add his own implementation to report the HAL error return state */
-	_Error("Error Handler");
+  /* User can add his own implementation to report the HAL error return state */
+  _Error("Error Handler");
   /* USER CODE END Error_Handler_Debug */
 }
 
@@ -830,7 +832,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
-	/* User can add his own implementation to report the file name and line number,
+  /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }

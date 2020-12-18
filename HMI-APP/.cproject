@@ -71,6 +71,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/HMI-APP/Shared/Inc}&quot;"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/target"/>
 									<listOptionValue builtIn="false" value="../Inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/STemWin/inc"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.282127587" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
