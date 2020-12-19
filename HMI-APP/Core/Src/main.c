@@ -94,11 +94,6 @@ osMessageQueueId_t CanRxQueueHandle;
 const osMessageQueueAttr_t CanRxQueue_attributes = {
   .name = "CanRxQueue"
 };
-/* Definitions for CanTxMutex */
-osMutexId_t CanTxMutexHandle;
-const osMutexAttr_t CanTxMutex_attributes = {
-  .name = "CanTxMutex"
-};
 /* Definitions for LogMutex */
 osMutexId_t LogMutexHandle;
 const osMutexAttr_t LogMutex_attributes = {
@@ -177,9 +172,6 @@ int main(void)
   /* Init scheduler */
   osKernelInitialize();
   /* Create the mutex(es) */
-  /* creation of CanTxMutex */
-  CanTxMutexHandle = osMutexNew(&CanTxMutex_attributes);
-
   /* creation of LogMutex */
   LogMutexHandle = osMutexNew(&LogMutex_attributes);
 

@@ -8,19 +8,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "Drivers/_canbus.h"
 
-///* External variables ---------------------------------------------------------*/
-//extern CAN_HandleTypeDef hcan2;
-//#if (!BOOTLOADER)
-//extern osMutexId_t CanTxMutexHandle;
-//extern osMessageQueueId_t CanRxQueueHandle;
-//#endif
-//
-///* Private variables ----------------------------------------------------------*/
-//static uint8_t CAN_ACTIVE = 0;
-
 /* External variables ----------------------------------------------------------*/
 #if (!BOOTLOADER)
-extern osMutexId_t CanTxMutexHandle;
+//extern osMutexId_t CanTxMutexHandle;
 extern osMessageQueueId_t CanRxQueueHandle;
 #endif
 
@@ -187,15 +177,15 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 
 /* Private functions implementation --------------------------------------------*/
 static void lock(void) {
-#if (!BOOTLOADER)
-  osMutexAcquire(CanTxMutexHandle, osWaitForever);
-#endif
+//#if (!BOOTLOADER)
+//  osMutexAcquire(CanTxMutexHandle, osWaitForever);
+//#endif
 }
 
 static void unlock(void) {
-#if (!BOOTLOADER)
-  osMutexRelease(CanTxMutexHandle);
-#endif
+//#if (!BOOTLOADER)
+//  osMutexRelease(CanTxMutexHandle);
+//#endif
 }
 
 static void CANBUS_Header(CAN_TxHeaderTypeDef *TxHeader, uint32_t address, uint32_t DLC) {
