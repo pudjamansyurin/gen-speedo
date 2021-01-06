@@ -21,7 +21,7 @@ static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size);
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOCAN_Upgrade(uint8_t factory) {
   can_rx_t Rx;
-  uint8_t p, success = 0;
+  uint8_t p = 0, success = 0;
   uint32_t timeout = 30000;
   uint32_t tick, iTick;
   uint32_t SIZE = 0;
