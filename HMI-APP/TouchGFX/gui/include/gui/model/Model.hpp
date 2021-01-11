@@ -126,9 +126,11 @@ public:
 
   void tick();
 
+#if defined(SIMULATOR)
+  void generateRandomIndicators();
+#endif
   uint8_t readCurrentIndicator();
   uint8_t readIndicatorState(uint8_t index);
-  void generateRandomIndicators();
   void reloadIndicators();
   void swipeIndicator();
   protected:

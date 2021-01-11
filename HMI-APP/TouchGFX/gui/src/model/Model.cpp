@@ -82,7 +82,7 @@ void Model::tick()
   }
 
   if (ticker % 60 == 0) {
-    uint8_t max, *mode;
+    uint8_t max = 0, *mode = NULL;
 
     switch (HMI1.d.mode.sel) {
       case HBAR_M_TRIP :
@@ -123,12 +123,27 @@ void Model::tick()
 
   if (ticker % (60 * 60) == 0)
     generateRandomIndicators();
+
+  switch (HMI1.d.mode.sel) {
+    case HBAR_M_TRIP :
+      modelListener->setTripMode(HMI1.d.mode.val[HBAR_M_TRIP]);
+      break;
+    case HBAR_M_DRIVE:
+      modelListener->setDriveMode(HMI1.d.mode.val[HBAR_M_DRIVE]);
+      break;
+    case HBAR_M_REPORT:
+      modelListener->setReportMode(HMI1.d.mode.val[HBAR_M_REPORT]);
+      break;
+    default:
+      break;
+  }
 #endif
 
-  if (ticker % (60 * 2) == 0)
-    swipeIndicator();
-
   // write to LCD
+  modelListener->setTripMode(HMI1.d.mode.val[HBAR_M_TRIP]);
+  modelListener->setDriveMode(HMI1.d.mode.val[HBAR_M_DRIVE]);
+  modelListener->setReportMode(HMI1.d.mode.val[HBAR_M_REPORT]);
+
   modelListener->setSpeed(VCU.d.speed);
   modelListener->setEngineRotation(MCU.d.rpm);
 
@@ -146,25 +161,8 @@ void Model::tick()
   modelListener->setModeSelector(HMI1.d.mode.sel);
   modelListener->setModeVisible(!HMI1.d.mode.hide);
 
-#ifdef SIMULATOR
-  switch (HMI1.d.mode.sel) {
-    case HBAR_M_TRIP :
-      modelListener->setTripMode(HMI1.d.mode.val[HBAR_M_TRIP]);
-      break;
-    case HBAR_M_DRIVE:
-      modelListener->setDriveMode(HMI1.d.mode.val[HBAR_M_DRIVE]);
-      break;
-    case HBAR_M_REPORT:
-      modelListener->setReportMode(HMI1.d.mode.val[HBAR_M_REPORT]);
-      break;
-    default:
-      break;
-  }
-#else
-  modelListener->setTripMode(HMI1.d.mode.val[HBAR_M_TRIP]);
-  modelListener->setDriveMode(HMI1.d.mode.val[HBAR_M_DRIVE]);
-  modelListener->setReportMode(HMI1.d.mode.val[HBAR_M_REPORT]);
-#endif
+  if (ticker % (60 * 2) == 0)
+    swipeIndicator();
 }
 
 uint8_t Model::readCurrentIndicator()
@@ -177,6 +175,7 @@ uint8_t Model::readIndicatorState(uint8_t index)
   return indicators[index];
 }
 
+#ifdef SIMULATOR
 void Model::generateRandomIndicators()
 {
   HMI1.d.state.abs = rand() & 1;
@@ -189,6 +188,7 @@ void Model::generateRandomIndicators()
   HMI1.d.state.daylight = rand() & 1;
   HMI1.d.mode.reverse = rand() & 1;
 }
+#endif
 
 void Model::reloadIndicators()
 {
@@ -239,8 +239,8 @@ void Model::swipeIndicator()
       }
     }
   }
-  // fallback
+  // fall-back
   if (!found)
-    indicator = 1;
+    indicator = INDICATOR_GO;
 }
 
