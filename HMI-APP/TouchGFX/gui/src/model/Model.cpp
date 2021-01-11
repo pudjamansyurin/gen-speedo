@@ -26,6 +26,9 @@ Model::Model()
 
   HMI1.d.mode.sel = HBAR_M_DRIVE;
   HMI1.d.mode.hide = 0;
+  
+    // HMI1.d.sein.left = 1;
+    // HMI1.d.sein.right = 1;
 
   HMI1.d.mode.val[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
   HMI1.d.mode.val[HBAR_M_DRIVE] = HBAR_M_DRIVE_STANDARD;
@@ -69,9 +72,6 @@ void Model::tick()
       VCU.d.signal = 0;
     else
       VCU.d.signal++;
-
-    HMI1.d.sein.left =!HMI1.d.sein.left;
-    HMI1.d.sein.right = !HMI1.d.sein.right;
   }
 
   if (ticker % 50 == 0) {
@@ -84,6 +84,9 @@ void Model::tick()
   if (ticker % 60 == 0) {
     uint8_t max = 0, *mode = NULL;
 
+    HMI1.d.sein.left = !HMI1.d.sein.left;
+    HMI1.d.sein.right = !HMI1.d.sein.right;
+	
     switch (HMI1.d.mode.sel) {
       case HBAR_M_TRIP :
         mode = &HMI1.d.mode.val[HBAR_M_TRIP];

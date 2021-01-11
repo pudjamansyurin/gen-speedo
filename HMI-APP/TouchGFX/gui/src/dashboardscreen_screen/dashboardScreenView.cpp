@@ -137,17 +137,11 @@ void dashboardScreenView::writeSein(uint8_t leftSide, uint8_t state)
 
   sein = leftSide ? &seinLeft : &seinRight;
 
-  if (!sein->isVisible() && state) {
-    sein->setVisible(true);
+  if (state)
     sein->startMoveAnimation(0, 0, animationSpeed, EasingEquations::linearEaseOut, EasingEquations::linearEaseOut);
-    sein->invalidate();
-  }
-
-  if (sein->isVisible() && !state) {
-    sein->setVisible(false);
+  else
     sein->setXY(80 * (leftSide ? 1 : -1), 0);
-    sein->invalidate();
-  }
+  sein->invalidate();
 }
 
 void dashboardScreenView::writeSpeed(uint8_t percent)

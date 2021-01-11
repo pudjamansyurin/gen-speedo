@@ -4,6 +4,7 @@
       {
         "Components": [
           {
+            "Type": "Box",
             "Color": {
               "Red": 0,
               "Green": 0,
@@ -15,14 +16,15 @@
             "Y": 0,
             "Width": 800,
             "Height": 480,
-            "Type": "Box",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
+            "Type": "Image",
             "RelativeFilename": "Gen_Motorcycle.png",
             "Alpha": 0,
             "Name": "genMotor",
@@ -30,8 +32,8 @@
             "Y": 143,
             "Width": 462,
             "Height": 195,
-            "Type": "Image",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -43,13 +45,13 @@
             "InteractionName": "Interaction1",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "ActionCustomTypeName": "Call welcomeScreen switchScreen",
-              "Type": "TriggerWhen"
+              "Type": "TriggerWhen",
+              "ActionCustomTypeName": "Call welcomeScreen switchScreen"
             },
             "Action": {
+              "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "dashboardScreen",
-              "Type": "ActionGotoScreen"
+              "ActionComponent": "dashboardScreen"
             }
           }
         ],
@@ -67,6 +69,7 @@
       {
         "Components": [
           {
+            "Type": "Box",
             "Color": {
               "Red": 0,
               "Green": 0,
@@ -78,8 +81,8 @@
             "Y": -1,
             "Width": 800,
             "Height": 480,
-            "Type": "Box",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -88,6 +91,7 @@
           {
             "Components": [
               {
+                "Type": "Image",
                 "RelativeFilename": "BatteryDrainOut.png",
                 "Alpha": 255,
                 "Name": "batteryLow",
@@ -95,14 +99,15 @@
                 "Y": 67,
                 "Width": 204,
                 "Height": 116,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "BrakeSystemAlert.png",
                 "Alpha": 255,
                 "Name": "brakeAlert",
@@ -110,14 +115,15 @@
                 "Y": 48,
                 "Width": 196,
                 "Height": 154,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "CoolantTemperatureWarning.png",
                 "Alpha": 255,
                 "Name": "temperatureWarning",
@@ -125,14 +131,15 @@
                 "Y": 71,
                 "Width": 146,
                 "Height": 118,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "ElectronicErrorMessage.png",
                 "Alpha": 255,
                 "Name": "errorMessage",
@@ -140,14 +147,15 @@
                 "Y": 63,
                 "Width": 146,
                 "Height": 126,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "FingerscanLoginStatus.png",
                 "Alpha": 255,
                 "Name": "fingerScan",
@@ -155,14 +163,15 @@
                 "Y": 50,
                 "Width": 142,
                 "Height": 153,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "HighBeamActivated.png",
                 "Alpha": 255,
                 "Name": "beamActivated",
@@ -170,14 +179,15 @@
                 "Y": 64,
                 "Width": 185,
                 "Height": 124,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "KeylessIgnitionKeyDetection.png",
                 "Alpha": 255,
                 "Name": "keylessKey",
@@ -185,14 +195,15 @@
                 "Y": 55,
                 "Width": 185,
                 "Height": 143,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "SmartphoneMirroringStatus.png",
                 "Alpha": 255,
                 "Name": "phoneMirroring",
@@ -200,14 +211,15 @@
                 "Y": 63,
                 "Width": 186,
                 "Height": 124,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "MainGo.png",
                 "Alpha": 255,
                 "Name": "mainGo",
@@ -215,14 +227,15 @@
                 "Y": 86,
                 "Width": 210,
                 "Height": 81,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "MainReverse.png",
                 "Alpha": 255,
                 "Name": "mainReverse",
@@ -230,22 +243,23 @@
                 "Y": 86,
                 "Width": 101,
                 "Height": 81,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               }
             ],
+            "Type": "Container",
             "IsCacheableContainer": false,
             "Name": "indicatorImages",
             "X": 274,
             "Y": 114,
             "Width": 250,
             "Height": 250,
-            "Type": "Container",
             "Visible": false,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -256,6 +270,7 @@
               {
                 "Components": [
                   {
+                    "Type": "Image",
                     "RelativeFilename": "MainGo.png",
                     "Alpha": 255,
                     "Name": "prevIconImage",
@@ -263,22 +278,23 @@
                     "Y": 75,
                     "Width": 210,
                     "Height": 81,
-                    "Type": "Image",
                     "Visible": true,
+                    "LockPosition": false,
                     "Draggable": false,
                     "Clickable": false,
                     "Fadeable": false,
                     "Moveable": false
                   }
                 ],
+                "Type": "Container",
                 "IsCacheableContainer": false,
                 "Name": "prevIconContainer",
                 "X": 139,
                 "Y": 230,
                 "Width": 230,
                 "Height": 230,
-                "Type": "Container",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
@@ -287,6 +303,7 @@
               {
                 "Components": [
                   {
+                    "Type": "Image",
                     "RelativeFilename": "MainGo.png",
                     "Alpha": 255,
                     "Name": "nextIconImage",
@@ -294,36 +311,38 @@
                     "Y": 75,
                     "Width": 210,
                     "Height": 81,
-                    "Type": "Image",
                     "Visible": true,
+                    "LockPosition": false,
                     "Draggable": false,
                     "Clickable": false,
                     "Fadeable": false,
                     "Moveable": false
                   }
                 ],
+                "Type": "Container",
                 "IsCacheableContainer": false,
                 "Name": "nextIconContainer",
                 "X": 139,
                 "Y": -230,
                 "Width": 230,
                 "Height": 230,
-                "Type": "Container",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": true
               }
             ],
+            "Type": "Container",
             "IsCacheableContainer": false,
             "Name": "iconContainer",
             "X": 146,
             "Y": 132,
             "Width": 508,
             "Height": 230,
-            "Type": "Container",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -332,6 +351,7 @@
           {
             "Components": [
               {
+                "Type": "TextArea",
                 "TextId": "SingleUseId1",
                 "TextRotation": "0",
                 "Color": {
@@ -347,14 +367,15 @@
                 "Y": 114,
                 "Width": 46,
                 "Height": 14,
-                "Type": "TextArea",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "TextArea",
                 "TextId": "SingleUseId9",
                 "TextRotation": "0",
                 "Color": {
@@ -370,14 +391,15 @@
                 "Y": 61,
                 "Width": 12,
                 "Height": 18,
-                "Type": "TextArea",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "TextArea",
                 "TextId": "SingleUseId10",
                 "TextRotation": "0",
                 "Color": {
@@ -393,14 +415,15 @@
                 "Y": 61,
                 "Width": 12,
                 "Height": 18,
-                "Type": "TextArea",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "SignalIcon.png",
                 "Alpha": 255,
                 "Name": "signalIcon",
@@ -408,14 +431,15 @@
                 "Y": 62,
                 "Width": 24,
                 "Height": 17,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "BatteryIcon.png",
                 "Alpha": 255,
                 "Name": "batteryIcon",
@@ -423,14 +447,15 @@
                 "Y": 63,
                 "Width": 26,
                 "Height": 15,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "BackgroundRight.png",
                 "Alpha": 255,
                 "Name": "backgroundRight",
@@ -438,14 +463,15 @@
                 "Y": 57,
                 "Width": 243,
                 "Height": 366,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "BackgroundLeft.png",
                 "Alpha": 255,
                 "Name": "backgroundLeft",
@@ -453,14 +479,15 @@
                 "Y": 57,
                 "Width": 243,
                 "Height": 366,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "TripContainer.png",
                 "Alpha": 255,
                 "Name": "tripBox",
@@ -468,14 +495,15 @@
                 "Y": 98,
                 "Width": 143,
                 "Height": 30,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               },
               {
+                "Type": "Image",
                 "RelativeFilename": "ModeContainer.png",
                 "Alpha": 255,
                 "Name": "driveBox",
@@ -483,22 +511,23 @@
                 "Y": 364,
                 "Width": 245,
                 "Height": 31,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": false
               }
             ],
+            "Type": "Container",
             "IsCacheableContainer": false,
             "Name": "frameContainer",
             "X": 0,
             "Y": 0,
             "Width": 800,
             "Height": 480,
-            "Type": "Container",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -507,6 +536,7 @@
           {
             "Components": [
               {
+                "Type": "Image",
                 "RelativeFilename": "SeinLeft.png",
                 "Alpha": 255,
                 "Name": "seinLeft",
@@ -514,22 +544,23 @@
                 "Y": 0,
                 "Width": 80,
                 "Height": 355,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": true
               }
             ],
+            "Type": "Container",
             "IsCacheableContainer": false,
             "Name": "seinLeftContainer",
             "X": 152,
             "Y": 67,
             "Width": 80,
             "Height": 355,
-            "Type": "Container",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -538,6 +569,7 @@
           {
             "Components": [
               {
+                "Type": "Image",
                 "RelativeFilename": "SeinRightFlipped.png",
                 "Alpha": 255,
                 "Name": "seinRight",
@@ -545,28 +577,30 @@
                 "Y": 0,
                 "Width": 80,
                 "Height": 355,
-                "Type": "Image",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": true
               }
             ],
+            "Type": "Container",
             "IsCacheableContainer": false,
             "Name": "seinRightContainer",
             "X": 567,
             "Y": 67,
             "Width": 80,
             "Height": 355,
-            "Type": "Container",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
+            "Type": "ImageProgress",
             "FileNameProgress": "EngineRotationFlipped.png",
             "AnchorAtZero": true,
             "Direction": "Up",
@@ -585,14 +619,15 @@
             "Y": 57,
             "Width": 137,
             "Height": 366,
-            "Type": "ImageProgress",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
+            "Type": "ImageProgress",
             "FileNameProgress": "SpeedLevel.png",
             "AnchorAtZero": true,
             "Direction": "Up",
@@ -611,8 +646,8 @@
             "Y": 57,
             "Width": 137,
             "Height": 366,
-            "Type": "ImageProgress",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -623,6 +658,7 @@
               {
                 "Components": [
                   {
+                    "Type": "TextArea",
                     "TextId": "SingleUseId40",
                     "TextRotation": "0",
                     "Color": {
@@ -638,14 +674,15 @@
                     "Y": 0,
                     "Width": 105,
                     "Height": 18,
-                    "Type": "TextArea",
                     "Visible": true,
+                    "LockPosition": false,
                     "Draggable": false,
                     "Clickable": false,
                     "Fadeable": false,
                     "Moveable": false
                   },
                   {
+                    "Type": "TextArea",
                     "TextId": "SingleUseId38",
                     "TextRotation": "0",
                     "Color": {
@@ -661,14 +698,15 @@
                     "Y": 0,
                     "Width": 48,
                     "Height": 18,
-                    "Type": "TextArea",
                     "Visible": true,
+                    "LockPosition": false,
                     "Draggable": false,
                     "Clickable": false,
                     "Fadeable": false,
                     "Moveable": false
                   },
                   {
+                    "Type": "TextArea",
                     "TextId": "SingleUseId45",
                     "TextRotation": "0",
                     "Color": {
@@ -689,22 +727,23 @@
                     "Y": 0,
                     "Width": 50,
                     "Height": 18,
-                    "Type": "TextArea",
                     "Visible": true,
+                    "LockPosition": false,
                     "Draggable": false,
                     "Clickable": false,
                     "Fadeable": false,
                     "Moveable": false
                   }
                 ],
+                "Type": "Container",
                 "IsCacheableContainer": false,
                 "Name": "prevReportModeContainer",
                 "X": 0,
                 "Y": 18,
                 "Width": 227,
                 "Height": 18,
-                "Type": "Container",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
@@ -713,6 +752,7 @@
               {
                 "Components": [
                   {
+                    "Type": "TextArea",
                     "TextId": "SingleUseId42",
                     "TextRotation": "0",
                     "Color": {
@@ -728,14 +768,15 @@
                     "Y": 0,
                     "Width": 105,
                     "Height": 18,
-                    "Type": "TextArea",
                     "Visible": true,
+                    "LockPosition": false,
                     "Draggable": false,
                     "Clickable": false,
                     "Fadeable": false,
                     "Moveable": false
                   },
                   {
+                    "Type": "TextArea",
                     "TextId": "SingleUseId44",
                     "TextRotation": "0",
                     "Color": {
@@ -751,14 +792,15 @@
                     "Y": 0,
                     "Width": 28,
                     "Height": 18,
-                    "Type": "TextArea",
                     "Visible": true,
+                    "LockPosition": false,
                     "Draggable": false,
                     "Clickable": false,
                     "Fadeable": false,
                     "Moveable": false
                   },
                   {
+                    "Type": "TextArea",
                     "TextId": "SingleUseId28",
                     "TextRotation": "0",
                     "Color": {
@@ -779,36 +821,38 @@
                     "Y": 0,
                     "Width": 50,
                     "Height": 18,
-                    "Type": "TextArea",
                     "Visible": true,
+                    "LockPosition": false,
                     "Draggable": false,
                     "Clickable": false,
                     "Fadeable": false,
                     "Moveable": false
                   }
                 ],
+                "Type": "Container",
                 "IsCacheableContainer": false,
                 "Name": "nextReportModeContainer",
                 "X": 0,
                 "Y": -18,
                 "Width": 227,
                 "Height": 18,
-                "Type": "Container",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": true
               }
             ],
+            "Type": "Container",
             "IsCacheableContainer": false,
             "Name": "reportModeContainer",
             "X": 285,
             "Y": 406,
             "Width": 227,
             "Height": 18,
-            "Type": "Container",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -817,6 +861,7 @@
           {
             "Components": [
               {
+                "Type": "TextArea",
                 "TextId": "SingleUseId30",
                 "TextRotation": "0",
                 "Color": {
@@ -837,14 +882,15 @@
                 "Y": 19,
                 "Width": 222,
                 "Height": 19,
-                "Type": "TextArea",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": true
               },
               {
+                "Type": "TextArea",
                 "TextId": "SingleUseId32",
                 "TextRotation": "0",
                 "Color": {
@@ -865,28 +911,30 @@
                 "Y": -19,
                 "Width": 222,
                 "Height": 19,
-                "Type": "TextArea",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": true
               }
             ],
+            "Type": "Container",
             "IsCacheableContainer": false,
             "Name": "driveModeContainer",
             "X": 288,
             "Y": 369,
             "Width": 222,
             "Height": 19,
-            "Type": "Container",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
+            "Type": "TextArea",
             "TextId": "SingleUseId3",
             "TextRotation": "0",
             "Color": {
@@ -907,8 +955,8 @@
             "Y": 102,
             "Width": 119,
             "Height": 20,
-            "Type": "TextArea",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -917,6 +965,7 @@
           {
             "Components": [
               {
+                "Type": "TextArea",
                 "TextId": "SingleUseId36",
                 "TextRotation": "0",
                 "Color": {
@@ -937,14 +986,15 @@
                 "Y": 20,
                 "Width": 79,
                 "Height": 20,
-                "Type": "TextArea",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": true
               },
               {
+                "Type": "TextArea",
                 "TextId": "SingleUseId34",
                 "TextRotation": "0",
                 "Color": {
@@ -965,28 +1015,30 @@
                 "Y": -20,
                 "Width": 79,
                 "Height": 20,
-                "Type": "TextArea",
                 "Visible": true,
+                "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
                 "Moveable": true
               }
             ],
+            "Type": "Container",
             "IsCacheableContainer": false,
             "Name": "tripModeContainer",
             "X": 269,
             "Y": 93,
             "Width": 79,
             "Height": 20,
-            "Type": "Container",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
+            "Type": "TextArea",
             "TextId": "SingleUseId4",
             "TextRotation": "0",
             "Color": {
@@ -1007,14 +1059,15 @@
             "Y": 61,
             "Width": 39,
             "Height": 20,
-            "Type": "TextArea",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
+            "Type": "TextArea",
             "TextId": "SingleUseId5",
             "TextRotation": "0",
             "Color": {
@@ -1035,8 +1088,8 @@
             "Y": 61,
             "Width": 39,
             "Height": 20,
-            "Type": "TextArea",
             "Visible": true,
+            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -1197,5 +1250,5 @@
     "PortraitSkinY": 0,
     "DisplayOrientation": "Landscape"
   },
-  "Version": "4.14.0"
+  "Version": "4.16.0"
 }

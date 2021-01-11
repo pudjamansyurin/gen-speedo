@@ -8,6 +8,9 @@
 welcomeScreenViewBase::welcomeScreenViewBase()
 {
 
+    __background.setPosition(0, 0, 800, 480);
+    __background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+
     box1.setPosition(0, 0, 800, 480);
     box1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
 
@@ -15,6 +18,7 @@ welcomeScreenViewBase::welcomeScreenViewBase()
     genMotor.setBitmap(touchgfx::Bitmap(BITMAP_GEN_MOTORCYCLE_ID));
     genMotor.setAlpha(0);
 
+    add(__background);
     add(box1);
     add(genMotor);
 }

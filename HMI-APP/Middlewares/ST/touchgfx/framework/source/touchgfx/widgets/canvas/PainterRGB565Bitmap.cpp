@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.14.0 distribution.
+  * This file is part of the TouchGFX 4.16.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -42,7 +42,7 @@ void PainterRGB565Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, unsign
         count = bitmapRectToFrameBuffer.width - currentX;
     }
 
-    uint8_t totalAlpha = LCD::div255(widgetAlpha * painterAlpha);
+    const uint8_t totalAlpha = LCD::div255(widgetAlpha * painterAlpha);
     if (bitmap.getFormat() == Bitmap::RGB565)
     {
         const uint16_t* src = bitmapRGB565Pointer;
@@ -53,9 +53,7 @@ void PainterRGB565Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, unsign
             {
                 do
                 {
-                    uint8_t alpha = LCD::div255((*covers) * (*srcAlpha));
-                    covers++;
-                    srcAlpha++;
+                    const uint8_t alpha = LCD::div255((*covers++) * (*srcAlpha++));
                     if (alpha == 0xFF)
                     {
                         // Solid pixel
@@ -68,16 +66,13 @@ void PainterRGB565Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, unsign
                     }
                     p++;
                     src++;
-                }
-                while (--count != 0);
+                } while (--count != 0);
             }
             else
             {
                 do
                 {
-                    uint8_t alpha = LCD::div255((*covers) * LCD::div255((*srcAlpha) * totalAlpha));
-                    covers++;
-                    srcAlpha++;
+                    const uint8_t alpha = LCD::div255((*covers++) * LCD::div255((*srcAlpha++) * totalAlpha));
                     if (alpha) // This can never get to max=0XFF as totalAlpha<0xFF
                     {
                         // Non-Transparent pixel
@@ -85,8 +80,7 @@ void PainterRGB565Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, unsign
                     }
                     p++;
                     src++;
-                }
-                while (--count != 0);
+                } while (--count != 0);
             }
         }
         else
@@ -96,7 +90,7 @@ void PainterRGB565Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, unsign
                 do
                 {
                     //use alpha from covers directly
-                    uint8_t alpha = *covers++;
+                    const uint8_t alpha = *covers++;
                     if (alpha == 0xFF)
                     {
                         // Solid pixel
@@ -109,22 +103,19 @@ void PainterRGB565Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, unsign
                     }
                     p++;
                     src++;
-                }
-                while (--count != 0);
+                } while (--count != 0);
             }
             else
             {
                 do
                 {
-                    uint8_t alpha = LCD::div255((*covers) * totalAlpha);
-                    covers++;
+                    const uint8_t alpha = LCD::div255((*covers++) * totalAlpha);
 
                     *p = mixColors(*src, *p, alpha);
 
                     p++;
                     src++;
-                }
-                while (--count != 0);
+                } while (--count != 0);
             }
         }
     }
@@ -136,9 +127,8 @@ void PainterRGB565Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, unsign
             uint32_t newpix;
             do
             {
-                uint8_t srcAlpha = (*src) >> 24;
-                uint8_t alpha = LCD::div255((*covers) * srcAlpha);
-                covers++;
+                const uint8_t srcAlpha = (*src) >> 24;
+                const uint8_t alpha = LCD::div255((*covers++) * srcAlpha);
                 newpix = *src;
                 if (alpha == 0xFF)
                 {
@@ -152,17 +142,15 @@ void PainterRGB565Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, unsign
                 }
                 p++;
                 src++;
-            }
-            while (--count != 0);
+            } while (--count != 0);
         }
         else
         {
             uint32_t newpix;
             do
             {
-                uint8_t srcAlpha = (*src) >> 24;
-                uint8_t alpha = LCD::div255((*covers) * LCD::div255(srcAlpha * totalAlpha));
-                covers++;
+                const uint8_t srcAlpha = (*src) >> 24;
+                const uint8_t alpha = LCD::div255((*covers++) * LCD::div255(srcAlpha * totalAlpha));
                 if (alpha)
                 {
                     // Non-Transparent pixel
@@ -171,8 +159,7 @@ void PainterRGB565Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, unsign
                 }
                 p++;
                 src++;
-            }
-            while (--count != 0);
+            } while (--count != 0);
         }
     }
 }

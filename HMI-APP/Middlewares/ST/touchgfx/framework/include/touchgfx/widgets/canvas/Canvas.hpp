@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.14.0 distribution.
+  * This file is part of the TouchGFX 4.16.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -118,15 +118,18 @@ public:
     }
 
     /**
-     * Render the graphical shape drawn using moveTo() and lineTo() with the given Painter.
-     * The shape is automatically closed, i.e. a lineTo() is automatically inserted
-     * connecting the current pen position with the initial pen position given in the first
-     * moveTo() command.
+     * Render the graphical shape drawn using moveTo() and lineTo() with the given Painter. The
+     * shape is automatically closed, i.e. a lineTo() is automatically inserted connecting the
+     * current pen position with the initial pen position given in the first moveTo() command.
      *
-     * @return true if the widget was rendered, false if insufficient memory was available
-     *         to render the widget.
+     * @param  customAlpha (Optional) Alpha to apply to the entire canvas. Useful if the canvas
+     *                     is part of a more complex container setup that needs to be faded.
+     *                     Default is solid.
+     *
+     * @return true if the widget was rendered, false if insufficient memory was available to
+     *         render the widget.
      */
-    bool render();
+    bool render(uint8_t customAlpha = 255);
 
 private:
     // Pointer to the widget using the Canvas

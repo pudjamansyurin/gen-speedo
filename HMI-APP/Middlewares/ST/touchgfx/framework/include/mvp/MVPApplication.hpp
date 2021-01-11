@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.14.0 distribution.
+  * This file is part of the TouchGFX 4.16.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -30,6 +30,7 @@
 #include <touchgfx/Application.hpp>
 #include <touchgfx/Callback.hpp>
 #include <touchgfx/hal/HAL.hpp>
+#include <touchgfx/transitions/Transition.hpp>
 
 namespace touchgfx
 {
@@ -133,8 +134,7 @@ FORCE_INLINE_FUNCTION static void finalizeTransition(Screen* newScreen, Presente
     newPresenter->activate();
     newScreen->bindTransition(*newTransition);
     newTransition->init();
-
-    Application::getInstance()->draw();
+    newTransition->invalidate();
 }
 
 /**

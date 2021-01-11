@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.14.0 distribution.
+  * This file is part of the TouchGFX 4.16.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -21,13 +21,12 @@ namespace touchgfx
 void PainterRGB565::render(uint8_t* ptr, int x, int xAdjust, int /*y*/, unsigned count, const uint8_t* covers)
 {
     uint16_t* p = reinterpret_cast<uint16_t*>(ptr) + (x + xAdjust);
-    uint8_t totalAlpha = LCD::div255(widgetAlpha * painterAlpha);
+    const uint8_t totalAlpha = LCD::div255(widgetAlpha * painterAlpha);
     if (totalAlpha == 0xFF)
     {
         do
         {
-            uint8_t alpha = *covers;
-            covers++;
+            const uint8_t alpha = *covers++;
             if (alpha == 0xFF)
             {
                 *p = painterColor;
@@ -37,15 +36,13 @@ void PainterRGB565::render(uint8_t* ptr, int x, int xAdjust, int /*y*/, unsigned
                 *p = mixColors(painterRed, painterGreen, painterBlue, *p, alpha);
             }
             p++;
-        }
-        while (--count != 0);
+        } while (--count != 0);
     }
     else
     {
         do
         {
-            uint8_t alpha = LCD::div255((*covers) * totalAlpha);
-            covers++;
+            const uint8_t alpha = LCD::div255((*covers++) * totalAlpha);
             if (alpha == 0xFF)
             {
                 *p = painterColor;
@@ -55,8 +52,7 @@ void PainterRGB565::render(uint8_t* ptr, int x, int xAdjust, int /*y*/, unsigned
                 *p = mixColors(painterRed, painterGreen, painterBlue, *p, alpha);
             }
             p++;
-        }
-        while (--count != 0);
+        } while (--count != 0);
     }
 }
 

@@ -41,6 +41,7 @@ extern const uint8_t* const unicodes_venus_rising_rg_17_4bpp[] =
     unicodes_venus_rising_rg_17_4bpp_0
 };
 extern const touchgfx::KerningNode kerning_venus_rising_rg_17_4bpp[];
+
 touchgfx::GeneratedFont& getFont_venus_rising_rg_17_4bpp();
 
 touchgfx::GeneratedFont& getFont_venus_rising_rg_17_4bpp()

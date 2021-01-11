@@ -9,6 +9,9 @@
 dashboardScreenViewBase::dashboardScreenViewBase()
 {
 
+    __background.setPosition(0, 0, 800, 480);
+    __background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+
     background.setPosition(-1, -1, 800, 480);
     background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
 
@@ -248,6 +251,7 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     batteryValue.setWildcard(batteryValueBuffer);
     batteryValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
 
+    add(__background);
     add(background);
     add(indicatorImages);
     add(iconContainer);

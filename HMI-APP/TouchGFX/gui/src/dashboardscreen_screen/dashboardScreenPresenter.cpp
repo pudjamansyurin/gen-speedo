@@ -22,7 +22,7 @@ void dashboardScreenPresenter::setSeinLeft(uint8_t value)
 {
   static uint8_t init = 1, _value;
 
-  if (_value == value || init) {
+  if (_value != value || init) {
     init = 0;
     _value = value;
     view.writeSein(1, value);
@@ -32,7 +32,7 @@ void dashboardScreenPresenter::setSeinRight(uint8_t value)
 {
   static uint8_t init = 1, _value;
 
-  if (_value == value || init) {
+  if (_value != value || init) {
     init = 0;
     _value = value;
     view.writeSein(0, value);

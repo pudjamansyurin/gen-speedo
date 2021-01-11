@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.14.0 distribution.
+  * This file is part of the TouchGFX 4.16.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -67,6 +67,8 @@ static DWORD mainThreadHandle;
 static int transferThreadFunc(void* ptr);
 static SDL_sem* sem_transfer_ready = 0;
 static SDL_sem* sem_transfer_done = 0;
+
+bool HALSDL2::flashInvalidatedRect = false;
 
 void HALSDL2::renderLCD_FrameBufferToMemory(const Rect& _rectToUpdate, uint8_t* frameBuffer)
 {
@@ -283,12 +285,14 @@ bool HALSDL2::sdl_init(int /*argcount*/, char** args)
     return true;
 }
 
+const char* HALSDL2::customTitle = 0;
+
 void HALSDL2::setWindowTitle(const char* title)
 {
     customTitle = title;
 }
 
-const char* HALSDL2::getWindowTitle() const
+const char* HALSDL2::getWindowTitle()
 {
     if (customTitle != 0)
     {
@@ -299,7 +303,7 @@ const char* HALSDL2::getWindowTitle() const
     return title;
 }
 
-void HALSDL2::loadSkin(touchgfx::DisplayOrientation orientation, int x, int y)
+void HALSDL2::loadSkin(DisplayOrientation orientation, int x, int y)
 {
     char path[300];
 
@@ -420,17 +424,23 @@ bool HALSDL2::popTouch() const
     return _lastTouch;
 }
 
-void HALSDL2::updateTitle(int32_t x, int32_t y) const
+bool HALSDL2::debugInfoEnabled = false;
+
+void HALSDL2::updateTitle(int32_t x, int32_t y)
 {
     char title[500];
     int length = sprintf_s(title, 500, "%s", getWindowTitle());
-    if (flashInvalidatedRect)
-    {
-        length += sprintf_s(title + length, 500 - length, " (flashmode)");
-    }
     if (debugInfoEnabled)
     {
         length += sprintf_s(title + length, 500 - length, " @ %d,%d", x, y);
+    }
+    if (flashInvalidatedRect)
+    {
+        length += sprintf_s(title + length, 500 - length, " (flash)");
+    }
+    if (isSingleStepping())
+    {
+        length += sprintf_s(title + length, 500 - length, " (step)");
     }
     SDL_SetWindowTitle(simulatorWindow, title);
 }
@@ -498,6 +508,9 @@ bool HALSDL2::sampleKey(uint8_t& key)
     return false;
 }
 
+bool HALSDL2::singleSteppingEnabled = false;
+uint16_t HALSDL2::singleSteppingSteps = 0;
+
 void HALSDL2::taskEntry()
 {
     uint32_t lastTick = SDL_GetTicks();
@@ -517,17 +530,32 @@ void HALSDL2::taskEntry()
                 msPassed += msSinceLastTick;
                 if (msPassed >= msBetweenTicks)
                 {
-                    while (msPassed >= msBetweenTicks)
+                    if (singleSteppingEnabled && singleSteppingSteps == 0)
                     {
-                        msPassed -= msBetweenTicks;
-                        vSync();
+                        // Eat up extra ms when waiting for next step
+                        while (msPassed >= msBetweenTicks)
+                        {
+                            msPassed -= msBetweenTicks;
+                        }
                     }
-                    backPorchExited();
-                    frontPorchEntered();
-                    if (screenshotcount > 0)
+                    else
                     {
-                        screenshotcount--;
-                        saveScreenshot();
+                        while (msPassed >= msBetweenTicks)
+                        {
+                            msPassed -= msBetweenTicks;
+                            vSync();
+                        }
+                        backPorchExited();
+                        frontPorchEntered();
+                        if (screenshotcount > 0)
+                        {
+                            screenshotcount--;
+                            saveScreenshot();
+                        }
+                    }
+                    if (singleSteppingEnabled && singleSteppingSteps > 0)
+                    {
+                        singleSteppingSteps--;
                     }
                 }
                 break;
@@ -653,6 +681,17 @@ void HALSDL2::taskEntry()
                 else if (event.key.keysym.sym == SDLK_ESCAPE)
                 {
                     isAlive = false;
+                }
+                else if (event.key.keysym.sym == SDLK_F9)
+                {
+                    setSingleStepping(!singleSteppingEnabled);
+                }
+                else if (event.key.keysym.sym == SDLK_F10)
+                {
+                    if (singleSteppingEnabled)
+                    {
+                        singleSteppingSteps++;
+                    }
                 }
                 break;
             }
@@ -986,6 +1025,7 @@ void HALSDL2::setTFTFrameBuffer(uint16_t* adr)
         {
             FrameBufferAllocatorWaitOnTransfer();
         }
+
         //always use the original tft buffer as screen memory GRAM
         renderLCD_FrameBufferToMemory(dirty, doRotate(rotated, scaleTo24bpp(tft24bpp, tft, lcd().framebufferFormat())));
     }
@@ -1004,10 +1044,15 @@ static int transferThreadFunc(void* ptr)
     Bitmap::BitmapFormat framebufferFormat = HAL::getInstance()->lcd().framebufferFormat();
     while (1)
     {
-        if (fbAllocator->hasBlockReadyForTransfer())
+        //wait for blocks to transfer
+        SDL_SemWait(sem_transfer_ready);
+
+        while (fbAllocator->hasBlockReadyForTransfer())
         {
             Rect transfer_rect;
             const uint8_t* src = fbAllocator->getBlockForTransfer(transfer_rect);
+            // touchgfx_printf("transfer: (%d,%d w%d,h%d)\n", transfer_rect.x, transfer_rect.y, transfer_rect.width, transfer_rect.height);
+
             switch (framebufferFormat)
             {
             case Bitmap::RGB565:
@@ -1048,17 +1093,12 @@ static int transferThreadFunc(void* ptr)
                 break;
             }
             fbAllocator->freeBlockAfterTransfer();
-            //SDL_Delay(10);
-
-            //signal drawing part
-            if (SDL_SemValue(sem_transfer_done) == 0)
-            {
-                SDL_SemPost(sem_transfer_done);
-            }
         }
-        else
+
+        //signal drawing part
+        if (SDL_SemValue(sem_transfer_done) == 0)
         {
-            SDL_SemWait(sem_transfer_ready);
+            SDL_SemPost(sem_transfer_done);
         }
     }
 }
@@ -1113,10 +1153,6 @@ void HALSDL2::flushFrameBuffer(const Rect& rect)
 bool HALSDL2::blockCopy(void* RESTRICT dest, const void* RESTRICT src, uint32_t numBytes)
 {
     return HAL::blockCopy(dest, src, numBytes);
-}
-
-void HALSDL2::blitSetTransparencyKey(uint16_t /*key*/)
-{
 }
 
 void HALSDL2::setVsyncInterval(float ms)
@@ -1207,7 +1243,6 @@ void HALSDL2::saveNextScreenshots(int n)
     screenshotcount += n;
 }
 
-//copy 24 bit framebuffer to clipboard on Win32
 void HALSDL2::copyScreenshotToClipboard()
 {
 #ifdef __linux__
@@ -1267,6 +1302,26 @@ void HALSDL2::copyScreenshotToClipboard()
 #endif
 }
 
+void HALSDL2::setSingleStepping(bool singleStepping /*= true*/)
+{
+    singleSteppingEnabled = singleStepping;
+    singleSteppingSteps = 0;
+    updateTitle(_xMouse, _yMouse);
+}
+
+bool HALSDL2::isSingleStepping()
+{
+    return singleSteppingEnabled;
+}
+
+void HALSDL2::singleStep(uint16_t steps /*= 1*/)
+{
+    if (singleSteppingEnabled)
+    {
+        singleSteppingSteps += steps;
+    }
+}
+
 #ifdef __linux__
 void simulator_printf(const char* format, va_list pArg)
 {
@@ -1295,8 +1350,8 @@ void simulator_enable_stdio()
 #ifdef __GNUC__
 #define freopen_s(pFile, filename, mode, pStream) (((*(pFile)) = freopen((filename), (mode), (pStream))) == NULL)
 #endif
-    touchgfx::HAL* hal = touchgfx::HAL::getInstance();
-    if (static_cast<touchgfx::HALSDL2*>(hal)->getWindowVisible())
+    HAL* hal = HAL::getInstance();
+    if (static_cast<HALSDL2*>(hal)->getConsoleVisible())
     {
         HWND consoleHwnd = GetConsoleWindow(); // Get handle of console window
         if (!consoleHwnd)                      // No console window yet?

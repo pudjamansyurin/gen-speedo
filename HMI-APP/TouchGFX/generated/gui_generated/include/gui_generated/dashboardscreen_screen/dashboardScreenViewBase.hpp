@@ -31,6 +31,7 @@ protected:
     /*
      * Member Declarations
      */
+    touchgfx::Box __background;
     touchgfx::Box background;
     touchgfx::Container indicatorImages;
     touchgfx::Image batteryLow;

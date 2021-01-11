@@ -17,7 +17,6 @@ build/MINGW32_NT-6.2/generated/texts/src/Texts.o: \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Event.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/events/DragEvent.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/events/GestureEvent.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/Transition.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/lcd/LCD.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/TextureMapTypes.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Utils.hpp \
@@ -64,8 +63,6 @@ generated/texts/include/texts/TypedTextDatabase.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/events/DragEvent.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/events/GestureEvent.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/Transition.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/lcd/LCD.hpp:
 

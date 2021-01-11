@@ -12,7 +12,6 @@ build/MINGW32_NT-6.2/generated/simulator/src/mainBase.o: \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Event.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/events/DragEvent.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/events/GestureEvent.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/Transition.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/lcd/LCD.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Font.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Unicode.hpp \
@@ -58,13 +57,13 @@ build/MINGW32_NT-6.2/generated/simulator/src/mainBase.o: \
  ../Middlewares/ST/touchgfx/framework/include/common/AbstractPartition.hpp \
  ../Middlewares/ST/touchgfx/framework/include/mvp/MVPHeap.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/NoTransition.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/Transition.hpp \
  gui/include/gui/common/FrontendApplication.hpp \
  generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp \
  ../Middlewares/ST/touchgfx/framework/include/mvp/MVPApplication.hpp \
  ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp \
  ../Middlewares/ST/touchgfx/framework/include/mvp/Presenter.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/JSMOCHelper.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/Container.hpp \
  gui/include/gui/model/Model.hpp \
  gui/include/gui/welcomescreen_screen/welcomeScreenView.hpp \
@@ -83,9 +82,9 @@ build/MINGW32_NT-6.2/generated/simulator/src/mainBase.o: \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractDirectionProgress.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp \
  ../Middlewares/ST/touchgfx/framework/include/platform/driver/lcd/LCD16bpp.hpp
 
@@ -112,8 +111,6 @@ generated/simulator/include/simulator/mainBase.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/events/DragEvent.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/events/GestureEvent.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/Transition.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/lcd/LCD.hpp:
 
@@ -205,6 +202,8 @@ generated/gui_generated/include/gui_generated/common/FrontendHeapBase.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/NoTransition.hpp:
 
+../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/Transition.hpp:
+
 gui/include/gui/common/FrontendApplication.hpp:
 
 generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp:
@@ -216,8 +215,6 @@ generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp
 ../Middlewares/ST/touchgfx/framework/include/mvp/Presenter.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/JSMOCHelper.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/Container.hpp:
 
@@ -255,11 +252,11 @@ gui/include/gui/dashboardscreen_screen/dashboardScreenPresenter.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp:
 
+../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp:
+
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
-
-../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/MoveAnimator.hpp:
 
