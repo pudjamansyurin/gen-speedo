@@ -6,31 +6,32 @@
 class ModelListener
 {
 public:
-    ModelListener() : model(0) {}
-    
-    virtual ~ModelListener() {}
-	
-    void bind(Model* m)
-    {
-        model = m;
-    }
-	
-    virtual void setIndicator(uint8_t index) {};
-	virtual void setSein(uint8_t leftSide, uint8_t state) {};
-	virtual void setSpeed(uint8_t value) {};
-	virtual void setEngineRotation(uint32_t value) {};
-	virtual void setBattery(uint8_t percent) {};
-	virtual void setSignal(uint8_t percent) {};
-	virtual void setDriveMode(uint8_t index) {};
-	virtual void setTripMode(uint8_t index) {};
-	virtual void setTripValue(uint32_t value) {};
-	virtual void setReportMode(uint8_t index) {};
-	virtual void setReportValue(uint16_t value) {};
-	
-	virtual void setModeSelector(uint8_t mode) {};
-	virtual void setModeVisible(uint8_t state) {};
+  ModelListener() : model(0) {}
+
+  virtual ~ModelListener() {}
+
+  void bind(Model* m)
+  {
+    model = m;
+  }
+
+  virtual void setIndicator(uint8_t index) {};
+  virtual void setSeinLeft(uint8_t state) {};
+  virtual void setSeinRight(uint8_t state) {};
+  virtual void setSpeed(uint8_t value) {};
+  virtual void setEngineRotation(uint32_t value) {};
+  virtual void setBattery(uint8_t percent) {};
+  virtual void setSignal(uint8_t percent) {};
+  virtual void setDriveMode(uint8_t index) {};
+  virtual void setTripMode(uint8_t index) {};
+  virtual void setTripValue(uint32_t value) {};
+  virtual void setReportMode(uint8_t index) {};
+  virtual void setReportValue(uint16_t value) {};
+
+  virtual void setModeSelector(uint8_t mode) {};
+  virtual void setModeVisible(uint8_t state) {};
 protected:
-    Model* model;
+  Model* model;
 };
 
 #endif // MODELLISTENER_HPP

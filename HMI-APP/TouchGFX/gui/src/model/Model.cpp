@@ -153,8 +153,8 @@ void Model::tick()
   modelListener->setSignal(VCU.d.signal);
   modelListener->setBattery(BMS.d.soc);
 
-  modelListener->setSein(1, HMI1.d.sein.left);
-  modelListener->setSein(0, HMI1.d.sein.right);
+  modelListener->setSeinLeft(HMI1.d.sein.left);
+  modelListener->setSeinRight(HMI1.d.sein.right);
 
   modelListener->setIndicator(indicator);
 

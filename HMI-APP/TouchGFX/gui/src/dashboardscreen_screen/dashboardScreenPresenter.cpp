@@ -18,15 +18,24 @@ void dashboardScreenPresenter::deactivate()
 
 }
 
-void dashboardScreenPresenter::setSein(uint8_t leftSide, uint8_t state)
+void dashboardScreenPresenter::setSeinLeft(uint8_t value)
 {
-  static uint8_t init = 1, _side, _state;
+  static uint8_t init = 1, _value;
 
-  if (!(_side == leftSide && _state == state) || init) {
+  if (_value == value || init) {
     init = 0;
-    _side = leftSide;
-    _state = state;
-    view.writeSein(leftSide, state);
+    _value = value;
+    view.writeSein(1, value);
+  }
+}
+void dashboardScreenPresenter::setSeinRight(uint8_t value)
+{
+  static uint8_t init = 1, _value;
+
+  if (_value == value || init) {
+    init = 0;
+    _value = value;
+    view.writeSein(0, value);
   }
 }
 void dashboardScreenPresenter::setSpeed(uint8_t value)
