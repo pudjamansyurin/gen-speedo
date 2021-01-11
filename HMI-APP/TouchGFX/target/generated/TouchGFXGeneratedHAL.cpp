@@ -4,7 +4,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -82,7 +82,12 @@ void TouchGFXGeneratedHAL::setTFTFrameBuffer(uint16_t* adr)
 
 void TouchGFXGeneratedHAL::flushFrameBuffer(const touchgfx::Rect& rect)
 {
-    HAL::flushFrameBuffer(rect);
+  HAL::flushFrameBuffer(rect);
+}
+
+bool TouchGFXGeneratedHAL::blockCopy(void* RESTRICT dest, const void* RESTRICT src, uint32_t numBytes)
+{
+  return HAL::blockCopy(dest, src, numBytes);
 }
 
 extern "C"
@@ -110,5 +115,4 @@ extern "C"
         }
     }
 }
-
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

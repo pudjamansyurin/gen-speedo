@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./credential.env
+source .env
 
 SRC_BIN_FILE="../HMI-APP/Release/HMI-APP.bin"
 APP_BIN_FILE="APP.bin"
