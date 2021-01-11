@@ -23,19 +23,19 @@ trip_t M_TRIP;
 
 
 dashboardScreenView::dashboardScreenView() :
-    ticker(0),
+        ticker(0),
         iconAssets {
-            BITMAP_MAINREVERSE_ID,
-            BITMAP_MAINGO_ID,
-            BITMAP_BRAKESYSTEMALERT_ID,
-            BITMAP_SMARTPHONEMIRRORINGSTATUS_ID,
-            BITMAP_HIGHBEAMACTIVATED_ID,
-            BITMAP_ELECTRONICERRORMESSAGE_ID,
-            BITMAP_COOLANTTEMPERATUREWARNING_ID,
-            BITMAP_FINGERSCANLOGINSTATUS_ID,
-            BITMAP_KEYLESSIGNITIONKEYDETECTION_ID,
-            BITMAP_BATTERYDRAINOUT_ID,
-        }
+  BITMAP_MAINREVERSE_ID,
+  BITMAP_MAINGO_ID,
+  BITMAP_BRAKESYSTEMALERT_ID,
+  BITMAP_SMARTPHONEMIRRORINGSTATUS_ID,
+  BITMAP_HIGHBEAMACTIVATED_ID,
+  BITMAP_ELECTRONICERRORMESSAGE_ID,
+  BITMAP_COOLANTTEMPERATUREWARNING_ID,
+  BITMAP_FINGERSCANLOGINSTATUS_ID,
+  BITMAP_KEYLESSIGNITIONKEYDETECTION_ID,
+  BITMAP_BATTERYDRAINOUT_ID,
+}
 {
   posIndicator.prev.x = 0 - prevIconContainer.getWidth() - 200;
   posIndicator.prev.y = iconContainer.getHeight() / 5;
@@ -83,7 +83,7 @@ void dashboardScreenView::handleTickEvent()
 
       if (curIndicator == INDICATOR_LOWBAT ||
           curIndicator == INDICATOR_WARNING
-              ) {
+      ) {
         if (ticker % 10 == 0) {
           nextIndicator.container->setVisible(!nextIndicator.container->isVisible());
           nextIndicator.container->invalidate();
@@ -93,7 +93,7 @@ void dashboardScreenView::handleTickEvent()
       if (curIndicator == INDICATOR_FINGER ||
           curIndicator == INDICATOR_MIRRORING ||
           curIndicator == INDICATOR_UNREMOTE
-              ) {
+      ) {
         if (ticker == 45) {
           nextIndicator.container->setVisible(false);
           nextIndicator.container->invalidate();
@@ -117,9 +117,9 @@ void dashboardScreenView::handleTickEvent()
 void dashboardScreenView::writeModeSelector(uint8_t mode)
 {
   for (uint8_t i = 0; i <= HBAR_M_MAX; i++) {
-    if (i == mode) {
+    if (i == mode)
       modeSelected = mode;
-    } else {
+    else {
       modeContainer[i]->setVisible(true);
       modeContainer[i]->invalidate();
     }
@@ -185,20 +185,20 @@ void dashboardScreenView::writeIndicator(uint8_t index)
   nextIndicator.image->setXY(
       (nextIndicator.container->getWidth() - nextIndicator.image->getWidth()) / 2,
       (nextIndicator.container->getHeight() - nextIndicator.image->getHeight()) / 2
-          );
+  );
 
   nextIndicator.container->setXY(posIndicator.next.x, posIndicator.next.y);
   nextIndicator.container->startMoveAnimation(
       posIndicator.current.x, posIndicator.current.y, animationSpeed,
       EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
-      );
+  );
   nextIndicator.container->invalidate();
 
   prevIndicator.container->setVisible(true);
   prevIndicator.container->startMoveAnimation(
       posIndicator.prev.x, posIndicator.prev.y, animationSpeed,
       EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
-      );
+  );
   prevIndicator.container->invalidate();
 
   iconImageSwiper = !iconImageSwiper;
@@ -217,13 +217,13 @@ void dashboardScreenView::writeDriveMode(uint8_t index)
   nextText->startMoveAnimation(
       0, 0, animationSpeed,
       EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
-      );
+  );
   nextText->invalidate();
 
   prevText->startMoveAnimation(
       0, driveModeContainer.getHeight(), animationSpeed,
       EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
-      );
+  );
   prevText->invalidate();
 
   driveModeSwiper = !driveModeSwiper;
@@ -241,13 +241,13 @@ void dashboardScreenView::writeTripMode(uint8_t index)
   nextText->startMoveAnimation(
       0, 0, animationSpeed,
       EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
-      );
+  );
   nextText->invalidate();
 
   prevText->startMoveAnimation(
       0, tripModeContainer.getHeight(), animationSpeed,
       EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
-      );
+  );
   prevText->invalidate();
 
   tripModeSwiper = !tripModeSwiper;
@@ -270,13 +270,13 @@ void dashboardScreenView::writeReportMode(uint8_t index)
   nextContainer->startMoveAnimation(
       0, 0, animationSpeed,
       EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
-      );
+  );
   nextContainer->invalidate();
 
   prevContainer->startMoveAnimation(
       0, reportModeContainer.getHeight(), animationSpeed,
       EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
-      );
+  );
   prevContainer->invalidate();
 
   reportModeSwiper = !reportModeSwiper;

@@ -30,7 +30,7 @@ void welcomeScreenView::setLogoTransparency(uint8_t alpha)
 {
   static uint8_t init = 1, _alpha;
 
-  if (init || _alpha != alpha) {
+  if (_alpha != alpha || init) {
     init = 0;
     _alpha = alpha;
     genMotor.setAlpha(alpha);
@@ -41,7 +41,6 @@ void welcomeScreenView::setLogoTransparency(uint8_t alpha)
 void welcomeScreenView::handleTickEvent() {
   if (ticker < 0)
     ticker++;
-
 #if !defined(SIMULATOR) || defined(LCD_TESTING)
   if (ticker == -5)
     _LcdPower(1);
