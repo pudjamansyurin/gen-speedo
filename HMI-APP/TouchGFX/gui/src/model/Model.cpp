@@ -121,9 +121,8 @@ void Model::tick()
       HMI1.d.mode.sel++;
   }
 
-  if (ticker % (60*60) == 0) {
+  if (ticker % (60 * 60) == 0)
     generateRandomIndicators();
-  }
 #endif
 
   if (ticker % (60 * 2) == 0)
