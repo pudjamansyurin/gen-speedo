@@ -6,7 +6,7 @@ touchgfx::Container *modeContainer[HBAR_M_MAX+1];
 uint8_t modeSelected = HBAR_M_DRIVE;
 uint8_t modeVisible = 1;
 
-uint8_t animationSpeed = 10;
+uint8_t animationSpeed = 20;
 
 uint8_t iconImageSwiper = 0;
 uint8_t tripModeSwiper = 0;

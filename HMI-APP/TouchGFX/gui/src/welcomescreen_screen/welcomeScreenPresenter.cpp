@@ -17,6 +17,7 @@ welcomeScreenPresenter::welcomeScreenPresenter(welcomeScreenView& v)
 void welcomeScreenPresenter::activate()
 {
 #if !defined(SIMULATOR) || defined(LCD_TESTING)
+  _DelayMS(1000);
   _LcdPower(1);
 #endif
 }
