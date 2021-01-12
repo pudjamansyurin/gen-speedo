@@ -75,9 +75,8 @@ void _FlushData(void) {
 	HMI1.Init();
 	MCU.Init();
 	BMS.Init();
-
-	// default backlight is ON
 	_LcdBacklight(1);
+  LOG_StrLn("Data is flushed.");
 }
 
 float _D2R(uint16_t deg) {

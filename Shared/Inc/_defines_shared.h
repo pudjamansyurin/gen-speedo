@@ -21,6 +21,8 @@
 #endif
 
 /* Exported constants --------------------------------------------------------*/
+#define RTOS_ENABLE                             !BOOTLOADER
+
 // macro to manipulate bit
 #define BIT(x)                              (1ULL << x)
 #define BV(var, x)                          (var |= (1ULL << x))
@@ -45,26 +47,26 @@
 // Some constants
 #if (!BOOTLOADER)
 #define MCU_SPEED_MAX 			      (uint8_t) 150
-#define MCU_RPM_MAX 			     (uint32_t) 99999
+#define MCU_RPM_MAX 			       (uint32_t) 99999
 #define VCU_ODOMETER_MAX		     (uint32_t) 99999
 
 #define GUI_MAIN_COLOR			     (uint32_t) 0xFFC0C0C0
-#define LCD_SIZE_X                   (uint16_t) (320-1)
-#define LCD_SIZE_Y                   (uint16_t) (240-1)
+#define LCD_SIZE_X               (uint16_t) (320-1)
+#define LCD_SIZE_Y               (uint16_t) (240-1)
 
 // Events (for Individual Thread)
-#define EVT_MASK				     (uint32_t) 0x7FFFFFFF
+#define EVT_MASK				         (uint32_t) 0x7FFFFFFF
 
 // Events group (for All Threads)
 #define EVENT_MASK		  		     (uint32_t) 0xFFFFFF
-#define EVENT_READY                  BIT(0)
+#define EVENT_READY                         BIT(0)
 #endif
 
 // CAN Message Address
-#define CAND_VCU_SWITCH			     (uint32_t) 0x000
-#define CAND_VCU_DATETIME		     (uint32_t) 0x001
-#define CAND_VCU_SELECT_SET		     (uint32_t) 0x002
-#define CAND_VCU_TRIP_MODE		     (uint32_t) 0x003
+#define CAND_VCU_SWITCH			         (uint32_t) 0x000
+#define CAND_VCU_DATETIME		         (uint32_t) 0x001
+#define CAND_VCU_SELECT_SET		       (uint32_t) 0x002
+#define CAND_VCU_TRIP_MODE		       (uint32_t) 0x003
 #define CAND_HMI1                    (uint32_t) 0x7C0
 // FOCAN Command Address
 #define CAND_SET_PROGRESS            (uint32_t) 0x101

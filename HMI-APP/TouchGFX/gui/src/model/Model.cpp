@@ -19,16 +19,13 @@ hmi1_t HMI1;
 
 Model::Model()
 :
-    modelListener(0), ticker(0), indicator(1), indicators { 0 }
+        modelListener(0), ticker(0), indicator(1), indicators { 0 }
 {
 #ifdef SIMULATOR
   generateRandomIndicators();
 
   HMI1.d.mode.sel = HBAR_M_DRIVE;
   HMI1.d.mode.hide = 0;
-  
-    // HMI1.d.sein.left = 1;
-    // HMI1.d.sein.right = 1;
 
   HMI1.d.mode.val[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
   HMI1.d.mode.val[HBAR_M_DRIVE] = HBAR_M_DRIVE_STANDARD;
@@ -86,7 +83,7 @@ void Model::tick()
 
     HMI1.d.sein.left = !HMI1.d.sein.left;
     HMI1.d.sein.right = !HMI1.d.sein.right;
-	
+
     switch (HMI1.d.mode.sel) {
       case HBAR_M_TRIP :
         mode = &HMI1.d.mode.val[HBAR_M_TRIP];

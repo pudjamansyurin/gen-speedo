@@ -73,7 +73,7 @@ osThreadId_t DisplayTaskHandle;
 const osThreadAttr_t DisplayTask_attributes = {
   .name = "DisplayTask",
   .priority = (osPriority_t) osPriorityAboveNormal,
-  .stack_size = 4096 * 4
+  .stack_size = 5120 * 4
 };
 /* Definitions for CanTxTask */
 osThreadId_t CanTxTaskHandle;
@@ -665,9 +665,9 @@ void StartManagerTask(void *argument)
   _FlushData();
 
   // suspend other threads
-  //    osThreadSuspend(DisplayTaskHandle);
-  //    osThreadSuspend(CanTxTaskHandle);
-  //    osThreadSuspend(CanRxTaskHandle);
+//      osThreadSuspend(DisplayTaskHandle);
+//      osThreadSuspend(CanTxTaskHandle);
+//      osThreadSuspend(CanRxTaskHandle);
 
   // Release other threads
   osEventFlagsSet(GlobalEventHandle, EVENT_READY);
