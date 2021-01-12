@@ -23,8 +23,8 @@ trip_t M_TRIP;
 
 
 dashboardScreenView::dashboardScreenView() :
-        ticker(0),
-        iconAssets {
+            ticker(0),
+            iconAssets {
   BITMAP_MAINREVERSE_ID,
   BITMAP_MAINGO_ID,
   BITMAP_BRAKESYSTEMALERT_ID,
@@ -133,16 +133,11 @@ void dashboardScreenView::writeModeVisible(uint8_t state)
 
 void dashboardScreenView::writeSein(uint8_t leftSide, uint8_t state)
 {
-  MoveAnimator<Image> *sein;
+  Image *sein;
 
   sein = leftSide ? &seinLeft : &seinRight;
 
-  if (state)
-    sein->setVisible(true);
-//    sein->startMoveAnimation(0, 0, animationSpeed, EasingEquations::linearEaseOut, EasingEquations::linearEaseOut);
-  else
-    sein->setVisible(false);
-//    sein->setXY(80 * (leftSide ? 1 : -1), 0);
+  sein->setVisible(state);
   sein->invalidate();
 }
 
@@ -183,20 +178,20 @@ void dashboardScreenView::writeIndicator(uint8_t index)
       (nextIndicator.container->getHeight() - nextIndicator.image->getHeight()) / 2
   );
 
-//  nextIndicator.container->setXY(posIndicator.next.x, posIndicator.next.y);
+  //  nextIndicator.container->setXY(posIndicator.next.x, posIndicator.next.y);
   nextIndicator.container->setXY(posIndicator.current.x, posIndicator.current.y);
-//  nextIndicator.container->startMoveAnimation(
-//      posIndicator.current.x, posIndicator.current.y, animationSpeed,
-//      EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
-//  );
+  //  nextIndicator.container->startMoveAnimation(
+  //      posIndicator.current.x, posIndicator.current.y, animationSpeed,
+  //      EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
+  //  );
   nextIndicator.container->invalidate();
 
   prevIndicator.container->setVisible(true);
   prevIndicator.container->setXY(posIndicator.prev.x, posIndicator.prev.y);
-//  prevIndicator.container->startMoveAnimation(
-//      posIndicator.prev.x, posIndicator.prev.y, animationSpeed,
-//      EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
-//  );
+  //  prevIndicator.container->startMoveAnimation(
+  //      posIndicator.prev.x, posIndicator.prev.y, animationSpeed,
+  //      EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
+  //  );
   prevIndicator.container->invalidate();
 
   iconImageSwiper = !iconImageSwiper;
