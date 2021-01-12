@@ -120,13 +120,13 @@ dashboardScreenViewBase::dashboardScreenViewBase()
 
     seinLeftContainer.setPosition(152, 67, 80, 355);
 
-    seinLeft.setXY(80, 0);
+    seinLeft.setXY(0, 0);
     seinLeft.setBitmap(touchgfx::Bitmap(BITMAP_SEINLEFT_ID));
     seinLeftContainer.add(seinLeft);
 
     seinRightContainer.setPosition(567, 67, 80, 355);
 
-    seinRight.setXY(-80, 0);
+    seinRight.setXY(0, 0);
     seinRight.setBitmap(touchgfx::Bitmap(BITMAP_SEINRIGHTFLIPPED_ID));
     seinRightContainer.add(seinRight);
 
