@@ -5,14 +5,40 @@
 FONT_TABLE_LOCATION_FLASH_PRAGMA
 KEEP extern const touchgfx::GlyphNode glyphs_venus_rising_rg_17_4bpp[] FONT_TABLE_LOCATION_FLASH_ATTRIBUTE =
 {
-    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+    {     0, 0x0020,   0,   0,   0,   0,   6,   0,   0, 0x00 },
+    {     0, 0x0030,  16,  13,  13,   1,  18,   0,   0, 0x00 },
+    {   104, 0x0031,   7,  13,  13,   0,   8,   0,   0, 0x00 },
+    {   156, 0x0032,  16,  13,  13,   1,  17,   0,   0, 0x00 },
+    {   260, 0x0033,  16,  13,  13,   0,  16,   0,   0, 0x00 },
+    {   364, 0x0034,  17,  13,  13,   0,  17,   0,   0, 0x00 },
+    {   481, 0x0035,  16,  13,  13,   1,  17,   0,   0, 0x00 },
+    {   585, 0x0036,  16,  13,  13,   1,  17,   0,   0, 0x00 },
+    {   689, 0x0037,  16,  13,  13,   0,  17,   0,   0, 0x00 },
+    {   793, 0x0038,  16,  13,  13,   1,  18,   0,   0, 0x00 },
+    {   897, 0x0039,  17,  13,  13,   0,  17,   0,   0, 0x00 },
+    {  1014, 0x003F,  16,  13,  13,   1,  17,   0,   0, 0x00 },
+    {  1118, 0x0041,  16,  13,  13,   1,  18,   0,   0, 0x00 },
+    {  1222, 0x0042,  16,  13,  13,   1,  18,   0,   0, 0x00 },
+    {  1326, 0x0043,  16,  13,  13,   1,  17,   0,   0, 0x00 },
+    {  1430, 0x0044,  16,  13,  13,   1,  18,   0,   0, 0x00 },
+    {  1534, 0x0045,  16,  13,  13,   1,  17,   0,   0, 0x00 },
+    {  1638, 0x0046,  16,  13,  13,   1,  17,   0,   0, 0x00 },
+    {  1742, 0x0049,   3,  13,  13,   1,   5,   0,   0, 0x00 },
+    {  1768, 0x004D,  23,  13,  13,   1,  24,   0,   0, 0x00 },
+    {  1924, 0x004E,  16,  13,  13,   1,  18,   0,   0, 0x00 },
+    {  2028, 0x004F,  16,  13,  13,   1,  18,   0,   0, 0x00 },
+    {  2132, 0x0050,  16,  13,  13,   1,  17,   0,   0, 0x00 },
+    {  2236, 0x0052,  16,  13,  13,   1,  17,   0,   0, 0x00 },
+    {  2340, 0x0053,  16,  13,  13,   1,  17,   0,   0, 0x00 },
+    {  2444, 0x0054,  16,  13,  13,   0,  16,   0,   1, 0x00 }
 };
 
 // venus_rising_rg_17_4bpp
 extern const touchgfx::GlyphNode glyphs_venus_rising_rg_17_4bpp[];
+extern const uint8_t unicodes_venus_rising_rg_17_4bpp_0[];
 extern const uint8_t* const unicodes_venus_rising_rg_17_4bpp[] =
 {
-    0
+    unicodes_venus_rising_rg_17_4bpp_0
 };
 extern const touchgfx::KerningNode kerning_venus_rising_rg_17_4bpp[];
 
@@ -20,6 +46,6 @@ touchgfx::GeneratedFont& getFont_venus_rising_rg_17_4bpp();
 
 touchgfx::GeneratedFont& getFont_venus_rising_rg_17_4bpp()
 {
-    static touchgfx::GeneratedFont venus_rising_rg_17_4bpp(glyphs_venus_rising_rg_17_4bpp, 0, 17, 0, 4, 1, 0, 0, unicodes_venus_rising_rg_17_4bpp, kerning_venus_rising_rg_17_4bpp, 63, 0, 0);
+    static touchgfx::GeneratedFont venus_rising_rg_17_4bpp(glyphs_venus_rising_rg_17_4bpp, 26, 17, 0, 4, 1, 0, 0, unicodes_venus_rising_rg_17_4bpp, kerning_venus_rising_rg_17_4bpp, 63, 0, 0);
     return venus_rising_rg_17_4bpp;
 }
