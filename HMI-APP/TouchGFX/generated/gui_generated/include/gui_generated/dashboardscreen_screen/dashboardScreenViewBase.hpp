@@ -8,8 +8,9 @@
 #include <mvp/View.hpp>
 #include <gui/dashboardscreen_screen/dashboardScreenPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/containers/Container.hpp>
+#include <touchgfx/containers/CacheableContainer.hpp>
 #include <touchgfx/widgets/Image.hpp>
+#include <touchgfx/containers/Container.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/progress_indicators/ImageProgress.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
@@ -33,7 +34,7 @@ protected:
      */
     touchgfx::Box __background;
     touchgfx::Box background;
-    touchgfx::Container indicatorImages;
+    touchgfx::CacheableContainer indicatorImages;
     touchgfx::Image batteryLow;
     touchgfx::Image brakeAlert;
     touchgfx::Image temperatureWarning;
@@ -44,7 +45,7 @@ protected:
     touchgfx::Image phoneMirroring;
     touchgfx::Image mainGo;
     touchgfx::Image mainReverse;
-    touchgfx::Container iconContainer;
+    touchgfx::CacheableContainer iconContainer;
     touchgfx::MoveAnimator< touchgfx::Container > prevIconContainer;
     touchgfx::Image prevIconImage;
     touchgfx::MoveAnimator< touchgfx::Container > nextIconContainer;

@@ -252,7 +252,7 @@
               }
             ],
             "Type": "Container",
-            "IsCacheableContainer": false,
+            "IsCacheableContainer": true,
             "Name": "indicatorImages",
             "X": 274,
             "Y": 114,
@@ -335,7 +335,7 @@
               }
             ],
             "Type": "Container",
-            "IsCacheableContainer": false,
+            "IsCacheableContainer": true,
             "Name": "iconContainer",
             "X": 146,
             "Y": 132,
