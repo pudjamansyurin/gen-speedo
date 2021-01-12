@@ -138,9 +138,11 @@ void dashboardScreenView::writeSein(uint8_t leftSide, uint8_t state)
   sein = leftSide ? &seinLeft : &seinRight;
 
   if (state)
-    sein->startMoveAnimation(0, 0, animationSpeed, EasingEquations::linearEaseOut, EasingEquations::linearEaseOut);
+    sein->setVisible(true);
+//    sein->startMoveAnimation(0, 0, animationSpeed, EasingEquations::linearEaseOut, EasingEquations::linearEaseOut);
   else
-    sein->setXY(80 * (leftSide ? 1 : -1), 0);
+    sein->setVisible(false);
+//    sein->setXY(80 * (leftSide ? 1 : -1), 0);
   sein->invalidate();
 }
 
@@ -181,18 +183,20 @@ void dashboardScreenView::writeIndicator(uint8_t index)
       (nextIndicator.container->getHeight() - nextIndicator.image->getHeight()) / 2
   );
 
-  nextIndicator.container->setXY(posIndicator.next.x, posIndicator.next.y);
-  nextIndicator.container->startMoveAnimation(
-      posIndicator.current.x, posIndicator.current.y, animationSpeed,
-      EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
-  );
+//  nextIndicator.container->setXY(posIndicator.next.x, posIndicator.next.y);
+  nextIndicator.container->setXY(posIndicator.current.x, posIndicator.current.y);
+//  nextIndicator.container->startMoveAnimation(
+//      posIndicator.current.x, posIndicator.current.y, animationSpeed,
+//      EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
+//  );
   nextIndicator.container->invalidate();
 
   prevIndicator.container->setVisible(true);
-  prevIndicator.container->startMoveAnimation(
-      posIndicator.prev.x, posIndicator.prev.y, animationSpeed,
-      EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
-  );
+  prevIndicator.container->setXY(posIndicator.prev.x, posIndicator.prev.y);
+//  prevIndicator.container->startMoveAnimation(
+//      posIndicator.prev.x, posIndicator.prev.y, animationSpeed,
+//      EasingEquations::linearEaseOut, EasingEquations::linearEaseOut
+//  );
   prevIndicator.container->invalidate();
 
   iconImageSwiper = !iconImageSwiper;
