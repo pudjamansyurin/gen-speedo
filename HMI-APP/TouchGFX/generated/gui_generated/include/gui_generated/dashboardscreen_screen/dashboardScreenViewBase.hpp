@@ -61,7 +61,7 @@ protected:
     touchgfx::Image tripBox;
     touchgfx::Image driveBox;
     touchgfx::Container seinLeftContainer;
-    touchgfx::MoveAnimator< touchgfx::Image > seinLeft;
+    touchgfx::Image seinLeft;
     touchgfx::Container seinRightContainer;
     touchgfx::MoveAnimator< touchgfx::Image > seinRight;
     touchgfx::ImageProgress engineProgress;

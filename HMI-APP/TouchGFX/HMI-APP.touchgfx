@@ -549,7 +549,7 @@
                 "Draggable": false,
                 "Clickable": false,
                 "Fadeable": false,
-                "Moveable": true
+                "Moveable": false
               }
             ],
             "Type": "Container",
