@@ -11,7 +11,7 @@ static uint8_t alpha;
 
 welcomeScreenView::welcomeScreenView()
 :
-        ticker(-10)
+        ticker(-120)
 {
 
 }
