@@ -218,11 +218,7 @@ uint8_t FOCAN_xDownloadFlash(can_rx_t *Rx, uint32_t *size, uint32_t timeout, uin
   // progress indicator
   if (p) {
     percent = offset * 100 / *size;
-    LOG_Str("FOTA:Progress = ");
-    LOG_Int(offset);
-    LOG_Str(" Bytes (");
-    LOG_Int(percent);
-    LOG_StrLn("%)");
+    Log("FOTA:Progress = %u Bytes (%u%%)\n", offset, percent);
   }
 
   // send final response

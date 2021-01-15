@@ -25,18 +25,11 @@ uint8_t FOTA_ValidateChecksum(uint32_t checksum, uint32_t len, uint32_t address)
   crc = CRC_Calculate8(addr, len, 1);
 
   // Indicator
-  LOG_Str("FOTA:Checksum = ");
-  if (crc == checksum) {
-    LOG_StrLn("MATCH");
-    /* Glue checksum information to image */
-    FOTA_GlueInfo32(CHECKSUM_OFFSET, &crc);
-  } else {
-    LOG_StrLn("NOT MATCH");
-    LOG_Hex32(checksum);
-    LOG_Str(" != ");
-    LOG_Hex32(crc);
-    LOG_Enter();
-  }
+  Log("FOTA:Checksum = ");
+  if (crc == checksum)
+    Log("MATCH\n");
+  else
+    Log("DIFF (0x%08X != 0x%08X)\n", checksum, crc);
 
   return (crc == checksum);
 }

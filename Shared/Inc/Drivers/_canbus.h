@@ -11,10 +11,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "Libs/_utils.h"
 
-/* Private constants ----------------------------------------------------------*/
-#define CANBUS_DEBUG       0
-
-
 /* Exported union ------------------------------------------------------------*/
 typedef union {
     uint8_t u8[8];
@@ -43,8 +39,10 @@ typedef struct {
 
 typedef struct {
   uint8_t active;
-  CAN_HandleTypeDef *hcan;
-} can_handler_t;
+  struct {
+    CAN_HandleTypeDef *can;
+  } h;
+} can_t;
 
 /* Public functions prototype ------------------------------------------------*/
 void CANBUS_Init(CAN_HandleTypeDef *hcan);

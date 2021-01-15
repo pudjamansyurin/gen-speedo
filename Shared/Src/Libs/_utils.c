@@ -8,7 +8,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "Libs/_utils.h"
 #if (!BOOTLOADER)
-#include "Libs/_rtos_utils.h"
 #include "Nodes/VCU.h"
 #include "Nodes/HMI1.h"
 #include "Nodes/MCU.h"
@@ -16,6 +15,14 @@
 #endif
 
 /* Public functions implementations ------------------------------------------*/
+#if RTOS_ENABLE
+uint8_t _osThreadFlagsWait(uint32_t *notif, uint32_t flags, uint32_t options, uint32_t timeout) {
+  *notif = osThreadFlagsWait(flags, options, timeout);
+
+  return !(!(*notif) || ((*notif) & (~EVT_MASK)));
+}
+#endif
+
 void _DelayMS(uint32_t ms) {
 #if RTOS_ENABLE
     osDelay(ms);
@@ -43,9 +50,9 @@ void _LedToggle(void) {
 void _Error(char msg[50]) {
 #if RTOS_ENABLE
     if (osKernelGetState() == osKernelRunning)
-        LOG_StrLn(msg);
+        Log(msg);
 #else
-	LOG_StrLn(msg);
+	Log(msg);
 #endif
 
 //    // indicator error
@@ -76,7 +83,7 @@ void _FlushData(void) {
 	MCU.Init();
 	BMS.Init();
 	_LcdBacklight(1);
-  LOG_StrLn("Data is flushed.");
+  Log("Data is flushed.\n");
 }
 
 float _D2R(uint16_t deg) {

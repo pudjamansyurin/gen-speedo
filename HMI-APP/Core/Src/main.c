@@ -166,7 +166,7 @@ int main(void)
   MX_LTDC_Init();
   MX_TouchGFX_Init();
   /* USER CODE BEGIN 2 */
-
+  LogInit();
   /* USER CODE END 2 */
 
   /* Init scheduler */
