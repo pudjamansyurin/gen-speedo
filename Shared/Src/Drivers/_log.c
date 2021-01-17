@@ -44,9 +44,13 @@ void LogInit(void) {
   setvbuf(stdout, NULL, _IONBF, 0);
 }
 
+void LogBufferHex(char *data, uint16_t size) {
+  for(uint32_t i=0; i<size; i++)
+    printf("%02X", *(data+i));
+}
+
 // void Log(const char *fmt, ...) {
 //   va_list args;
-
 //   lock();
 //   va_start(args, fmt);
 //   vprintf(fmt, args);
