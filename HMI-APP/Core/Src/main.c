@@ -94,10 +94,11 @@ osMessageQueueId_t CanRxQueueHandle;
 const osMessageQueueAttr_t CanRxQueue_attributes = {
   .name = "CanRxQueue"
 };
-/* Definitions for LogMutex */
-osMutexId_t LogMutexHandle;
-const osMutexAttr_t LogMutex_attributes = {
-  .name = "LogMutex"
+/* Definitions for LogRecMutex */
+osMutexId_t LogRecMutexHandle;
+const osMutexAttr_t LogRecMutex_attributes = {
+  .name = "LogRecMutex",
+  .attr_bits = osMutexRecursive,
 };
 /* Definitions for GlobalEvent */
 osEventFlagsId_t GlobalEventHandle;
@@ -171,9 +172,10 @@ int main(void)
 
   /* Init scheduler */
   osKernelInitialize();
-  /* Create the mutex(es) */
-  /* creation of LogMutex */
-  LogMutexHandle = osMutexNew(&LogMutex_attributes);
+
+  /* Create the recursive mutex(es) */
+  /* creation of LogRecMutex */
+  LogRecMutexHandle = osMutexNew(&LogRecMutex_attributes);
 
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
@@ -213,6 +215,7 @@ int main(void)
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
+  /* Create the event(s) */
   /* creation of GlobalEvent */
   GlobalEventHandle = osEventFlagsNew(&GlobalEvent_attributes);
 

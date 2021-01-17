@@ -12,7 +12,7 @@
 
 /* External variables ----------------------------------------------------------*/
 #if (!BOOTLOADER)
-extern osMutexId_t LogMutexHandle;
+extern osMutexId_t LogRecMutexHandle;
 #endif
 
 /* Private functions declarations ----------------------------------------------*/
@@ -45,8 +45,10 @@ void LogInit(void) {
 }
 
 void LogBufferHex(char *data, uint16_t size) {
+  lock();
   for(uint32_t i=0; i<size; i++)
     printf("%02X", *(data+i));
+  unlock();
 }
 
 // void Log(const char *fmt, ...) {
@@ -62,7 +64,7 @@ void LogBufferHex(char *data, uint16_t size) {
 static void lock(void) {
 #ifdef DEBUG
 #if (!BOOTLOADER)
-  osMutexAcquire(LogMutexHandle, osWaitForever);
+  osMutexAcquire(LogRecMutexHandle, osWaitForever);
 #endif
 #endif
 }
@@ -70,7 +72,7 @@ static void lock(void) {
 static void unlock(void) {
 #ifdef DEBUG
 #if (!BOOTLOADER)
-  osMutexRelease(LogMutexHandle);
+  osMutexRelease(LogRecMutexHandle);
 #endif
 #endif
 }
