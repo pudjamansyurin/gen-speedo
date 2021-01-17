@@ -25,11 +25,11 @@ uint8_t FOTA_ValidateChecksum(uint32_t checksum, uint32_t len, uint32_t address)
   crc = CRC_Calculate8(addr, len, 1);
 
   // Indicator
-  Log("FOTA:Checksum = ");
   if (crc == checksum)
-    Log("MATCH\n");
+    printf("FOTA:Checksum = MATCH\n");
   else
-    Log("DIFF (0x%08X != 0x%08X)\n", checksum, crc);
+    printf("FOTA:Checksum = DIFF (0x%08X != 0x%08X)\n",
+        (unsigned int) checksum, (unsigned int) crc);
 
   return (crc == checksum);
 }

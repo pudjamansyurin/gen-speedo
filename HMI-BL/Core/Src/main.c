@@ -126,7 +126,7 @@ int main(void)
 		/* Initialize LCD */
 		BSP_LCD_Init();
 
-		Log("IAP set, do DFU.\n");
+		printf("IAP set, do DFU.\n");
 		/* Everything went well */
 		if (FOCAN_Upgrade(0)) {
 			/* Reset IAP flag */
@@ -141,7 +141,7 @@ int main(void)
 	}
 	/* Jump to application if it exist and DFU finished */
 	else if (FOTA_ValidImage(APP_START_ADDR)) {
-		Log("Jump to application.\n");
+		printf("Jump to application.\n");
 		/* Jump sequence */
 		FOTA_JumpToApplication();
 	}
@@ -152,7 +152,7 @@ int main(void)
 
 		/* Check is the backup image valid */
 		if (FOTA_ValidImage(BKP_START_ADDR)) {
-			Log("Has backed-up image, roll-back.\n");
+			printf("Has backed-up image, roll-back.\n");
 			FOTA_DisplayDevice(IAP_HMI);
 			FOTA_DisplayStatus("Roll-back firmware.");
 			/* Restore back old image to application area */
@@ -161,7 +161,7 @@ int main(void)
 				FOTA_Reboot();
 			}
 		} else {
-			Log("No image at all, do DFU.\n");
+			printf("No image at all, do DFU.\n");
 			/* Download new firmware for the first time */
 			if (FOCAN_Upgrade(1)) {
 				/* Take branching decision on next reboot */

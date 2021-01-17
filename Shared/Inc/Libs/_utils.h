@@ -10,7 +10,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "_defines.h"
-#include "Drivers/_logger.h"
+#include "Drivers/_log.h"
 
 /* Functions prototypes -------------------------------------------------------*/
 #if RTOS_ENABLE
