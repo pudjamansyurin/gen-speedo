@@ -32,7 +32,7 @@ typedef struct {
     uint8_t hide;
     uint8_t sel;
 
-    uint8_t val[HBAR_M_MAX + 1];
+    uint8_t val[HBAR_M_MAX];
     uint8_t report;
     uint32_t trip;
   } mode;

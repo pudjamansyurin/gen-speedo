@@ -2,7 +2,7 @@
 #include <touchgfx/Color.hpp>
 #include "BitmapDatabase.hpp"
 
-touchgfx::Container *modeContainer[HBAR_M_MAX+1];
+touchgfx::Container *modeContainer[HBAR_M_MAX];
 uint8_t modeSelected = HBAR_M_DRIVE;
 uint8_t modeVisible = 1;
 
@@ -116,7 +116,7 @@ void dashboardScreenView::handleTickEvent()
 
 void dashboardScreenView::writeModeSelector(uint8_t mode)
 {
-  for (uint8_t i = 0; i <= HBAR_M_MAX; i++) {
+  for (uint8_t i = 0; i < HBAR_M_MAX; i++) {
     if (i == mode)
       modeSelected = mode;
     else {
