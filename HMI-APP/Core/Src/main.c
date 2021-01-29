@@ -661,8 +661,6 @@ void StartManagerTask(void *argument)
   /* USER CODE BEGIN 5 */
   TickType_t lastWake;
 
-  CANBUS_Init(&hcan2);
-
   // Reset database
   _LcdPower(0);
   _FlushData();
@@ -729,6 +727,8 @@ void StartCanTxTask(void *argument)
   // wait until ManagerTask done
   osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
+  CANBUS_Init(&hcan2);
+
   /* Infinite loop */
   for (;;) {
     lastWake = osKernelGetTickCount();
@@ -757,7 +757,6 @@ void StartCanRxTask(void *argument)
 
   /* Infinite loop */
   for (;;) {
-    // get can rx in queue
     if (osMessageQueueGet(CanRxQueueHandle, &Rx, NULL, 1000) == osOK) {
       VCU.d.tick.canRx = _GetTickMS();
 
