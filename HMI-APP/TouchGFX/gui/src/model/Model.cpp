@@ -87,15 +87,15 @@ void Model::tick()
     switch (HMI1.d.mode.sel) {
       case HBAR_M_TRIP :
         mode = &HMI1.d.mode.val[HBAR_M_TRIP];
-        max = HBAR_M_TRIP_MAX;
+        max = HBAR_M_TRIP_MAX - 1;
         break;
       case HBAR_M_DRIVE:
         mode = &HMI1.d.mode.val[HBAR_M_DRIVE];
-        max = HBAR_M_DRIVE_MAX;
+        max = HBAR_M_DRIVE_MAX - 1;
         break;
       case HBAR_M_REPORT:
         mode = &HMI1.d.mode.val[HBAR_M_REPORT];
-        max = HBAR_M_REPORT_MAX;
+        max = HBAR_M_REPORT_MAX - 1;
         break;
       default:
         break;
