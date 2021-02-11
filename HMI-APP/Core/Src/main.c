@@ -770,7 +770,7 @@ void StartCanRxTask(void *argument)
           VCU.can.r.MixedData(&Rx);
           break;
         case CAND_VCU_TRIP_MODE :
-          VCU.can.r.SubTripData(&Rx);
+          VCU.can.r.TripData(&Rx);
           break;
         case CAND_SET_PROGRESS :
           FW_EnterModeIAP();

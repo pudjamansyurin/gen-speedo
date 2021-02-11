@@ -24,9 +24,8 @@ Model::Model()
 #ifdef SIMULATOR
   generateRandomIndicators();
 
-  HMI1.d.mode.sel = HBAR_M_DRIVE;
   HMI1.d.mode.hide = 0;
-
+  HMI1.d.mode.sel = HBAR_M_DRIVE;
   HMI1.d.mode.val[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
   HMI1.d.mode.val[HBAR_M_DRIVE] = HBAR_M_DRIVE_STANDARD;
   HMI1.d.mode.val[HBAR_M_REPORT] = HBAR_M_REPORT_RANGE;
@@ -47,12 +46,8 @@ void Model::tick()
     MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
   }
 
-  if (ticker % 10 == 0) {
-    if (HMI1.d.mode.trip >= 999999)
-      HMI1.d.mode.trip = 0;
-    else
+  if (ticker % 10 == 0)
       HMI1.d.mode.trip++;
-  }
 
   if (ticker % 15 == 0)
     HMI1.d.mode.hide = !HMI1.d.mode.hide;

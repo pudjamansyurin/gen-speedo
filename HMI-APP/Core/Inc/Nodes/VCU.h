@@ -16,7 +16,6 @@
 typedef struct {
   uint8_t signal;
   uint8_t speed;
-  uint32_t odometer;
   struct {
     uint32_t canRx;
   } tick;
@@ -26,7 +25,7 @@ typedef struct {
   struct {
     void (*SwitchModeControl)(can_rx_t*);
     void (*MixedData)(can_rx_t*);
-    void (*SubTripData)(can_rx_t*);
+    void (*TripData)(can_rx_t*);
   } r;
 } vcu_can_t;
 
@@ -43,6 +42,6 @@ extern vcu_t VCU;
 void VCU_Init(void);
 void VCU_CAN_RX_SwitchModeControl(can_rx_t *Rx);
 void VCU_CAN_RX_MixedData(can_rx_t *Rx);
-void VCU_CAN_RX_SubTripData(can_rx_t *Rx);
+void VCU_CAN_RX_TripData(can_rx_t *Rx);
 
 #endif /* INC_NODES_VCU_H_ */

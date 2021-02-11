@@ -23,7 +23,7 @@ vcu_t VCU = {
         .r = {
             VCU_CAN_RX_SwitchModeControl,
             VCU_CAN_RX_MixedData,
-            VCU_CAN_RX_SubTripData
+            VCU_CAN_RX_TripData
         }
     },
     VCU_Init
@@ -33,7 +33,6 @@ vcu_t VCU = {
 void VCU_Init(void) {
   VCU.d.signal = 0;
   VCU.d.speed = 0;
-  VCU.d.odometer = 0;
 }
 
 /* ====================================== CAN RX =================================== */
@@ -79,16 +78,14 @@ void VCU_CAN_RX_MixedData(can_rx_t *Rx) {
   else
     HMI1.d.mode.report = Rx->data.u8[3];
 
-  // odometer
-  VCU.d.odometer = Rx->data.u32[1];
-  if (HMI1.d.mode.val[HBAR_M_TRIP] == HBAR_M_TRIP_ODO)
-    HMI1.d.mode.trip = VCU.d.odometer;
 }
 
-void VCU_CAN_RX_SubTripData(can_rx_t *Rx) {
-  // read message
+void VCU_CAN_RX_TripData(can_rx_t *Rx) {
+  // sub trip
   if (HMI1.d.mode.val[HBAR_M_TRIP] == HBAR_M_TRIP_A)
-    HMI1.d.mode.trip = Rx->data.u32[0];
+    HMI1.d.mode.trip = Rx->data.u16[0];
   else if (HMI1.d.mode.val[HBAR_M_TRIP] == HBAR_M_TRIP_B)
+    HMI1.d.mode.trip = Rx->data.u16[1];
+  else if (HMI1.d.mode.val[HBAR_M_TRIP] == HBAR_M_TRIP_ODO)
     HMI1.d.mode.trip = Rx->data.u32[1];
 }

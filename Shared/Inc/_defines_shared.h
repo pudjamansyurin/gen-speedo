@@ -107,9 +107,9 @@ typedef enum {
 } HBAR_MODE_DRIVE;
 
 typedef enum {
-    HBAR_M_TRIP_ODO = 0,
-    HBAR_M_TRIP_A,
+	  HBAR_M_TRIP_A = 0,
     HBAR_M_TRIP_B,
+		HBAR_M_TRIP_ODO,
     HBAR_M_TRIP_MAX = 3,
 } HBAR_MODE_TRIP;
 
