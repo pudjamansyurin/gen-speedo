@@ -48,18 +48,18 @@ dashboardScreenView::dashboardScreenView() :
   modeContainer[HBAR_M_DRIVE] = &driveModeContainer;
   modeContainer[HBAR_M_REPORT] = &reportModeContainer;
 
-  M_DRIVE.color[0] = Color::getColorFrom24BitRGB(255, 255, 0);
-  M_DRIVE.color[1] = Color::getColorFrom24BitRGB(0, 255, 0);
-  M_DRIVE.color[2] = Color::getColorFrom24BitRGB(255, 0, 0);
-  M_DRIVE.color[3] = Color::getColorFrom24BitRGB(0, 255, 255);
-  touchgfx::Unicode::strncpy(M_DRIVE.mode[0], "ECONOMIC", NEXTDRIVEMODETEXT_SIZE);
-  touchgfx::Unicode::strncpy(M_DRIVE.mode[1], "STANDARD", NEXTDRIVEMODETEXT_SIZE);
-  touchgfx::Unicode::strncpy(M_DRIVE.mode[2], "SPORT", NEXTDRIVEMODETEXT_SIZE);
-  touchgfx::Unicode::strncpy(M_DRIVE.mode[3], "PERFORMANCE", NEXTDRIVEMODETEXT_SIZE);
+  M_DRIVE.color[HBAR_M_DRIVE_ECONOMY] = Color::getColorFrom24BitRGB(255, 255, 0);
+  M_DRIVE.color[HBAR_M_DRIVE_STANDARD] = Color::getColorFrom24BitRGB(0, 255, 0);
+  M_DRIVE.color[HBAR_M_DRIVE_SPORT] = Color::getColorFrom24BitRGB(255, 0, 0);
+  M_DRIVE.color[HBAR_M_DRIVE_PERFORMANCE] = Color::getColorFrom24BitRGB(0, 255, 255);
+  touchgfx::Unicode::strncpy(M_DRIVE.mode[HBAR_M_DRIVE_ECONOMY], "ECONOMIC", NEXTDRIVEMODETEXT_SIZE);
+  touchgfx::Unicode::strncpy(M_DRIVE.mode[HBAR_M_DRIVE_STANDARD], "STANDARD", NEXTDRIVEMODETEXT_SIZE);
+  touchgfx::Unicode::strncpy(M_DRIVE.mode[HBAR_M_DRIVE_SPORT], "SPORT", NEXTDRIVEMODETEXT_SIZE);
+  touchgfx::Unicode::strncpy(M_DRIVE.mode[HBAR_M_DRIVE_PERFORMANCE], "PERFORMANCE", NEXTDRIVEMODETEXT_SIZE);
 
-  touchgfx::Unicode::strncpy(M_TRIP.mode[0], "ODO", NEXTTRIPMODETEXT_SIZE);
-  touchgfx::Unicode::strncpy(M_TRIP.mode[1], "TRIP A", NEXTTRIPMODETEXT_SIZE);
-  touchgfx::Unicode::strncpy(M_TRIP.mode[2], "TRIP B", NEXTTRIPMODETEXT_SIZE);
+  touchgfx::Unicode::strncpy(M_TRIP.mode[HBAR_M_TRIP_A], "TRIP A", NEXTTRIPMODETEXT_SIZE);
+  touchgfx::Unicode::strncpy(M_TRIP.mode[HBAR_M_TRIP_B], "TRIP B", NEXTTRIPMODETEXT_SIZE);
+  touchgfx::Unicode::strncpy(M_TRIP.mode[HBAR_M_TRIP_ODO], "ODO", NEXTTRIPMODETEXT_SIZE);
 
 }
 
