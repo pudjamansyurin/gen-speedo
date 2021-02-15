@@ -68,15 +68,12 @@
 #define CAND_VCU_SELECT_SET		       (uint32_t) 0x002
 #define CAND_VCU_TRIP_MODE		       (uint32_t) 0x003
 #define CAND_HMI1                    (uint32_t) 0x7C0
-// FOCAN Command Address
 #define CAND_SET_PROGRESS            (uint32_t) 0x101
-#if (BOOTLOADER)
 #define CAND_GET_CHECKSUM            (uint32_t) 0x102
 #define CAND_PRA_DOWNLOAD            (uint32_t) 0x103
 #define CAND_INIT_DOWNLOAD           (uint32_t) 0x104
 #define CAND_DOWNLOADING             (uint32_t) 0x105
 #define CAND_PASCA_DOWNLOAD          (uint32_t) 0x106
-#endif
 
 /* Enum prototypes ------------------------------------------------------- */
 #if (BOOTLOADER)

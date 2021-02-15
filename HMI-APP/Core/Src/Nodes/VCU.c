@@ -54,7 +54,7 @@ void VCU_CAN_RX_SwitchModeControl(can_rx_t *Rx) {
 
   // mode
   HMI1.d.mode.val[HBAR_M_DRIVE] = _R2(Rx->data.u8[2], 0);
-  HMI1.d.mode.val[HBAR_M_TRIP] = _R1(Rx->data.u8[2], 2);
+  HMI1.d.mode.val[HBAR_M_TRIP] = _R2(Rx->data.u8[2], 2);
   HMI1.d.mode.val[HBAR_M_REPORT] = _R1(Rx->data.u8[2], 4);
   HMI1.d.mode.sel = _R2(Rx->data.u8[2], 5);
   HMI1.d.mode.hide = _R1(Rx->data.u8[2], 7);
