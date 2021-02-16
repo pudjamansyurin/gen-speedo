@@ -4,11 +4,11 @@
 #if !defined(SIMULATOR) || defined(LCD_TESTING)
 extern "C"
 {
-#include "Libs/_utils.h"
-#include "Nodes/VCU.h"
-#include "Nodes/HMI1.h"
-#include "Nodes/BMS.h"
-#include "Nodes/MCU.h"
+	#include "Libs/_utils.h"
+	#include "Nodes/VCU.h"
+	#include "Nodes/HMI1.h"
+	#include "Nodes/BMS.h"
+	#include "Nodes/MCU.h"
 }
 #else
 vcu_t VCU;
@@ -24,11 +24,11 @@ Model::Model()
 #ifdef SIMULATOR
   generateRandomIndicators();
 
-  HMI1.d.hbar.hide = 0;
-  HMI1.d.hbar.sel = HBAR_M_DRIVE;
-  HMI1.d.hbar.mode[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
-  HMI1.d.hbar.mode[HBAR_M_DRIVE] = HBAR_M_DRIVE_STANDARD;
-  HMI1.d.hbar.mode[HBAR_M_REPORT] = HBAR_M_REPORT_RANGE;
+  HMI1.hbar.hide = 0;
+  HMI1.hbar.m = HBAR_M_DRIVE;
+  HMI1.hbar.d.mode[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
+  HMI1.hbar.d.mode[HBAR_M_DRIVE] = HBAR_M_DRIVE_STANDARD;
+  HMI1.hbar.d.mode[HBAR_M_REPORT] = HBAR_M_REPORT_RANGE;
 #endif
 }
 
@@ -47,16 +47,16 @@ void Model::tick()
   }
 
   if (ticker % 10 == 0)
-      HMI1.d.hbar.trip++;
+      HMI1.hbar.d.trip++;
 
   if (ticker % 15 == 0)
-    HMI1.d.hbar.hide = !HMI1.d.hbar.hide;
+    HMI1.hbar.hide = !HMI1.hbar.hide;
 
   if (ticker % 20 == 0) {
-    if (HMI1.d.hbar.report >= 255)
-      HMI1.d.hbar.report = 0;
+    if (HMI1.hbar.d.report >= 255)
+      HMI1.hbar.d.report = 0;
     else
-      HMI1.d.hbar.report++;
+      HMI1.hbar.d.report++;
   }
 
   if(ticker % 30 == 0) {
@@ -79,17 +79,17 @@ void Model::tick()
     HMI1.d.sein.left = !HMI1.d.sein.left;
     HMI1.d.sein.right = !HMI1.d.sein.right;
 
-    switch (HMI1.d.hbar.sel) {
+    switch (HMI1.hbar.m) {
       case HBAR_M_TRIP :
-        mode = &HMI1.d.hbar.mode[HBAR_M_TRIP];
+        mode = &HMI1.hbar.d.mode[HBAR_M_TRIP];
         max = HBAR_M_TRIP_MAX - 1;
         break;
       case HBAR_M_DRIVE:
-        mode = &HMI1.d.hbar.mode[HBAR_M_DRIVE];
+        mode = &HMI1.hbar.d.mode[HBAR_M_DRIVE];
         max = HBAR_M_DRIVE_MAX - 1;
         break;
       case HBAR_M_REPORT:
-        mode = &HMI1.d.hbar.mode[HBAR_M_REPORT];
+        mode = &HMI1.hbar.d.mode[HBAR_M_REPORT];
         max = HBAR_M_REPORT_MAX - 1;
         break;
       default:
@@ -110,24 +110,24 @@ void Model::tick()
   }
 
   if (ticker % (60*3) == 0) {
-    if (HMI1.d.hbar.sel >= HBAR_M_MAX)
-      HMI1.d.hbar.sel = 0;
+    if (HMI1.hbar.m >= HBAR_M_MAX)
+      HMI1.hbar.m = 0;
     else
-      HMI1.d.hbar.sel++;
+      HMI1.hbar.m++;
   }
 
   if (ticker % (60 * 60) == 0)
     generateRandomIndicators();
 
-  switch (HMI1.d.hbar.sel) {
+  switch (HMI1.hbar.m) {
     case HBAR_M_TRIP :
-      modelListener->setTripMode(HMI1.d.hbar.mode[HBAR_M_TRIP]);
+      modelListener->setTripMode(HMI1.hbar.d.mode[HBAR_M_TRIP]);
       break;
     case HBAR_M_DRIVE:
-      modelListener->setDriveMode(HMI1.d.hbar.mode[HBAR_M_DRIVE]);
+      modelListener->setDriveMode(HMI1.hbar.d.mode[HBAR_M_DRIVE]);
       break;
     case HBAR_M_REPORT:
-      modelListener->setReportMode(HMI1.d.hbar.mode[HBAR_M_REPORT]);
+      modelListener->setReportMode(HMI1.hbar.d.mode[HBAR_M_REPORT]);
       break;
     default:
       break;
@@ -135,15 +135,15 @@ void Model::tick()
 #endif
 
   // write to LCD
-  modelListener->setTripMode(HMI1.d.hbar.mode[HBAR_M_TRIP]);
-  modelListener->setDriveMode(HMI1.d.hbar.mode[HBAR_M_DRIVE]);
-  modelListener->setReportMode(HMI1.d.hbar.mode[HBAR_M_REPORT]);
+  modelListener->setTripMode(HMI1.hbar.d.mode[HBAR_M_TRIP]);
+  modelListener->setDriveMode(HMI1.hbar.d.mode[HBAR_M_DRIVE]);
+  modelListener->setReportMode(HMI1.hbar.d.mode[HBAR_M_REPORT]);
 
   modelListener->setSpeed(VCU.d.speed);
   modelListener->setEngineRotation(MCU.d.rpm);
 
-  modelListener->setTripValue(HMI1.d.hbar.trip);
-  modelListener->setReportValue(HMI1.d.hbar.report);
+  modelListener->setTripValue(HMI1.hbar.d.trip);
+  modelListener->setReportValue(HMI1.hbar.d.report);
 
   modelListener->setSignal(VCU.d.signal);
   modelListener->setBattery(BMS.d.soc);
@@ -153,8 +153,8 @@ void Model::tick()
 
   modelListener->setIndicator(indicator);
 
-  modelListener->setModeSelector(HMI1.d.hbar.sel);
-  modelListener->setModeVisible(!HMI1.d.hbar.hide);
+  modelListener->setModeSelector(HMI1.hbar.m);
+  modelListener->setModeVisible(!HMI1.hbar.hide);
 
   if (ticker % (60 * 2) == 0)
     swipeIndicator();
@@ -181,7 +181,7 @@ void Model::generateRandomIndicators()
   HMI1.d.state.unfinger = rand() & 1;
   HMI1.d.state.unremote = rand() & 1;
   HMI1.d.state.daylight = rand() & 1;
-  HMI1.d.hbar.reverse = rand() & 1;
+  HMI1.hbar.reverse = rand() & 1;
 }
 #endif
 
@@ -205,8 +205,8 @@ void Model::reloadIndicators()
     }
   }
 
-  indicators[INDICATOR_REVERSE] = HMI1.d.hbar.reverse;
-  indicators[INDICATOR_GO] = !HMI1.d.hbar.reverse && !errors;
+  indicators[INDICATOR_REVERSE] = HMI1.hbar.reverse;
+  indicators[INDICATOR_GO] = !HMI1.hbar.reverse && !errors;
 }
 
 void Model::swipeIndicator()

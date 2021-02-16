@@ -83,15 +83,20 @@ typedef struct {
 } bms_t;
 
 typedef struct {
-	uint8_t reverse;
-	uint8_t hide;
-	uint8_t sel;
 	uint8_t mode[HBAR_M_MAX];
 	uint8_t report;
 	uint32_t trip;
 } hbar_data_t;
 
 typedef struct {
+  uint8_t m;
+  hbar_data_t d;
+	uint8_t reverse;
+	uint8_t hide;
+} hbar_t;
+
+typedef struct {
+	hbar_t hbar;
   struct {
     struct {
       uint8_t abs;
@@ -107,7 +112,6 @@ typedef struct {
       uint8_t left;
       uint8_t right;
     } sein;
-  	hbar_data_t hbar;
   } d;
 } hmi1_t;
 #endif

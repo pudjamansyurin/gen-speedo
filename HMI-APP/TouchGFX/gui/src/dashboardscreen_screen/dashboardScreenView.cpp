@@ -10,7 +10,7 @@ uint8_t animationSpeed = 10;
 uint8_t iconImageSwiper = 0;
 uint8_t tripModeSwiper = 0;
 uint8_t driveModeSwiper = 0;
-uint8_t reportModeSwiper = 0;
+//uint8_t reportModeSwiper = 0;
 
 touchgfx::TextAreaWithOneWildcard *pReportValueText;
 touchgfx::Unicode::UnicodeChar *pReportValueTextBuffer;
@@ -61,10 +61,10 @@ dashboardScreenView::dashboardScreenView() :
   touchgfx::Unicode::strncpy(M_TRIP.mode[HBAR_M_TRIP_B], "TRIP B", NEXTTRIPMODETEXT_SIZE);
   touchgfx::Unicode::strncpy(M_TRIP.mode[HBAR_M_TRIP_ODO], "ODO", NEXTTRIPMODETEXT_SIZE);
 
-  M_REPORT.pValueText[HBAR_M_REPORT_RANGE] = &nextReportValueText;
-  M_REPORT.pValueText[HBAR_M_REPORT_AVERAGE] = &prevReportValueText;
-  M_REPORT.pValueTextBuffer[HBAR_M_REPORT_RANGE] = nextReportValueTextBuffer;
-  M_REPORT.pValueTextBuffer[HBAR_M_REPORT_AVERAGE] = prevReportValueTextBuffer;
+  M_REPORT.pValueText[HBAR_M_REPORT_RANGE] = &prevReportValueText;
+  M_REPORT.pValueText[HBAR_M_REPORT_AVERAGE] = &nextReportValueText;
+  M_REPORT.pValueTextBuffer[HBAR_M_REPORT_RANGE] = prevReportValueTextBuffer;
+  M_REPORT.pValueTextBuffer[HBAR_M_REPORT_AVERAGE] = nextReportValueTextBuffer;
 
 }
 
@@ -259,8 +259,8 @@ void dashboardScreenView::writeTripValue(uint32_t value)
 
 void dashboardScreenView::writeReportMode(uint8_t index)
 {
-  MoveAnimator<touchgfx::Container> *prevContainer = reportModeSwiper ? &prevReportModeContainer : &nextReportModeContainer;
-  MoveAnimator<touchgfx::Container> *nextContainer = reportModeSwiper ? &nextReportModeContainer : &prevReportModeContainer;
+  MoveAnimator<touchgfx::Container> *prevContainer = index ? &prevReportModeContainer : &nextReportModeContainer;
+  MoveAnimator<touchgfx::Container> *nextContainer = index ? &nextReportModeContainer : &prevReportModeContainer;
 
   pReportValueText = M_REPORT.pValueText[index];
   pReportValueTextBuffer = M_REPORT.pValueTextBuffer[index];
@@ -278,7 +278,7 @@ void dashboardScreenView::writeReportMode(uint8_t index)
   );
   prevContainer->invalidate();
 
-  reportModeSwiper = !reportModeSwiper;
+//  reportModeSwiper = !reportModeSwiper;
 }
 
 void dashboardScreenView::writeReportValue(uint16_t value)

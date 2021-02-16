@@ -13,13 +13,17 @@
 
 /* Exported struct -----------------------------------------------------------*/
 typedef struct {
-	uint8_t reverse;
-	uint8_t hide;
-	uint8_t sel;
 	uint8_t mode[HBAR_M_MAX];
 	uint8_t report;
 	uint32_t trip;
 } hbar_data_t;
+
+typedef struct {
+  HBAR_MODE m;
+  hbar_data_t d;
+	uint8_t reverse;
+	uint8_t hide;
+} hbar_t;
 
 typedef struct {
 	struct {
@@ -36,7 +40,6 @@ typedef struct {
 		uint8_t left;
 		uint8_t right;
 	} sein;
-	hbar_data_t hbar;
 } hmi1_data_t;
 
 typedef struct {
@@ -46,6 +49,7 @@ typedef struct {
 } hmi1_can_t;
 
 typedef struct {
+	hbar_t hbar;
 	hmi1_data_t d;
 	hmi1_can_t can;
 	void (*Init)(void);
