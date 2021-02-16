@@ -50,14 +50,14 @@ void VCU_CAN_RX_SwitchModeControl(can_rx_t *Rx) {
   // sein
   HMI1.d.sein.left = _R1(Rx->data.u8[1], 0);
   HMI1.d.sein.right = _R1(Rx->data.u8[1], 1);
-  HMI1.d.mode.reverse = _R1(Rx->data.u8[1], 2);
+  HMI1.d.hbar.reverse = _R1(Rx->data.u8[1], 2);
 
   // mode
-  HMI1.d.mode.val[HBAR_M_DRIVE] = _R2(Rx->data.u8[2], 0);
-  HMI1.d.mode.val[HBAR_M_TRIP] = _R2(Rx->data.u8[2], 2);
-  HMI1.d.mode.val[HBAR_M_REPORT] = _R1(Rx->data.u8[2], 4);
-  HMI1.d.mode.sel = _R2(Rx->data.u8[2], 5);
-  HMI1.d.mode.hide = _R1(Rx->data.u8[2], 7);
+  HMI1.d.hbar.mode[HBAR_M_DRIVE] = _R2(Rx->data.u8[2], 0);
+  HMI1.d.hbar.mode[HBAR_M_TRIP] = _R2(Rx->data.u8[2], 2);
+  HMI1.d.hbar.mode[HBAR_M_REPORT] = _R1(Rx->data.u8[2], 4);
+  HMI1.d.hbar.sel = _R2(Rx->data.u8[2], 5);
+  HMI1.d.hbar.hide = _R1(Rx->data.u8[2], 7);
 
   // others
   VCU.d.speed = Rx->data.u8[3];
@@ -73,19 +73,19 @@ void VCU_CAN_RX_MixedData(can_rx_t *Rx) {
   BMS.d.soc = Rx->data.u8[1];
 
   // decide report value according to mode
-  if (HMI1.d.mode.val[HBAR_M_REPORT] == HBAR_M_REPORT_RANGE)
-    HMI1.d.mode.report = Rx->data.u8[2];
+  if (HMI1.d.hbar.mode[HBAR_M_REPORT] == HBAR_M_REPORT_RANGE)
+    HMI1.d.hbar.report = Rx->data.u8[2];
   else
-    HMI1.d.mode.report = Rx->data.u8[3];
+    HMI1.d.hbar.report = Rx->data.u8[3];
 
 }
 
 void VCU_CAN_RX_TripData(can_rx_t *Rx) {
   // sub trip
-  if (HMI1.d.mode.val[HBAR_M_TRIP] == HBAR_M_TRIP_A)
-    HMI1.d.mode.trip = Rx->data.u16[0];
-  else if (HMI1.d.mode.val[HBAR_M_TRIP] == HBAR_M_TRIP_B)
-    HMI1.d.mode.trip = Rx->data.u16[1];
-  else if (HMI1.d.mode.val[HBAR_M_TRIP] == HBAR_M_TRIP_ODO)
-    HMI1.d.mode.trip = Rx->data.u32[1];
+  if (HMI1.d.hbar.mode[HBAR_M_TRIP] == HBAR_M_TRIP_A)
+    HMI1.d.hbar.trip = Rx->data.u16[0];
+  else if (HMI1.d.hbar.mode[HBAR_M_TRIP] == HBAR_M_TRIP_B)
+    HMI1.d.hbar.trip = Rx->data.u16[1];
+  else if (HMI1.d.hbar.mode[HBAR_M_TRIP] == HBAR_M_TRIP_ODO)
+    HMI1.d.hbar.trip = Rx->data.u32[1];
 }

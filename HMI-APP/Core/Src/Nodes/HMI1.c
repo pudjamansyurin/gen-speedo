@@ -13,7 +13,7 @@
 hmi1_t HMI1 = {
     .d = {
         .state = { 0 },
-        .mode = { 0 },
+        .hbar = { 0 },
     },
     .can = {
         .t = {
@@ -37,14 +37,14 @@ void HMI1_Init(void) {
   HMI1.d.sein.left = 0;
   HMI1.d.sein.right = 0;
 
-  HMI1.d.mode.reverse = 0;
-  HMI1.d.mode.hide = 0;
-  HMI1.d.mode.sel = HBAR_M_DRIVE;
-  HMI1.d.mode.val[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
-  HMI1.d.mode.val[HBAR_M_DRIVE] = HBAR_M_DRIVE_STANDARD;
-  HMI1.d.mode.val[HBAR_M_REPORT] = HBAR_M_REPORT_RANGE;
-  HMI1.d.mode.trip = 0;
-  HMI1.d.mode.report = 0;
+  HMI1.d.hbar.reverse = 0;
+  HMI1.d.hbar.hide = 0;
+  HMI1.d.hbar.sel = HBAR_M_DRIVE;
+  HMI1.d.hbar.mode[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
+  HMI1.d.hbar.mode[HBAR_M_DRIVE] = HBAR_M_DRIVE_STANDARD;
+  HMI1.d.hbar.mode[HBAR_M_REPORT] = HBAR_M_REPORT_RANGE;
+  HMI1.d.hbar.trip = 0;
+  HMI1.d.hbar.report = 0;
 }
 
 /* ====================================== CAN TX =================================== */

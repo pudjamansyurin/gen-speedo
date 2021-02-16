@@ -13,40 +13,42 @@
 
 /* Exported struct -----------------------------------------------------------*/
 typedef struct {
-  struct {
-    uint8_t abs;
-    uint8_t mirroring;
-    uint8_t lamp;
-    uint8_t warning;
-    uint8_t overheat;
-    uint8_t unfinger;
-    uint8_t unremote;
-    uint8_t daylight;
-  } state;
-  struct {
-    uint8_t left;
-    uint8_t right;
-  } sein;
-  struct {
-    uint8_t reverse;
-    uint8_t hide;
-    uint8_t sel;
-    uint8_t val[HBAR_M_MAX];
-    uint8_t report;
-    uint32_t trip;
-  } mode;
+	uint8_t reverse;
+	uint8_t hide;
+	uint8_t sel;
+	uint8_t mode[HBAR_M_MAX];
+	uint8_t report;
+	uint32_t trip;
+} hbar_data_t;
+
+typedef struct {
+	struct {
+		uint8_t abs;
+		uint8_t mirroring;
+		uint8_t lamp;
+		uint8_t warning;
+		uint8_t overheat;
+		uint8_t unfinger;
+		uint8_t unremote;
+		uint8_t daylight;
+	} state;
+	struct {
+		uint8_t left;
+		uint8_t right;
+	} sein;
+	hbar_data_t hbar;
 } hmi1_data_t;
 
 typedef struct {
-  struct {
-    uint8_t (*Heartbeat)(void);
-  } t;
+	struct {
+		uint8_t (*Heartbeat)(void);
+	} t;
 } hmi1_can_t;
 
 typedef struct {
-  hmi1_data_t d;
-  hmi1_can_t can;
-  void (*Init)(void);
+	hmi1_data_t d;
+	hmi1_can_t can;
+	void (*Init)(void);
 } hmi1_t;
 
 /* Exported variables ---------------------------------------------------------*/
