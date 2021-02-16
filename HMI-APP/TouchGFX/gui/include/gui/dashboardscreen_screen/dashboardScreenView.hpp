@@ -18,6 +18,11 @@ typedef struct {
 } trip_t;
 
 typedef struct {
+	touchgfx::TextAreaWithOneWildcard *pValueText[HBAR_M_REPORT_MAX];
+	touchgfx::Unicode::UnicodeChar *pValueTextBuffer[HBAR_M_REPORT_MAX];
+} report_t;
+
+typedef struct {
   Image *image;
   MoveAnimator< Container > *container;
 } icon_t;

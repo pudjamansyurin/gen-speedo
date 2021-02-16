@@ -5,13 +5,13 @@
 touchgfx::Container *modeContainer[HBAR_M_MAX];
 uint8_t modeSelected = HBAR_M_DRIVE;
 uint8_t modeVisible = 1;
-
 uint8_t animationSpeed = 10;
 
 uint8_t iconImageSwiper = 0;
 uint8_t tripModeSwiper = 0;
 uint8_t driveModeSwiper = 0;
 uint8_t reportModeSwiper = 0;
+
 touchgfx::TextAreaWithOneWildcard *pReportValueText;
 touchgfx::Unicode::UnicodeChar *pReportValueTextBuffer;
 
@@ -20,7 +20,7 @@ icon_t prevIndicator, nextIndicator;
 
 drive_t M_DRIVE;
 trip_t M_TRIP;
-
+report_t M_REPORT;
 
 dashboardScreenView::dashboardScreenView() :
             ticker(0),
@@ -60,6 +60,11 @@ dashboardScreenView::dashboardScreenView() :
   touchgfx::Unicode::strncpy(M_TRIP.mode[HBAR_M_TRIP_A], "TRIP A", NEXTTRIPMODETEXT_SIZE);
   touchgfx::Unicode::strncpy(M_TRIP.mode[HBAR_M_TRIP_B], "TRIP B", NEXTTRIPMODETEXT_SIZE);
   touchgfx::Unicode::strncpy(M_TRIP.mode[HBAR_M_TRIP_ODO], "ODO", NEXTTRIPMODETEXT_SIZE);
+
+  M_REPORT.pValueText[HBAR_M_REPORT_RANGE] = &nextReportValueText;
+  M_REPORT.pValueText[HBAR_M_REPORT_AVERAGE] = &prevReportValueText;
+  M_REPORT.pValueTextBuffer[HBAR_M_REPORT_RANGE] = nextReportValueTextBuffer;
+  M_REPORT.pValueTextBuffer[HBAR_M_REPORT_AVERAGE] = prevReportValueTextBuffer;
 
 }
 
@@ -256,8 +261,9 @@ void dashboardScreenView::writeReportMode(uint8_t index)
 {
   MoveAnimator<touchgfx::Container> *prevContainer = reportModeSwiper ? &prevReportModeContainer : &nextReportModeContainer;
   MoveAnimator<touchgfx::Container> *nextContainer = reportModeSwiper ? &nextReportModeContainer : &prevReportModeContainer;
-  pReportValueText = reportModeSwiper ? &nextReportValueText : &prevReportValueText;
-  pReportValueTextBuffer = reportModeSwiper ? nextReportValueTextBuffer : prevReportValueTextBuffer;
+
+  pReportValueText = M_REPORT.pValueText[index];
+  pReportValueTextBuffer = M_REPORT.pValueTextBuffer[index];
 
   nextContainer->setXY(0, 0 - reportModeContainer.getHeight());
   nextContainer->startMoveAnimation(
