@@ -160,9 +160,6 @@
     <Filter Include="Header Files\generated\gui_generated\common">
       <UniqueIdentifier>5686FB94-D2D2-D5AE-E26E-E2C2F1E02B83</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\gui\common\ScrollingWheels">
-      <UniqueIdentifier>6372B24E-2B03-980B-2825-B3A819C6F6A5</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\gui\welcomescreen_screen">
       <UniqueIdentifier>5B4F8846-19C0-BC20-CAED-46E932C8C236</UniqueIdentifier>
     </Filter>

@@ -78,6 +78,7 @@ build/MINGW32_NT-6.2/generated/simulator/src/mainBase.o: \
  gui/include/gui/dashboardscreen_screen/dashboardScreenView.hpp \
  generated/gui_generated/include/gui_generated/dashboardscreen_screen/dashboardScreenViewBase.hpp \
  gui/include/gui/dashboardscreen_screen/dashboardScreenPresenter.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/CacheableContainer.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractDirectionProgress.hpp \
@@ -243,6 +244,8 @@ gui/include/gui/dashboardscreen_screen/dashboardScreenView.hpp:
 generated/gui_generated/include/gui_generated/dashboardscreen_screen/dashboardScreenViewBase.hpp:
 
 gui/include/gui/dashboardscreen_screen/dashboardScreenPresenter.hpp:
+
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/CacheableContainer.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:
 
