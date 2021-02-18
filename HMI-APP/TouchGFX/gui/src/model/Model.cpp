@@ -1,7 +1,7 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
 
-#if !defined(SIMULATOR) || defined(LCD_TESTING)
+#if !defined(SIMULATOR)
 extern "C"
 {
 	#include "Libs/_utils.h"
