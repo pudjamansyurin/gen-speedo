@@ -1,6 +1,6 @@
 #include <gui/welcomescreen_screen/welcomeScreenView.hpp>
 
-#if !defined(SIMULATOR) || defined(LCD_TESTING)
+#if !defined(SIMULATOR)
 extern "C"
 {
 #include "Libs/_utils.h"
@@ -39,7 +39,7 @@ void welcomeScreenView::setLogoTransparency(uint8_t alpha)
 }
 
 void welcomeScreenView::handleTickEvent() {
-#if !defined(SIMULATOR) || defined(LCD_TESTING)
+#if !defined(SIMULATOR)
   if (ticker > 0)
     _LcdPower(1);
 #endif

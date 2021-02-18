@@ -4,7 +4,7 @@
 #include <gui_generated/dashboardscreen_screen/dashboardScreenViewBase.hpp>
 #include <gui/dashboardscreen_screen/dashboardScreenPresenter.hpp>
 
-#if !defined(SIMULATOR) || defined(LCD_TESTING)
+#if !defined(SIMULATOR)
 #include "_defines_shared.h"
 #endif
 
