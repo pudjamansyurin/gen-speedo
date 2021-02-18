@@ -3,10 +3,10 @@
   <FileVersion>3.0</FileVersion>
   <Workspace>
     <WorkspaceType>Single-project</WorkspaceType>
-    <WorkspacePath>/home/pudja/STM32CubeIDE/workspace_1.4.0/gen-speedo/HMI-APP/</WorkspacePath>
+    <WorkspacePath>/opt/STM32CubeIDE/workspace_1.3.0/gen-speedo/HMI-APP/</WorkspacePath>
     <underRoot>true</underRoot>
     <TrustZone>0</TrustZone>
-    <HAL_Driver>/home/pudja/STM32Cube/Repository//STM32Cube_FW_F4_V1.25.2</HAL_Driver>
+    <HAL_Driver>/opt/STM32CubeIDE/Repository/STM32Cube_FW_F4_V1.25.2</HAL_Driver>
     <CMSIS>Drivers/CMSIS</CMSIS>
     <Toolchain>STM32CubeIDE</Toolchain>
     <IocFile>HMI-APP.ioc</IocFile>
@@ -96,6 +96,39 @@
         <file>
           <name>Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c</name>
         </file>
+        <file>
+          <name>Core\Src\main.c</name>
+        </file>
+        <file>
+          <name>Core\Src\gpio.c</name>
+        </file>
+        <file>
+          <name>Core\Src\can.c</name>
+        </file>
+        <file>
+          <name>Core\Src\crc.c</name>
+        </file>
+        <file>
+          <name>Core\Src\dma.c</name>
+        </file>
+        <file>
+          <name>Core\Src\i2c.c</name>
+        </file>
+        <file>
+          <name>Core\Src\iwdg.c</name>
+        </file>
+        <file>
+          <name>Core\Src\usart.c</name>
+        </file>
+        <file>
+          <name>Core\Src\stm32f4xx_it.c</name>
+        </file>
+        <file>
+          <name>Core\Src\stm32f4xx_hal_msp.c</name>
+        </file>
+        <file>
+          <name>Core\Src/system_stm32f4xx.c</name>
+        </file>
       </filestoremove>
       <sourceEntriesToRemove>
         <sourceEntry />
@@ -113,7 +146,7 @@
             <memory access="xrw" name="CCMRAM" size="64" start="0x10000000" />
             <memory access="rx" name="FLASH" size="2048" start="0x8000000" />
           </memories>
-          <startup>/home/pudja/STM32Cube/Repository/STM32Cube_FW_F4_V1.25.2/Drivers/CMSIS/Device\ST\STM32F4xx\Source\Templates\gcc\startup_stm32f429xx.s</startup>
+          <startup>/opt/STM32CubeIDE/Repository/STM32Cube_FW_F4_V1.25.2/Drivers/CMSIS/Device\ST\STM32F4xx\Source\Templates\gcc\startup_stm32f429xx.s</startup>
           <LinkSettings>
             <LinkAdditionalLibs />
           </LinkSettings>
