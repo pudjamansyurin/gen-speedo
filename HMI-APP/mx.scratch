@@ -99,6 +99,39 @@
         <file>
           <name>Core\Src\system_stm32f4xx.c</name>
         </file>
+        <file>
+          <name>Core\Src\main.c</name>
+        </file>
+        <file>
+          <name>Core\Src\gpio.c</name>
+        </file>
+        <file>
+          <name>Core\Src\can.c</name>
+        </file>
+        <file>
+          <name>Core\Src\crc.c</name>
+        </file>
+        <file>
+          <name>Core\Src\dma.c</name>
+        </file>
+        <file>
+          <name>Core\Src\i2c.c</name>
+        </file>
+        <file>
+          <name>Core\Src\iwdg.c</name>
+        </file>
+        <file>
+          <name>Core\Src\usart.c</name>
+        </file>
+        <file>
+          <name>Core\Src\stm32f4xx_it.c</name>
+        </file>
+        <file>
+          <name>Core\Src\stm32f4xx_hal_msp.c</name>
+        </file>
+        <file>
+          <name>Core\Src/system_stm32f4xx.c</name>
+        </file>
       </filestoremove>
       <sourceEntriesToRemove>
         <sourceEntry />
