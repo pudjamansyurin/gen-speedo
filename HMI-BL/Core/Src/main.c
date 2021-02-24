@@ -102,7 +102,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  printf_init();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -112,7 +112,6 @@ int main(void)
   MX_FMC_Init();
   MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
-  LogInit();
   CANBUS_Init(&hcan2);
   /* USER CODE END 2 */
 

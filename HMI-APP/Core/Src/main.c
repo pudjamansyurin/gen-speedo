@@ -35,6 +35,10 @@
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
+typedef StaticTask_t osStaticThreadDef_t;
+typedef StaticQueue_t osStaticMessageQDef_t;
+typedef StaticSemaphore_t osStaticMutexDef_t;
+typedef StaticEventGroup_t osStaticEventGroupDef_t;
 /* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
@@ -63,47 +67,79 @@ SDRAM_HandleTypeDef hsdram1;
 
 /* Definitions for ManagerTask */
 osThreadId_t ManagerTaskHandle;
+uint32_t ManagerTaskBuffer[ 128 ];
+osStaticThreadDef_t ManagerTaskControlBlock;
 const osThreadAttr_t ManagerTask_attributes = {
   .name = "ManagerTask",
+  .stack_mem = &ManagerTaskBuffer[0],
+  .stack_size = sizeof(ManagerTaskBuffer),
+  .cb_mem = &ManagerTaskControlBlock,
+  .cb_size = sizeof(ManagerTaskControlBlock),
   .priority = (osPriority_t) osPriorityRealtime,
-  .stack_size = 128 * 4
 };
 /* Definitions for DisplayTask */
 osThreadId_t DisplayTaskHandle;
+uint32_t DisplayTaskBuffer[ 5120 ];
+osStaticThreadDef_t DisplayTaskControlBlock;
 const osThreadAttr_t DisplayTask_attributes = {
   .name = "DisplayTask",
+  .stack_mem = &DisplayTaskBuffer[0],
+  .stack_size = sizeof(DisplayTaskBuffer),
+  .cb_mem = &DisplayTaskControlBlock,
+  .cb_size = sizeof(DisplayTaskControlBlock),
   .priority = (osPriority_t) osPriorityAboveNormal,
-  .stack_size = 5120 * 4
 };
 /* Definitions for CanTxTask */
 osThreadId_t CanTxTaskHandle;
+uint32_t CanTxTaskBuffer[ 192 ];
+osStaticThreadDef_t CanTxTaskControlBlock;
 const osThreadAttr_t CanTxTask_attributes = {
   .name = "CanTxTask",
+  .stack_mem = &CanTxTaskBuffer[0],
+  .stack_size = sizeof(CanTxTaskBuffer),
+  .cb_mem = &CanTxTaskControlBlock,
+  .cb_size = sizeof(CanTxTaskControlBlock),
   .priority = (osPriority_t) osPriorityBelowNormal,
-  .stack_size = 192 * 4
 };
 /* Definitions for CanRxTask */
 osThreadId_t CanRxTaskHandle;
+uint32_t CanRxTaskBuffer[ 192 ];
+osStaticThreadDef_t CanRxTaskControlBlock;
 const osThreadAttr_t CanRxTask_attributes = {
   .name = "CanRxTask",
+  .stack_mem = &CanRxTaskBuffer[0],
+  .stack_size = sizeof(CanRxTaskBuffer),
+  .cb_mem = &CanRxTaskControlBlock,
+  .cb_size = sizeof(CanRxTaskControlBlock),
   .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 192 * 4
 };
 /* Definitions for CanRxQueue */
 osMessageQueueId_t CanRxQueueHandle;
+uint8_t CanRxQueueBuffer[ 10 * sizeof( can_rx_t ) ];
+osStaticMessageQDef_t CanRxQueueControlBlock;
 const osMessageQueueAttr_t CanRxQueue_attributes = {
-  .name = "CanRxQueue"
+  .name = "CanRxQueue",
+  .cb_mem = &CanRxQueueControlBlock,
+  .cb_size = sizeof(CanRxQueueControlBlock),
+  .mq_mem = &CanRxQueueBuffer,
+  .mq_size = sizeof(CanRxQueueBuffer)
 };
 /* Definitions for LogRecMutex */
 osMutexId_t LogRecMutexHandle;
+osStaticMutexDef_t LogRecMutexControlBlock;
 const osMutexAttr_t LogRecMutex_attributes = {
   .name = "LogRecMutex",
   .attr_bits = osMutexRecursive,
+  .cb_mem = &LogRecMutexControlBlock,
+  .cb_size = sizeof(LogRecMutexControlBlock),
 };
 /* Definitions for GlobalEvent */
 osEventFlagsId_t GlobalEventHandle;
+osStaticEventGroupDef_t GlobalEventControlBlock;
 const osEventFlagsAttr_t GlobalEvent_attributes = {
-  .name = "GlobalEvent"
+  .name = "GlobalEvent",
+  .cb_mem = &GlobalEventControlBlock,
+  .cb_size = sizeof(GlobalEventControlBlock),
 };
 /* USER CODE BEGIN PV */
 
@@ -154,7 +190,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  printf_init();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -167,7 +203,7 @@ int main(void)
   MX_LTDC_Init();
   MX_TouchGFX_Init();
   /* USER CODE BEGIN 2 */
-  LogInit();
+
   /* USER CODE END 2 */
 
   /* Init scheduler */
