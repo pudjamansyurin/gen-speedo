@@ -6,7 +6,7 @@
     <WorkspacePath>D:\stm32cubeide\workspace_1.5.1\gen-speedo\HMI-APP\</WorkspacePath>
     <underRoot>true</underRoot>
     <TrustZone>0</TrustZone>
-    <HAL_Driver>C:\Users\Public\STM32Cube\Repository\STM32Cube_FW_F4_V1.25.2</HAL_Driver>
+    <HAL_Driver>D:\stm32cubeide\Repository\STM32Cube_FW_F4_V1.26.0</HAL_Driver>
     <CMSIS>Drivers/CMSIS</CMSIS>
     <Toolchain>STM32CubeIDE</Toolchain>
     <IocFile>HMI-APP.ioc</IocFile>
@@ -14,92 +14,7 @@
       <ProjectName>HMI-APP</ProjectName>
       <ProjectNature>Cpp</ProjectNature>
       <Secure />
-      <filestoremove>
-        <file>
-          <name>Core\Src\gpio.c</name>
-        </file>
-        <file>
-          <name>Core\Src\adc.c</name>
-        </file>
-        <file>
-          <name>Core\Src\aes.c</name>
-        </file>
-        <file>
-          <name>Core\Src\can.c</name>
-        </file>
-        <file>
-          <name>Core\Src\crc.c</name>
-        </file>
-        <file>
-          <name>Core\Src\dma.c</name>
-        </file>
-        <file>
-          <name>Core\Src\i2c.c</name>
-        </file>
-        <file>
-          <name>Core\Src\i2s.c</name>
-        </file>
-        <file>
-          <name>Core\Src\iwdg.c</name>
-        </file>
-        <file>
-          <name>Core\Src\rng.c</name>
-        </file>
-        <file>
-          <name>Core\Src\rtc.c</name>
-        </file>
-        <file>
-          <name>Core\Src\spi.c</name>
-        </file>
-        <file>
-          <name>Core\Src\tim.c</name>
-        </file>
-        <file>
-          <name>Core\Src\usart.c</name>
-        </file>
-        <file>
-          <name>Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc.c</name>
-        </file>
-        <file>
-          <name>Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc_ex.c</name>
-        </file>
-        <file>
-          <name>Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cryp.c</name>
-        </file>
-        <file>
-          <name>Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cryp_ex.c</name>
-        </file>
-        <file>
-          <name>Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_i2c.c</name>
-        </file>
-        <file>
-          <name>Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_i2c_ex.c</name>
-        </file>
-        <file>
-          <name>Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_i2s.c</name>
-        </file>
-        <file>
-          <name>Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_i2s_ex.c</name>
-        </file>
-        <file>
-          <name>Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rng.c</name>
-        </file>
-        <file>
-          <name>Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rtc.c</name>
-        </file>
-        <file>
-          <name>Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rtc_ex.c</name>
-        </file>
-        <file>
-          <name>Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_spi.c</name>
-        </file>
-        <file>
-          <name>Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c</name>
-        </file>
-        <file>
-          <name>Core\Src\system_stm32f4xx.c</name>
-        </file>
-      </filestoremove>
+      <filestoremove />
       <sourceEntriesToRemove>
         <sourceEntry />
       </sourceEntriesToRemove>
@@ -116,7 +31,7 @@
             <memory access="xrw" name="CCMRAM" size="64" start="0x10000000" />
             <memory access="rx" name="FLASH" size="2048" start="0x8000000" />
           </memories>
-          <startup>C:\Users\Public\STM32Cube\Repository\STM32Cube_FW_F4_V1.25.2\Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\gcc\startup_stm32f429xx.s</startup>
+          <startup>D:\stm32cubeide\Repository\STM32Cube_FW_F4_V1.26.0\Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\gcc\startup_stm32f429xx.s</startup>
           <LinkSettings>
             <LinkAdditionalLibs />
           </LinkSettings>
@@ -160,19 +75,7 @@
             <Aincludes>
               <include />
             </Aincludes>
-            <Cincludes>
-              <include>Drivers/STM32F4xx_HAL_Driver/Inc</include>
-              <include>Drivers/STM32F4xx_HAL_Driver/Inc/Legacy</include>
-              <include>Middlewares/Third_Party/FreeRTOS/Source/include</include>
-              <include>Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2</include>
-              <include>Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F</include>
-              <include>Drivers/CMSIS/Device/ST/STM32F4xx/Include</include>
-              <include>Drivers/CMSIS/Include</include>
-              <include>Core/Inc</include>
-              <include>TouchGFX/App</include>
-              <include>TouchGFX/target/generated</include>
-              <include>TouchGFX/target</include>
-            </Cincludes>
+            <Cincludes />
           </inctoremove>
         </config>
       </configs>
@@ -182,13 +85,13 @@
           <name>Core</name>
         </sourceEntry>
         <sourceEntry>
+          <name>TouchGFX</name>
+        </sourceEntry>
+        <sourceEntry>
           <name>Drivers</name>
         </sourceEntry>
         <sourceEntry>
           <name>Middlewares</name>
-        </sourceEntry>
-        <sourceEntry>
-          <name>TouchGFX</name>
         </sourceEntry>
       </sourceEntries>
       <Groups />

@@ -71,10 +71,10 @@ uint32_t ManagerTaskBuffer[ 128 ];
 osStaticThreadDef_t ManagerTaskControlBlock;
 const osThreadAttr_t ManagerTask_attributes = {
   .name = "ManagerTask",
-  .stack_mem = &ManagerTaskBuffer[0],
-  .stack_size = sizeof(ManagerTaskBuffer),
   .cb_mem = &ManagerTaskControlBlock,
   .cb_size = sizeof(ManagerTaskControlBlock),
+  .stack_mem = &ManagerTaskBuffer[0],
+  .stack_size = sizeof(ManagerTaskBuffer),
   .priority = (osPriority_t) osPriorityRealtime,
 };
 /* Definitions for DisplayTask */
@@ -83,10 +83,10 @@ uint32_t DisplayTaskBuffer[ 5120 ];
 osStaticThreadDef_t DisplayTaskControlBlock;
 const osThreadAttr_t DisplayTask_attributes = {
   .name = "DisplayTask",
-  .stack_mem = &DisplayTaskBuffer[0],
-  .stack_size = sizeof(DisplayTaskBuffer),
   .cb_mem = &DisplayTaskControlBlock,
   .cb_size = sizeof(DisplayTaskControlBlock),
+  .stack_mem = &DisplayTaskBuffer[0],
+  .stack_size = sizeof(DisplayTaskBuffer),
   .priority = (osPriority_t) osPriorityAboveNormal,
 };
 /* Definitions for CanTxTask */
@@ -95,10 +95,10 @@ uint32_t CanTxTaskBuffer[ 192 ];
 osStaticThreadDef_t CanTxTaskControlBlock;
 const osThreadAttr_t CanTxTask_attributes = {
   .name = "CanTxTask",
-  .stack_mem = &CanTxTaskBuffer[0],
-  .stack_size = sizeof(CanTxTaskBuffer),
   .cb_mem = &CanTxTaskControlBlock,
   .cb_size = sizeof(CanTxTaskControlBlock),
+  .stack_mem = &CanTxTaskBuffer[0],
+  .stack_size = sizeof(CanTxTaskBuffer),
   .priority = (osPriority_t) osPriorityBelowNormal,
 };
 /* Definitions for CanRxTask */
@@ -107,10 +107,10 @@ uint32_t CanRxTaskBuffer[ 192 ];
 osStaticThreadDef_t CanRxTaskControlBlock;
 const osThreadAttr_t CanRxTask_attributes = {
   .name = "CanRxTask",
-  .stack_mem = &CanRxTaskBuffer[0],
-  .stack_size = sizeof(CanRxTaskBuffer),
   .cb_mem = &CanRxTaskControlBlock,
   .cb_size = sizeof(CanRxTaskControlBlock),
+  .stack_mem = &CanRxTaskBuffer[0],
+  .stack_size = sizeof(CanRxTaskBuffer),
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for CanRxQueue */
