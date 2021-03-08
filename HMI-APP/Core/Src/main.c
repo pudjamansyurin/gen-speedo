@@ -124,6 +124,14 @@ const osMessageQueueAttr_t CanRxQueue_attributes = {
   .mq_mem = &CanRxQueueBuffer,
   .mq_size = sizeof(CanRxQueueBuffer)
 };
+/* Definitions for CanTxMutex */
+osMutexId_t CanTxMutexHandle;
+osStaticMutexDef_t CanTxMutexControlBlock;
+const osMutexAttr_t CanTxMutex_attributes = {
+  .name = "CanTxMutex",
+  .cb_mem = &CanTxMutexControlBlock,
+  .cb_size = sizeof(CanTxMutexControlBlock),
+};
 /* Definitions for LogRecMutex */
 osMutexId_t LogRecMutexHandle;
 osStaticMutexDef_t LogRecMutexControlBlock;
@@ -208,6 +216,9 @@ int main(void)
 
   /* Init scheduler */
   osKernelInitialize();
+  /* Create the mutex(es) */
+  /* creation of CanTxMutex */
+  CanTxMutexHandle = osMutexNew(&CanTxMutex_attributes);
 
   /* Create the recursive mutex(es) */
   /* creation of LogRecMutex */
@@ -251,7 +262,6 @@ int main(void)
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
-  /* Create the event(s) */
   /* creation of GlobalEvent */
   GlobalEventHandle = osEventFlagsNew(&GlobalEvent_attributes);
 
@@ -763,7 +773,7 @@ void StartCanTxTask(void *argument)
   // wait until ManagerTask done
   osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
-  CANBUS_Init(&hcan2);
+  CANBUS_Init();
 
   /* Infinite loop */
   for (;;) {

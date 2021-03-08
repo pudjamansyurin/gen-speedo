@@ -112,7 +112,7 @@ int main(void)
   MX_FMC_Init();
   MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
-  CANBUS_Init(&hcan2);
+  CANBUS_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
