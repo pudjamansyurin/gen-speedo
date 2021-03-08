@@ -11,6 +11,7 @@ extern const unsigned char image_backgroundright_extra_data[];
 extern const unsigned char image_batterydrainout[]; // BITMAP_BATTERYDRAINOUT_ID = 2, Size: 204x116 pixels
 extern const unsigned char image_batterydrainout_extra_data[];
 extern const unsigned char image_batteryicon[]; // BITMAP_BATTERYICON_ID = 3, Size: 26x15 pixels
+extern const unsigned char image_batteryicon_extra_data[];
 extern const unsigned char image_brakesystemalert[]; // BITMAP_BRAKESYSTEMALERT_ID = 4, Size: 196x154 pixels
 extern const unsigned char image_brakesystemalert_extra_data[];
 extern const unsigned char image_coolanttemperaturewarning[]; // BITMAP_COOLANTTEMPERATUREWARNING_ID = 5, Size: 146x118 pixels
@@ -38,6 +39,7 @@ extern const unsigned char image_seinleft_extra_data[];
 extern const unsigned char image_seinrightflipped[]; // BITMAP_SEINRIGHTFLIPPED_ID = 16, Size: 80x355 pixels
 extern const unsigned char image_seinrightflipped_extra_data[];
 extern const unsigned char image_signalicon[]; // BITMAP_SIGNALICON_ID = 17, Size: 24x17 pixels
+extern const unsigned char image_signalicon_extra_data[];
 extern const unsigned char image_smartphonemirroringstatus[]; // BITMAP_SMARTPHONEMIRRORINGSTATUS_ID = 18, Size: 186x124 pixels
 extern const unsigned char image_smartphonemirroringstatus_extra_data[];
 extern const unsigned char image_speedlevel[]; // BITMAP_SPEEDLEVEL_ID = 19, Size: 137x366 pixels
@@ -50,7 +52,7 @@ const touchgfx::Bitmap::BitmapData bitmap_database[] =
     { image_backgroundleft, image_backgroundleft_extra_data, 243, 366, 0, 0, 147, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 366, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 },
     { image_backgroundright, image_backgroundright_extra_data, 243, 366, 96, 0, 147, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 366, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 },
     { image_batterydrainout, image_batterydrainout_extra_data, 204, 116, 0, 0, 204, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 116, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 },
-    { image_batteryicon, 0, 26, 15, 0, 0, 26, (uint8_t)(touchgfx::Bitmap::RGB565) >> 3, 15, (uint8_t)(touchgfx::Bitmap::RGB565) & 0x7 },
+    { image_batteryicon, image_batteryicon_extra_data, 26, 15, 0, 0, 26, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 15, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 },
     { image_brakesystemalert, image_brakesystemalert_extra_data, 196, 154, 0, 0, 196, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 154, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 },
     { image_coolanttemperaturewarning, image_coolanttemperaturewarning_extra_data, 146, 118, 0, 0, 146, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 118, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 },
     { image_electronicerrormessage, image_electronicerrormessage_extra_data, 146, 126, 0, 0, 146, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 126, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 },
@@ -64,7 +66,7 @@ const touchgfx::Bitmap::BitmapData bitmap_database[] =
     { image_modecontainer, image_modecontainer_extra_data, 245, 31, 0, 0, 245, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 31, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 },
     { image_seinleft, image_seinleft_extra_data, 80, 355, 0, 0, 0, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 0, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 },
     { image_seinrightflipped, image_seinrightflipped_extra_data, 80, 355, 0, 0, 0, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 0, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 },
-    { image_signalicon, 0, 24, 17, 0, 0, 24, (uint8_t)(touchgfx::Bitmap::RGB565) >> 3, 17, (uint8_t)(touchgfx::Bitmap::RGB565) & 0x7 },
+    { image_signalicon, image_signalicon_extra_data, 24, 17, 0, 0, 24, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 17, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 },
     { image_smartphonemirroringstatus, image_smartphonemirroringstatus_extra_data, 186, 124, 0, 0, 186, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 124, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 },
     { image_speedlevel, image_speedlevel_extra_data, 137, 366, 5, 164, 7, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 31, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 },
     { image_tripcontainer, image_tripcontainer_extra_data, 143, 30, 0, 0, 143, (uint8_t)(touchgfx::Bitmap::L8) >> 3, 30, (uint8_t)(touchgfx::Bitmap::L8) & 0x7 }
