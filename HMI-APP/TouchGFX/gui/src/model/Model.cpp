@@ -9,6 +9,8 @@ extern "C"
 	#include "Nodes/HMI1.h"
 	#include "Nodes/BMS.h"
 	#include "Nodes/MCU.h"
+
+	extern uint8_t LTDC_MEASURED_FPS;
 }
 #else
 vcu_t VCU;
@@ -135,28 +137,32 @@ void Model::tick()
 #endif
 
   // write to LCD
-  modelListener->setTripMode(HMI1.hbar.d.mode[HBAR_M_TRIP]);
-  modelListener->setDriveMode(HMI1.hbar.d.mode[HBAR_M_DRIVE]);
-  modelListener->setReportMode(HMI1.hbar.d.mode[HBAR_M_REPORT]);
+  if (ticker % 30 == 0) {
+	  modelListener->setTripMode(HMI1.hbar.d.mode[HBAR_M_TRIP]);
+	  modelListener->setDriveMode(HMI1.hbar.d.mode[HBAR_M_DRIVE]);
+	  modelListener->setReportMode(HMI1.hbar.d.mode[HBAR_M_REPORT]);
 
-  modelListener->setSpeed(VCU.d.speed);
-  modelListener->setEngineRotation(MCU.d.rpm);
+	  modelListener->setSpeed(VCU.d.speed);
+	  modelListener->setEngineRotation(MCU.d.rpm);
 
-  modelListener->setTripValue(HMI1.hbar.d.trip);
-  modelListener->setReportValue(HMI1.hbar.d.report);
+	  modelListener->setTripValue(HMI1.hbar.d.trip);
+	  modelListener->setReportValue(HMI1.hbar.d.report);
 
-  modelListener->setSignal(VCU.d.signal);
-  modelListener->setBattery(BMS.d.soc);
+	  modelListener->setSignal(VCU.d.signal);
+	  modelListener->setBattery(BMS.d.soc);
 
-  modelListener->setSeinLeft(HMI1.d.sein.left);
-  modelListener->setSeinRight(HMI1.d.sein.right);
+	  modelListener->setSeinLeft(HMI1.d.sein.left);
+	  modelListener->setSeinRight(HMI1.d.sein.right);
 
-  modelListener->setIndicator(indicator);
+	  modelListener->setIndicator(indicator);
 
-  modelListener->setModeSelector(HMI1.hbar.m);
-  modelListener->setModeVisible(!HMI1.hbar.hide);
+	  modelListener->setModeSelector(HMI1.hbar.m);
+	  modelListener->setModeVisible(!HMI1.hbar.hide);
 
-  if (ticker % (60 * 2) == 0)
+	  modelListener->setFps(LTDC_MEASURED_FPS);
+  }
+
+  if (ticker % 120 == 0)
     swipeIndicator();
 }
 

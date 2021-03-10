@@ -15,7 +15,7 @@
 #include "_defines_shared.h"
 
 /* Exported constants --------------------------------------------------------*/
-#define HMI_VERSION              (uint16_t) 340
+#define HMI_VERSION              (uint16_t) 341
 
 // Some constants
 #define MCU_SPEED_MAX 			      (uint8_t) 150

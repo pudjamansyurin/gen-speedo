@@ -19,7 +19,6 @@
 /* USER CODE BEGIN TouchGFXHAL.cpp */
 
 #include "stm32f4xx.h"
-#include <touchgfx/hal/OSWrappers.hpp>
 
 using namespace touchgfx;
 
@@ -32,22 +31,6 @@ void TouchGFXHAL::initialize()
     // Please note, HAL::initialize() must be called to initialize the framework.
 
     TouchGFXGeneratedHAL::initialize();
-}
-
-/* Overwriting default implementation of taskEntry */
-void TouchGFXHAL::taskEntry()
-{
-    enableLCDControllerInterrupt();
-    enableInterrupts();
-
-    OSWrappers::waitForVSync();
-    backPorchExited();
-
-    for (;;)
-            {
-        OSWrappers::waitForVSync();
-        backPorchExited();
-    }
 }
 
 /**
@@ -70,8 +53,8 @@ uint16_t* TouchGFXHAL::getTFTFrameBuffer() const
  *
  * @param [in] address New frame buffer address.
  */
-void TouchGFXHAL::setTFTFrameBuffer(uint16_t *address)
-        {
+void TouchGFXHAL::setTFTFrameBuffer(uint16_t* address)
+{
     // Calling parent implementation of setTFTFrameBuffer(uint16_t* address).
     //
     // To overwrite the generated implementation, omit call to parent function
@@ -87,8 +70,8 @@ void TouchGFXHAL::setTFTFrameBuffer(uint16_t *address)
  *
  * @see flushFrameBuffer().
  */
-void TouchGFXHAL::flushFrameBuffer(const touchgfx::Rect &rect)
-        {
+void TouchGFXHAL::flushFrameBuffer(const touchgfx::Rect& rect)
+{
     // Calling parent implementation of flushFrameBuffer(const touchgfx::Rect& rect).
     //
     // To overwrite the generated implementation, omit call to parent function
@@ -97,6 +80,11 @@ void TouchGFXHAL::flushFrameBuffer(const touchgfx::Rect &rect)
     // be called to notify the touchgfx framework that flush has been performed.
 
     TouchGFXGeneratedHAL::flushFrameBuffer(rect);
+}
+
+bool TouchGFXHAL::blockCopy(void* RESTRICT dest, const void* RESTRICT src, uint32_t numBytes)
+{
+    return TouchGFXGeneratedHAL::blockCopy(dest, src, numBytes);
 }
 
 /**

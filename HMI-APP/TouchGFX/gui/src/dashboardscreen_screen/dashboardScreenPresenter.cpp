@@ -59,6 +59,16 @@ void dashboardScreenPresenter::setEngineRotation(uint32_t value)
     view.writeEngineRotation(value * 100 / MCU_RPM_MAX);
   }
 }
+void dashboardScreenPresenter::setFps(uint8_t value)
+{
+  static uint8_t init = 1, _value;
+
+  if (_value != value || init) {
+    init = 0;
+    _value = value;
+    view.writeFps(value);
+  }
+}
 void dashboardScreenPresenter::setBattery(uint8_t percent)
 {
   static uint8_t init = 1, _percent;

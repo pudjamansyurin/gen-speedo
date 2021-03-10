@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.16.1 distribution.
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -547,10 +547,9 @@ protected:
     Rect getBoundingRect() const;
 
     /**
-     * The TextureMapper will draw the transformed bitmap by drawing two triangles. One
-     * triangle is created from the points 0,1,2 and the other triangle from the points
-     * 1,2,3. The triangle is drawn using the x,y,z values from each point along with
-     * the u,v coordinates in the bitmap associated with each point.
+     * The TextureMapper will draw the transformed bitmap by drawing one transformed quad.
+     * The quad is drawn from the points 0,1,2,3 using the x,y,z values from each point along
+     * with the u,v coordinates in the bitmap associated with each point.
      *
      * @param      invalidatedArea The invalidated area.
      * @param [in] fb              The framebuffer.
@@ -560,7 +559,7 @@ protected:
      * @param      triangleUs      The triangle us.
      * @param      triangleVs      The triangle vs.
      */
-    void drawTriangle(const Rect& invalidatedArea, uint16_t* fb, const float* triangleXs, const float* triangleYs, const float* triangleZs, const float* triangleUs, const float* triangleVs) const;
+    void drawQuad(const Rect& invalidatedArea, uint16_t* fb, const float* triangleXs, const float* triangleYs, const float* triangleZs, const float* triangleUs, const float* triangleVs) const;
 
     /**
      * Returns the rendering variant based on the bitmap format, alpha value and rendering

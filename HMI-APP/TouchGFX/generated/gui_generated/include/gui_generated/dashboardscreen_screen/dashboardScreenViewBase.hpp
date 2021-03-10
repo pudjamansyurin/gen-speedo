@@ -8,12 +8,12 @@
 #include <mvp/View.hpp>
 #include <gui/dashboardscreen_screen/dashboardScreenPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/containers/CacheableContainer.hpp>
 #include <touchgfx/widgets/Image.hpp>
+#include <touchgfx/containers/CacheableContainer.hpp>
 #include <touchgfx/containers/Container.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
-#include <touchgfx/containers/progress_indicators/ImageProgress.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
+#include <touchgfx/containers/progress_indicators/ImageProgress.hpp>
 #include <touchgfx/EasingEquations.hpp>
 #include <touchgfx/mixins/MoveAnimator.hpp>
 
@@ -34,17 +34,16 @@ protected:
      */
     touchgfx::Box __background;
     touchgfx::Box background;
-    touchgfx::CacheableContainer indicatorImages;
     touchgfx::Image batteryLow;
     touchgfx::Image brakeAlert;
     touchgfx::Image temperatureWarning;
     touchgfx::Image errorMessage;
     touchgfx::Image fingerScan;
-    touchgfx::Image beamActivated;
     touchgfx::Image keylessKey;
-    touchgfx::Image phoneMirroring;
+    touchgfx::Image beamActivated;
     touchgfx::Image mainGo;
     touchgfx::Image mainReverse;
+    touchgfx::Image phoneMirroring;
     touchgfx::CacheableContainer iconContainer;
     touchgfx::MoveAnimator< touchgfx::Container > prevIconContainer;
     touchgfx::Image prevIconImage;
@@ -60,13 +59,11 @@ protected:
     touchgfx::Image backgroundLeft;
     touchgfx::Image tripBox;
     touchgfx::Image driveBox;
-    touchgfx::Container seinLeftContainer;
+    touchgfx::CacheableContainer seinLeftContainer;
     touchgfx::Image seinLeft;
     touchgfx::Container seinRightContainer;
-    touchgfx::MoveAnimator< touchgfx::Image > seinRight;
-    touchgfx::ImageProgress engineProgress;
-    touchgfx::ImageProgress speedProgress;
-    touchgfx::Container reportModeContainer;
+    touchgfx::Image seinRight;
+    touchgfx::CacheableContainer reportModeContainer;
     touchgfx::MoveAnimator< touchgfx::Container > prevReportModeContainer;
     touchgfx::TextArea prevReportUnitText;
     touchgfx::TextArea prevReportModeText;
@@ -75,15 +72,18 @@ protected:
     touchgfx::TextArea nextReportUnitText;
     touchgfx::TextArea nextReportModeText;
     touchgfx::TextAreaWithOneWildcard nextReportValueText;
-    touchgfx::Container driveModeContainer;
+    touchgfx::CacheableContainer driveModeContainer;
     touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > prevDriveModeText;
     touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > nextDriveModeText;
-    touchgfx::TextAreaWithOneWildcard tripValue;
-    touchgfx::Container tripModeContainer;
+    touchgfx::CacheableContainer tripModeContainer;
     touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > prevTripModeText;
     touchgfx::MoveAnimator< touchgfx::TextAreaWithOneWildcard > nextTripModeText;
+    touchgfx::TextAreaWithOneWildcard tripValue;
     touchgfx::TextAreaWithOneWildcard signalValue;
     touchgfx::TextAreaWithOneWildcard batteryValue;
+    touchgfx::TextAreaWithOneWildcard fpsValue;
+    touchgfx::ImageProgress engineProgress;
+    touchgfx::ImageProgress speedProgress;
 
     /*
      * Wildcard Buffers
@@ -96,16 +96,18 @@ protected:
     touchgfx::Unicode::UnicodeChar prevDriveModeTextBuffer[PREVDRIVEMODETEXT_SIZE];
     static const uint16_t NEXTDRIVEMODETEXT_SIZE = 12;
     touchgfx::Unicode::UnicodeChar nextDriveModeTextBuffer[NEXTDRIVEMODETEXT_SIZE];
-    static const uint16_t TRIPVALUE_SIZE = 7;
-    touchgfx::Unicode::UnicodeChar tripValueBuffer[TRIPVALUE_SIZE];
     static const uint16_t PREVTRIPMODETEXT_SIZE = 7;
     touchgfx::Unicode::UnicodeChar prevTripModeTextBuffer[PREVTRIPMODETEXT_SIZE];
     static const uint16_t NEXTTRIPMODETEXT_SIZE = 7;
     touchgfx::Unicode::UnicodeChar nextTripModeTextBuffer[NEXTTRIPMODETEXT_SIZE];
+    static const uint16_t TRIPVALUE_SIZE = 7;
+    touchgfx::Unicode::UnicodeChar tripValueBuffer[TRIPVALUE_SIZE];
     static const uint16_t SIGNALVALUE_SIZE = 4;
     touchgfx::Unicode::UnicodeChar signalValueBuffer[SIGNALVALUE_SIZE];
     static const uint16_t BATTERYVALUE_SIZE = 4;
     touchgfx::Unicode::UnicodeChar batteryValueBuffer[BATTERYVALUE_SIZE];
+    static const uint16_t FPSVALUE_SIZE = 3;
+    touchgfx::Unicode::UnicodeChar fpsValueBuffer[FPSVALUE_SIZE];
 
 private:
 

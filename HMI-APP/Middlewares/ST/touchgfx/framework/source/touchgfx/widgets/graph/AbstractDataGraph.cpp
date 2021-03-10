@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.16.1 distribution.
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -20,8 +20,10 @@
 namespace touchgfx
 {
 AbstractDataGraph::AbstractDataGraph(int16_t capacity)
-    : dataScale(1), alpha(255), topPadding(0), leftPadding(0), rightPadding(0), bottomPadding(0),
-      maxCapacity(capacity), usedCapacity(0), gapBeforeIndex(0), clickAction()
+    : dataScale(1), alpha(255),
+      graphArea(), leftArea(), rightArea(), topArea(), bottomArea(),
+      topPadding(0), leftPadding(0), rightPadding(0), bottomPadding(0),
+      maxCapacity(capacity), usedCapacity(0), gapBeforeIndex(0), clickAction(0), dragAction(0)
 {
     add(graphArea);
     add(topArea);
@@ -453,7 +455,8 @@ int AbstractDataGraph::getXAxisOffsetScaled() const
 }
 
 AbstractDataGraphWithY::AbstractDataGraphWithY(int16_t capacity, int* values)
-    : AbstractDataGraph(capacity), yValues(values), dataCounter(0), xOffset(0), xScale(1)
+    : AbstractDataGraph(capacity), yValues(values), dataCounter(0), xOffset(0), xScale(1),
+      graphRangeMinX(0), graphRangeMaxX(0), graphRangeMinY(0), graphRangeMaxY(0)
 {
     assert(capacity > 0);
     setGraphRangeX(0, capacity - 1);

@@ -15,59 +15,56 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     background.setPosition(-1, -1, 800, 480);
     background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
 
-    indicatorImages.setPosition(274, 114, 250, 250);
-    indicatorImages.setVisible(false);
-
-    batteryLow.setXY(24, 67);
+    batteryLow.setXY(298, 181);
+    batteryLow.setVisible(false);
     batteryLow.setBitmap(touchgfx::Bitmap(BITMAP_BATTERYDRAINOUT_ID));
-    indicatorImages.add(batteryLow);
 
-    brakeAlert.setXY(28, 48);
+    brakeAlert.setXY(302, 162);
+    brakeAlert.setVisible(false);
     brakeAlert.setBitmap(touchgfx::Bitmap(BITMAP_BRAKESYSTEMALERT_ID));
-    indicatorImages.add(brakeAlert);
 
-    temperatureWarning.setXY(52, 71);
+    temperatureWarning.setXY(326, 184);
+    temperatureWarning.setVisible(false);
     temperatureWarning.setBitmap(touchgfx::Bitmap(BITMAP_COOLANTTEMPERATUREWARNING_ID));
-    indicatorImages.add(temperatureWarning);
 
-    errorMessage.setXY(52, 63);
+    errorMessage.setXY(326, 177);
+    errorMessage.setVisible(false);
     errorMessage.setBitmap(touchgfx::Bitmap(BITMAP_ELECTRONICERRORMESSAGE_ID));
-    indicatorImages.add(errorMessage);
 
-    fingerScan.setXY(55, 50);
+    fingerScan.setXY(329, 164);
+    fingerScan.setVisible(false);
     fingerScan.setBitmap(touchgfx::Bitmap(BITMAP_FINGERSCANLOGINSTATUS_ID));
-    indicatorImages.add(fingerScan);
 
-    beamActivated.setXY(33, 64);
-    beamActivated.setBitmap(touchgfx::Bitmap(BITMAP_HIGHBEAMACTIVATED_ID));
-    indicatorImages.add(beamActivated);
-
-    keylessKey.setXY(34, 55);
+    keylessKey.setXY(308, 169);
+    keylessKey.setVisible(false);
     keylessKey.setBitmap(touchgfx::Bitmap(BITMAP_KEYLESSIGNITIONKEYDETECTION_ID));
-    indicatorImages.add(keylessKey);
 
-    phoneMirroring.setXY(33, 63);
-    phoneMirroring.setBitmap(touchgfx::Bitmap(BITMAP_SMARTPHONEMIRRORINGSTATUS_ID));
-    indicatorImages.add(phoneMirroring);
+    beamActivated.setXY(307, 178);
+    beamActivated.setVisible(false);
+    beamActivated.setBitmap(touchgfx::Bitmap(BITMAP_HIGHBEAMACTIVATED_ID));
 
-    mainGo.setXY(21, 86);
+    mainGo.setXY(295, 200);
+    mainGo.setVisible(false);
     mainGo.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
-    indicatorImages.add(mainGo);
 
-    mainReverse.setXY(76, 86);
+    mainReverse.setXY(350, 200);
+    mainReverse.setVisible(false);
     mainReverse.setBitmap(touchgfx::Bitmap(BITMAP_MAINREVERSE_ID));
-    indicatorImages.add(mainReverse);
+
+    phoneMirroring.setXY(307, 177);
+    phoneMirroring.setVisible(false);
+    phoneMirroring.setBitmap(touchgfx::Bitmap(BITMAP_SMARTPHONEMIRRORINGSTATUS_ID));
 
     iconContainer.setPosition(146, 132, 508, 230);
 
-    prevIconContainer.setPosition(139, 230, 230, 230);
+    prevIconContainer.setPosition(-230, 0, 230, 230);
 
     prevIconImage.setXY(9, 75);
     prevIconImage.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
     prevIconContainer.add(prevIconImage);
     iconContainer.add(prevIconContainer);
 
-    nextIconContainer.setPosition(139, -230, 230, 230);
+    nextIconContainer.setPosition(508, 0, 230, 230);
 
     nextIconImage.setXY(9, 75);
     nextIconImage.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
@@ -129,22 +126,6 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     seinRight.setXY(0, 0);
     seinRight.setBitmap(touchgfx::Bitmap(BITMAP_SEINRIGHTFLIPPED_ID));
     seinRightContainer.add(seinRight);
-
-    engineProgress.setXY(558, 57);
-    engineProgress.setProgressIndicatorPosition(0, 0, 137, 366);
-    engineProgress.setRange(0, 100);
-    engineProgress.setDirection(touchgfx::AbstractDirectionProgress::UP);
-    engineProgress.setBitmap(BITMAP_ENGINEROTATIONFLIPPED_ID);
-    engineProgress.setValue(100);
-    engineProgress.setAnchorAtZero(true);
-
-    speedProgress.setXY(105, 57);
-    speedProgress.setProgressIndicatorPosition(0, 0, 137, 366);
-    speedProgress.setRange(0, 100);
-    speedProgress.setDirection(touchgfx::AbstractDirectionProgress::UP);
-    speedProgress.setBitmap(BITMAP_SPEEDLEVEL_ID);
-    speedProgress.setValue(100);
-    speedProgress.setAnchorAtZero(true);
 
     reportModeContainer.setPosition(285, 406, 227, 18);
 
@@ -212,13 +193,6 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     nextDriveModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID32));
     driveModeContainer.add(nextDriveModeText);
 
-    tripValue.setPosition(374, 102, 119, 20);
-    tripValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
-    tripValue.setLinespacing(0);
-    Unicode::snprintf(tripValueBuffer, TRIPVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID11).getText());
-    tripValue.setWildcard(tripValueBuffer);
-    tripValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID3));
-
     tripModeContainer.setPosition(269, 93, 79, 20);
 
     prevTripModeText.setPosition(0, 20, 79, 20);
@@ -237,6 +211,13 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     nextTripModeText.setTypedText(touchgfx::TypedText(T_SINGLEUSEID34));
     tripModeContainer.add(nextTripModeText);
 
+    tripValue.setPosition(374, 102, 119, 20);
+    tripValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    tripValue.setLinespacing(0);
+    Unicode::snprintf(tripValueBuffer, TRIPVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID11).getText());
+    tripValue.setWildcard(tripValueBuffer);
+    tripValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID3));
+
     signalValue.setPosition(443, 61, 39, 20);
     signalValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
     signalValue.setLinespacing(0);
@@ -251,21 +232,54 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     batteryValue.setWildcard(batteryValueBuffer);
     batteryValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
 
+    fpsValue.setPosition(5, 5, 95, 18);
+    fpsValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    fpsValue.setLinespacing(0);
+    Unicode::snprintf(fpsValueBuffer, FPSVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID48).getText());
+    fpsValue.setWildcard(fpsValueBuffer);
+    fpsValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID47));
+
+    engineProgress.setXY(558, 57);
+    engineProgress.setProgressIndicatorPosition(0, 0, 137, 366);
+    engineProgress.setRange(0, 100);
+    engineProgress.setDirection(touchgfx::AbstractDirectionProgress::UP);
+    engineProgress.setBitmap(BITMAP_ENGINEROTATIONFLIPPED_ID);
+    engineProgress.setValue(100);
+    engineProgress.setAnchorAtZero(true);
+
+    speedProgress.setXY(105, 57);
+    speedProgress.setProgressIndicatorPosition(0, 0, 137, 366);
+    speedProgress.setRange(0, 100);
+    speedProgress.setDirection(touchgfx::AbstractDirectionProgress::UP);
+    speedProgress.setBitmap(BITMAP_SPEEDLEVEL_ID);
+    speedProgress.setValue(100);
+    speedProgress.setAnchorAtZero(true);
+
     add(__background);
     add(background);
-    add(indicatorImages);
+    add(batteryLow);
+    add(brakeAlert);
+    add(temperatureWarning);
+    add(errorMessage);
+    add(fingerScan);
+    add(keylessKey);
+    add(beamActivated);
+    add(mainGo);
+    add(mainReverse);
+    add(phoneMirroring);
     add(iconContainer);
     add(frameContainer);
     add(seinLeftContainer);
     add(seinRightContainer);
-    add(engineProgress);
-    add(speedProgress);
     add(reportModeContainer);
     add(driveModeContainer);
-    add(tripValue);
     add(tripModeContainer);
+    add(tripValue);
     add(signalValue);
     add(batteryValue);
+    add(fpsValue);
+    add(engineProgress);
+    add(speedProgress);
 }
 
 void dashboardScreenViewBase::setupScreen()

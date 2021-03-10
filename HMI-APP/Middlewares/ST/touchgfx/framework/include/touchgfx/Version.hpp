@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.16.1 distribution.
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -16,9 +16,9 @@
 #ifndef VERSION_HPP
 #define VERSION_HPP
 
-#define TOUCHGFX_VERSION 41600
+#define TOUCHGFX_VERSION 41601
 #define TOUCHGFX_VERSION_MAJOR 4
 #define TOUCHGFX_VERSION_MINOR 16
-#define TOUCHGFX_VERSION_PATCH 0
+#define TOUCHGFX_VERSION_PATCH 1
 
 #endif // VERSION_HPP

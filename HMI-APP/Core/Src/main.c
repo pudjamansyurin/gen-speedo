@@ -198,7 +198,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  printf_init();
+	printf_init();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -225,15 +225,15 @@ int main(void)
   LogRecMutexHandle = osMutexNew(&LogRecMutex_attributes);
 
   /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
+	/* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
+	/* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
+	/* start timers, add new ones, ... */
 
   /* USER CODE END RTOS_TIMERS */
 
@@ -242,7 +242,7 @@ int main(void)
   CanRxQueueHandle = osMessageQueueNew (10, sizeof(can_rx_t), &CanRxQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
+	/* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
@@ -259,14 +259,14 @@ int main(void)
   CanRxTaskHandle = osThreadNew(StartCanRxTask, NULL, &CanRxTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
+	/* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
   /* creation of GlobalEvent */
   GlobalEventHandle = osEventFlagsNew(&GlobalEvent_attributes);
 
   /* USER CODE BEGIN RTOS_EVENTS */
-  /* add events, ... */
+	/* add events, ... */
   /* USER CODE END RTOS_EVENTS */
 
   /* Start scheduler */
@@ -275,12 +275,12 @@ int main(void)
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+	while (1)
+	{
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+	}
   /* USER CODE END 3 */
 }
 
@@ -334,7 +334,7 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
-  PeriphClkInitStruct.PLLSAI.PLLSAIN = 66;
+  PeriphClkInitStruct.PLLSAI.PLLSAIN = 60;
   PeriphClkInitStruct.PLLSAI.PLLSAIR = 2;
   PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_2;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
@@ -515,8 +515,8 @@ static void MX_LTDC_Init(void)
   pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_RGB565;
   pLayerCfg.Alpha = 255;
   pLayerCfg.Alpha0 = 0;
-  pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
-  pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
+  pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
+  pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
   pLayerCfg.FBStartAdress = 0xC0000000;
   pLayerCfg.ImageWidth = 800;
   pLayerCfg.ImageHeight = 480;
@@ -559,16 +559,16 @@ static void MX_FMC_Init(void)
   hsdram1.Init.CASLatency = FMC_SDRAM_CAS_LATENCY_3;
   hsdram1.Init.WriteProtection = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
   hsdram1.Init.SDClockPeriod = FMC_SDRAM_CLOCK_PERIOD_2;
-  hsdram1.Init.ReadBurst = FMC_SDRAM_RBURST_DISABLE;
-  hsdram1.Init.ReadPipeDelay = FMC_SDRAM_RPIPE_DELAY_1;
+  hsdram1.Init.ReadBurst = FMC_SDRAM_RBURST_ENABLE;
+  hsdram1.Init.ReadPipeDelay = FMC_SDRAM_RPIPE_DELAY_0;
   /* SdramTiming */
   SdramTiming.LoadToActiveDelay = 2;
   SdramTiming.ExitSelfRefreshDelay = 7;
   SdramTiming.SelfRefreshTime = 4;
   SdramTiming.RowCycleDelay = 7;
-  SdramTiming.WriteRecoveryTime = 2;
+  SdramTiming.WriteRecoveryTime = 3;
   SdramTiming.RPDelay = 2;
-  SdramTiming.RCDDelay = 16;
+  SdramTiming.RCDDelay = 2;
 
   if (HAL_SDRAM_Init(&hsdram1, &SdramTiming) != HAL_OK)
   {
@@ -576,7 +576,7 @@ static void MX_FMC_Init(void)
   }
 
   /* USER CODE BEGIN FMC_Init 2 */
-  MX_SDRAM_InitEx();
+	MX_SDRAM_InitEx();
   /* USER CODE END FMC_Init 2 */
 }
 
@@ -705,33 +705,33 @@ static void MX_GPIO_Init(void)
 void StartManagerTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
-  TickType_t lastWake;
+	TickType_t lastWake;
 
-  // Reset database
-  _LcdPower(0);
-  _FlushData();
+	// Reset database
+	_LcdPower(0);
+	_FlushData();
 
-  // suspend other threads
-//      osThreadSuspend(DisplayTaskHandle);
-//      osThreadSuspend(CanTxTaskHandle);
-//      osThreadSuspend(CanRxTaskHandle);
+	// suspend other threads
+	//      osThreadSuspend(DisplayTaskHandle);
+	//      osThreadSuspend(CanTxTaskHandle);
+	//      osThreadSuspend(CanRxTaskHandle);
 
-  // Release other threads
-  osEventFlagsSet(GlobalEventHandle, EVENT_READY);
+	// Release other threads
+	osEventFlagsSet(GlobalEventHandle, EVENT_READY);
 
-  /* Infinite loop */
-  for (;;) {
-    lastWake = osKernelGetTickCount();
+	/* Infinite loop */
+	for (;;) {
+		lastWake = osKernelGetTickCount();
 
-    // Feed the dog
-    HAL_IWDG_Refresh(&hiwdg);
+		// Feed the dog
+		HAL_IWDG_Refresh(&hiwdg);
 
-    // reset display
-    if (_GetTickMS() - VCU.d.tick.canRx > 5000)
-      _FlushData();
+		// reset display
+		if (_GetTickMS() - VCU.d.tick.canRx > 5000)
+			_FlushData();
 
-    osDelayUntil(lastWake + 1000);
-  }
+		osDelayUntil(lastWake + 1000);
+	}
   /* USER CODE END 5 */
 }
 
@@ -745,16 +745,16 @@ void StartManagerTask(void *argument)
 void StartDisplayTask(void *argument)
 {
   /* USER CODE BEGIN StartDisplayTask */
-  // wait until ManagerTask done
-  osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
+	// wait until ManagerTask done
+	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
-  // Hand-over this thread to TouchGFX
-  MX_TouchGFX_Process();
+	// Hand-over this thread to TouchGFX
+	MX_TouchGFX_Process();
 
-  /* Infinite loop */
-  for (;;) {
-    osDelay(1);
-  }
+	/* Infinite loop */
+	for (;;) {
+		osDelay(1);
+	}
   /* USER CODE END StartDisplayTask */
 }
 
@@ -768,21 +768,21 @@ void StartDisplayTask(void *argument)
 void StartCanTxTask(void *argument)
 {
   /* USER CODE BEGIN StartCanTxTask */
-  TickType_t lastWake;
+	TickType_t lastWake;
 
-  // wait until ManagerTask done
-  osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
+	// wait until ManagerTask done
+	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
-  CANBUS_Init();
+	CANBUS_Init();
 
-  /* Infinite loop */
-  for (;;) {
-    lastWake = osKernelGetTickCount();
+	/* Infinite loop */
+	for (;;) {
+		lastWake = osKernelGetTickCount();
 
-    HMI1.can.t.Heartbeat();
+		HMI1.can.t.Heartbeat();
 
-    osDelayUntil(lastWake + 500);
-  }
+		osDelayUntil(lastWake + 500);
+	}
   /* USER CODE END StartCanTxTask */
 }
 
@@ -796,37 +796,37 @@ void StartCanTxTask(void *argument)
 void StartCanRxTask(void *argument)
 {
   /* USER CODE BEGIN StartCanRxTask */
-  can_rx_t Rx;
+	can_rx_t Rx;
 
-  // wait until ManagerTask done
-  osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
+	// wait until ManagerTask done
+	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
-  /* Infinite loop */
-  for (;;) {
-    if (osMessageQueueGet(CanRxQueueHandle, &Rx, NULL, 1000) == osOK) {
-      VCU.d.tick.canRx = _GetTickMS();
+	/* Infinite loop */
+	for (;;) {
+		if (osMessageQueueGet(CanRxQueueHandle, &Rx, NULL, 1000) == osOK) {
+			VCU.d.tick.canRx = _GetTickMS();
 
-      // handle message
-      switch (CANBUS_ReadID(&(Rx.header))) {
-        case CAND_VCU_SWITCH :
-          VCU.can.r.SwitchModeControl(&Rx);
-          _LcdBacklight(HMI1.d.state.daylight);
-          break;
-        case CAND_VCU_SELECT_SET :
-          VCU.can.r.MixedData(&Rx);
-          break;
-        case CAND_VCU_TRIP_MODE :
-          VCU.can.r.TripData(&Rx);
-          break;
-        case CAND_SET_PROGRESS :
-        case CAND_GET_CHECKSUM :
-          FW_EnterModeIAP();
-          break;
-        default:
-          break;
-      }
-    }
-  }
+			// handle message
+			switch (CANBUS_ReadID(&(Rx.header))) {
+			case CAND_VCU_SWITCH :
+				VCU.can.r.SwitchModeControl(&Rx);
+				_LcdBacklight(HMI1.d.state.daylight);
+				break;
+			case CAND_VCU_SELECT_SET :
+				VCU.can.r.MixedData(&Rx);
+				break;
+			case CAND_VCU_TRIP_MODE :
+				VCU.can.r.TripData(&Rx);
+				break;
+			case CAND_SET_PROGRESS :
+			case CAND_GET_CHECKSUM :
+				FW_EnterModeIAP();
+				break;
+			default:
+				break;
+			}
+		}
+	}
   /* USER CODE END StartCanRxTask */
 }
 
@@ -857,8 +857,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
-  _Error("Error Handler");
+	/* User can add his own implementation to report the HAL error return state */
+	_Error("Error Handler");
   /* USER CODE END Error_Handler_Debug */
 }
 
@@ -873,7 +873,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
+	/* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }

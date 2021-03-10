@@ -14,11 +14,7 @@
       <ProjectName>HMI-APP</ProjectName>
       <ProjectNature>Cpp</ProjectNature>
       <Secure />
-      <filestoremove>
-        <file>
-          <name>Core\Src\system_stm32f4xx.c</name>
-        </file>
-      </filestoremove>
+      <filestoremove />
       <sourceEntriesToRemove>
         <sourceEntry />
       </sourceEntriesToRemove>

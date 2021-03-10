@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.16.1 distribution.
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -44,8 +44,8 @@ public:
         //8x6 blocks, with 8 blocks on the longest edge
         if (HAL::DISPLAY_WIDTH > HAL::DISPLAY_HEIGHT)
         {
-            blockWidth = (HAL::FRAME_BUFFER_WIDTH + 7) / 8;
-            blockHeight = (HAL::FRAME_BUFFER_HEIGHT + 5) / 6;
+            blockWidth = (HAL::DISPLAY_WIDTH + 7) / 8;
+            blockHeight = (HAL::DISPLAY_HEIGHT + 5) / 6;
             blocksHorizontal = 8;
         }
         else
@@ -63,12 +63,13 @@ public:
      */
     virtual void handleTickEvent()
     {
+        const int blocks = 48;
         //"random" sequence of blocks to invalidate
-        const int indeces[48] = { 20, 11, 47, 14, 10, 0, 18, 28, 13, 6, 2, 41,
-                                  44, 5, 3, 17, 36, 46, 26, 15, 29, 39, 25, 12,
-                                  19, 24, 7, 38, 37, 30, 9, 43, 4, 31, 22, 23,
-                                  35, 16, 32, 42, 8, 1, 40, 33, 21, 27, 34, 45
-                                };
+        const int indeces[blocks] = { 20, 11, 47, 14, 10, 0, 18, 28, 13, 6, 2, 41,
+                                      44, 5, 3, 17, 36, 46, 26, 15, 29, 39, 25, 12,
+                                      19, 24, 7, 38, 37, 30, 9, 43, 4, 31, 22, 23,
+                                      35, 16, 32, 42, 8, 1, 40, 33, 21, 27, 34, 45
+                                    };
 
         Transition::handleTickEvent();
 
@@ -77,27 +78,21 @@ public:
             Application::getInstance()->copyInvalidatedAreasFromTFTToClientBuffer();
         }
 
-        if (animationCounter < 47)
+        if (animationCounter < blocks)
         {
-            //Invalidate next block in sequence
-            const int index = indeces[animationCounter];
+            int blocks_per_tick = 2;
+            while (blocks_per_tick-- > 0 && animationCounter < blocks)
+            {
+                //Invalidate next block in sequence
+                const int index = indeces[animationCounter];
 
-            const int16_t x = (index % blocksHorizontal) * blockWidth;
-            const int16_t y = (index / blocksHorizontal) * blockHeight;
+                const int16_t x = (index % blocksHorizontal) * blockWidth;
+                const int16_t y = (index / blocksHorizontal) * blockHeight;
 
-            Rect invRect(x, y, blockWidth, blockHeight);
-            screenContainer->invalidateRect(invRect);
-            animationCounter++;
-
-            //And the next...
-            const int index2 = indeces[animationCounter];
-
-            const int16_t x2 = (index2 % blocksHorizontal) * blockWidth;
-            const int16_t y2 = (index2 / blocksHorizontal) * blockHeight;
-
-            Rect invRect2(x2, y2, blockWidth, blockHeight);
-            screenContainer->invalidateRect(invRect2);
-            animationCounter++;
+                Rect invRect(x, y, blockWidth, blockHeight);
+                screenContainer->invalidateRect(invRect);
+                animationCounter++;
+            }
         }
         else
         {

@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.16.1 distribution.
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -371,6 +371,35 @@ public:
                                         RenderingVariant renderVariant,
                                         uint8_t alpha = 255,
                                         uint16_t subDivisionSize = 12);
+
+    /**
+     * Texture map quad. Draw a perspective correct texture mapped quad. The
+     * vertices describes the surface, the x,y,z coordinates and the u,v coordinates of the
+     * texture. The texture contains the image data to be drawn The quad line will be
+     * placed and clipped using the absolute and dirty rectangles The alpha will determine
+     * how the quad should be alpha blended. The subDivisionSize will determine the size
+     * of the piecewise affine texture mapped portions of the quad.
+     *
+     * @param  dest              The description of where the texture is drawn - can be used
+     *                           to issue a draw off screen.
+     * @param  vertices          The vertices of the quad.
+     * @param  texture           The texture.
+     * @param  absoluteRect      The containing rectangle in absolute coordinates.
+     * @param  dirtyAreaAbsolute The dirty area in absolute coordinates.
+     * @param  renderVariant     The render variant - includes the algorithm and the pixel
+     *                           format.
+     * @param  alpha             (Optional) the alpha. Default is 255 (solid).
+     * @param  subDivisionSize   (Optional) the size of the subdivisions of the scan line.
+     *                           Default is 12.
+     */
+    virtual void drawTextureMapQuad(const DrawingSurface& dest,
+                                    const Point3D* vertices,
+                                    const TextureSurface& texture,
+                                    const Rect& absoluteRect,
+                                    const Rect& dirtyAreaAbsolute,
+                                    RenderingVariant renderVariant,
+                                    uint8_t alpha = 255,
+                                    uint16_t subDivisionSize = 12);
 
     /**
      * Approximates an integer division of a 16bit value by 255. Divides numerator num (e.g.
