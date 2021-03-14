@@ -40,15 +40,6 @@
 #define ADDR_FLASH_SECTOR_22     ((uint32_t)0x081C0000) /* Base @ of Sector 10, 128 Kbytes */
 #define ADDR_FLASH_SECTOR_23     ((uint32_t)0x081E0000) /* Base @ of Sector 11, 128 Kbytes */
 
-/* User defined */
-#define APP_MAX_SIZE            (uint32_t)0xE0000       /* 7 x 128K */
-#define APP_START_ADDR          ADDR_FLASH_SECTOR_5
-#define APP_END_ADDR            (ADDR_FLASH_SECTOR_5 + APP_MAX_SIZE - 1)
-#define BKP_START_ADDR          ADDR_FLASH_SECTOR_17
-#define BKP_END_ADDR            (ADDR_FLASH_SECTOR_17 + APP_MAX_SIZE - 1)
-#define SIZE_OFFSET             (APP_MAX_SIZE - 4)
-#define CHECKSUM_OFFSET         (APP_MAX_SIZE - 8)
-
 /* Public functions prototype ------------------------------------------------*/
 uint8_t FLASHER_EraseBkpArea(void);
 uint8_t FLASHER_EraseAppArea(void);
