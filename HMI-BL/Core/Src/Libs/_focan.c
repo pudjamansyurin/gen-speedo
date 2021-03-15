@@ -41,23 +41,23 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
     // read
     if (CANBUS_Read(&Rx)) {
       switch (CANBUS_ReadID(&(Rx.header))) {
-        case CAND_GET_CRC :
+        case CAND_FOCAN_CRC :
           tick = _GetTickMS();
           p = FOCAN_xGetCRC();
           break;
-        case CAND_PRA_DOWNLOAD :
+        case CAND_FOCAN_PRA :
           tick = _GetTickMS();
           FOTA_DisplayStatus("Pra-Download.");
           p = FOCAN_xPraDownload(&Rx, &SIZE);
           break;
-        case CAND_INIT_DOWNLOAD :
+        case CAND_FOCAN_INIT :
           tick = _GetTickMS();
           p = SIZE;
           if (p)
             p = FOCAN_xDownloadFlash(&Rx, &SIZE, timeout, &tick);
 
           break;
-        case CAND_PASCA_DOWNLOAD :
+        case CAND_FOCAN_PASCA :
           tick = _GetTickMS();
           FOTA_DisplayStatus("Pasca-Download");
           p = SIZE;
@@ -67,7 +67,7 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
           /* Handle success DFU */
           success = p;
           break;
-        case CAND_SET_PROGRESS :
+        case CAND_FOCAN_PROGRESS :
           tick = _GetTickMS();
           FOCAN_xSetProgress(&Rx, &type);
           break;
@@ -119,7 +119,7 @@ uint8_t FOCAN_RequestFota(void) {
 }
 
 uint8_t FOCAN_xGetCRC(void) {
-  uint32_t address = CAND_GET_CRC;
+  uint32_t address = CAND_FOCAN_CRC;
   uint32_t crc;
 
   // Make message
@@ -149,7 +149,7 @@ uint8_t FOCAN_xSetProgress(can_rx_t *Rx, IAP_TYPE *type) {
 }
 
 uint8_t FOCAN_xPraDownload(can_rx_t *Rx, uint32_t *size) {
-  uint32_t address = CAND_PRA_DOWNLOAD;
+  uint32_t address = CAND_FOCAN_PRA;
   uint8_t p;
 
   // Read
@@ -176,7 +176,7 @@ uint8_t FOCAN_xDownloadFlash(can_rx_t *Rx, uint32_t *size, uint32_t timeout, uin
   // check the flash size
   p = (offset + currentSize) <= APP_MAX_SIZE;
   // Send response
-  FOCAN_SendResponse(CAND_INIT_DOWNLOAD, p ? FOCAN_ACK : FOCAN_NACK);
+  FOCAN_SendResponse(CAND_FOCAN_INIT, p ? FOCAN_ACK : FOCAN_NACK);
 
   // Wait data
   if (p) {
@@ -184,7 +184,7 @@ uint8_t FOCAN_xDownloadFlash(can_rx_t *Rx, uint32_t *size, uint32_t timeout, uin
     do {
       // read
       if (CANBUS_Read(Rx)) {
-        if ((CANBUS_ReadID(&(Rx->header)) >> 20) == CAND_DOWNLOADING) {
+        if ((CANBUS_ReadID(&(Rx->header)) >> 20) == CAND_FOCAN_RUNNING) {
           pos = (CANBUS_ReadID(&(Rx->header)) & 0xFFFF);
 
           // read
@@ -192,7 +192,7 @@ uint8_t FOCAN_xDownloadFlash(can_rx_t *Rx, uint32_t *size, uint32_t timeout, uin
           memcpy(&ptr[pos], &(Rx->data), len);
 
           // response ACK
-          address = (CAND_DOWNLOADING << 20) | pos;
+          address = (CAND_FOCAN_RUNNING << 20) | pos;
           p = FOCAN_SendResponse(address, FOCAN_ACK);
 
           // update tick
@@ -222,13 +222,13 @@ uint8_t FOCAN_xDownloadFlash(can_rx_t *Rx, uint32_t *size, uint32_t timeout, uin
   }
 
   // send final response
-  FOCAN_SendResponse(CAND_INIT_DOWNLOAD, p ? FOCAN_ACK : FOCAN_NACK);
+  FOCAN_SendResponse(CAND_FOCAN_INIT, p ? FOCAN_ACK : FOCAN_NACK);
 
   return p;
 }
 
 uint8_t FOCAN_xPascaDownload(can_rx_t *Rx, uint32_t *size) {
-  uint32_t address = CAND_PASCA_DOWNLOAD;
+  uint32_t address = CAND_FOCAN_PASCA;
   uint32_t crc;
   uint8_t p;
 

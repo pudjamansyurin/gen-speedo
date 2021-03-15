@@ -12,19 +12,21 @@
 #include "Libs/_utils.h"
 
 /* Exported defines -----------------------------------------------------------*/
-#define CAN_DATA 	UNION64
-// CAN Message Address
-#define CAND_VCU_SWITCH			         (uint32_t) 0x000
-#define CAND_VCU_DATETIME		         (uint32_t) 0x001
-#define CAND_VCU_SELECT_SET		       (uint32_t) 0x002
-#define CAND_VCU_TRIP_MODE		       (uint32_t) 0x003
+#define CAND_FOCAN_PROGRESS          (uint32_t) 0x101
+#define CAND_FOCAN_CRC               (uint32_t) 0x102
+#define CAND_FOCAN_PRA               (uint32_t) 0x103
+#define CAND_FOCAN_INIT              (uint32_t) 0x104
+#define CAND_FOCAN_RUNNING           (uint32_t) 0x105
+#define CAND_FOCAN_PASCA             (uint32_t) 0x106
+
+#define CAND_VCU_SWITCH			         (uint32_t) 0x200
+#define CAND_VCU_DATETIME		         (uint32_t) 0x201
+#define CAND_VCU_SELECT_SET		       (uint32_t) 0x202
+#define CAND_VCU_TRIP_MODE		       (uint32_t) 0x203
+
 #define CAND_HMI1                    (uint32_t) 0x7C0
-#define CAND_SET_PROGRESS            (uint32_t) 0x101
-#define CAND_GET_CRC                 (uint32_t) 0x102
-#define CAND_PRA_DOWNLOAD            (uint32_t) 0x103
-#define CAND_INIT_DOWNLOAD           (uint32_t) 0x104
-#define CAND_DOWNLOADING             (uint32_t) 0x105
-#define CAND_PASCA_DOWNLOAD          (uint32_t) 0x106
+
+#define CAN_DATA 	UNION64
 
 /* Exported struct ------------------------------------------------------------*/
 typedef struct {
