@@ -22,12 +22,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Libs/_utils.h"
-#include "Libs/_fota.h"
-#include "Libs/_focan.h"
 #include "Drivers/_canbus.h"
 #include "Drivers/_flasher.h"
 #include "Drivers/_sdram.h"
+#include "Libs/_utils.h"
+#include "Libs/_fota.h"
+#include "Libs/_focan.h"
 #include "BSP/_lcd.h"
 /* USER CODE END Includes */
 
@@ -533,7 +533,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
 	/* User can add his own implementation to report the HAL error return state */
-	_Error("Error Handler");
+	// _Error("Error Handler");
   /* USER CODE END Error_Handler_Debug */
 }
 
