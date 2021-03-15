@@ -47,7 +47,7 @@
 #define BKP_START_ADDR               (uint32_t) 0x08120000
 #define BKP_END_ADDR                            (BKP_START_ADDR + APP_MAX_SIZE - 1)
 #define SIZE_OFFSET                             (APP_MAX_SIZE - 4)
-#define CHECKSUM_OFFSET                         (APP_MAX_SIZE - 8)
+#define CRC_OFFSET                         (APP_MAX_SIZE - 8)
 #define HIN_VALUE                    (*(__IO uint32_t*) (APP_START_ADDR - 4))
 
 #endif /* DEFINES_SHARED_H_ */

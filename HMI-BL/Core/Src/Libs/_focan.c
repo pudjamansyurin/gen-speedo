@@ -41,9 +41,9 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
     // read
     if (CANBUS_Read(&Rx)) {
       switch (CANBUS_ReadID(&(Rx.header))) {
-        case CAND_GET_CHECKSUM :
+        case CAND_GET_CRC :
           tick = _GetTickMS();
-          p = FOCAN_xGetChecksum();
+          p = FOCAN_xGetCRC();
           break;
         case CAND_PRA_DOWNLOAD :
           tick = _GetTickMS();
@@ -118,15 +118,15 @@ uint8_t FOCAN_RequestFota(void) {
   return CANBUS_Write(CAND_HMI1, &TxData, 2);
 }
 
-uint8_t FOCAN_xGetChecksum(void) {
-  uint32_t address = CAND_GET_CHECKSUM;
-  uint32_t checksum;
+uint8_t FOCAN_xGetCRC(void) {
+  uint32_t address = CAND_GET_CRC;
+  uint32_t crc;
 
   // Make message
-  FOTA_GetChecksum(&checksum);
+  FOTA_GetCRC(&crc);
 
   // Send response
-  return FOCAN_SendSqueeze(address, &checksum, 4);
+  return FOCAN_SendSqueeze(address, &crc, 4);
 }
 
 uint8_t FOCAN_xSetProgress(can_rx_t *Rx, IAP_TYPE *type) {
@@ -229,17 +229,17 @@ uint8_t FOCAN_xDownloadFlash(can_rx_t *Rx, uint32_t *size, uint32_t timeout, uin
 
 uint8_t FOCAN_xPascaDownload(can_rx_t *Rx, uint32_t *size) {
   uint32_t address = CAND_PASCA_DOWNLOAD;
-  uint32_t checksum;
+  uint32_t crc;
   uint8_t p;
 
   // Read
-  checksum = Rx->data.u32[0];
+  crc = Rx->data.u32[0];
 
   // Execute
-  p = FOTA_ValidateChecksum(checksum, *size, APP_START_ADDR);
+  p = FOTA_ValidateCRC(crc, *size, APP_START_ADDR);
   // Glue related information to new image
   if (p) {
-    FOTA_GlueInfo32(CHECKSUM_OFFSET, &checksum);
+    FOTA_GlueInfo32(CRC_OFFSET, &crc);
     FOTA_GlueInfo32(SIZE_OFFSET, size);
   }
 

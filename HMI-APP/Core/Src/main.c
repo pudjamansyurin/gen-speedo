@@ -819,7 +819,7 @@ void StartCanRxTask(void *argument)
 				VCU.can.r.TripData(&Rx);
 				break;
 			case CAND_SET_PROGRESS :
-			case CAND_GET_CHECKSUM :
+			case CAND_GET_CRC :
 				FW_EnterModeIAP();
 				break;
 			default:

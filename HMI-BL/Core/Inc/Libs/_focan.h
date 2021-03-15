@@ -19,7 +19,7 @@
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOCAN_Upgrade(uint8_t factory);
 uint8_t FOCAN_RequestFota(void);
-uint8_t FOCAN_xGetChecksum(void);
+uint8_t FOCAN_xGetCRC(void);
 uint8_t FOCAN_xSetProgress(can_rx_t *Rx, IAP_TYPE *type);
 uint8_t FOCAN_xPraDownload(can_rx_t *Rx, uint32_t *size);
 uint8_t FOCAN_xPascaDownload(can_rx_t *Rx, uint32_t *size);

@@ -17,25 +17,25 @@ extern CAN_HandleTypeDef hcan2;
 extern CRC_HandleTypeDef hcrc;
 
 /* Public functions implementation --------------------------------------------*/
-uint8_t FOTA_ValidateChecksum(uint32_t checksum, uint32_t len, uint32_t address) {
+uint8_t FOTA_ValidateCRC(uint32_t crc, uint32_t len, uint32_t address) {
   uint8_t *addr = (uint8_t*) address;
-  uint32_t crc = 0;
+  uint32_t crcVal = 0;
 
   // Calculate CRC
-  crc = CRC_Calculate8(addr, len, 1);
+  crcVal = CRC_Calculate8(addr, len, 1);
 
   // Indicator
-  if (crc == checksum)
-    printf("FOTA:Checksum = MATCH\n");
+  if (crc == crcVal)
+    printf("FOTA:CRC = MATCH\n");
   else
-    printf("FOTA:Checksum = DIFF (0x%08X != 0x%08X)\n",
-        (unsigned int) checksum, (unsigned int) crc);
+    printf("FOTA:CRC = DIFF (0x%08X != 0x%08X)\n",
+        (unsigned int) crc, (unsigned int) crcVal);
 
-  return (crc == checksum);
+  return (crc == crcVal);
 }
 
 uint8_t FOTA_ValidImage(uint32_t address) {
-  uint32_t size, checksum;
+  uint32_t size, crc;
   uint8_t p;
 
   /* Check beginning stack pointer */
@@ -48,13 +48,13 @@ uint8_t FOTA_ValidImage(uint32_t address) {
     p = (size < APP_MAX_SIZE );
   }
 
-  /* Check the checksum */
+  /* Check the CRC */
   if (p) {
-    /* Get the stored checksum information */
-    checksum = *(uint32_t*) (address + CHECKSUM_OFFSET);
+    /* Get the stored CRC information */
+    crc = *(uint32_t*) (address + CRC_OFFSET);
 
-    /* Validate checksum */
-    p = FOTA_ValidateChecksum(checksum, size, address);
+    /* Validate CRC */
+    p = FOTA_ValidateCRC(crc, size, address);
   }
 
   return p;
@@ -98,14 +98,14 @@ void FOTA_Reboot(void) {
   HAL_NVIC_SystemReset();
 }
 
-void FOTA_GetChecksum(uint32_t *checksum) {
+void FOTA_GetCRC(uint32_t *crc) {
   uint32_t address = BKP_START_ADDR;
 
   if (FOTA_NeedBackup()) {
     address = APP_START_ADDR;
   }
 
-  *checksum = *(uint32_t*) (address + CHECKSUM_OFFSET);
+  *crc = *(uint32_t*) (address + CRC_OFFSET);
 }
 
 void FOTA_GlueInfo32(uint32_t offset, uint32_t *data) {
