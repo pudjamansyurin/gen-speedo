@@ -110,12 +110,12 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
 }
 
 uint8_t FOCAN_RequestFota(void) {
-  CAN_DATA TxData;
+	can_tx_t Tx;
 
   // Set message
-  TxData.u16[0] = 0xFFFF;
+  Tx.data.u16[0] = 0xFFFF;
   // send message
-  return CANBUS_Write(CAND_HMI1, &TxData, 2);
+  return CANBUS_Write(&Tx, CAND_HMI1, 2, 0);
 }
 
 uint8_t FOCAN_xGetCRC(void) {
@@ -251,7 +251,7 @@ uint8_t FOCAN_xPascaDownload(can_rx_t *Rx, uint32_t *size) {
 
 /* Private functions implementation ------------------------------------------*/
 static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size) {
-  CAN_DATA TxData;
+	can_tx_t Tx;
   uint8_t retry = FOCAN_RETRY, p;
 
   do {
@@ -260,9 +260,9 @@ static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size) {
     // version
     if (p) {
       // set message
-      memcpy(&TxData, data, size);
+      memcpy(&(Tx.data), data, size);
       // send message
-      p = CANBUS_Write(address, &TxData, size);
+      p = CANBUS_Write(&Tx, address, size, 0);
     }
     // ack
     if (p)
@@ -274,14 +274,14 @@ static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size) {
 }
 
 static uint8_t FOCAN_SendResponse(uint32_t address, FOCAN response) {
-  CAN_DATA TxData;
+	can_tx_t Tx;
   uint8_t retry = FOCAN_RETRY, p;
 
   do {
     // set message
-    TxData.u8[0] = response;
+    Tx.data.u8[0] = response;
     // send message
-    p = CANBUS_Write(address, &TxData, 1);
+    p = CANBUS_Write(&Tx, address, 1, 0);
   } while (!p && --retry);
 
   return p;

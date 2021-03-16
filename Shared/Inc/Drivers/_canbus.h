@@ -12,20 +12,36 @@
 #include "Libs/_utils.h"
 
 /* Exported defines -----------------------------------------------------------*/
-#define CAND_FOCAN_PROGRESS          (uint32_t) 0x101
-#define CAND_FOCAN_CRC               (uint32_t) 0x102
-#define CAND_FOCAN_PRA               (uint32_t) 0x103
-#define CAND_FOCAN_INIT              (uint32_t) 0x104
-#define CAND_FOCAN_RUNNING           (uint32_t) 0x105
-#define CAND_FOCAN_PASCA             (uint32_t) 0x106
+typedef enum {
+	CAND_FOCAN_PROGRESS 		= 0x101,
+	CAND_FOCAN_CRC 					= 0x102,
+	CAND_FOCAN_PRA 					= 0x103,
+	CAND_FOCAN_INIT 				= 0x104,
+	CAND_FOCAN_RUNNING 			= 0x105,
+	CAND_FOCAN_PASCA 				= 0x106,
 
-#define CAND_VCU_SWITCH			         (uint32_t) 0x200
-#define CAND_VCU_DATETIME		         (uint32_t) 0x201
-#define CAND_VCU_SELECT_SET		       (uint32_t) 0x202
-#define CAND_VCU_TRIP_MODE		       (uint32_t) 0x203
+	CAND_VCU_SWITCH 				= 0x200,
+	CAND_VCU_DATETIME 			= 0x201,
+	CAND_VCU_SELECT_SET 		= 0x202,
+	CAND_VCU_TRIP_MODE 			= 0x203,
 
-#define CAND_HMI1                    (uint32_t) 0x7C0
+	CAND_HMI1 							= 0x7C0,
+	CAND_HMI2 							= 0x7D0,
 
+	CAND_BMS_SETTING 				= 0x000001B2,
+	CAND_BMS_PARAM_1 				= 0x0B0FFFFF,
+	CAND_BMS_PARAM_2 				= 0x0B1FFFFF,
+	CAND_BMS_TO_CHARGER 		= 0x0E0FFFFF,
+	CAND_BMS_CODE 					= 0x0E1FFFFF,
+	CAND_BMS_FROM_CHARGER 	= 0x0E3FFFFF,
+
+	CAND_BMS_CELL_1 				= 0x0B4,
+	CAND_BMS_CELL_2 				= 0x0B5,
+	CAND_BMS_CELL_3 				= 0x0B6,
+	CAND_BMS_CELL_4 				= 0x0B7,
+	CAND_BMS_RATED 					= 0x0BA
+
+} CAN_ADDR;
 #define CAN_DATA 	UNION64
 
 /* Exported struct ------------------------------------------------------------*/
@@ -48,10 +64,8 @@ typedef struct {
 void CANBUS_Init(void);
 void CANBUS_DeInit(void);
 uint8_t CANBUS_Filter(void);
-uint8_t CANBUS_Write(uint32_t address, CAN_DATA *TxData, uint32_t DLC);
+uint8_t CANBUS_Write(can_tx_t *Tx, uint32_t address, uint32_t DLC, uint8_t ext);
 uint8_t CANBUS_Read(can_rx_t *Rx);
 uint32_t CANBUS_ReadID(CAN_RxHeaderTypeDef *RxHeader);
-void CANBUS_TxDebugger(CAN_TxHeaderTypeDef *TxHeader, CAN_DATA *TxData);
-void CANBUS_RxDebugger(can_rx_t *Rx);
 
 #endif /* CANBUS_H_ */
