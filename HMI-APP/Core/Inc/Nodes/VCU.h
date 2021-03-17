@@ -25,7 +25,6 @@ typedef struct {
 typedef struct {
 	uint32_t rpm;
   uint8_t speed;
-	uint32_t temperature;
 } mcu_data_t;
 
 typedef struct {

@@ -31,7 +31,6 @@ void VCU_Init(void) {
   VCU.d.bms.soc = 0;
   VCU.d.mcu.rpm = 0;
   VCU.d.mcu.speed = 0;
-  VCU.d.mcu.temperature = 0;
 }
 
 /* ====================================== CAN RX =================================== */
@@ -61,9 +60,8 @@ void VCU_CAN_RX_SwitchModeControl(can_rx_t *Rx) {
   // others
   VCU.d.mcu.speed = Rx->data.u8[3];
 
-  // convert Speed to RPM
+  // TODO: convert Speed to RPM
   VCU.d.mcu.rpm = VCU.d.mcu.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
-  VCU.d.mcu.temperature = 0;
 
 	VCU.d.tick = _GetTickMS();
 }
