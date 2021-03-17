@@ -7,16 +7,13 @@ extern "C"
 	#include "Libs/_utils.h"
 	#include "Nodes/VCU.h"
 	#include "Nodes/HMI1.h"
-	#include "Nodes/BMS.h"
-	#include "Nodes/MCU.h"
 
 	extern uint8_t LTDC_MEASURED_FPS;
 }
 #else
-vcu_t VCU;
-bms_t BMS;
-mcu_t MCU;
-hmi1_t HMI1;
+	vcu_t VCU;
+	hmi1_t HMI1;
+	uint8_t LTDC_MEASURED_FPS = 0;
 #endif
 
 Model::Model()
@@ -24,13 +21,8 @@ Model::Model()
         modelListener(0), ticker(0), indicator(1), indicators { 0 }
 {
 #ifdef SIMULATOR
+	setDefaultData();
   generateRandomIndicators();
-
-  HMI1.hbar.hide = 0;
-  HMI1.hbar.m = HBAR_M_DRIVE;
-  HMI1.hbar.d.mode[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
-  HMI1.hbar.d.mode[HBAR_M_DRIVE] = HBAR_M_DRIVE_STANDARD;
-  HMI1.hbar.d.mode[HBAR_M_REPORT] = HBAR_M_REPORT_RANGE;
 #endif
 }
 
@@ -39,101 +31,7 @@ void Model::tick()
   ticker++;
 
 #ifdef SIMULATOR
-  if (ticker % 1 == 0) {
-    if (VCU.d.speed >= MCU_SPEED_MAX)
-      VCU.d.speed = 0;
-    else
-      VCU.d.speed += 5;
-
-    MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
-  }
-
-  if (ticker % 10 == 0)
-      HMI1.hbar.d.trip++;
-
-  if (ticker % 15 == 0)
-    HMI1.hbar.hide = !HMI1.hbar.hide;
-
-  if (ticker % 20 == 0) {
-    if (HMI1.hbar.d.report >= 255)
-      HMI1.hbar.d.report = 0;
-    else
-      HMI1.hbar.d.report++;
-  }
-
-  if(ticker % 30 == 0) {
-    if (VCU.d.signal >= 100)
-      VCU.d.signal = 0;
-    else
-      VCU.d.signal++;
-  }
-
-  if (ticker % 50 == 0) {
-    if (BMS.d.soc >= 100)
-      BMS.d.soc = 0;
-    else
-      BMS.d.soc++;
-  }
-
-  if (ticker % 60 == 0) {
-    uint8_t max = 0, *mode = NULL;
-
-    HMI1.d.sein.left = !HMI1.d.sein.left;
-    HMI1.d.sein.right = !HMI1.d.sein.right;
-
-    switch (HMI1.hbar.m) {
-      case HBAR_M_TRIP :
-        mode = &HMI1.hbar.d.mode[HBAR_M_TRIP];
-        max = HBAR_M_TRIP_MAX - 1;
-        break;
-      case HBAR_M_DRIVE:
-        mode = &HMI1.hbar.d.mode[HBAR_M_DRIVE];
-        max = HBAR_M_DRIVE_MAX - 1;
-        break;
-      case HBAR_M_REPORT:
-        mode = &HMI1.hbar.d.mode[HBAR_M_REPORT];
-        max = HBAR_M_REPORT_MAX - 1;
-        break;
-      default:
-        break;
-    }
-
-    if (*mode >= max)
-      *mode = 0;
-    else
-      (*mode)++;
-  }
-
-  if (ticker % (60*2) == 0) {
-    if (indicator >= INDICATOR_MAX)
-      indicator = 0;
-    else
-      indicator++;
-  }
-
-  if (ticker % (60*3) == 0) {
-    if (HMI1.hbar.m >= HBAR_M_MAX)
-      HMI1.hbar.m = 0;
-    else
-      HMI1.hbar.m++;
-  }
-
-  if (ticker % (60 * 60) == 0)
-    generateRandomIndicators();
-
-  switch (HMI1.hbar.m) {
-    case HBAR_M_TRIP :
-      modelListener->setTripMode(HMI1.hbar.d.mode[HBAR_M_TRIP]);
-      break;
-    case HBAR_M_DRIVE:
-      modelListener->setDriveMode(HMI1.hbar.d.mode[HBAR_M_DRIVE]);
-      break;
-    case HBAR_M_REPORT:
-      modelListener->setReportMode(HMI1.hbar.d.mode[HBAR_M_REPORT]);
-      break;
-    default:
-      break;
-  }
+  generateRandomData();
 #endif
 
   // write to LCD
@@ -142,14 +40,14 @@ void Model::tick()
 	  modelListener->setDriveMode(HMI1.hbar.d.mode[HBAR_M_DRIVE]);
 	  modelListener->setReportMode(HMI1.hbar.d.mode[HBAR_M_REPORT]);
 
-	  modelListener->setSpeed(VCU.d.speed);
-	  modelListener->setEngineRotation(MCU.d.rpm);
+	  modelListener->setSpeed(VCU.d.mcu.speed);
+	  modelListener->setEngineRotation(VCU.d.mcu.rpm);
 
 	  modelListener->setTripValue(HMI1.hbar.d.trip);
 	  modelListener->setReportValue(HMI1.hbar.d.report);
 
 	  modelListener->setSignal(VCU.d.signal);
-	  modelListener->setBattery(BMS.d.soc);
+	  modelListener->setBattery(VCU.d.bms.soc);
 
 	  modelListener->setSeinLeft(HMI1.d.sein.left);
 	  modelListener->setSeinRight(HMI1.d.sein.right);
@@ -176,21 +74,6 @@ uint8_t Model::readIndicatorState(uint8_t index)
   return indicators[index];
 }
 
-#ifdef SIMULATOR
-void Model::generateRandomIndicators()
-{
-  HMI1.d.state.abs = rand() & 1;
-  HMI1.d.state.mirroring = rand() & 1;
-  HMI1.d.state.lamp = rand() & 1;
-  HMI1.d.state.warning = rand() & 1;
-  HMI1.d.state.overheat = rand() & 1;
-  HMI1.d.state.unfinger = rand() & 1;
-  HMI1.d.state.unremote = rand() & 1;
-  HMI1.d.state.daylight = rand() & 1;
-  HMI1.hbar.reverse = rand() & 1;
-}
-#endif
-
 void Model::reloadIndicators()
 {
   uint8_t errors = 0;
@@ -202,7 +85,7 @@ void Model::reloadIndicators()
   indicators[INDICATOR_OVERHEAT] = HMI1.d.state.overheat;
   indicators[INDICATOR_FINGER] = HMI1.d.state.unfinger;
   indicators[INDICATOR_UNREMOTE] = HMI1.d.state.unremote;
-  indicators[INDICATOR_LOWBAT] = BMS.d.soc < 20;
+  indicators[INDICATOR_LOWBAT] = VCU.d.bms.soc < BMS_LOWBAT;
 
   for (uint8_t i = INDICATOR_GO; i < INDICATOR_MAX; ++i) {
     if (indicators[i]) {
@@ -219,7 +102,6 @@ void Model::swipeIndicator()
 {
   uint8_t i, found = 0;
 
-  // reload data
   reloadIndicators();
 
   // current -> up
@@ -244,4 +126,114 @@ void Model::swipeIndicator()
   if (!found)
     indicator = INDICATOR_GO;
 }
+
+#ifdef SIMULATOR
+void Model::setDefaultData()
+{
+  HMI1.hbar.hide = 0;
+  HMI1.hbar.m = HBAR_M_DRIVE;
+  HMI1.hbar.d.mode[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
+  HMI1.hbar.d.mode[HBAR_M_DRIVE] = HBAR_M_DRIVE_STANDARD;
+  HMI1.hbar.d.mode[HBAR_M_REPORT] = HBAR_M_REPORT_RANGE;
+}
+
+void Model::generateRandomIndicators()
+{
+  HMI1.d.state.abs = rand() & 1;
+  HMI1.d.state.mirroring = rand() & 1;
+  HMI1.d.state.lamp = rand() & 1;
+  HMI1.d.state.warning = rand() & 1;
+  HMI1.d.state.overheat = rand() & 1;
+  HMI1.d.state.unfinger = rand() & 1;
+  HMI1.d.state.unremote = rand() & 1;
+  HMI1.d.state.daylight = rand() & 1;
+  HMI1.hbar.reverse = rand() & 1;
+}
+
+void Model::generateRandomData()
+{
+
+  if (ticker % 1 == 0) {
+    if (VCU.d.mcu.speed >= MCU_SPEED_MAX) VCU.d.mcu.speed = 0;
+    else VCU.d.mcu.speed += 5;
+
+    VCU.d.mcu.rpm = VCU.d.mcu.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
+  }
+
+  if (ticker % 10 == 0)
+      HMI1.hbar.d.trip++;
+
+  if (ticker % 15 == 0)
+    HMI1.hbar.hide = !HMI1.hbar.hide;
+
+  if (ticker % 20 == 0) {
+    if (HMI1.hbar.d.report >= 255) HMI1.hbar.d.report = 0;
+    else HMI1.hbar.d.report++;
+  }
+
+  if(ticker % 30 == 0) {
+    if (VCU.d.signal >= 100) VCU.d.signal = 0;
+    else VCU.d.signal++;
+  }
+
+  if (ticker % 50 == 0) {
+    if (VCU.d.bms.soc >= 100) VCU.d.bms.soc = 0;
+    else VCU.d.bms.soc++;
+  }
+
+  if (ticker % 60 == 0) {
+    uint8_t max = 0, *mode = NULL;
+
+    HMI1.d.sein.left = !HMI1.d.sein.left;
+    HMI1.d.sein.right = !HMI1.d.sein.right;
+
+    switch (HMI1.hbar.m) {
+      case HBAR_M_TRIP :
+        mode = &HMI1.hbar.d.mode[HBAR_M_TRIP];
+        max = HBAR_M_TRIP_MAX - 1;
+        break;
+      case HBAR_M_DRIVE:
+        mode = &HMI1.hbar.d.mode[HBAR_M_DRIVE];
+        max = HBAR_M_DRIVE_MAX - 1;
+        break;
+      case HBAR_M_REPORT:
+        mode = &HMI1.hbar.d.mode[HBAR_M_REPORT];
+        max = HBAR_M_REPORT_MAX - 1;
+        break;
+      default:
+        break;
+    }
+
+    if (*mode >= max) *mode = 0;
+    else (*mode)++;
+  }
+
+  if (ticker % (60*2) == 0) {
+    if (indicator >= INDICATOR_MAX) indicator = 0;
+    else indicator++;
+  }
+
+  if (ticker % (60*3) == 0) {
+    if (HMI1.hbar.m >= HBAR_M_MAX) HMI1.hbar.m = 0;
+    else HMI1.hbar.m++;
+  }
+
+  if (ticker % (60 * 60) == 0)
+    generateRandomIndicators();
+
+  switch (HMI1.hbar.m) {
+    case HBAR_M_TRIP :
+      modelListener->setTripMode(HMI1.hbar.d.mode[HBAR_M_TRIP]);
+      break;
+    case HBAR_M_DRIVE:
+      modelListener->setDriveMode(HMI1.hbar.d.mode[HBAR_M_DRIVE]);
+      break;
+    case HBAR_M_REPORT:
+      modelListener->setReportMode(HMI1.hbar.d.mode[HBAR_M_REPORT]);
+      break;
+    default:
+      break;
+  }
+}
+#endif
 

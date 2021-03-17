@@ -39,11 +39,6 @@ void _Error(char msg[50]);
 void _LcdBacklight(uint8_t state);
 void _LcdPower(uint8_t state);
 void _RightPad(char *dest, const char *src, const char pad, uint8_t sz);
-
-#if (!BOOTLOADER)
-void _FlushData(void);
 float _D2R(uint16_t deg);
-#else
 uint32_t _ByteSwap32(uint32_t x);
-#endif
 #endif /* CONFIG_H_ */

@@ -30,7 +30,6 @@
 #include "Libs/_firmware.h"
 #include "Nodes/HMI1.h"
 #include "Nodes/VCU.h"
-#include "Nodes/MCU.h"
 
 /* USER CODE END Includes */
 
@@ -707,9 +706,8 @@ void StartManagerTask(void *argument)
   /* USER CODE BEGIN 5 */
 	TickType_t lastWake;
 
-	// Reset database
 	_LcdPower(0);
-	_FlushData();
+	HMI1.Flush();
 
 	// suspend other threads
 	//      osThreadSuspend(DisplayTaskHandle);
@@ -723,13 +721,11 @@ void StartManagerTask(void *argument)
 	for (;;) {
 		lastWake = osKernelGetTickCount();
 
-		// Feed the dog
+		_LcdBacklight(HMI1.d.state.daylight);
+		if (_GetTickMS() - VCU.d.tick > VCU_TIMEOUT)
+			HMI1.Flush();
+
 		HAL_IWDG_Refresh(&hiwdg);
-
-		// reset display
-		if (_GetTickMS() - VCU.d.tick.canRx > 5000)
-			_FlushData();
-
 		osDelayUntil(lastWake + 1000);
 	}
   /* USER CODE END 5 */
@@ -745,7 +741,6 @@ void StartManagerTask(void *argument)
 void StartDisplayTask(void *argument)
 {
   /* USER CODE BEGIN StartDisplayTask */
-	// wait until ManagerTask done
 	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
 	// Hand-over this thread to TouchGFX
@@ -770,7 +765,6 @@ void StartCanTxTask(void *argument)
   /* USER CODE BEGIN StartCanTxTask */
 	TickType_t lastWake;
 
-	// wait until ManagerTask done
 	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
 	CANBUS_Init();
@@ -798,32 +792,29 @@ void StartCanRxTask(void *argument)
   /* USER CODE BEGIN StartCanRxTask */
 	can_rx_t Rx;
 
-	// wait until ManagerTask done
 	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
 
 	/* Infinite loop */
 	for (;;) {
 		if (osMessageQueueGet(CanRxQueueHandle, &Rx, NULL, 1000) == osOK) {
-			VCU.d.tick.canRx = _GetTickMS();
-
-			// handle message
-			switch (CANBUS_ReadID(&(Rx.header))) {
-			case CAND_VCU_SWITCH :
-				VCU.can.r.SwitchModeControl(&Rx);
-				_LcdBacklight(HMI1.d.state.daylight);
-				break;
-			case CAND_VCU_SELECT_SET :
-				VCU.can.r.MixedData(&Rx);
-				break;
-			case CAND_VCU_TRIP_MODE :
-				VCU.can.r.TripData(&Rx);
-				break;
-			case CAND_FOCAN_PROGRESS :
-			case CAND_FOCAN_CRC :
-				FW_EnterModeIAP();
-				break;
-			default:
-				break;
+			if (Rx.header.IDE == CAN_ID_STD) {
+				switch (Rx.header.StdId) {
+					case CAND_VCU_SWITCH :
+						VCU.can.r.SwitchModeControl(&Rx);
+						break;
+					case CAND_VCU_SELECT_SET :
+						VCU.can.r.MixedData(&Rx);
+						break;
+					case CAND_VCU_TRIP_MODE :
+						VCU.can.r.TripData(&Rx);
+						break;
+					case CAND_FOCAN_PROGRESS :
+					case CAND_FOCAN_CRC :
+						FW_EnterModeIAP();
+						break;
+					default:
+						break;
+				}
 			}
 		}
 	}

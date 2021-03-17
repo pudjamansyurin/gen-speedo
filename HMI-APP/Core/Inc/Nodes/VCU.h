@@ -12,13 +12,27 @@
 #include "Libs/_utils.h"
 #include "Drivers/_canbus.h"
 
+/* Exported constants --------------------------------------------------------*/
+#define VCU_TIMEOUT    					 (uint32_t) 5000					// ms
+#define MCU_SPEED_MAX 			      (uint8_t) 150
+#define MCU_RPM_MAX 			       (uint32_t) 99999
+
 /* Exported struct -----------------------------------------------------------*/
 typedef struct {
-  uint8_t signal;
+	uint8_t soc;
+} bms_data_t;
+
+typedef struct {
+	uint32_t rpm;
   uint8_t speed;
-  struct {
-    uint32_t canRx;
-  } tick;
+	uint32_t temperature;
+} mcu_data_t;
+
+typedef struct {
+  uint8_t signal;
+  uint32_t tick;
+	bms_data_t bms;
+	mcu_data_t mcu;
 } vcu_data_t;
 
 typedef struct {

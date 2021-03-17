@@ -53,6 +53,7 @@ typedef struct {
 	hmi1_data_t d;
 	hmi1_can_t can;
 	void (*Init)(void);
+	void (*Flush)(void);
 } hmi1_t;
 
 /* Exported variables ---------------------------------------------------------*/
@@ -60,6 +61,7 @@ extern hmi1_t HMI1;
 
 /* Public functions implementation --------------------------------------------*/
 void HMI1_Init(void);
+void HMI1_Flush(void);
 uint8_t HMI1_CAN_TX_Heartbeat(void);
 
 #endif /* INC_NODES_HMI1_H_ */

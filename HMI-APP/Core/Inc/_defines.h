@@ -17,14 +17,14 @@
 /* Exported constants --------------------------------------------------------*/
 #define HMI_VERSION              (uint16_t) 341
 
-// Some constants
-#define MCU_SPEED_MAX 			      (uint8_t) 150
+#define MCU_SPEED_MAX 			      (uint8_t) 150							// in kph
 #define MCU_RPM_MAX 			       (uint32_t) 99999
-#define VCU_ODOMETER_MAX		     (uint32_t) 99999
+#define ODOMETER_MAX		         (uint32_t) 99999						// in km
+#define BMS_LOWBAT							  (uint8_t) 20							// in %
 
-#define GUI_MAIN_COLOR			     (uint32_t) 0xFFC0C0C0
-#define LCD_SIZE_X               (uint16_t) (320-1)
-#define LCD_SIZE_Y               (uint16_t) (240-1)
+//#define GUI_MAIN_COLOR			     (uint32_t) 0xFFC0C0C0
+//#define LCD_SIZE_X               (uint16_t) (320-1)
+//#define LCD_SIZE_Y               (uint16_t) (240-1)
 
 // Events (for Individual Thread)
 #define EVT_MASK				         (uint32_t) 0x7FFFFFFF

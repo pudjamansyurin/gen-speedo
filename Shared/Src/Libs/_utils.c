@@ -10,8 +10,6 @@
 #if (!BOOTLOADER)
 #include "Nodes/VCU.h"
 #include "Nodes/HMI1.h"
-#include "Nodes/MCU.h"
-#include "Nodes/BMS.h"
 #endif
 
 /* Public functions implementations ------------------------------------------*/
@@ -79,21 +77,10 @@ void _RightPad(char *dest, const char *src, const char pad, uint8_t sz) {
   dest[sz - 1] = 0x00;
 }
 
-#if (!BOOTLOADER)
-void _FlushData(void) {
-  VCU.Init();
-  HMI1.Init();
-  MCU.Init();
-  BMS.Init();
-  _LcdBacklight(1);
-  printf("Data is flushed.\n");
-}
-
 float _D2R(uint16_t deg) {
   return deg * M_PI / 180.0;
 }
 
-#else
 uint32_t _ByteSwap32(uint32_t x) {
   uint32_t y = (x >> 24) & 0xff;
   y |= ((x >> 16) & 0xff) << 8;
@@ -102,5 +89,4 @@ uint32_t _ByteSwap32(uint32_t x) {
 
   return y;
 }
-#endif
 

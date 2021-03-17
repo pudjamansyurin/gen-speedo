@@ -8,13 +8,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "Nodes/VCU.h"
 #include "Nodes/HMI1.h"
-#include "Nodes/BMS.h"
-#include "Nodes/MCU.h"
 
 /* External variables ---------------------------------------------------------*/
 extern hmi1_t HMI1;
-extern bms_t BMS;
-extern mcu_t MCU;
 
 /* Public variables -----------------------------------------------------------*/
 vcu_t VCU = {
@@ -32,7 +28,10 @@ vcu_t VCU = {
 /* Public functions implementation --------------------------------------------*/
 void VCU_Init(void) {
   VCU.d.signal = 0;
-  VCU.d.speed = 0;
+  VCU.d.bms.soc = 0;
+  VCU.d.mcu.rpm = 0;
+  VCU.d.mcu.speed = 0;
+  VCU.d.mcu.temperature = 0;
 }
 
 /* ====================================== CAN RX =================================== */
@@ -60,17 +59,19 @@ void VCU_CAN_RX_SwitchModeControl(can_rx_t *Rx) {
   HMI1.hbar.hide = (Rx->data.u8[2] >> 7) & 0x01;
 
   // others
-  VCU.d.speed = Rx->data.u8[3];
+  VCU.d.mcu.speed = Rx->data.u8[3];
 
   // convert Speed to RPM
-  MCU.d.rpm = VCU.d.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
-  //  MCU.d.temperature = ?
+  VCU.d.mcu.rpm = VCU.d.mcu.speed * MCU_RPM_MAX / MCU_SPEED_MAX;
+  VCU.d.mcu.temperature = 0;
+
+	VCU.d.tick = _GetTickMS();
 }
 
 void VCU_CAN_RX_MixedData(can_rx_t *Rx) {
   // read message
   VCU.d.signal = Rx->data.u8[0];
-  BMS.d.soc = Rx->data.u8[1];
+  VCU.d.bms.soc = Rx->data.u8[1];
 
   // decide report value according to mode
   if (HMI1.hbar.d.mode[HBAR_M_REPORT] == HBAR_M_REPORT_RANGE)
@@ -78,14 +79,16 @@ void VCU_CAN_RX_MixedData(can_rx_t *Rx) {
   else
     HMI1.hbar.d.report = Rx->data.u8[3];
 
+	VCU.d.tick = _GetTickMS();
 }
 
 void VCU_CAN_RX_TripData(can_rx_t *Rx) {
-  // sub trip
   if (HMI1.hbar.d.mode[HBAR_M_TRIP] == HBAR_M_TRIP_A)
     HMI1.hbar.d.trip = Rx->data.u16[0];
   else if (HMI1.hbar.d.mode[HBAR_M_TRIP] == HBAR_M_TRIP_B)
     HMI1.hbar.d.trip = Rx->data.u16[1];
   else if (HMI1.hbar.d.mode[HBAR_M_TRIP] == HBAR_M_TRIP_ODO)
     HMI1.hbar.d.trip = Rx->data.u32[1];
+
+	VCU.d.tick = _GetTickMS();
 }
