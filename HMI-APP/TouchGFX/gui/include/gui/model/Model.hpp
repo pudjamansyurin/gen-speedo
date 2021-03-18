@@ -26,7 +26,7 @@ typedef enum {
 #if defined(SIMULATOR)
 /* Macro prototypes ------------------------------------------------------- */
 #define MCU_SPEED_MAX 			      (uint8_t) 150							// in kph
-#define MCU_RPM_MAX 			       (uint32_t) 99999
+#define MCU_CURRENT_MAX     	     (uint8_t) 220
 #define ODOMETER_MAX		         (uint32_t) 99999						// in km
 #define BMS_LOWBAT							  (uint8_t) 20							// in %
 
@@ -65,19 +65,19 @@ typedef struct {
 } bms_data_t;
 
 typedef struct {
-	uint32_t rpm;
-  uint8_t speed;
+	float current;
+	uint8_t speed;
 } mcu_data_t;
 
 typedef struct {
-  uint8_t signal;
-  uint32_t tick;
+	uint8_t signal;
+	uint32_t tick;
 	bms_data_t bms;
 	mcu_data_t mcu;
 } vcu_data_t;
 
 typedef struct {
-  vcu_data_t d;
+	vcu_data_t d;
 } vcu_t;
 
 typedef struct {

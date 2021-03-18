@@ -27,6 +27,7 @@ typedef enum {
 	CAND_VCU_SELECT_SET 		= 0x02C,
 	CAND_VCU_TRIP_MODE 			= 0x02D,
 
+	CAND_VCU 							= 0x7B0,
 	CAND_HMI1 							= 0x7C0,
 	CAND_HMI2 							= 0x7D0,
 

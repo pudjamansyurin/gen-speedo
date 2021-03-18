@@ -124,7 +124,7 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     seinRightContainer.setPosition(567, 67, 80, 355);
 
     seinRight.setXY(0, 0);
-    seinRight.setBitmap(touchgfx::Bitmap(BITMAP_SEINRIGHTFLIPPED_ID));
+    seinRight.setBitmap(touchgfx::Bitmap(BITMAP_SEINRIGHT_ID));
     seinRightContainer.add(seinRight);
 
     reportModeContainer.setPosition(285, 406, 227, 18);
@@ -243,7 +243,7 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     engineProgress.setProgressIndicatorPosition(0, 0, 137, 366);
     engineProgress.setRange(0, 100);
     engineProgress.setDirection(touchgfx::AbstractDirectionProgress::UP);
-    engineProgress.setBitmap(BITMAP_ENGINEROTATIONFLIPPED_ID);
+    engineProgress.setBitmap(BITMAP_ENGINEROTATION_ID);
     engineProgress.setValue(100);
     engineProgress.setAnchorAtZero(true);
 
