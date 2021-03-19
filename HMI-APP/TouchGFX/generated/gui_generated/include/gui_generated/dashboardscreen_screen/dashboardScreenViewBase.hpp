@@ -82,7 +82,7 @@ protected:
     touchgfx::TextAreaWithOneWildcard signalValue;
     touchgfx::TextAreaWithOneWildcard batteryValue;
     touchgfx::TextAreaWithOneWildcard fpsValue;
-    touchgfx::ImageProgress engineProgress;
+    touchgfx::ImageProgress dischargeProgress;
     touchgfx::ImageProgress speedProgress;
 
     /*

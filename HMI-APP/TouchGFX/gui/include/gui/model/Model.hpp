@@ -18,7 +18,7 @@ typedef enum {
 	INDICATOR_WARNING,
 	INDICATOR_OVERHEAT,
 	INDICATOR_FINGER,
-	INDICATOR_UNREMOTE,
+	INDICATOR_UNREMOTE, 
 	INDICATOR_LOWBAT,
 	INDICATOR_MAX = 9
 } INDICATOR;
@@ -26,7 +26,7 @@ typedef enum {
 #if defined(SIMULATOR)
 /* Macro prototypes ------------------------------------------------------- */
 #define MCU_SPEED_MAX 			      (uint8_t) 150							// in kph
-#define MCU_CURRENT_MAX     	     (uint8_t) 220
+#define MCU_DISCHARGE_MAX     	     (uint8_t) 220
 #define ODOMETER_MAX		         (uint32_t) 99999						// in km
 #define BMS_LOWBAT							  (uint8_t) 20							// in %
 
@@ -64,7 +64,7 @@ typedef struct {
 } bms_data_t;
 
 typedef struct {
-	float current;
+	float discharge;
 	uint8_t speed;
 } mcu_data_t;
 

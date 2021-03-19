@@ -151,10 +151,10 @@ void dashboardScreenView::writeSpeed(uint8_t percent)
 	speedProgress.invalidate();
 }
 
-void dashboardScreenView::writeEngineRotation(uint8_t percent)
+void dashboardScreenView::writeDischarge(uint8_t percent)
 {
-	engineProgress.setValue(percent);
-	engineProgress.invalidate();
+	dischargeProgress.setValue(percent);
+	dischargeProgress.invalidate();
 }
 
 void dashboardScreenView::writeFps(uint8_t value)

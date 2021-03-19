@@ -239,19 +239,19 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     fpsValue.setWildcard(fpsValueBuffer);
     fpsValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID47));
 
-    engineProgress.setXY(558, 57);
-    engineProgress.setProgressIndicatorPosition(0, 0, 137, 366);
-    engineProgress.setRange(0, 100);
-    engineProgress.setDirection(touchgfx::AbstractDirectionProgress::UP);
-    engineProgress.setBitmap(BITMAP_ENGINEROTATION_ID);
-    engineProgress.setValue(100);
-    engineProgress.setAnchorAtZero(true);
+    dischargeProgress.setXY(558, 57);
+    dischargeProgress.setProgressIndicatorPosition(0, 0, 137, 366);
+    dischargeProgress.setRange(0, 100);
+    dischargeProgress.setDirection(touchgfx::AbstractDirectionProgress::UP);
+    dischargeProgress.setBitmap(BITMAP_PROGRESSRIGHT_ID);
+    dischargeProgress.setValue(100);
+    dischargeProgress.setAnchorAtZero(true);
 
     speedProgress.setXY(105, 57);
     speedProgress.setProgressIndicatorPosition(0, 0, 137, 366);
     speedProgress.setRange(0, 100);
     speedProgress.setDirection(touchgfx::AbstractDirectionProgress::UP);
-    speedProgress.setBitmap(BITMAP_SPEEDLEVEL_ID);
+    speedProgress.setBitmap(BITMAP_PROGRESSLEFT_ID);
     speedProgress.setValue(100);
     speedProgress.setAnchorAtZero(true);
 
@@ -278,7 +278,7 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     add(signalValue);
     add(batteryValue);
     add(fpsValue);
-    add(engineProgress);
+    add(dischargeProgress);
     add(speedProgress);
 }
 

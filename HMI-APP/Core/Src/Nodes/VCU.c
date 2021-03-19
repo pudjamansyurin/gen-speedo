@@ -30,7 +30,7 @@ void VCU_Init(void) {
   VCU.d.signal = 0;
   VCU.d.bms.soc = 0;
   VCU.d.mcu.speed = 0;
-  VCU.d.mcu.current = 0;
+  VCU.d.mcu.discharge = 0;
 }
 
 /* ====================================== CAN RX =================================== */
@@ -59,7 +59,7 @@ void VCU_CAN_RX_SwitchModeControl(can_rx_t *Rx) {
 
   // others
   VCU.d.mcu.speed = Rx->data.u8[3];
-  VCU.d.mcu.current = Rx->data.u8[4];
+  VCU.d.mcu.discharge = Rx->data.u8[4];
 
 	VCU.d.tick = _GetTickMS();
 }

@@ -614,7 +614,7 @@
             "ProgressRangeSteps": 0,
             "ProgressRangeStepsMin": 0,
             "ProgressInitialValue": 100,
-            "Name": "engineProgress",
+            "Name": "dischargeProgress",
             "X": 558,
             "Y": 57,
             "Width": 137,

@@ -4,7 +4,7 @@
 #include <touchgfx/hal/Config.hpp>
 
 LOCATION_PRAGMA("IntFlashSection")
-KEEP extern const unsigned char image_speedlevel[] LOCATION_ATTRIBUTE("IntFlashSection") = // 137x366 L8_ARGB8888 pixels.
+KEEP extern const unsigned char image_progressleft[] LOCATION_ATTRIBUTE("IntFlashSection") = // 137x366 L8_ARGB8888 pixels.
 {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -4188,7 +4188,7 @@ KEEP extern const unsigned char image_speedlevel[] LOCATION_ATTRIBUTE("IntFlashS
 };
 
 LOCATION_PRAGMA("IntFlashSection")
-KEEP extern const unsigned char image_speedlevel_extra_data[] LOCATION_ATTRIBUTE("IntFlashSection") = // 244 ARGB8888 CLUT entries.
+KEEP extern const unsigned char image_progressleft_extra_data[] LOCATION_ATTRIBUTE("IntFlashSection") = // 244 ARGB8888 CLUT entries.
 {
     0x00, 0x00, 0xf4, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0xab, 0x80, 0x06, 0x00, 0xc0, 0x8d, 0x14,

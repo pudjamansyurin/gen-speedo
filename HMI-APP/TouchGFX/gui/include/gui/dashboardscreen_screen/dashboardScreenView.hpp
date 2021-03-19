@@ -50,7 +50,7 @@ public:
 
   virtual void writeSein(uint8_t leftSide, uint8_t state);
   virtual void writeSpeed(uint8_t percent);
-  virtual void writeEngineRotation(uint8_t percent);
+  virtual void writeDischarge(uint8_t percent);
   virtual void writeFps(uint8_t value);
   virtual void writeBattery(uint8_t percent);
   virtual void writeSignal(uint8_t percent);

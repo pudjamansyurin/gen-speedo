@@ -14,8 +14,6 @@
 
 /* Exported constants --------------------------------------------------------*/
 #define VCU_TIMEOUT    					 (uint32_t) 5000					// ms
-#define MCU_SPEED_MAX 			       (uint8_t) 150
-#define MCU_CURRENT_MAX     	     (uint8_t) 220
 
 /* Exported struct -----------------------------------------------------------*/
 typedef struct {
@@ -23,7 +21,7 @@ typedef struct {
 } bms_data_t;
 
 typedef struct {
-	uint8_t current;
+	uint8_t discharge;
 	uint8_t speed;
 } mcu_data_t;
 
