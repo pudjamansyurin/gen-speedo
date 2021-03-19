@@ -59,7 +59,7 @@ void VCU_CAN_RX_SwitchModeControl(can_rx_t *Rx) {
 
   // others
   VCU.d.mcu.speed = Rx->data.u8[3];
-  VCU.d.mcu.current = Rx->data.u16[2] * 0.1;
+  VCU.d.mcu.current = Rx->data.u8[4];
 
 	VCU.d.tick = _GetTickMS();
 }
