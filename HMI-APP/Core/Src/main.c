@@ -773,7 +773,7 @@ void StartCanTxTask(void *argument)
 	for (;;) {
 		lastWake = osKernelGetTickCount();
 
-		HMI1.can.t.Heartbeat();
+		HMI1.t.Heartbeat();
 
 		osDelayUntil(lastWake + 500);
 	}
@@ -800,13 +800,13 @@ void StartCanRxTask(void *argument)
 			if (Rx.header.IDE == CAN_ID_STD) {
 				switch (Rx.header.StdId) {
 					case CAND_VCU_SWITCH :
-						VCU.can.r.SwitchModeControl(&Rx);
+						VCU.r.SwitchModeControl(&Rx);
 						break;
 					case CAND_VCU_SELECT_SET :
-						VCU.can.r.MixedData(&Rx);
+						VCU.r.MixedData(&Rx);
 						break;
 					case CAND_VCU_TRIP_MODE :
-						VCU.can.r.TripData(&Rx);
+						VCU.r.TripData(&Rx);
 						break;
 					case CAND_FOCAN_PROGRESS :
 					case CAND_FOCAN_CRC :
