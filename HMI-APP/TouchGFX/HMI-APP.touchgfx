@@ -553,13 +553,13 @@
             "Components": [
               {
                 "Type": "Image",
-                "RelativeFilename": "SeinRightFlipped.png",
+                "RelativeFilename": "SeinRight.png",
                 "Alpha": 255,
                 "Name": "seinRight",
                 "X": 0,
                 "Y": 0,
-                "Width": 80,
-                "Height": 355,
+                "Width": 79,
+                "Height": 354,
                 "Visible": true,
                 "LockPosition": false,
                 "Draggable": false,
@@ -1055,7 +1055,7 @@
           },
           {
             "Type": "ImageProgress",
-            "FileNameProgress": "EngineRotationFlipped.png",
+            "FileNameProgress": "EngineRotation.png",
             "AnchorAtZero": true,
             "Direction": "Up",
             "Alpha": 255,
