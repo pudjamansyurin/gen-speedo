@@ -51,11 +51,10 @@ dashboardScreenView::dashboardScreenView() :
 	M_DRIVE.color[HBAR_M_DRIVE_ECONOMY] = Color::getColorFrom24BitRGB(255, 255, 0);
 	M_DRIVE.color[HBAR_M_DRIVE_STANDARD] = Color::getColorFrom24BitRGB(0, 255, 0);
 	M_DRIVE.color[HBAR_M_DRIVE_SPORT] = Color::getColorFrom24BitRGB(255, 0, 0);
-	M_DRIVE.color[HBAR_M_DRIVE_PERFORMANCE] = Color::getColorFrom24BitRGB(0, 255, 255);
+
 	touchgfx::Unicode::strncpy(M_DRIVE.mode[HBAR_M_DRIVE_ECONOMY], "ECONOMIC", NEXTDRIVEMODETEXT_SIZE);
 	touchgfx::Unicode::strncpy(M_DRIVE.mode[HBAR_M_DRIVE_STANDARD], "STANDARD", NEXTDRIVEMODETEXT_SIZE);
 	touchgfx::Unicode::strncpy(M_DRIVE.mode[HBAR_M_DRIVE_SPORT], "SPORT", NEXTDRIVEMODETEXT_SIZE);
-	touchgfx::Unicode::strncpy(M_DRIVE.mode[HBAR_M_DRIVE_PERFORMANCE], "PERFORMANCE", NEXTDRIVEMODETEXT_SIZE);
 
 	touchgfx::Unicode::strncpy(M_TRIP.mode[HBAR_M_TRIP_A], "TRIP A", NEXTTRIPMODETEXT_SIZE);
 	touchgfx::Unicode::strncpy(M_TRIP.mode[HBAR_M_TRIP_B], "TRIP B", NEXTTRIPMODETEXT_SIZE);
