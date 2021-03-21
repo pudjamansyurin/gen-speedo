@@ -30,7 +30,7 @@ public:
   virtual void setSeinLeft(uint8_t state);
   virtual void setSeinRight(uint8_t state);
   virtual void setSpeed(uint8_t value);
-  virtual void setDischarge(uint8_t value);
+  virtual void setDiscur(uint8_t value);
   virtual void setFps(uint8_t value);
   virtual void setBattery(uint8_t percent);
   virtual void setSignal(uint8_t percent);

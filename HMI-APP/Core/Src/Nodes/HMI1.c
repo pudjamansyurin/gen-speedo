@@ -58,7 +58,7 @@ void HMI1_Flush(void) {
 
 /* ====================================== CAN TX =================================== */
 uint8_t HMI1_TX_Heartbeat(void) {
-	can_tx_t Tx;
+	can_tx_t Tx = {0};
 
 	Tx.data.u16[0] = HMI_VERSION;
 

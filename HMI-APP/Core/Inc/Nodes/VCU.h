@@ -21,7 +21,7 @@ typedef struct {
 } bms_data_t;
 
 typedef struct {
-	uint8_t discharge;
+	uint8_t discur;
 	uint8_t speed;
 } mcu_data_t;
 

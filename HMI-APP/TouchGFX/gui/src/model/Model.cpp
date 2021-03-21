@@ -41,7 +41,7 @@ void Model::tick()
 	  modelListener->setReportMode(HMI1.hbar.d.mode[HBAR_M_REPORT]);
 
 	  modelListener->setSpeed(VCU.d.mcu.speed);
-	  modelListener->setDischarge(VCU.d.mcu.discharge);
+	  modelListener->setDiscur(VCU.d.mcu.discur);
 
 	  modelListener->setTripValue(HMI1.hbar.d.trip);
 	  modelListener->setReportValue(HMI1.hbar.d.report);
@@ -157,8 +157,8 @@ void Model::generateRandomData()
     if (VCU.d.mcu.speed >= MCU_SPEED_MAX) VCU.d.mcu.speed = 0;
     else VCU.d.mcu.speed += 5;
 
-    if (VCU.d.mcu.discharge >= MCU_DISCHARGE_MAX) VCU.d.mcu.discharge = 0;
-    else VCU.d.mcu.discharge += 1;
+    if (VCU.d.mcu.discur >= MCU_DISCUR_MAX) VCU.d.mcu.discur = 0;
+    else VCU.d.mcu.discur += 1;
   }
 
   if (ticker % 10 == 0)

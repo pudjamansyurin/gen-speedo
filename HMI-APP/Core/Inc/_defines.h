@@ -18,7 +18,7 @@
 #define HMI_VERSION              (uint16_t) 341
 
 #define MCU_SPEED_MAX 			      (uint8_t) 150							// in kph
-#define MCU_DISCHARGE_MAX 			       (uint8_t) 220
+#define MCU_DISCUR_MAX 			       (uint8_t) 220
 #define ODOMETER_MAX		         (uint32_t) 99999						// in km
 #define BMS_LOWBAT							  (uint8_t) 20							// in %
 

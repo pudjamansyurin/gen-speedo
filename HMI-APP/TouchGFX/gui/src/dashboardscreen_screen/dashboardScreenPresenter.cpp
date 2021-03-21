@@ -48,7 +48,7 @@ void dashboardScreenPresenter::setSpeed(uint8_t value)
     view.writeSpeed(value * 100 / MCU_SPEED_MAX);
   }
 }
-void dashboardScreenPresenter::setDischarge(uint8_t value)
+void dashboardScreenPresenter::setDiscur(uint8_t value)
 {
   static uint8_t init = 1;
   static uint32_t _value;
@@ -56,7 +56,7 @@ void dashboardScreenPresenter::setDischarge(uint8_t value)
   if (_value != value || init) {
     init = 0;
     _value = value;
-    view.writeDischarge(value * 100 / MCU_DISCHARGE_MAX);
+    view.writeDiscur(value * 100 / MCU_DISCUR_MAX);
   }
 }
 void dashboardScreenPresenter::setFps(uint8_t value)

@@ -151,10 +151,10 @@ void dashboardScreenView::writeSpeed(uint8_t percent)
 	speedProgress.invalidate();
 }
 
-void dashboardScreenView::writeDischarge(uint8_t percent)
+void dashboardScreenView::writeDiscur(uint8_t percent)
 {
-	dischargeProgress.setValue(percent);
-	dischargeProgress.invalidate();
+	discurProgress.setValue(percent);
+	discurProgress.invalidate();
 }
 
 void dashboardScreenView::writeFps(uint8_t value)

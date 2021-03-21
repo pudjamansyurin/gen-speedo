@@ -110,11 +110,10 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
 }
 
 uint8_t FOCAN_RequestFota(void) {
-	can_tx_t Tx;
+	can_tx_t Tx = {0};
 
-  // Set message
   Tx.data.u16[0] = 0xFFFF;
-  // send message
+  
   return CANBUS_Write(&Tx, CAND_HMI1, 2, 0);
 }
 
@@ -251,7 +250,7 @@ uint8_t FOCAN_xPascaDownload(can_rx_t *Rx, uint32_t *size) {
 
 /* Private functions implementation ------------------------------------------*/
 static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size) {
-	can_tx_t Tx;
+	can_tx_t Tx = {0};
   uint8_t retry = FOCAN_RETRY, p;
 
   do {
@@ -274,7 +273,7 @@ static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size) {
 }
 
 static uint8_t FOCAN_SendResponse(uint32_t address, FOCAN response) {
-	can_tx_t Tx;
+	can_tx_t Tx = {0};
   uint8_t retry = FOCAN_RETRY, p;
 
   do {
