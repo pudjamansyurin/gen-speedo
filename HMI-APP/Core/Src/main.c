@@ -741,7 +741,7 @@ void StartManagerTask(void *argument)
 void StartDisplayTask(void *argument)
 {
   /* USER CODE BEGIN StartDisplayTask */
-	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
+	_osEventManager();
 
 	// Hand-over this thread to TouchGFX
 	MX_TouchGFX_Process();
@@ -765,7 +765,7 @@ void StartCanTxTask(void *argument)
   /* USER CODE BEGIN StartCanTxTask */
 	TickType_t lastWake;
 
-	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
+	_osEventManager();
 
 	CANBUS_Init();
 
@@ -792,7 +792,7 @@ void StartCanRxTask(void *argument)
   /* USER CODE BEGIN StartCanRxTask */
 	can_rx_t Rx;
 
-	osEventFlagsWait(GlobalEventHandle, EVENT_READY, osFlagsNoClear, osWaitForever);
+	_osEventManager();
 
 	/* Infinite loop */
 	for (;;) {

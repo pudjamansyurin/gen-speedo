@@ -14,6 +14,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "_defines_shared.h"
 
+#define CAN_DEBUG		0
+
 /* Enum prototypes ------------------------------------------------------- */
 typedef enum {
     IAP_VCU = 0xA1B2C3D4,
