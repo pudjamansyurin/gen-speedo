@@ -15,12 +15,12 @@
 extern IWDG_HandleTypeDef hiwdg;
 
 /* Private functions prototypes -----------------------------------------------*/
-static uint8_t FOCAN_SendResponse(uint32_t address, FOCAN response);
-static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size);
+static uint8_t SendResponse(uint32_t address, uint8_t response);
+static uint8_t SendSqueeze(uint32_t address, void *data, uint8_t size);
 
 /* Public functions implementation --------------------------------------------*/
 uint8_t FOCAN_Upgrade(uint8_t factory) {
-	can_rx_t Rx;
+	can_rx_t Rx = {0};
 	uint8_t p = 1, success = 0;
 	uint32_t timeout = 30000;
 	uint32_t tick, iTick;
@@ -116,18 +116,16 @@ uint8_t FOCAN_RequestFota(void) {
 }
 
 uint8_t FOCAN_xGetCRC(void) {
-	uint32_t address = CAND_FOCAN_CRC;
 	uint32_t crc;
 
 	// Make message
 	FOTA_GetCRC(&crc);
 
 	// Send response
-	return FOCAN_SendSqueeze(address, &crc, 4);
+	return SendSqueeze(CAND_FOCAN_CRC, &crc, 4);
 }
 
 uint8_t FOCAN_xSetProgress(can_rx_t *Rx, IAP_TYPE *type) {
-	uint8_t p;
 	float percent;
 
 	// Get
@@ -139,14 +137,10 @@ uint8_t FOCAN_xSetProgress(can_rx_t *Rx, IAP_TYPE *type) {
 	FOTA_DisplayStatus(percent > 0.0f ? "Downloading..." : "Connecting...");
 	FOTA_DisplayPercent(percent);
 
-	// Send response
-	p = 1;
-
-	return p;
+	return 1;
 }
 
 uint8_t FOCAN_xPraDownload(can_rx_t *Rx, uint32_t *size) {
-	uint32_t address = CAND_FOCAN_PRA;
 	uint8_t p;
 
 	// Read
@@ -156,14 +150,14 @@ uint8_t FOCAN_xPraDownload(can_rx_t *Rx, uint32_t *size) {
 	p = FLASHER_BackupApp();
 
 	// Send response
-	FOCAN_SendResponse(address, p ? FOCAN_ACK : FOCAN_NACK);
+	SendResponse(CAND_FOCAN_PRA, p ? FOCAN_ACK : FOCAN_NACK);
 
 	return p;
 }
 
 uint8_t FOCAN_xDownloadFlash(can_rx_t *Rx, uint32_t *size, uint32_t timeout, uint32_t *tick) {
-	uint32_t offset, currentSize, address;
-	uint8_t p, percent, len = 0, ptr[BLK_SIZE ];
+	uint32_t offset, currentSize;
+	uint8_t p, percent, len, ptr[BLK_SIZE ];
 	uint16_t pos = 0;
 
 	// read
@@ -173,24 +167,24 @@ uint8_t FOCAN_xDownloadFlash(can_rx_t *Rx, uint32_t *size, uint32_t timeout, uin
 	// check the flash size
 	p = (offset + currentSize) <= APP_MAX_SIZE;
 	// Send response
-	FOCAN_SendResponse(CAND_FOCAN_INIT, p ? FOCAN_ACK : FOCAN_NACK);
+	SendResponse(CAND_FOCAN_INIT, p ? FOCAN_ACK : FOCAN_NACK);
 
 	// Wait data
+	len = sizeof(uint32_t);
 	if (p) {
 		*tick = _GetTickMS();
 		do {
 			// read
 			if (CANBUS_Read(Rx)) {
-				if ((CANBUS_ReadID(&(Rx->header)) >> 20) == CAND_FOCAN_RUNNING) {
-					pos = (CANBUS_ReadID(&(Rx->header)) & 0xFFFF);
+				if (CANBUS_ReadID(&(Rx->header)) == CAND_FOCAN_RUN) {
 
 					// read
-					len = Rx->header.DLC;
-					memcpy(&ptr[pos], &(Rx->data), len);
+					pos = Rx->data.u16[0];
+					memcpy(&ptr[pos], &(Rx->data.u32[1]), len);
 
 					// response ACK
-					address = (CAND_FOCAN_RUNNING << 20) | pos;
-					p = FOCAN_SendResponse(address, FOCAN_ACK);
+					p = SendResponse(CAND_FOCAN_RUN, pos);
+					pos += len;
 
 					// update tick
 					*tick = _GetTickMS();
@@ -201,12 +195,12 @@ uint8_t FOCAN_xDownloadFlash(can_rx_t *Rx, uint32_t *size, uint32_t timeout, uin
 			if ((_GetTickMS() - *tick > timeout))
 				p = 0;
 
-		} while (p && ((pos + len) < currentSize));
+		} while (p && (pos < currentSize));
 	}
 
 	// validate received size
 	if (p)
-		p = ((pos + len) == currentSize);
+		p = (pos == currentSize);
 
 	// flash to firmware
 	if (p)
@@ -219,13 +213,12 @@ uint8_t FOCAN_xDownloadFlash(can_rx_t *Rx, uint32_t *size, uint32_t timeout, uin
 	}
 
 	// send final response
-	FOCAN_SendResponse(CAND_FOCAN_INIT, p ? FOCAN_ACK : FOCAN_NACK);
+	SendResponse(CAND_FOCAN_INIT, p ? FOCAN_ACK : FOCAN_NACK);
 
 	return p;
 }
 
 uint8_t FOCAN_xPascaDownload(can_rx_t *Rx, uint32_t *size) {
-	uint32_t address = CAND_FOCAN_PASCA;
 	uint32_t crc;
 	uint8_t p;
 
@@ -241,44 +234,40 @@ uint8_t FOCAN_xPascaDownload(can_rx_t *Rx, uint32_t *size) {
 	}
 
 	// Send response
-	FOCAN_SendResponse(address, p ? FOCAN_ACK : FOCAN_NACK);
+	SendResponse(CAND_FOCAN_PASCA, p ? FOCAN_ACK : FOCAN_NACK);
 
 	return p;
 }
 
 /* Private functions implementation ------------------------------------------*/
-static uint8_t FOCAN_SendSqueeze(uint32_t address, void *data, uint8_t size) {
+static uint8_t SendSqueeze(uint32_t address, void *data, uint8_t size) {
+	uint8_t p, retry = FOCAN_RETRY;
 	can_tx_t Tx = {0};
-	uint8_t retry = FOCAN_RETRY, p;
 
 	do {
 		// ack
-		p = FOCAN_SendResponse(address, FOCAN_ACK);
+		p = SendResponse(address, FOCAN_ACK);
 		// version
 		if (p) {
-			// set message
 			memcpy(&(Tx.data), data, size);
-			// send message
-			p = CANBUS_Write(&Tx, address, size, address > 0x7FF);
+			p = CANBUS_Write(&Tx, address, size, 0);
 		}
 		// ack
 		if (p)
-			p = FOCAN_SendResponse(address, FOCAN_ACK);
+			p = SendResponse(address, FOCAN_ACK);
 
 	} while (!p && --retry);
 
 	return p;
 }
 
-static uint8_t FOCAN_SendResponse(uint32_t address, FOCAN response) {
+static uint8_t SendResponse(uint32_t address, uint8_t response) {
+	uint8_t p, retry = FOCAN_RETRY;
 	can_tx_t Tx = {0};
-	uint8_t retry = FOCAN_RETRY, p;
 
 	do {
-		// set message
 		Tx.data.u8[0] = response;
-		// send message
-		p = CANBUS_Write(&Tx, address, 1, address > 0x7FF);
+		p = CANBUS_Write(&Tx, address, 1, 0);
 	} while (!p && --retry);
 
 	return p;

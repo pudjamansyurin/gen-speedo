@@ -15,7 +15,7 @@
 #include "_defines_shared.h"
 
 /* Exported constants --------------------------------------------------------*/
-#define HMI_VERSION              (uint16_t) 344
+#define HMI_VERSION              (uint16_t) 345
 
 #define CAN_DEBUG		0
 
