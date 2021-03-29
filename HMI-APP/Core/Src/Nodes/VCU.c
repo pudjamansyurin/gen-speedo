@@ -16,7 +16,7 @@ extern hmi1_t HMI1;
 vcu_t VCU = {
 		.d = { 0 },
 		.r = {
-				VCU_RX_SwitchModeControl,
+				VCU_RX_SwitchControl,
 				VCU_RX_MixedData,
 				VCU_RX_TripData
 		},
@@ -32,7 +32,7 @@ void VCU_Init(void) {
 }
 
 /* ====================================== CAN RX =================================== */
-void VCU_RX_SwitchModeControl(can_rx_t *Rx) {
+void VCU_RX_SwitchControl(can_rx_t *Rx) {
 	// read message
 	HMI1.d.state.abs = (Rx->data.u8[0] >> 0) & 0x01;
 	HMI1.d.state.mirroring = (Rx->data.u8[0] >> 1) & 0x01;

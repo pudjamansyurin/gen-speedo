@@ -799,13 +799,13 @@ void StartCanRxTask(void *argument)
 		if (osMessageQueueGet(CanRxQueueHandle, &Rx, NULL, 1000) == osOK) {
 			if (Rx.header.IDE == CAN_ID_STD) {
 				switch (Rx.header.StdId) {
-					case CAND_VCU_SWITCH :
-						VCU.r.SwitchModeControl(&Rx);
+					case CAND_VCU_SWITCH_CTL :
+						VCU.r.SwitchControl(&Rx);
 						break;
-					case CAND_VCU_SELECT_SET :
+					case CAND_VCU_MIXED_DATA :
 						VCU.r.MixedData(&Rx);
 						break;
-					case CAND_VCU_TRIP_MODE :
+					case CAND_VCU_TRIP_DATA :
 						VCU.r.TripData(&Rx);
 						break;
 					case CAND_FOCAN_PROGRESS :

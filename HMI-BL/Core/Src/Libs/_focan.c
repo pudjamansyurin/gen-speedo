@@ -71,7 +71,7 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
 				tick = _GetTickMS();
 				FOCAN_xSetProgress(&Rx, &type);
 				break;
-			case CAND_VCU_SWITCH :
+			case CAND_VCU_SWITCH_CTL :
 				if (factory) FOCAN_RequestFota();
 				else p = 0;
 
