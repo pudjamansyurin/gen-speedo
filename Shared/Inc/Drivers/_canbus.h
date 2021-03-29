@@ -45,7 +45,6 @@ typedef struct {
 } can_rx_t;
 
 typedef struct {
-	uint8_t active;
 	CAN_HandleTypeDef *pcan;
 } can_t;
 

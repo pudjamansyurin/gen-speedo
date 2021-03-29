@@ -17,15 +17,14 @@ extern CAN_HandleTypeDef hcan2;
 
 /* Private variables ----------------------------------------------------------*/
 static can_t can = {
-		.active = 0,
 		.pcan = &hcan2
 };
 
 /* Private functions declaration ----------------------------------------------*/
 static void lock(void);
 static void unlock(void);
-static uint8_t Activated(void);
-static void CAN_Header(CAN_TxHeaderTypeDef *header, uint32_t address, uint32_t DLC, uint8_t ext);
+static void Reset(void);
+static void Header(CAN_TxHeaderTypeDef *header, uint32_t address, uint32_t DLC, uint8_t ext);
 #if CAN_DEBUG
 static void TxDebugger(CAN_TxHeaderTypeDef *TxHeader, CAN_DATA *TxData);
 static void RxDebugger(CAN_RxHeaderTypeDef *RxHeader, CAN_DATA *RxData);
@@ -47,8 +46,6 @@ void CANBUS_Init(void) {
 
 	if (e)
 		printf("CAN: Initiate error.\n");
-
-	can.active = !e;
 }
 
 void CANBUS_DeInit(void) {
@@ -85,24 +82,24 @@ uint8_t CANBUS_Filter(void) {
  write a message to CAN peripheral and transmit it
  *----------------------------------------------------------------------------*/
 uint8_t CANBUS_Write(can_tx_t *Tx, uint32_t address, uint32_t DLC, uint8_t ext) {
-  HAL_StatusTypeDef status;
+	HAL_StatusTypeDef status;
 
-  if (!Activated())
-    return 0;
+	lock();
+	Header(&(Tx->header), address, DLC, ext);
+	while (HAL_CAN_GetTxMailboxesFreeLevel(can.pcan) == 0);
 
-  lock();
-  CAN_Header(&(Tx->header), address, DLC, ext);
-  while (HAL_CAN_GetTxMailboxesFreeLevel(can.pcan) == 0);
-
-  /* Start the Transmission process */
-  status = HAL_CAN_AddTxMessage(can.pcan, &(Tx->header), Tx->data.u8, NULL);
+	/* Start the Transmission process */
+	status = HAL_CAN_AddTxMessage(can.pcan, &(Tx->header), Tx->data.u8, NULL);
 
 #if CAN_DEBUG
-   if (status == HAL_OK)
-     TxDebugger(&(Tx->header), &(Tx->data));
+	if (status == HAL_OK)
+		TxDebugger(&(Tx->header), &(Tx->data));
 #endif
-  unlock();
-  return (status == HAL_OK);
+	if (status != HAL_OK)
+		Reset();
+
+	unlock();
+	return (status == HAL_OK);
 }
 
 /*----------------------------------------------------------------------------
@@ -111,18 +108,18 @@ uint8_t CANBUS_Write(can_tx_t *Tx, uint32_t address, uint32_t DLC, uint8_t ext) 
 uint8_t CANBUS_Read(can_rx_t *Rx) {
 	HAL_StatusTypeDef status = HAL_ERROR;
 
-  if (!Activated()) return 0;
-  memset(Rx, 0x00, sizeof(can_rx_t));
+	memset(Rx, 0x00, sizeof(can_rx_t));
 
 	lock();
 	if (HAL_CAN_GetRxFifoFillLevel(can.pcan, CAN_RX_FIFO0)) {
 		status = HAL_CAN_GetRxMessage(can.pcan, CAN_RX_FIFO0, &(Rx->header), Rx->data.u8);
 
 #if CAN_DEBUG
-     if (status == HAL_OK)
-       RxDebugger(&(Rx->header), &(Rx->data));
+		if (status == HAL_OK)
+			RxDebugger(&(Rx->header), &(Rx->data));
 #endif
-
+		if (status != HAL_OK)
+			Reset();
 	}
 	unlock();
 
@@ -138,7 +135,7 @@ uint32_t CANBUS_ReadID(CAN_RxHeaderTypeDef *RxHeader) {
 #if (RTOS_ENABLE)
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 	can_rx_t Rx;
-	
+
 	if (CANBUS_Read(&Rx))
 		if (osKernelGetState() == osKernelRunning)
 			osMessageQueuePut(CanRxQueueHandle, &Rx, 0U, 0U);
@@ -160,25 +157,23 @@ static void unlock(void) {
 #endif
 }
 
-static void CAN_Header(CAN_TxHeaderTypeDef *header, uint32_t address, uint32_t DLC, uint8_t ext) {
-  if (ext) {
-    header->IDE = CAN_ID_EXT;
-    header->ExtId = address;
-  } else {
-    header->IDE = CAN_ID_STD;
-    header->StdId = address;
-  }
-  header->DLC = DLC;
-  header->RTR = (DLC ? CAN_RTR_DATA : CAN_RTR_REMOTE);
-  header->TransmitGlobalTime = DISABLE;
+static void Reset(void) {
+	CANBUS_DeInit();
+	_DelayMS(500);
+	CANBUS_Init();
 }
 
-static uint8_t Activated(void) {
-	if (!can.active) {
-		CANBUS_DeInit();
-		CANBUS_Init();
+static void Header(CAN_TxHeaderTypeDef *header, uint32_t address, uint32_t DLC, uint8_t ext) {
+	if (ext) {
+		header->IDE = CAN_ID_EXT;
+		header->ExtId = address;
+	} else {
+		header->IDE = CAN_ID_STD;
+		header->StdId = address;
 	}
-	return can.active;
+	header->DLC = DLC;
+	header->RTR = (DLC ? CAN_RTR_DATA : CAN_RTR_REMOTE);
+	header->TransmitGlobalTime = DISABLE;
 }
 
 #if CAN_DEBUG
