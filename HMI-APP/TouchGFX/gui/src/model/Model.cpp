@@ -18,7 +18,7 @@ uint8_t LTDC_MEASURED_FPS = 0;
 
 Model::Model()
 :
-        		modelListener(0), ticker(0), indicator(1), indicators { 0 }
+        						modelListener(0), ticker(0), indicator(1), indicators { 0 }
 {
 #ifdef SIMULATOR
 	setDefaultData();
@@ -34,35 +34,34 @@ void Model::tick()
 	generateRandomData();
 #endif
 
+	if (HMI1.hbar.reverse)
+		indicator = INDICATOR_REVERSE;
+	else if (ticker % 120 == 0)
+		swipeIndicator();
+
 	// write to LCD
-	if (ticker % 30 == 0) {
-		modelListener->setTripMode(HMI1.hbar.d.mode[HBAR_M_TRIP]);
-		modelListener->setDriveMode(HMI1.hbar.d.mode[HBAR_M_DRIVE]);
-		modelListener->setReportMode(HMI1.hbar.d.mode[HBAR_M_REPORT]);
+	modelListener->setTripMode(HMI1.hbar.d.mode[HBAR_M_TRIP]);
+	modelListener->setDriveMode(HMI1.hbar.d.mode[HBAR_M_DRIVE]);
+	modelListener->setReportMode(HMI1.hbar.d.mode[HBAR_M_REPORT]);
 
-		modelListener->setSpeed(VCU.d.mcu.speed);
-		modelListener->setDiscur(VCU.d.mcu.discur);
+	modelListener->setSpeed(VCU.d.mcu.speed);
+	modelListener->setDiscur(VCU.d.mcu.discur);
 
-		modelListener->setTripValue(HMI1.hbar.d.trip);
-		modelListener->setReportValue(HMI1.hbar.d.report);
+	modelListener->setTripValue(HMI1.hbar.d.trip);
+	modelListener->setReportValue(HMI1.hbar.d.report);
 
-		modelListener->setSignal(VCU.d.signal);
-		modelListener->setBattery(VCU.d.bms.soc);
+	modelListener->setSignal(VCU.d.signal);
+	modelListener->setBattery(VCU.d.bms.soc);
 
-		modelListener->setSeinLeft(HMI1.d.sein.left);
-		modelListener->setSeinRight(HMI1.d.sein.right);
+	modelListener->setSeinLeft(HMI1.d.sein.left);
+	modelListener->setSeinRight(HMI1.d.sein.right);
 
-		modelListener->setIndicator(indicator);
+	modelListener->setIndicator(indicator);
 
-		modelListener->setModeSelector(HMI1.hbar.m);
-		modelListener->setModeVisible(!HMI1.hbar.hide);
+	modelListener->setModeSelector(HMI1.hbar.m);
+	modelListener->setModeVisible(!HMI1.hbar.hide);
 
-		modelListener->setFps(LTDC_MEASURED_FPS);
-	}
-
-	if (ticker % 120 == 0)
-		if (!(HMI1.hbar.reverse && readCurrentIndicator() == INDICATOR_REVERSE))
-			swipeIndicator();
+	modelListener->setFps(LTDC_MEASURED_FPS);
 }
 
 uint8_t Model::readCurrentIndicator()
@@ -88,12 +87,8 @@ void Model::reloadIndicators()
 	indicators[INDICATOR_UNREMOTE] = HMI1.d.state.unremote;
 	indicators[INDICATOR_LOWBAT] = VCU.d.bms.soc < BMS_LOWBAT;
 
-	for (uint8_t i = INDICATOR_GO; i < INDICATOR_MAX; ++i) {
-		if (indicators[i]) {
-			errors = 1;
-			break;
-		}
-	}
+	for (uint8_t i = (INDICATOR_GO+1); i < INDICATOR_MAX; i++)
+		errors |= indicators[i];
 
 	indicators[INDICATOR_REVERSE] = HMI1.hbar.reverse;
 	indicators[INDICATOR_GO] = !HMI1.hbar.reverse && !errors;
