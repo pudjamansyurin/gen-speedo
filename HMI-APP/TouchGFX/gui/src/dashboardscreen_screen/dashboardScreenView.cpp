@@ -257,7 +257,7 @@ void dashboardScreenView::writeTripMode(uint8_t index)
 	tripModeSwiper = !tripModeSwiper;
 }
 
-void dashboardScreenView::writeTripValue(uint32_t value)
+void dashboardScreenView::writeTripValue(uint16_t value)
 {
 	Unicode::snprintf(tripValueBuffer, TRIPVALUE_SIZE, "%06d", value);
 	tripValue.invalidate();

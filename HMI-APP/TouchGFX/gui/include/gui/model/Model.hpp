@@ -26,8 +26,7 @@ typedef enum {
 #if defined(SIMULATOR)
 /* Macro prototypes ------------------------------------------------------- */
 #define MCU_SPEED_MAX 			      (uint8_t) 150							// in kph
-#define MCU_DISCUR_MAX     	     (uint8_t) 220
-#define ODOMETER_MAX		         (uint32_t) 99999						// in km
+#define MCU_DISCUR_MAX     	      (uint8_t) 220
 #define BMS_LOWBAT							  (uint8_t) 20							// in %
 
 /* Enum prototypes ------------------------------------------------------- */
@@ -82,7 +81,7 @@ typedef struct {
 typedef struct {
 	uint8_t mode[HBAR_M_MAX];
 	uint8_t report;
-	uint32_t trip;
+	uint16_t trip;
 } hbar_data_t;
 
 typedef struct {

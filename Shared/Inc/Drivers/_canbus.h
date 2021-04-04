@@ -15,21 +15,20 @@
 
 /* Exported defines -----------------------------------------------------------*/
 typedef enum {
-	CAND_FOCAN_PROGRESS 		= 0x01A,
+	CAND_FOCAN_PROGRESS 			= 0x01A,
 	CAND_FOCAN_CRC 					= 0x01B,
 	CAND_FOCAN_PRA 					= 0x01C,
 	CAND_FOCAN_INIT 				= 0x01D,
-	CAND_FOCAN_RUN 			= 0x01E,
+	CAND_FOCAN_RUN 					= 0x01E,
 	CAND_FOCAN_PASCA 				= 0x01F,
 
-	CAND_VCU_SWITCH_CTL 				= 0x02A,
-	CAND_VCU_DATETIME 			= 0x02B,
-	CAND_VCU_MIXED_DATA 		= 0x02C,
-	CAND_VCU_TRIP_DATA 			= 0x02D,
+	CAND_VCU_SWITCH_CTL 			= 0x02A,
+	CAND_VCU_MODE_DATA 				= 0x02B,
+	CAND_VCU_DATETIME 				= 0x02C,
 
-	CAND_VCU 							= 0x7B0,
-	CAND_HMI1 							= 0x7C0,
-	CAND_HMI2 							= 0x7D0,
+	CAND_VCU 						= 0x7B0,
+	CAND_HMI1 						= 0x7C0,
+	CAND_HMI2 						= 0x7D0,
 
 } CAN_ADDR;
 

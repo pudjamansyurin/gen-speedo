@@ -802,11 +802,8 @@ void StartCanRxTask(void *argument)
 					case CAND_VCU_SWITCH_CTL :
 						VCU.r.SwitchControl(&Rx);
 						break;
-					case CAND_VCU_MIXED_DATA :
-						VCU.r.MixedData(&Rx);
-						break;
-					case CAND_VCU_TRIP_DATA :
-						VCU.r.TripData(&Rx);
+					case CAND_VCU_MODE_DATA :
+						VCU.r.ModeData(&Rx);
 						break;
 					case CAND_FOCAN_PROGRESS :
 					case CAND_FOCAN_CRC :

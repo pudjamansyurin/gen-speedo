@@ -20,8 +20,7 @@
 #define CAN_DEBUG		0
 
 #define MCU_SPEED_MAX 			      (uint8_t) 150							// in kph
-#define MCU_DISCUR_MAX 			       (uint8_t) 220
-#define ODOMETER_MAX		         (uint32_t) 99999						// in km
+#define MCU_DISCUR_MAX 			      (uint8_t) 220
 #define BMS_LOWBAT							  (uint8_t) 20							// in %
 
 /* Enum prototypes ------------------------------------------------------- */

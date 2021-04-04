@@ -15,7 +15,7 @@
 typedef struct {
 	uint8_t mode[HBAR_M_MAX];
 	uint8_t report;
-	uint32_t trip;
+	uint16_t trip;
 } hbar_data_t;
 
 typedef struct {

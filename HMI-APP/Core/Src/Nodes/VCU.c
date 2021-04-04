@@ -17,8 +17,7 @@ vcu_t VCU = {
 		.d = { 0 },
 		.r = {
 				VCU_RX_SwitchControl,
-				VCU_RX_MixedData,
-				VCU_RX_TripData
+				VCU_RX_ModeData
 		},
 		VCU_Init
 };
@@ -58,31 +57,24 @@ void VCU_RX_SwitchControl(can_rx_t *Rx) {
 	// others
 	VCU.d.mcu.speed = Rx->data.u8[3];
 	VCU.d.mcu.discur = Rx->data.u8[4];
+	VCU.d.signal = Rx->data.u8[5];
+	VCU.d.bms.soc = Rx->data.u8[6];
 
 	VCU.d.tick = _GetTickMS();
 }
 
-void VCU_RX_MixedData(can_rx_t *Rx) {
-	// read message
-	VCU.d.signal = Rx->data.u8[0];
-	VCU.d.bms.soc = Rx->data.u8[1];
-
-	// decide report value according to mode
-	if (HMI1.hbar.d.mode[HBAR_M_REPORT] == HBAR_M_REPORT_RANGE)
-		HMI1.hbar.d.report = Rx->data.u8[2];
-	else
-		HMI1.hbar.d.report = Rx->data.u8[3];
-
-	VCU.d.tick = _GetTickMS();
-}
-
-void VCU_RX_TripData(can_rx_t *Rx) {
+void VCU_RX_ModeData(can_rx_t *Rx) {
 	if (HMI1.hbar.d.mode[HBAR_M_TRIP] == HBAR_M_TRIP_A)
 		HMI1.hbar.d.trip = Rx->data.u16[0];
 	else if (HMI1.hbar.d.mode[HBAR_M_TRIP] == HBAR_M_TRIP_B)
 		HMI1.hbar.d.trip = Rx->data.u16[1];
 	else if (HMI1.hbar.d.mode[HBAR_M_TRIP] == HBAR_M_TRIP_ODO)
-		HMI1.hbar.d.trip = Rx->data.u32[1];
+		HMI1.hbar.d.trip = Rx->data.u16[2];
+
+	if (HMI1.hbar.d.mode[HBAR_M_REPORT] == HBAR_M_REPORT_RANGE)
+		HMI1.hbar.d.report = Rx->data.u8[6];
+	else if (HMI1.hbar.d.mode[HBAR_M_REPORT] == HBAR_M_REPORT_AVERAGE)
+		HMI1.hbar.d.report = Rx->data.u8[7];
 
 	VCU.d.tick = _GetTickMS();
 }

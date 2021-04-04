@@ -36,8 +36,7 @@ typedef struct {
 	vcu_data_t d;
 	struct {
 		void (*SwitchControl)(can_rx_t*);
-		void (*MixedData)(can_rx_t*);
-		void (*TripData)(can_rx_t*);
+		void (*ModeData)(can_rx_t*);
 	} r;
 	void (*Init)(void);
 } vcu_t;
@@ -48,7 +47,6 @@ extern vcu_t VCU;
 /* Public functions implementation --------------------------------------------*/
 void VCU_Init(void);
 void VCU_RX_SwitchControl(can_rx_t *Rx);
-void VCU_RX_MixedData(can_rx_t *Rx);
-void VCU_RX_TripData(can_rx_t *Rx);
+void VCU_RX_ModeData(can_rx_t *Rx);
 
 #endif /* INC_NODES_VCU_H_ */

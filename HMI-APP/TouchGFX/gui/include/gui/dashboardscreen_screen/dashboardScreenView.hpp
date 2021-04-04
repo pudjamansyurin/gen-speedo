@@ -57,7 +57,7 @@ public:
   virtual void writeIndicator(uint8_t index);
   virtual void writeDriveMode(uint8_t index);
   virtual void writeTripMode(uint8_t index);
-  virtual void writeTripValue(uint32_t value);
+  virtual void writeTripValue(uint16_t value);
   virtual void writeReportMode(uint8_t index);
   virtual void writeReportValue(uint16_t value);
 

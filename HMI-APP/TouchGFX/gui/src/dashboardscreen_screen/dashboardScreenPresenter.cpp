@@ -121,10 +121,10 @@ void dashboardScreenPresenter::setTripMode(uint8_t index)
     // touchgfx_printf("T = %d\n", index);
   }
 }
-void dashboardScreenPresenter::setTripValue(uint32_t value)
+void dashboardScreenPresenter::setTripValue(uint16_t value)
 {
   static uint8_t init = 1;
-  static uint32_t _value;
+  static uint16_t _value;
 
   if (_value != value || init) {
     init = 0;
