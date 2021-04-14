@@ -52,6 +52,7 @@ public:
   virtual void writeSpeed(uint8_t percent);
   virtual void writeDiscur(uint8_t percent);
   virtual void writeFps(uint8_t value);
+  virtual void writeState(int8_t value);
   virtual void writeBattery(uint8_t percent);
   virtual void writeSignal(uint8_t percent);
   virtual void writeIndicator(uint8_t index);

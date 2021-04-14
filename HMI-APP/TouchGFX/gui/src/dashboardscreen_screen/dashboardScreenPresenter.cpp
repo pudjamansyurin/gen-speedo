@@ -69,6 +69,17 @@ void dashboardScreenPresenter::setFps(uint8_t value)
     view.writeFps(value);
   }
 }
+void dashboardScreenPresenter::setState(int8_t value)
+{
+  static uint8_t init = 1;
+  static int8_t _value;
+
+  if (_value != value || init) {
+    init = 0;
+    _value = value;
+    view.writeState(value);
+  }
+}
 void dashboardScreenPresenter::setBattery(uint8_t percent)
 {
   static uint8_t init = 1, _percent;

@@ -26,8 +26,9 @@ typedef struct {
 } mcu_data_t;
 
 typedef struct {
-	uint8_t signal;
 	uint32_t tick;
+	uint8_t signal;
+	int8_t state;
 	bms_data_t bms;
 	mcu_data_t mcu;
 } vcu_data_t;

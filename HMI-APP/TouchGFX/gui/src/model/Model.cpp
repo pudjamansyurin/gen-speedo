@@ -62,6 +62,7 @@ void Model::tick()
 	modelListener->setModeVisible(!HMI1.hbar.hide);
 
 	modelListener->setFps(LTDC_MEASURED_FPS);
+	modelListener->setState(VCU.d.state);
 }
 
 uint8_t Model::readCurrentIndicator()
@@ -87,7 +88,7 @@ void Model::reloadIndicators()
 	indicators[INDICATOR_UNREMOTE] = HMI1.d.state.unremote;
 	indicators[INDICATOR_LOWBAT] = VCU.d.bms.soc < BMS_LOWBAT;
 
-	for (uint8_t i = (INDICATOR_GO+1); i < INDICATOR_MAX; i++)
+	for (uint8_t i = INDICATOR_ABS; i <= INDICATOR_LOWBAT; i++)
 		errors |= indicators[i];
 
 	indicators[INDICATOR_REVERSE] = HMI1.hbar.reverse;

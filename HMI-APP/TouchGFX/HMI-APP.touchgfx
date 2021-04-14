@@ -1042,8 +1042,8 @@
               "BufferSize": 3
             },
             "Name": "fpsValue",
-            "X": 5,
-            "Y": 5,
+            "X": 695,
+            "Y": 433,
             "Width": 95,
             "Height": 18,
             "Visible": true,
@@ -1100,6 +1100,35 @@
             "Y": 57,
             "Width": 137,
             "Height": 366,
+            "Visible": true,
+            "LockPosition": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Type": "TextArea",
+            "TextId": "SingleUseId49",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId50",
+              "UseBuffer": true,
+              "BufferSize": 3
+            },
+            "Name": "stateValue",
+            "X": 10,
+            "Y": 433,
+            "Width": 100,
+            "Height": 18,
             "Visible": true,
             "LockPosition": false,
             "Draggable": false,
@@ -1222,6 +1251,14 @@
       },
       {
         "TextEntryId": "SingleUseId48",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId49",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId50",
         "IsResource": false
       }
     ],

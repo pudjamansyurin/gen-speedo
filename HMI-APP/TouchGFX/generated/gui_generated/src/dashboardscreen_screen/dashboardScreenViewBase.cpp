@@ -232,7 +232,7 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     batteryValue.setWildcard(batteryValueBuffer);
     batteryValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
 
-    fpsValue.setPosition(5, 5, 95, 18);
+    fpsValue.setPosition(695, 433, 95, 18);
     fpsValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     fpsValue.setLinespacing(0);
     Unicode::snprintf(fpsValueBuffer, FPSVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID48).getText());
@@ -254,6 +254,13 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     speedProgress.setBitmap(BITMAP_PROGRESSLEFT_ID);
     speedProgress.setValue(100);
     speedProgress.setAnchorAtZero(true);
+
+    stateValue.setPosition(10, 433, 100, 18);
+    stateValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    stateValue.setLinespacing(0);
+    Unicode::snprintf(stateValueBuffer, STATEVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID50).getText());
+    stateValue.setWildcard(stateValueBuffer);
+    stateValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID49));
 
     add(__background);
     add(background);
@@ -280,6 +287,7 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     add(fpsValue);
     add(discurProgress);
     add(speedProgress);
+    add(stateValue);
 }
 
 void dashboardScreenViewBase::setupScreen()

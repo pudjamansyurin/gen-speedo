@@ -25,6 +25,7 @@ vcu_t VCU = {
 /* Public functions implementation --------------------------------------------*/
 void VCU_Init(void) {
 	VCU.d.signal = 0;
+	VCU.d.state = 0;
 	VCU.d.bms.soc = 0;
 	VCU.d.mcu.speed = 0;
 	VCU.d.mcu.discur = 0;
@@ -57,8 +58,9 @@ void VCU_RX_SwitchControl(can_rx_t *Rx) {
 	// others
 	VCU.d.mcu.speed = Rx->data.u8[3];
 	VCU.d.mcu.discur = Rx->data.u8[4];
-	VCU.d.signal = Rx->data.u8[5];
-	VCU.d.bms.soc = Rx->data.u8[6];
+	VCU.d.bms.soc = Rx->data.u8[5];
+	VCU.d.signal = Rx->data.u8[6];
+	VCU.d.state = Rx->data.u8[7];
 
 	VCU.d.tick = _GetTickMS();
 }

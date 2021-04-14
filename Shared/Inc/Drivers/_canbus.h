@@ -11,9 +11,11 @@
 /* Includes ------------------------------------------------------------------*/
 #include "Libs/_utils.h"
 
-#define CAN_DATA 					UNION64
-
 /* Exported defines -----------------------------------------------------------*/
+#define CAN_DATA 					UNION64
+#define CAN_RX_MS (uint16_t) 1000
+
+/* Exported enum -----------------------------------------------------------*/
 typedef enum {
 	CAND_FOCAN_PROGRESS 			= 0x01A,
 	CAND_FOCAN_CRC 					= 0x01B,

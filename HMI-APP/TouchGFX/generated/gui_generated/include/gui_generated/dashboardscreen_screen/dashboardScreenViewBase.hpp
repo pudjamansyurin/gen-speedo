@@ -84,6 +84,7 @@ protected:
     touchgfx::TextAreaWithOneWildcard fpsValue;
     touchgfx::ImageProgress discurProgress;
     touchgfx::ImageProgress speedProgress;
+    touchgfx::TextAreaWithOneWildcard stateValue;
 
     /*
      * Wildcard Buffers
@@ -108,6 +109,8 @@ protected:
     touchgfx::Unicode::UnicodeChar batteryValueBuffer[BATTERYVALUE_SIZE];
     static const uint16_t FPSVALUE_SIZE = 3;
     touchgfx::Unicode::UnicodeChar fpsValueBuffer[FPSVALUE_SIZE];
+    static const uint16_t STATEVALUE_SIZE = 3;
+    touchgfx::Unicode::UnicodeChar stateValueBuffer[STATEVALUE_SIZE];
 
 private:
 

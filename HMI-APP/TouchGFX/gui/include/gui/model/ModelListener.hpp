@@ -21,6 +21,7 @@ public:
   virtual void setSpeed(uint8_t value) {};
   virtual void setDiscur(uint8_t value) {};
   virtual void setFps(uint8_t value) {};
+  virtual void setState(int8_t value) {};
   virtual void setBattery(uint8_t percent) {};
   virtual void setSignal(uint8_t percent) {};
   virtual void setDriveMode(uint8_t index) {};

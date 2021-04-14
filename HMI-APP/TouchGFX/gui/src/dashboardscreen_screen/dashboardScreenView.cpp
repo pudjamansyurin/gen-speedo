@@ -137,9 +137,7 @@ void dashboardScreenView::writeModeVisible(uint8_t state)
 
 void dashboardScreenView::writeSein(uint8_t leftSide, uint8_t state)
 {
-	Image *sein;
-
-	sein = leftSide ? &seinLeft : &seinRight;
+	Image *sein = leftSide ? &seinLeft : &seinRight;
 
 	sein->setVisible(state);
 	sein->invalidate();
@@ -161,6 +159,12 @@ void dashboardScreenView::writeFps(uint8_t value)
 {
 	Unicode::snprintf(fpsValueBuffer, FPSVALUE_SIZE, "%2d", value);
 	fpsValue.invalidate();
+}
+
+void dashboardScreenView::writeState(int8_t value)
+{
+	Unicode::snprintf(stateValueBuffer, STATEVALUE_SIZE, "%1d", value);
+	stateValue.invalidate();
 }
 
 void dashboardScreenView::writeBattery(uint8_t percent)
