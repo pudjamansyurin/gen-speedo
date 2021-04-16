@@ -85,6 +85,9 @@ protected:
     touchgfx::ImageProgress discurProgress;
     touchgfx::ImageProgress speedProgress;
     touchgfx::TextAreaWithOneWildcard stateValue;
+    touchgfx::TextAreaWithOneWildcard bmsValue;
+    touchgfx::TextAreaWithOneWildcard mcuValue;
+    touchgfx::TextArea registeringValue;
 
     /*
      * Wildcard Buffers
@@ -109,8 +112,12 @@ protected:
     touchgfx::Unicode::UnicodeChar batteryValueBuffer[BATTERYVALUE_SIZE];
     static const uint16_t FPSVALUE_SIZE = 3;
     touchgfx::Unicode::UnicodeChar fpsValueBuffer[FPSVALUE_SIZE];
-    static const uint16_t STATEVALUE_SIZE = 3;
+    static const uint16_t STATEVALUE_SIZE = 2;
     touchgfx::Unicode::UnicodeChar stateValueBuffer[STATEVALUE_SIZE];
+    static const uint16_t BMSVALUE_SIZE = 2;
+    touchgfx::Unicode::UnicodeChar bmsValueBuffer[BMSVALUE_SIZE];
+    static const uint16_t MCUVALUE_SIZE = 2;
+    touchgfx::Unicode::UnicodeChar mcuValueBuffer[MCUVALUE_SIZE];
 
 private:
 

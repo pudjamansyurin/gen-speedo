@@ -59,10 +59,12 @@ typedef enum {
 
 /* Struct prototypes ------------------------------------------------------- */
 typedef struct {
+	uint8_t run;
 	uint8_t soc;
 } bms_data_t;
 
 typedef struct {
+	uint8_t run;
 	float discur;
 	uint8_t speed;
 } mcu_data_t;
@@ -93,23 +95,26 @@ typedef struct {
 } hbar_t;
 
 typedef struct {
-	hbar_t hbar;
 	struct {
-		struct {
-			uint8_t abs;
-			uint8_t mirroring;
-			uint8_t lamp;
-			uint8_t warning;
-			uint8_t overheat;
-			uint8_t unfinger;
-			uint8_t unremote;
-			uint8_t daylight;
-		} state;
-		struct {
-			uint8_t left;
-			uint8_t right;
-		} sein;
-	} d;
+		uint8_t abs;
+		uint8_t mirroring;
+		uint8_t lamp;
+		uint8_t warning;
+		uint8_t overheat;
+		uint8_t unfinger;
+		uint8_t unremote;
+		uint8_t daylight;
+		uint8_t registering;
+	} state;
+	struct {
+		uint8_t left;
+		uint8_t right;
+	} sein;
+} hmi1_data_t;
+
+typedef struct {
+	hbar_t hbar;
+	hmi1_data_t d;
 } hmi1_t;
 #endif
 

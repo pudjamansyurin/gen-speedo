@@ -232,7 +232,7 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     batteryValue.setWildcard(batteryValueBuffer);
     batteryValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
 
-    fpsValue.setPosition(695, 433, 95, 18);
+    fpsValue.setPosition(686, 433, 95, 18);
     fpsValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     fpsValue.setLinespacing(0);
     Unicode::snprintf(fpsValueBuffer, FPSVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID48).getText());
@@ -255,12 +255,31 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     speedProgress.setValue(100);
     speedProgress.setAnchorAtZero(true);
 
-    stateValue.setPosition(10, 433, 100, 18);
+    stateValue.setPosition(15, 433, 50, 18);
     stateValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     stateValue.setLinespacing(0);
     Unicode::snprintf(stateValueBuffer, STATEVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID50).getText());
     stateValue.setWildcard(stateValueBuffer);
     stateValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID49));
+
+    bmsValue.setPosition(65, 433, 50, 18);
+    bmsValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    bmsValue.setLinespacing(0);
+    Unicode::snprintf(bmsValueBuffer, BMSVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID52).getText());
+    bmsValue.setWildcard(bmsValueBuffer);
+    bmsValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID51));
+
+    mcuValue.setPosition(115, 433, 50, 18);
+    mcuValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    mcuValue.setLinespacing(0);
+    Unicode::snprintf(mcuValueBuffer, MCUVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID54).getText());
+    mcuValue.setWildcard(mcuValueBuffer);
+    mcuValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID53));
+
+    registeringValue.setPosition(165, 433, 20, 18);
+    registeringValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    registeringValue.setLinespacing(0);
+    registeringValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID55));
 
     add(__background);
     add(background);
@@ -288,6 +307,9 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     add(discurProgress);
     add(speedProgress);
     add(stateValue);
+    add(bmsValue);
+    add(mcuValue);
+    add(registeringValue);
 }
 
 void dashboardScreenViewBase::setupScreen()

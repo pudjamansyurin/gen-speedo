@@ -17,10 +17,12 @@
 
 /* Exported struct -----------------------------------------------------------*/
 typedef struct {
+	uint8_t run;
 	uint8_t soc;
 } bms_data_t;
 
 typedef struct {
+	uint8_t run;
 	uint8_t discur;
 	uint8_t speed;
 } mcu_data_t;

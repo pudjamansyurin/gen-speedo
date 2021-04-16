@@ -12,7 +12,7 @@
             },
             "Alpha": 255,
             "Name": "box1",
-            "X": 0,
+            "X": 1,
             "Y": 0,
             "Width": 800,
             "Height": 480,
@@ -1042,7 +1042,7 @@
               "BufferSize": 3
             },
             "Name": "fpsValue",
-            "X": 695,
+            "X": 686,
             "Y": 433,
             "Width": 95,
             "Height": 18,
@@ -1122,12 +1122,94 @@
             "Wildcard1": {
               "TextId": "SingleUseId50",
               "UseBuffer": true,
-              "BufferSize": 3
+              "BufferSize": 2
             },
             "Name": "stateValue",
-            "X": 10,
+            "X": 15,
             "Y": 433,
-            "Width": 100,
+            "Width": 50,
+            "Height": 18,
+            "Visible": true,
+            "LockPosition": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Type": "TextArea",
+            "TextId": "SingleUseId51",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId52",
+              "UseBuffer": true,
+              "BufferSize": 2
+            },
+            "Name": "bmsValue",
+            "X": 65,
+            "Y": 433,
+            "Width": 50,
+            "Height": 18,
+            "Visible": true,
+            "LockPosition": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Type": "TextArea",
+            "TextId": "SingleUseId53",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId54",
+              "UseBuffer": true,
+              "BufferSize": 2
+            },
+            "Name": "mcuValue",
+            "X": 115,
+            "Y": 433,
+            "Width": 50,
+            "Height": 18,
+            "Visible": true,
+            "LockPosition": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Type": "TextArea",
+            "TextId": "SingleUseId55",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Name": "registeringValue",
+            "X": 165,
+            "Y": 433,
+            "Width": 20,
             "Height": 18,
             "Visible": true,
             "LockPosition": false,
@@ -1259,6 +1341,26 @@
       },
       {
         "TextEntryId": "SingleUseId50",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId51",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId52",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId53",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId54",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId55",
         "IsResource": false
       }
     ],

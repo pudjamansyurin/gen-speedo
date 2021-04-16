@@ -63,6 +63,9 @@ void Model::tick()
 
 	modelListener->setFps(LTDC_MEASURED_FPS);
 	modelListener->setState(VCU.d.state);
+	modelListener->setBmsState(VCU.d.bms.run);
+	modelListener->setMcuState(VCU.d.mcu.run);
+	modelListener->setRegisteringState(HMI1.d.state.registering);
 }
 
 uint8_t Model::readCurrentIndicator()

@@ -80,6 +80,36 @@ void dashboardScreenPresenter::setState(int8_t value)
     view.writeState(value);
   }
 }
+void dashboardScreenPresenter::setBmsState(uint8_t value)
+{
+  static uint8_t init = 1, _value;
+
+  if (_value != value || init) {
+    init = 0;
+    _value = value;
+    view.writeBmsState(value);
+  }
+}
+void dashboardScreenPresenter::setMcuState(uint8_t value)
+{
+  static uint8_t init = 1, _value;
+
+  if (_value != value || init) {
+    init = 0;
+    _value = value;
+    view.writeMcuState(value);
+  }
+}
+void dashboardScreenPresenter::setRegisteringState(uint8_t value)
+{
+  static uint8_t init = 1, _value;
+
+  if (_value != value || init) {
+    init = 0;
+    _value = value;
+    view.writeRegisteringState(value);
+  }
+}
 void dashboardScreenPresenter::setBattery(uint8_t percent)
 {
   static uint8_t init = 1, _percent;

@@ -15,13 +15,13 @@
 #include "_defines_shared.h"
 
 /* Exported constants --------------------------------------------------------*/
-#define HMI_VERSION              (uint16_t) 346
+#define HMI_VERSION              	  (uint16_t) 347
 
 #define CAN_DEBUG		0
 
 #define MCU_SPEED_MAX 			      (uint8_t) 150							// in kph
 #define MCU_DISCUR_MAX 			      (uint8_t) 220
-#define BMS_LOWBAT							  (uint8_t) 20							// in %
+#define BMS_LOWBAT					  (uint8_t) 20							// in %
 
 /* Enum prototypes ------------------------------------------------------- */
 typedef enum {

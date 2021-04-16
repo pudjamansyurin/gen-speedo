@@ -167,6 +167,24 @@ void dashboardScreenView::writeState(int8_t value)
 	stateValue.invalidate();
 }
 
+void dashboardScreenView::writeBmsState(uint8_t value)
+{
+	Unicode::snprintf(bmsValueBuffer, BMSVALUE_SIZE, "%1d", value);
+	bmsValue.invalidate();
+}
+
+void dashboardScreenView::writeMcuState(uint8_t value)
+{
+	Unicode::snprintf(mcuValueBuffer, MCUVALUE_SIZE, "%1d", value);
+	mcuValue.invalidate();
+}
+
+void dashboardScreenView::writeRegisteringState(uint8_t value)
+{
+	registeringValue.setVisible(value);
+	registeringValue.invalidate();
+}
+
 void dashboardScreenView::writeBattery(uint8_t percent)
 {
 	Unicode::snprintf(batteryValueBuffer, BATTERYVALUE_SIZE, "%3d", percent);

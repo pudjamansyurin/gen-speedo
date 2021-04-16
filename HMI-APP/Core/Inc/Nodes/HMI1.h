@@ -35,6 +35,7 @@ typedef struct {
 		uint8_t unfinger;
 		uint8_t unremote;
 		uint8_t daylight;
+		uint8_t registering;
 	} state;
 	struct {
 		uint8_t left;
