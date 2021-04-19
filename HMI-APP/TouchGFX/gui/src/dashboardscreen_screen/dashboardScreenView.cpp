@@ -27,6 +27,7 @@ dashboardScreenView::dashboardScreenView() :
 											iconAssets {
 	BITMAP_MAINREVERSE_ID,
 	BITMAP_MAINGO_ID,
+	BITMAP_NONE_ID,
 	BITMAP_BRAKESYSTEMALERT_ID,
 	BITMAP_SMARTPHONEMIRRORINGSTATUS_ID,
 	BITMAP_HIGHBEAMACTIVATED_ID,
@@ -181,8 +182,16 @@ void dashboardScreenView::writeMcuState(uint8_t value)
 
 void dashboardScreenView::writeRegisteringState(uint8_t value)
 {
-	registeringValue.setVisible(value);
-	registeringValue.invalidate();
+	uint8_t show = value & 0x01;
+	uint8_t error = value & 0x02;
+	uint16_t color = BITMAP_FINGERSCANLOGINSTATUSMINI_ID;
+
+	if (error)
+		color = BITMAP_FINGERSCANLOGINSTATUSMINIRED_ID;
+
+	registerIcon.setVisible(show);
+	registerIcon.setBitmap(Bitmap(color));
+	registerIcon.invalidate();
 }
 
 void dashboardScreenView::writeBattery(uint8_t percent)

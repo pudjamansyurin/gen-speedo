@@ -94,8 +94,8 @@ void Model::reloadIndicators()
 	for (uint8_t i = INDICATOR_ABS; i <= INDICATOR_LOWBAT; i++)
 		errors |= indicators[i];
 
+	indicators[INDICATOR_GO] = !HMI1.hbar.reverse && !errors && VCU.d.mcu.run;
 	indicators[INDICATOR_REVERSE] = HMI1.hbar.reverse;
-	indicators[INDICATOR_GO] = !HMI1.hbar.reverse && !errors;
 }
 
 void Model::swipeIndicator()
@@ -124,7 +124,7 @@ void Model::swipeIndicator()
 	}
 	// fall-back
 	if (!found)
-		indicator = INDICATOR_GO;
+		indicator = INDICATOR_NONE;
 }
 
 #ifdef SIMULATOR

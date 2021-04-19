@@ -49,7 +49,7 @@ void VCU_RX_SwitchControl(can_rx_t *Rx) {
 	HMI1.hbar.reverse = (Rx->data.u8[1] >> 2) & 0x01;
 	VCU.d.bms.run = (Rx->data.u8[1] >> 3) & 0x01;
 	VCU.d.mcu.run = (Rx->data.u8[1] >> 4) & 0x01;
-	HMI1.d.state.registering = (Rx->data.u8[1] >> 5) & 0x01;
+	HMI1.d.state.registering = (Rx->data.u8[1] >> 5) & 0x03;
 
 	// mode
 	HMI1.hbar.d.mode[HBAR_M_DRIVE] = (Rx->data.u8[2] >> 0) & 0x03;

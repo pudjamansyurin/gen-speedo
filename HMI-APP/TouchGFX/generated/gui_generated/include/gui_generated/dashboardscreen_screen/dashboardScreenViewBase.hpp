@@ -41,6 +41,7 @@ protected:
     touchgfx::Image fingerScan;
     touchgfx::Image keylessKey;
     touchgfx::Image beamActivated;
+    touchgfx::Image none;
     touchgfx::Image mainGo;
     touchgfx::Image mainReverse;
     touchgfx::Image phoneMirroring;
@@ -59,6 +60,7 @@ protected:
     touchgfx::Image backgroundLeft;
     touchgfx::Image tripBox;
     touchgfx::Image driveBox;
+    touchgfx::Image registerIcon;
     touchgfx::CacheableContainer seinLeftContainer;
     touchgfx::Image seinLeft;
     touchgfx::Container seinRightContainer;
@@ -87,7 +89,6 @@ protected:
     touchgfx::TextAreaWithOneWildcard stateValue;
     touchgfx::TextAreaWithOneWildcard bmsValue;
     touchgfx::TextAreaWithOneWildcard mcuValue;
-    touchgfx::TextArea registeringValue;
 
     /*
      * Wildcard Buffers

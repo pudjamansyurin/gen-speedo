@@ -202,6 +202,22 @@
           },
           {
             "Type": "Image",
+            "RelativeFilename": "None.png",
+            "Alpha": 255,
+            "Name": "none",
+            "X": 295,
+            "Y": 200,
+            "Width": 2,
+            "Height": 2,
+            "Visible": false,
+            "LockPosition": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Type": "Image",
             "RelativeFilename": "MainGo.png",
             "Alpha": 255,
             "Name": "mainGo",
@@ -495,6 +511,22 @@
                 "Width": 245,
                 "Height": 31,
                 "Visible": true,
+                "LockPosition": false,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "Type": "Image",
+                "RelativeFilename": "FingerscanLoginStatusMini.png",
+                "Alpha": 255,
+                "Name": "registerIcon",
+                "X": 507,
+                "Y": 62,
+                "Width": 20,
+                "Height": 22,
+                "Visible": false,
                 "LockPosition": false,
                 "Draggable": false,
                 "Clickable": false,
@@ -1125,8 +1157,8 @@
               "BufferSize": 2
             },
             "Name": "stateValue",
-            "X": 15,
-            "Y": 433,
+            "X": 115,
+            "Y": 41,
             "Width": 50,
             "Height": 18,
             "Visible": true,
@@ -1154,8 +1186,8 @@
               "BufferSize": 2
             },
             "Name": "bmsValue",
-            "X": 65,
-            "Y": 433,
+            "X": 165,
+            "Y": 41,
             "Width": 50,
             "Height": 18,
             "Visible": true,
@@ -1183,33 +1215,9 @@
               "BufferSize": 2
             },
             "Name": "mcuValue",
-            "X": 115,
-            "Y": 433,
+            "X": 215,
+            "Y": 41,
             "Width": 50,
-            "Height": 18,
-            "Visible": true,
-            "LockPosition": false,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "Type": "TextArea",
-            "TextId": "SingleUseId55",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "Alpha": 255,
-            "AutoSize": false,
-            "LineSpacing": 0,
-            "Name": "registeringValue",
-            "X": 165,
-            "Y": 433,
-            "Width": 20,
             "Height": 18,
             "Visible": true,
             "LockPosition": false,
@@ -1357,10 +1365,6 @@
       },
       {
         "TextEntryId": "SingleUseId54",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId55",
         "IsResource": false
       }
     ],

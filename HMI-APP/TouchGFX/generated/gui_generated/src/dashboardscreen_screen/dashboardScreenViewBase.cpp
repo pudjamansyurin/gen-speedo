@@ -43,6 +43,10 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     beamActivated.setVisible(false);
     beamActivated.setBitmap(touchgfx::Bitmap(BITMAP_HIGHBEAMACTIVATED_ID));
 
+    none.setXY(295, 200);
+    none.setVisible(false);
+    none.setBitmap(touchgfx::Bitmap(BITMAP_NONE_ID));
+
     mainGo.setXY(295, 200);
     mainGo.setVisible(false);
     mainGo.setBitmap(touchgfx::Bitmap(BITMAP_MAINGO_ID));
@@ -114,6 +118,11 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     driveBox.setXY(277, 364);
     driveBox.setBitmap(touchgfx::Bitmap(BITMAP_MODECONTAINER_ID));
     frameContainer.add(driveBox);
+
+    registerIcon.setXY(507, 62);
+    registerIcon.setVisible(false);
+    registerIcon.setBitmap(touchgfx::Bitmap(BITMAP_FINGERSCANLOGINSTATUSMINI_ID));
+    frameContainer.add(registerIcon);
 
     seinLeftContainer.setPosition(152, 67, 80, 355);
 
@@ -255,31 +264,26 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     speedProgress.setValue(100);
     speedProgress.setAnchorAtZero(true);
 
-    stateValue.setPosition(15, 433, 50, 18);
+    stateValue.setPosition(115, 41, 50, 18);
     stateValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     stateValue.setLinespacing(0);
     Unicode::snprintf(stateValueBuffer, STATEVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID50).getText());
     stateValue.setWildcard(stateValueBuffer);
     stateValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID49));
 
-    bmsValue.setPosition(65, 433, 50, 18);
+    bmsValue.setPosition(165, 41, 50, 18);
     bmsValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     bmsValue.setLinespacing(0);
     Unicode::snprintf(bmsValueBuffer, BMSVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID52).getText());
     bmsValue.setWildcard(bmsValueBuffer);
     bmsValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID51));
 
-    mcuValue.setPosition(115, 433, 50, 18);
+    mcuValue.setPosition(215, 41, 50, 18);
     mcuValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     mcuValue.setLinespacing(0);
     Unicode::snprintf(mcuValueBuffer, MCUVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID54).getText());
     mcuValue.setWildcard(mcuValueBuffer);
     mcuValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID53));
-
-    registeringValue.setPosition(165, 433, 20, 18);
-    registeringValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
-    registeringValue.setLinespacing(0);
-    registeringValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID55));
 
     add(__background);
     add(background);
@@ -290,6 +294,7 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     add(fingerScan);
     add(keylessKey);
     add(beamActivated);
+    add(none);
     add(mainGo);
     add(mainReverse);
     add(phoneMirroring);
@@ -309,7 +314,6 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     add(stateValue);
     add(bmsValue);
     add(mcuValue);
-    add(registeringValue);
 }
 
 void dashboardScreenViewBase::setupScreen()
