@@ -26,9 +26,9 @@ typedef enum {
 
 #if defined(SIMULATOR)
 /* Macro prototypes ------------------------------------------------------- */
-#define MCU_SPEED_MAX 			      (uint8_t) 150							// in kph
-#define MCU_DISCUR_MAX     	      (uint8_t) 220
-#define BMS_LOWBAT							  (uint8_t) 20							// in %
+#define MCU_SPEED_MAX_KPH 			  ((uint8_t)150)
+#define MCU_DISCUR_MAX     	      	  ((uint8_t)220)
+#define BMS_LOWBAT_PERCENT			  ((uint8_t)20)
 
 /* Enum prototypes ------------------------------------------------------- */
 typedef enum {

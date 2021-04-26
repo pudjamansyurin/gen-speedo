@@ -89,7 +89,7 @@ void Model::reloadIndicators()
 	indicators[INDICATOR_OVERHEAT] = HMI1.d.state.overheat;
 	indicators[INDICATOR_FINGER] = HMI1.d.state.unfinger;
 	indicators[INDICATOR_UNREMOTE] = HMI1.d.state.unremote;
-	indicators[INDICATOR_LOWBAT] = VCU.d.bms.soc < BMS_LOWBAT;
+	indicators[INDICATOR_LOWBAT] = VCU.d.bms.soc < BMS_LOWBAT_PERCENT;
 
 	for (uint8_t i = INDICATOR_ABS; i <= INDICATOR_LOWBAT; i++)
 		errors |= indicators[i];
@@ -154,7 +154,7 @@ void Model::generateRandomData()
 {
 
 	if (ticker % 1 == 0) {
-		if (VCU.d.mcu.speed >= MCU_SPEED_MAX) VCU.d.mcu.speed = 0;
+		if (VCU.d.mcu.speed >= MCU_SPEED_MAX_KPH) VCU.d.mcu.speed = 0;
 		else VCU.d.mcu.speed += 5;
 
 		if (VCU.d.mcu.discur >= MCU_DISCUR_MAX) VCU.d.mcu.discur = 0;

@@ -45,7 +45,7 @@ void dashboardScreenPresenter::setSpeed(uint8_t value)
   if (_value != value || init) {
     init = 0;
     _value = value;
-    view.writeSpeed(value * 100 / MCU_SPEED_MAX);
+    view.writeSpeed(value * 100 / MCU_SPEED_MAX_KPH);
   }
 }
 void dashboardScreenPresenter::setDiscur(uint8_t value)

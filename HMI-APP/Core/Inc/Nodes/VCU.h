@@ -13,7 +13,7 @@
 #include "Drivers/_canbus.h"
 
 /* Exported constants --------------------------------------------------------*/
-#define VCU_TIMEOUT    					 (uint32_t) 5000					// ms
+#define VCU_TIMEOUT_MS    					 ((uint32_t)5000)					
 
 /* Exported struct -----------------------------------------------------------*/
 typedef struct {

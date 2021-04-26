@@ -13,10 +13,9 @@
 
 /* Exported defines
  * ------------------------------------------------------------*/
-#define EVENT_MASK		  		     (uint32_t) 0xFFFFFF
-#define EVENT_READY                         BIT(0)
-
-#define FLAG_MASK				         (uint32_t) 0x7FFFFFFF
+#define EVENT_READY                      BIT(0)
+#define EVENT_MASK		  		         ((uint32_t)0xFFFFFF)
+#define FLAG_MASK				         ((uint32_t)0x7FFFFFFF)
 
 /* Public functions prototype ------------------------------------------------*/
 uint8_t _osFlag(uint32_t *notif, uint32_t flags, uint32_t options, uint32_t timeout);

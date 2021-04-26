@@ -722,7 +722,7 @@ void StartManagerTask(void *argument)
 		lastWake = osKernelGetTickCount();
 
 		_LcdBacklight(HMI1.d.state.daylight);
-		if (_GetTickMS() - VCU.d.tick > VCU_TIMEOUT)
+		if (_GetTickMS() - VCU.d.tick > VCU_TIMEOUT_MS)
 			HMI1.Flush();
 
 		HAL_IWDG_Refresh(&hiwdg);
