@@ -22,7 +22,7 @@ typedef struct {
   HBAR_MODE m;
   hbar_data_t d;
 	uint8_t reverse;
-	uint8_t hide;
+	uint8_t listening;
 } hbar_t;
 
 typedef struct {

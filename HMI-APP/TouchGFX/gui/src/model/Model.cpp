@@ -18,7 +18,7 @@ uint8_t LTDC_MEASURED_FPS = 0;
 
 Model::Model()
 :
-        						modelListener(0), ticker(0), indicator(1), indicators { 0 }
+        										modelListener(0), ticker(0), indicator(1), indicators { 0 }
 {
 #ifdef SIMULATOR
 	setDefaultData();
@@ -28,6 +28,8 @@ Model::Model()
 
 void Model::tick()
 {
+	static uint8_t session = 0;
+
 	ticker++;
 
 #ifdef SIMULATOR
@@ -38,6 +40,12 @@ void Model::tick()
 		indicator = INDICATOR_REVERSE;
 	else if (ticker % 120 == 0)
 		swipeIndicator();
+
+	if (HMI1.hbar.listening) {
+		if (ticker % 20 == 0)
+			session = !session;
+	} else
+		session = 1;
 
 	// write to LCD
 	modelListener->setTripMode(HMI1.hbar.d.mode[HBAR_M_TRIP]);
@@ -59,7 +67,7 @@ void Model::tick()
 	modelListener->setIndicator(indicator);
 
 	modelListener->setModeSelector(HMI1.hbar.m);
-	modelListener->setModeVisible(!HMI1.hbar.hide);
+	modelListener->setModeSession(session);
 
 	modelListener->setFps(LTDC_MEASURED_FPS);
 	modelListener->setState(VCU.d.state);
@@ -130,7 +138,7 @@ void Model::swipeIndicator()
 #ifdef SIMULATOR
 void Model::setDefaultData()
 {
-	HMI1.hbar.hide = 0;
+	HMI1.hbar.listening = 0;
 	HMI1.hbar.m = HBAR_M_DRIVE;
 	HMI1.hbar.d.mode[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
 	HMI1.hbar.d.mode[HBAR_M_DRIVE] = HBAR_M_DRIVE_STANDARD;
@@ -152,6 +160,7 @@ void Model::generateRandomIndicators()
 
 void Model::generateRandomData()
 {
+	HMI1.hbar.listening = 1;
 
 	if (ticker % 1 == 0) {
 		if (VCU.d.mcu.speed >= MCU_SPEED_MAX_KPH) VCU.d.mcu.speed = 0;
@@ -163,9 +172,6 @@ void Model::generateRandomData()
 
 	if (ticker % 10 == 0)
 		HMI1.hbar.d.trip++;
-
-	if (ticker % 15 == 0)
-		HMI1.hbar.hide = !HMI1.hbar.hide;
 
 	if (ticker % 20 == 0) {
 		if (HMI1.hbar.d.report >= 255) HMI1.hbar.d.report = 0;

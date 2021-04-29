@@ -46,7 +46,7 @@ public:
   virtual void setReportValue(uint16_t value);
 
   virtual void setModeSelector(uint8_t mode);
-  virtual void setModeVisible(uint8_t state);
+  virtual void setModeSession(uint8_t state);
 
   uint8_t getCurrentIndicator();
   virtual uint8_t getIndicatorState(uint8_t index);

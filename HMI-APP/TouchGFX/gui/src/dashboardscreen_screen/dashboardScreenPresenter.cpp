@@ -205,7 +205,7 @@ void dashboardScreenPresenter::setModeSelector(uint8_t mode)
     view.writeModeSelector(mode);
   }
 }
-void dashboardScreenPresenter::setModeVisible(uint8_t state)
+void dashboardScreenPresenter::setModeSession(uint8_t state)
 {
   static uint8_t init = 1, _state;
 
