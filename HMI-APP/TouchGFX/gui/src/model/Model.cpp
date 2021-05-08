@@ -50,13 +50,12 @@ void Model::tick()
 	// write to LCD
 	modelListener->setTripMode(HMI1.hbar.d.mode[HBAR_M_TRIP]);
 	modelListener->setDriveMode(HMI1.hbar.d.mode[HBAR_M_DRIVE]);
-	modelListener->setReportMode(HMI1.hbar.d.mode[HBAR_M_REPORT]);
+	modelListener->setReportMode(HMI1.hbar.d.mode[HBAR_M_REPORT], HMI1.hbar.d.report);
 
 	modelListener->setSpeed(VCU.d.mcu.speed);
 	modelListener->setDiscur(VCU.d.mcu.discur);
 
 	modelListener->setTripValue(HMI1.hbar.d.trip);
-	modelListener->setReportValue(HMI1.hbar.d.report);
 
 	modelListener->setSignal(VCU.d.signal);
 	modelListener->setBattery(VCU.d.bms.soc);

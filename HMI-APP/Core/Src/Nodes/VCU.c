@@ -73,17 +73,30 @@ void VCU_RX_SwitchControl(can_rx_t *Rx) {
 void VCU_RX_ModeData(can_rx_t *Rx) {
 	UNION64 *d = &(Rx->data);
 
-	if (HMI1.hbar.d.mode[HBAR_M_TRIP] == HBAR_M_TRIP_A)
-		HMI1.hbar.d.trip = d->u16[0];
-	else if (HMI1.hbar.d.mode[HBAR_M_TRIP] == HBAR_M_TRIP_B)
-		HMI1.hbar.d.trip = d->u16[1];
-	else if (HMI1.hbar.d.mode[HBAR_M_TRIP] == HBAR_M_TRIP_ODO)
-		HMI1.hbar.d.trip = d->u16[2];
+	switch (HMI1.hbar.d.mode[HBAR_M_TRIP]) {
+		case HBAR_M_TRIP_A:
+			HMI1.hbar.d.trip = d->u16[0];
+			break;
+		case HBAR_M_TRIP_B:
+			HMI1.hbar.d.trip = d->u16[1];
+			break;
+		case HBAR_M_TRIP_ODO:
+			HMI1.hbar.d.trip = d->u16[2];
+			break;
+		default:
+			break;
+	}
 
-	if (HMI1.hbar.d.mode[HBAR_M_REPORT] == HBAR_M_REPORT_RANGE)
-		HMI1.hbar.d.report = d->u8[6];
-	else if (HMI1.hbar.d.mode[HBAR_M_REPORT] == HBAR_M_REPORT_AVERAGE)
-		HMI1.hbar.d.report = d->u8[7];
+	switch (HMI1.hbar.d.mode[HBAR_M_REPORT]) {
+		case HBAR_M_REPORT_RANGE:
+			HMI1.hbar.d.report = d->u8[6];
+			break;
+		case HBAR_M_REPORT_AVERAGE:
+			HMI1.hbar.d.report = d->u8[7];
+			break;
+		default:
+			break;
+	}
 
 	VCU.d.tick = _GetTickMS();
 }

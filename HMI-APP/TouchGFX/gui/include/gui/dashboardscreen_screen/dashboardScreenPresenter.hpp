@@ -42,8 +42,7 @@ public:
   virtual void setDriveMode(uint8_t index);
   virtual void setTripMode(uint8_t index);
   virtual void setTripValue(uint16_t value);
-  virtual void setReportMode(uint8_t index);
-  virtual void setReportValue(uint16_t value);
+  virtual void setReportMode(uint8_t index, uint16_t value);
 
   virtual void setModeSelector(uint8_t mode);
   virtual void setModeSession(uint8_t state);

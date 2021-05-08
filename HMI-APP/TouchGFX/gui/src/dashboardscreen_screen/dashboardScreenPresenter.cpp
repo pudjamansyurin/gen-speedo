@@ -173,7 +173,7 @@ void dashboardScreenPresenter::setTripValue(uint16_t value)
     view.writeTripValue(value);
   }
 }
-void dashboardScreenPresenter::setReportMode(uint8_t index)
+void dashboardScreenPresenter::setReportMode(uint8_t index, uint16_t value)
 {
   static uint8_t init = 1, _index;
 
@@ -181,16 +181,14 @@ void dashboardScreenPresenter::setReportMode(uint8_t index)
     init = 0;
     _index = index;
     view.writeReportMode(index);
-    // touchgfx_printf("R = %d\n", index);
+    view.writeReportValue(value);
   }
-}
-void dashboardScreenPresenter::setReportValue(uint16_t value)
-{
-  static uint8_t init = 1;
+
+  static uint8_t initVal = 1;
   static uint16_t _value;
 
-  if (_value != value || init) {
-    init = 0;
+  if (_value != value || initVal) {
+    initVal = 0;
     _value = value;
     view.writeReportValue(value);
   }
