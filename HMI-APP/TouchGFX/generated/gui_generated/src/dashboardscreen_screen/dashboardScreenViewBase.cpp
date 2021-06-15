@@ -278,7 +278,7 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     mcuValue.setWildcard(mcuValueBuffer);
     mcuValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID53));
 
-    canState.setXY(309, 348);
+    canState.setXY(309, 345);
     canState.setVisible(false);
     canState.setColor(touchgfx::Color::getColorFrom24BitRGB(217, 210, 25));
     canState.setLinespacing(0);
