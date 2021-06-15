@@ -26,7 +26,7 @@ typedef enum {
 
 #if defined(SIMULATOR)
 /* Macro prototypes ------------------------------------------------------- */
-#define MCU_SPEED_MAX_KPH 			  ((uint8_t)150)
+#define MCU_SPEED_MAX_KPH 			  ((uint8_t)140)
 #define MCU_DISCUR_MAX     	      	  ((uint8_t)220)
 #define BMS_LOWBAT_PERCENT			  ((uint8_t)20)
 
@@ -71,6 +71,7 @@ typedef struct {
 } mcu_data_t;
 
 typedef struct {
+	uint8_t connected;
 	uint32_t tick;
 	uint8_t signal;
 	int8_t state;
@@ -105,7 +106,7 @@ typedef struct {
 		uint8_t unfinger;
 		uint8_t unremote;
 		uint8_t daylight;
-		uint8_t registering;
+		uint8_t scanning;
 	} state;
 	struct {
 		uint8_t left;

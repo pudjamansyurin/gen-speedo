@@ -17,10 +17,10 @@
 /* Exported constants --------------------------------------------------------*/
 #define HMI_VERSION              	  ((uint16_t)347)
 
-#define CAN_DEBUG		0
+#define CAN_DEBUG							0
 
-#define MCU_SPEED_MAX_KPH 			  ((uint8_t)150)
-#define MCU_DISCUR_MAX 			      ((uint8_t)220)
+#define MCU_SPEED_MAX_KPH 			  ((uint8_t)140)
+#define MCU_DISCUR_MAX 			      ((uint8_t)210)
 #define BMS_LOWBAT_PERCENT			  ((uint8_t)20)
 
 /* Enum prototypes ------------------------------------------------------- */

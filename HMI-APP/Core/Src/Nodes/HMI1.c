@@ -17,11 +17,6 @@ hmi1_t HMI1 = {
 				.state = { 0 },
 				.sein = { 0 },
 		},
-		.t = {
-				HMI1_TX_Heartbeat
-		},
-		HMI1_Init,
-		HMI1_Flush
 };
 
 /* Public functions implementation --------------------------------------------*/
@@ -46,14 +41,6 @@ void HMI1_Init(void) {
 	HMI1.hbar.d.mode[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
 	HMI1.hbar.d.mode[HBAR_M_DRIVE] = HBAR_M_DRIVE_STANDARD;
 	HMI1.hbar.d.mode[HBAR_M_REPORT] = HBAR_M_REPORT_RANGE;
-}
-
-void HMI1_Flush(void) {
-	VCU.Init();
-	HMI1.Init();
-
-	_LcdBacklight(1);
-	printf("Data is flushed.\n");
 }
 
 /* ====================================== CAN TX =================================== */

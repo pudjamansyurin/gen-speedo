@@ -68,11 +68,13 @@ void Model::tick()
 	modelListener->setModeSelector(HMI1.hbar.m);
 	modelListener->setModeSession(session);
 
-	modelListener->setFps(LTDC_MEASURED_FPS);
 	modelListener->setState(VCU.d.state);
 	modelListener->setBmsState(VCU.d.bms.run);
 	modelListener->setMcuState(VCU.d.mcu.run);
-	modelListener->setRegisteringState(HMI1.d.state.registering);
+	modelListener->setScanningState(HMI1.d.state.scanning);
+
+	modelListener->setCanState(VCU.d.connected);
+
 }
 
 uint8_t Model::readCurrentIndicator()
@@ -142,6 +144,8 @@ void Model::setDefaultData()
 	HMI1.hbar.d.mode[HBAR_M_TRIP] = HBAR_M_TRIP_ODO;
 	HMI1.hbar.d.mode[HBAR_M_DRIVE] = HBAR_M_DRIVE_STANDARD;
 	HMI1.hbar.d.mode[HBAR_M_REPORT] = HBAR_M_REPORT_RANGE;
+
+	VCU.d.connected = 0;
 }
 
 void Model::generateRandomIndicators()
@@ -226,20 +230,6 @@ void Model::generateRandomData()
 
 	if (ticker % (60 * 60) == 0)
 		generateRandomIndicators();
-
-	switch (HMI1.hbar.m) {
-	case HBAR_M_TRIP :
-		modelListener->setTripMode(HMI1.hbar.d.mode[HBAR_M_TRIP]);
-		break;
-	case HBAR_M_DRIVE:
-		modelListener->setDriveMode(HMI1.hbar.d.mode[HBAR_M_DRIVE]);
-		break;
-	case HBAR_M_REPORT:
-		modelListener->setReportMode(HMI1.hbar.d.mode[HBAR_M_REPORT]);
-		break;
-	default:
-		break;
-	}
 }
 #endif
 

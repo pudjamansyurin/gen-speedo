@@ -35,7 +35,7 @@ typedef struct {
 		uint8_t unfinger;
 		uint8_t unremote;
 		uint8_t daylight;
-		uint8_t registering;
+		uint8_t scanning;
 	} state;
 	struct {
 		uint8_t left;
@@ -46,11 +46,6 @@ typedef struct {
 typedef struct {
 	hbar_t hbar;
 	hmi1_data_t d;
-	struct {
-		uint8_t (*Heartbeat)(void);
-	} t;
-	void (*Init)(void);
-	void (*Flush)(void);
 } hmi1_t;
 
 /* Exported variables ---------------------------------------------------------*/
@@ -58,7 +53,6 @@ extern hmi1_t HMI1;
 
 /* Public functions implementation --------------------------------------------*/
 void HMI1_Init(void);
-void HMI1_Flush(void);
 uint8_t HMI1_TX_Heartbeat(void);
 
 #endif /* INC_NODES_HMI1_H_ */

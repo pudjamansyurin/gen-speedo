@@ -707,7 +707,8 @@ void StartManagerTask(void *argument)
 	TickType_t lastWake;
 
 	_LcdPower(0);
-	HMI1.Flush();
+	VCU_Init();
+	HMI1_Init();
 
 	// suspend other threads
 	//      osThreadSuspend(DisplayTaskHandle);
@@ -721,9 +722,14 @@ void StartManagerTask(void *argument)
 	for (;;) {
 		lastWake = osKernelGetTickCount();
 
-		_LcdBacklight(HMI1.d.state.daylight);
-		if (_GetTickMS() - VCU.d.tick > VCU_TIMEOUT_MS)
-			HMI1.Flush();
+		VCU.d.connected = (_GetTickMS() - VCU.d.tick < VCU_TIMEOUT_MS);
+		if (VCU.d.connected) {
+			_LcdBacklight(HMI1.d.state.daylight);
+		} else {
+			_LcdBacklight(1);
+			VCU_Init();
+			HMI1_Init();
+		}
 
 		HAL_IWDG_Refresh(&hiwdg);
 		osDelayUntil(lastWake + 1000);
@@ -773,7 +779,7 @@ void StartCanTxTask(void *argument)
 	for (;;) {
 		lastWake = osKernelGetTickCount();
 
-		HMI1.t.Heartbeat();
+		HMI1_TX_Heartbeat();
 
 		osDelayUntil(lastWake + 500);
 	}
@@ -800,10 +806,10 @@ void StartCanRxTask(void *argument)
 			if (Rx.header.IDE == CAN_ID_STD) {
 				switch (Rx.header.StdId) {
 					case CAND_VCU_SWITCH_CTL :
-						VCU.r.SwitchControl(&Rx);
+						VCU_RX_SwitchControl(&Rx);
 						break;
 					case CAND_VCU_MODE_DATA :
-						VCU.r.ModeData(&Rx);
+						VCU_RX_ModeData(&Rx);
 						break;
 					case CAND_FOCAN_PROGRESS :
 					case CAND_FOCAN_CRC :

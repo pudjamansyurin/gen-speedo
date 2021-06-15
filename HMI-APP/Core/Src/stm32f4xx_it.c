@@ -42,7 +42,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-uint8_t LTDC_MEASURED_FPS = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -195,16 +195,7 @@ void CAN2_RX0_IRQHandler(void)
 void LTDC_IRQHandler(void)
 {
   /* USER CODE BEGIN LTDC_IRQn 0 */
-	static uint32_t tick = 0;
-	uint32_t time, now = HAL_GetTick();
 
-	time = now - tick;
-	time = time ? time : 1;
-	time = 1000 / time;
-	tick = now;
-
-	if (time < 100)
-		LTDC_MEASURED_FPS = time;
   /* USER CODE END LTDC_IRQn 0 */
   HAL_LTDC_IRQHandler(&hltdc);
   /* USER CODE BEGIN LTDC_IRQn 1 */

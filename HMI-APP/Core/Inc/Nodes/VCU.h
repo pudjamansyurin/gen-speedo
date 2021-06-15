@@ -28,6 +28,7 @@ typedef struct {
 } mcu_data_t;
 
 typedef struct {
+	uint8_t connected;
 	uint32_t tick;
 	uint8_t signal;
 	int8_t state;
@@ -37,11 +38,6 @@ typedef struct {
 
 typedef struct {
 	vcu_data_t d;
-	struct {
-		void (*SwitchControl)(can_rx_t*);
-		void (*ModeData)(can_rx_t*);
-	} r;
-	void (*Init)(void);
 } vcu_t;
 
 /* Exported variables ---------------------------------------------------------*/

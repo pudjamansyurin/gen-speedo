@@ -59,16 +59,6 @@ void dashboardScreenPresenter::setDiscur(uint8_t value)
     view.writeDiscur(value * 100 / MCU_DISCUR_MAX);
   }
 }
-void dashboardScreenPresenter::setFps(uint8_t value)
-{
-  static uint8_t init = 1, _value;
-
-  if (_value != value || init) {
-    init = 0;
-    _value = value;
-    view.writeFps(value);
-  }
-}
 void dashboardScreenPresenter::setState(int8_t value)
 {
   static uint8_t init = 1;
@@ -100,14 +90,24 @@ void dashboardScreenPresenter::setMcuState(uint8_t value)
     view.writeMcuState(value);
   }
 }
-void dashboardScreenPresenter::setRegisteringState(uint8_t value)
+void dashboardScreenPresenter::setScanningState(uint8_t value)
 {
   static uint8_t init = 1, _value;
 
   if (_value != value || init) {
     init = 0;
     _value = value;
-    view.writeRegisteringState(value);
+    view.writeScanningState(value);
+  }
+}
+void dashboardScreenPresenter::setCanState(uint8_t value)
+{
+  static uint8_t init = 1, _value;
+
+  if (_value != value || init) {
+    init = 0;
+    _value = value;
+    view.writeCanState(value);
   }
 }
 void dashboardScreenPresenter::setBattery(uint8_t percent)

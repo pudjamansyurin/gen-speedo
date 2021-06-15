@@ -156,12 +156,6 @@ void dashboardScreenView::writeDiscur(uint8_t percent)
 	discurProgress.invalidate();
 }
 
-void dashboardScreenView::writeFps(uint8_t value)
-{
-	Unicode::snprintf(fpsValueBuffer, FPSVALUE_SIZE, "%2d", value);
-	fpsValue.invalidate();
-}
-
 void dashboardScreenView::writeState(int8_t value)
 {
 	Unicode::snprintf(stateValueBuffer, STATEVALUE_SIZE, "%1d", value);
@@ -180,7 +174,7 @@ void dashboardScreenView::writeMcuState(uint8_t value)
 	mcuValue.invalidate();
 }
 
-void dashboardScreenView::writeRegisteringState(uint8_t value)
+void dashboardScreenView::writeScanningState(uint8_t value)
 {
 	uint8_t show = value & 0x01;
 	uint8_t error = value & 0x02;
@@ -189,9 +183,15 @@ void dashboardScreenView::writeRegisteringState(uint8_t value)
 	if (error)
 		color = BITMAP_FINGERSCANLOGINSTATUSMINIRED_ID;
 
-	registerIcon.setVisible(show);
-	registerIcon.setBitmap(Bitmap(color));
-	registerIcon.invalidate();
+	scanningIcon.setVisible(show);
+	scanningIcon.setBitmap(Bitmap(color));
+	scanningIcon.invalidate();
+}
+
+void dashboardScreenView::writeCanState(uint8_t value)
+{
+	canState.setVisible(!value);
+	canState.invalidate();
 }
 
 void dashboardScreenView::writeBattery(uint8_t percent)

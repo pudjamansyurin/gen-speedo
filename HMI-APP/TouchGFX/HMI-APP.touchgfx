@@ -521,7 +521,7 @@
                 "Type": "Image",
                 "RelativeFilename": "FingerscanLoginStatusMini.png",
                 "Alpha": 255,
-                "Name": "registerIcon",
+                "Name": "scanningIcon",
                 "X": 507,
                 "Y": 62,
                 "Width": 20,
@@ -1057,35 +1057,6 @@
             "Moveable": false
           },
           {
-            "Type": "TextArea",
-            "TextId": "SingleUseId47",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "Alpha": 255,
-            "AutoSize": false,
-            "LineSpacing": 0,
-            "Wildcard1": {
-              "TextId": "SingleUseId48",
-              "UseBuffer": true,
-              "BufferSize": 3
-            },
-            "Name": "fpsValue",
-            "X": 686,
-            "Y": 433,
-            "Width": 95,
-            "Height": 18,
-            "Visible": true,
-            "LockPosition": false,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
             "Type": "ImageProgress",
             "FileNameProgress": "ProgressRight.png",
             "AnchorAtZero": true,
@@ -1157,7 +1128,7 @@
               "BufferSize": 2
             },
             "Name": "stateValue",
-            "X": 115,
+            "X": 327,
             "Y": 41,
             "Width": 50,
             "Height": 18,
@@ -1186,7 +1157,7 @@
               "BufferSize": 2
             },
             "Name": "bmsValue",
-            "X": 165,
+            "X": 377,
             "Y": 41,
             "Width": 50,
             "Height": 18,
@@ -1215,11 +1186,35 @@
               "BufferSize": 2
             },
             "Name": "mcuValue",
-            "X": 215,
+            "X": 427,
             "Y": 41,
             "Width": 50,
             "Height": 18,
             "Visible": true,
+            "LockPosition": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Type": "TextArea",
+            "TextId": "SingleUseId55",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 217,
+              "Green": 210,
+              "Blue": 25
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "canState",
+            "X": 309,
+            "Y": 348,
+            "Width": 114,
+            "Height": 14,
+            "Visible": false,
             "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
@@ -1336,14 +1331,6 @@
         "IsResource": false
       },
       {
-        "TextEntryId": "SingleUseId47",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId48",
-        "IsResource": false
-      },
-      {
         "TextEntryId": "SingleUseId49",
         "IsResource": false
       },
@@ -1365,6 +1352,10 @@
       },
       {
         "TextEntryId": "SingleUseId54",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId55",
         "IsResource": false
       }
     ],

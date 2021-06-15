@@ -119,10 +119,10 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     driveBox.setBitmap(touchgfx::Bitmap(BITMAP_MODECONTAINER_ID));
     frameContainer.add(driveBox);
 
-    registerIcon.setXY(507, 62);
-    registerIcon.setVisible(false);
-    registerIcon.setBitmap(touchgfx::Bitmap(BITMAP_FINGERSCANLOGINSTATUSMINI_ID));
-    frameContainer.add(registerIcon);
+    scanningIcon.setXY(507, 62);
+    scanningIcon.setVisible(false);
+    scanningIcon.setBitmap(touchgfx::Bitmap(BITMAP_FINGERSCANLOGINSTATUSMINI_ID));
+    frameContainer.add(scanningIcon);
 
     seinLeftContainer.setPosition(152, 67, 80, 355);
 
@@ -241,13 +241,6 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     batteryValue.setWildcard(batteryValueBuffer);
     batteryValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
 
-    fpsValue.setPosition(686, 433, 95, 18);
-    fpsValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
-    fpsValue.setLinespacing(0);
-    Unicode::snprintf(fpsValueBuffer, FPSVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID48).getText());
-    fpsValue.setWildcard(fpsValueBuffer);
-    fpsValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID47));
-
     discurProgress.setXY(558, 57);
     discurProgress.setProgressIndicatorPosition(0, 0, 137, 366);
     discurProgress.setRange(0, 100);
@@ -264,26 +257,32 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     speedProgress.setValue(100);
     speedProgress.setAnchorAtZero(true);
 
-    stateValue.setPosition(115, 41, 50, 18);
+    stateValue.setPosition(327, 41, 50, 18);
     stateValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     stateValue.setLinespacing(0);
     Unicode::snprintf(stateValueBuffer, STATEVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID50).getText());
     stateValue.setWildcard(stateValueBuffer);
     stateValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID49));
 
-    bmsValue.setPosition(165, 41, 50, 18);
+    bmsValue.setPosition(377, 41, 50, 18);
     bmsValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     bmsValue.setLinespacing(0);
     Unicode::snprintf(bmsValueBuffer, BMSVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID52).getText());
     bmsValue.setWildcard(bmsValueBuffer);
     bmsValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID51));
 
-    mcuValue.setPosition(215, 41, 50, 18);
+    mcuValue.setPosition(427, 41, 50, 18);
     mcuValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     mcuValue.setLinespacing(0);
     Unicode::snprintf(mcuValueBuffer, MCUVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID54).getText());
     mcuValue.setWildcard(mcuValueBuffer);
     mcuValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID53));
+
+    canState.setXY(309, 348);
+    canState.setVisible(false);
+    canState.setColor(touchgfx::Color::getColorFrom24BitRGB(217, 210, 25));
+    canState.setLinespacing(0);
+    canState.setTypedText(touchgfx::TypedText(T_SINGLEUSEID55));
 
     add(__background);
     add(background);
@@ -308,12 +307,12 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     add(tripValue);
     add(signalValue);
     add(batteryValue);
-    add(fpsValue);
     add(discurProgress);
     add(speedProgress);
     add(stateValue);
     add(bmsValue);
     add(mcuValue);
+    add(canState);
 }
 
 void dashboardScreenViewBase::setupScreen()

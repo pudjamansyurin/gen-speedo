@@ -60,7 +60,7 @@ protected:
     touchgfx::Image backgroundLeft;
     touchgfx::Image tripBox;
     touchgfx::Image driveBox;
-    touchgfx::Image registerIcon;
+    touchgfx::Image scanningIcon;
     touchgfx::CacheableContainer seinLeftContainer;
     touchgfx::Image seinLeft;
     touchgfx::Container seinRightContainer;
@@ -83,12 +83,12 @@ protected:
     touchgfx::TextAreaWithOneWildcard tripValue;
     touchgfx::TextAreaWithOneWildcard signalValue;
     touchgfx::TextAreaWithOneWildcard batteryValue;
-    touchgfx::TextAreaWithOneWildcard fpsValue;
     touchgfx::ImageProgress discurProgress;
     touchgfx::ImageProgress speedProgress;
     touchgfx::TextAreaWithOneWildcard stateValue;
     touchgfx::TextAreaWithOneWildcard bmsValue;
     touchgfx::TextAreaWithOneWildcard mcuValue;
+    touchgfx::TextArea canState;
 
     /*
      * Wildcard Buffers
@@ -111,8 +111,6 @@ protected:
     touchgfx::Unicode::UnicodeChar signalValueBuffer[SIGNALVALUE_SIZE];
     static const uint16_t BATTERYVALUE_SIZE = 4;
     touchgfx::Unicode::UnicodeChar batteryValueBuffer[BATTERYVALUE_SIZE];
-    static const uint16_t FPSVALUE_SIZE = 3;
-    touchgfx::Unicode::UnicodeChar fpsValueBuffer[FPSVALUE_SIZE];
     static const uint16_t STATEVALUE_SIZE = 2;
     touchgfx::Unicode::UnicodeChar stateValueBuffer[STATEVALUE_SIZE];
     static const uint16_t BMSVALUE_SIZE = 2;

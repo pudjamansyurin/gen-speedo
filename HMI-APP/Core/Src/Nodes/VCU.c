@@ -14,21 +14,12 @@ extern hmi1_t HMI1;
 
 /* Public variables -----------------------------------------------------------*/
 vcu_t VCU = {
-		.d = { 0 },
-		.r = {
-				VCU_RX_SwitchControl,
-				VCU_RX_ModeData
-		},
-		VCU_Init
+		.d = { 0 }
 };
 
 /* Public functions implementation --------------------------------------------*/
 void VCU_Init(void) {
-	VCU.d.signal = 0;
-	VCU.d.state = 0;
-	VCU.d.bms.soc = 0;
-	VCU.d.mcu.speed = 0;
-	VCU.d.mcu.discur = 0;
+	memset(&VCU, 0, sizeof(vcu_t));
 }
 
 /* ====================================== CAN RX =================================== */
@@ -51,7 +42,7 @@ void VCU_RX_SwitchControl(can_rx_t *Rx) {
 	HMI1.hbar.reverse = (d->u8[1] >> 2) & 0x01;
 	VCU.d.bms.run = (d->u8[1] >> 3) & 0x01;
 	VCU.d.mcu.run = (d->u8[1] >> 4) & 0x01;
-	HMI1.d.state.registering = (d->u8[1] >> 5) & 0x03;
+	HMI1.d.state.scanning = (d->u8[1] >> 5) & 0x03;
 
 	// mode
 	HMI1.hbar.d.mode[HBAR_M_DRIVE] = (d->u8[2] >> 0) & 0x03;
