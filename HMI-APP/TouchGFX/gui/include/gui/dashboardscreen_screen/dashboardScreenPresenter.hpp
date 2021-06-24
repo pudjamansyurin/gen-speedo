@@ -8,24 +8,25 @@ using namespace touchgfx;
 
 class dashboardScreenView;
 
-class dashboardScreenPresenter : public touchgfx::Presenter, public ModelListener
-{
-public:
+class dashboardScreenPresenter : public touchgfx::Presenter,
+                                 public ModelListener {
+ public:
   dashboardScreenPresenter(dashboardScreenView& v);
 
   /**
-   * The activate function is called automatically when this screen is "switched in"
-   * (ie. made active). Initialization logic can be placed here.
+   * The activate function is called automatically when this screen is "switched
+   * in" (ie. made active). Initialization logic can be placed here.
    */
   virtual void activate();
 
   /**
-   * The deactivate function is called automatically when this screen is "switched out"
-   * (ie. made inactive). Teardown functionality can be placed here.
+   * The deactivate function is called automatically when this screen is
+   * "switched out" (ie. made inactive). Teardown functionality can be placed
+   * here.
    */
   virtual void deactivate();
 
-  virtual ~dashboardScreenPresenter() {};
+  virtual ~dashboardScreenPresenter(){};
 
   virtual void setSeinLeft(uint8_t state);
   virtual void setSeinRight(uint8_t state);
@@ -42,17 +43,18 @@ public:
   virtual void setDriveMode(uint8_t index);
   virtual void setTripMode(uint8_t index);
   virtual void setTripValue(uint16_t value);
-  virtual void setReportMode(uint8_t index, uint16_t value);
+  virtual void setPredictionMode(uint8_t index, uint16_t value);
 
   virtual void setModeSelector(uint8_t mode);
   virtual void setModeSession(uint8_t state);
 
   uint8_t getCurrentIndicator();
   virtual uint8_t getIndicatorState(uint8_t index);
-private:
+
+ private:
   dashboardScreenPresenter();
 
   dashboardScreenView& view;
 };
 
-#endif // DASHBOARDSCREENPRESENTER_HPP
+#endif  // DASHBOARDSCREENPRESENTER_HPP
