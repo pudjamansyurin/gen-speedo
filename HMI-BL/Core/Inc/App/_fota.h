@@ -8,10 +8,12 @@
 #ifndef INC_LIBS__FOTA_H_
 #define INC_LIBS__FOTA_H_
 
-/* Includes ------------------------------------------------------------------*/
-#include "Libs/_utils.h"
+/* Includes
+ * --------------------------------------------*/
+#include "App/_common.h"
 
-/* Public functions implementation --------------------------------------------*/
+/* Public functions prototype
+ * --------------------------------------------*/
 uint8_t FOTA_ValidateCRC(uint32_t crc, uint32_t len, uint32_t address);
 uint8_t FOTA_ValidImage(uint32_t address);
 void FOTA_JumpToApplication(void);

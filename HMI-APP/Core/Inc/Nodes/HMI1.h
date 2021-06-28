@@ -8,10 +8,12 @@
 #ifndef INC_NODES_HMI1_H_
 #define INC_NODES_HMI1_H_
 
-/* Includes ------------------------------------------------------------------*/
-#include "Libs/_utils.h"
+/* Includes
+ * --------------------------------------------*/
+#include "App/_common.h"
 
-/* Exported struct -----------------------------------------------------------*/
+/* Exported structs
+ * --------------------------------------------*/
 typedef struct {
   uint8_t mode[HBAR_M_MAX];
   uint8_t prediction;
@@ -49,10 +51,10 @@ typedef struct {
 } hmi1_t;
 
 /* Exported variables
- * ---------------------------------------------------------*/
+ * --------------------------------------------*/
 extern hmi1_t HMI1;
 
-/* Public functions implementation
+/* Public functions prototype
  * --------------------------------------------*/
 void HMI1_Init(void);
 uint8_t HMI1_TX_Heartbeat(void);

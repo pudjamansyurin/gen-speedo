@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #if !defined(SIMULATOR)
-#include "_defines_shared.h"
+#include "_defs_shared.h"
 #endif
 
 /* Exported enum  ------------------------------------------------------------*/

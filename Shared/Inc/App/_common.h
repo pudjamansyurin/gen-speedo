@@ -1,5 +1,5 @@
 /*
- * _utils.h
+ * _common.h
  *
  *  Created on: Aug 26, 2019
  *      Author: Puja
@@ -8,29 +8,33 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
-/* Includes ------------------------------------------------------------------*/
-#include "_defines.h"
+/* Includes
+ * --------------------------------------------*/
 #include "Drivers/_log.h"
-#if RTOS_ENABLE
+#include "_defs.h"
+
+#if APP
 #include "Libs/_rtos.h"
 #endif
 
-/* Exported union ------------------------------------------------------------*/
+/* Exported unions
+ * --------------------------------------------*/
 typedef union {
-    uint8_t u8[8];
-    uint16_t u16[4];
-    uint32_t u32[2];
-    uint64_t u64;
-    int8_t s8[8];
-    int16_t s16[4];
-    int32_t s32[2];
-    int64_t s64;
-    char CHAR[8];
-    float FLOAT[2];
-    double DOUBLE;
+  uint8_t u8[8];
+  uint16_t u16[4];
+  uint32_t u32[2];
+  uint64_t u64;
+  int8_t s8[8];
+  int16_t s16[4];
+  int32_t s32[2];
+  int64_t s64;
+  char CHAR[8];
+  float FLOAT[2];
+  double DOUBLE;
 } UNION64;
 
-/* Functions prototypes -------------------------------------------------------*/
+/* Public functions prototypes
+ * --------------------------------------------*/
 void _DelayMS(uint32_t ms);
 uint32_t _GetTickMS(void);
 void _LedWrite(uint8_t state);

@@ -5,7 +5,7 @@
 #include <gui_generated/dashboardscreen_screen/dashboardScreenViewBase.hpp>
 
 #if !defined(SIMULATOR)
-#include "_defines.h"
+#include "_defs.h"
 #endif
 
 typedef struct {

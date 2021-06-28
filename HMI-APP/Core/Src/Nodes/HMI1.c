@@ -5,14 +5,15 @@
  *      Author: pudja
  */
 
-/* Includes ------------------------------------------------------------------*/
+/* Includes
+ * --------------------------------------------*/
 #include "Nodes/HMI1.h"
 
 #include "Drivers/_canbus.h"
 #include "Nodes/VCU.h"
 
 /* Public variables
- * -----------------------------------------------------------*/
+ * --------------------------------------------*/
 hmi1_t HMI1 = {
     .hbar = {0},
     .d =
@@ -47,8 +48,8 @@ void HMI1_Init(void) {
   HMI1.hbar.d.mode[HBAR_M_PREDICTION] = HBAR_M_PREDICTION_RANGE;
 }
 
-/* ====================================== CAN TX
- * =================================== */
+/* CAN TX
+ * --------------------------------------------*/
 uint8_t HMI1_TX_Heartbeat(void) {
   can_tx_t Tx = {0};
   UNION64 *d = &(Tx.data);

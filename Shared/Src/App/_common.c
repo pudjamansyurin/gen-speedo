@@ -1,20 +1,23 @@
 /*
- * _utils.c
+ * _common.c
  *
  *  Created on: Aug 26, 2019
  *      Author: Puja
  */
 
-/* Includes ------------------------------------------------------------------*/
-#include "Libs/_utils.h"
-#if (!BOOTLOADER)
-#include "Nodes/VCU.h"
+/* Includes
+ * --------------------------------------------*/
+#include "App/_common.h"
+#if (APP)
 #include "Nodes/HMI1.h"
+#include "Nodes/VCU.h"
+
 #endif
 
-/* Public functions implementations ------------------------------------------*/
+/* Public functions implementations
+ * --------------------------------------------*/
 void _DelayMS(uint32_t ms) {
-#if RTOS_ENABLE
+#if APP
   osDelay(ms);
 #else
   HAL_Delay(ms);
@@ -22,7 +25,7 @@ void _DelayMS(uint32_t ms) {
 }
 
 uint32_t _GetTickMS(void) {
-#if RTOS_ENABLE
+#if APP
   return osKernelGetTickCount();
 #else
   return HAL_GetTick();
@@ -33,14 +36,11 @@ void _LedWrite(uint8_t state) {
   HAL_GPIO_WritePin(SYS_LED_GPIO_Port, SYS_LED_Pin, state);
 }
 
-void _LedToggle(void) {
-  HAL_GPIO_TogglePin(SYS_LED_GPIO_Port, SYS_LED_Pin);
-}
+void _LedToggle(void) { HAL_GPIO_TogglePin(SYS_LED_GPIO_Port, SYS_LED_Pin); }
 
 void _Error(char msg[50]) {
-#if RTOS_ENABLE
-  if (osKernelGetState() == osKernelRunning)
-    printf(msg);
+#if APP
+  if (osKernelGetState() == osKernelRunning) printf(msg);
 #else
   printf(msg);
 #endif
@@ -66,9 +66,7 @@ void _RightPad(char *dest, const char *src, const char pad, uint8_t sz) {
   dest[sz - 1] = 0x00;
 }
 
-float _D2R(uint16_t deg) {
-  return deg * M_PI / 180.0;
-}
+float _D2R(uint16_t deg) { return deg * M_PI / 180.0; }
 
 uint32_t _ByteSwap32(uint32_t x) {
   uint32_t y = (x >> 24) & 0xff;
@@ -78,4 +76,3 @@ uint32_t _ByteSwap32(uint32_t x) {
 
   return y;
 }
-

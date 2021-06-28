@@ -25,9 +25,9 @@
 #include "Drivers/_canbus.h"
 #include "Drivers/_flasher.h"
 #include "Drivers/_sdram.h"
-#include "Libs/_utils.h"
-#include "Libs/_fota.h"
-#include "Libs/_focan.h"
+#include "App/_common.h"
+#include "App/_fota.h"
+#include "App/_focan.h"
 #include "BSP/_lcd.h"
 /* USER CODE END Includes */
 

@@ -9,12 +9,14 @@
 #define DEFINES_H_
 
 /* Choose between VCU or Boot-loader mode */
-#define BOOTLOADER 0
+#define APP 1
 
-/* Includes ------------------------------------------------------------------*/
-#include "_defines_shared.h"
+/* Includes
+ * --------------------------------------------*/
+#include "_defs_shared.h"
 
-/* Exported constants --------------------------------------------------------*/
+/* Exported constants
+ * --------------------------------------------*/
 #define HMI_VERSION ((uint16_t)347)
 
 #define CAN_DEBUG 0
@@ -23,7 +25,8 @@
 #define MCU_DISCUR_MAX ((uint8_t)210)
 #define BMS_LOWBAT_PERCENT ((uint8_t)20)
 
-/* Enum prototypes ------------------------------------------------------- */
+/* Exported enums
+ * --------------------------------------------*/
 typedef enum {
   HBAR_M_DRIVE = 0,
   HBAR_M_TRIP,
