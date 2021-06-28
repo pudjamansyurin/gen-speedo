@@ -31,13 +31,17 @@
 #define APP_END_ADDR (APP_START_ADDR + APP_MAX_SIZE - 1)
 #define BKP_START_ADDR ((uint32_t)0x08120000)
 #define BKP_END_ADDR (BKP_START_ADDR + APP_MAX_SIZE - 1)
+
 #define SIZE_OFFSET (APP_MAX_SIZE - 4)
 #define CRC_OFFSET (APP_MAX_SIZE - 8)
-/* Bootloader */
+
+/* Bootloader */ 
 #define BL_MAX_SIZE ((uint32_t)0x10000)
 #define BL_START_ADDR ((uint32_t)0x08000000)
 #define BL_END_ADDR (BL_START_ADDR + BL_MAX_SIZE - 1)
-#define HIN_VALUE (*(__IO uint32_t *)(BL_MAX_SIZE - 4))
+
+#define HIN_OFFSET (BL_MAX_SIZE - 4)
+#define HIN_VALUE (*(__IO uint32_t *)(BL_START_ADDR + HIN_OFFSET))
 
 /* Exported enums
  * --------------------------------------------*/
