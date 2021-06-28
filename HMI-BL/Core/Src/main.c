@@ -130,12 +130,12 @@ int main(void) {
     /* Everything went well */
     if (FOCAN_Upgrade(0)) {
       /* Reset IAP flag */
-      *(uint32_t *)IAP_FLAG_ADDR = 0;
+      *(uint32_t *)IAP_FLAG_ADDR = IFLAG_RESET;
       /* Take branching decision on next reboot */
       FOTA_Reboot();
     }
     /* Reset IAP flag */
-    *(uint32_t *)IAP_FLAG_ADDR = 0;
+    *(uint32_t *)IAP_FLAG_ADDR = IFLAG_RESET;
     /* FOTA failed */
     HAL_NVIC_SystemReset();
   }

@@ -41,17 +41,9 @@
 
 /* Exported enums
  * --------------------------------------------*/
-typedef enum {
-	FOCAN_ERROR = 0x00,
-	FOCAN_ACK = 0x79,
-	FOCAN_NACK = 0x1F
-} FOCAN;
+typedef enum { FOCAN_ERROR = 0x00, FOCAN_ACK = 0x79, FOCAN_NACK = 0x1F } FOCAN;
 
-
-typedef enum {
-	ITYPE_VCU = 0xA1B2C3D4,
-	ITYPE_HMI = 0x1A2B3C4D
-} IAP_TYPE;
+typedef enum { ITYPE_VCU = 0xA1B2C3D4, ITYPE_HMI = 0x1A2B3C4D } IAP_TYPE;
 
 typedef enum {
   IFLAG_RESET = 0,

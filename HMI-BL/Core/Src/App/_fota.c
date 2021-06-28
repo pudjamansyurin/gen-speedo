@@ -72,10 +72,10 @@ void FOTA_JumpToApplication(void) {
   appEntry = *(__IO uint32_t *)(APP_START_ADDR + 4);
 
   /* Shutdown all peripherals */
-  HAL_CAN_MspDeInit(&hcan2);
-  HAL_CRC_MspDeInit(&hcrc);
   _LCD_DeInit();
   MX_SDRAM_DeInitEx();
+  HAL_CAN_MspDeInit(&hcan2);
+  HAL_CRC_MspDeInit(&hcrc);
   HAL_RCC_DeInit();
   HAL_DeInit();
 
@@ -92,8 +92,7 @@ void FOTA_JumpToApplication(void) {
   jump();
 
   /* Never reached */
-  while (1)
-    ;
+  while (1) {};
 }
 
 void FOTA_Reboot(void) {
