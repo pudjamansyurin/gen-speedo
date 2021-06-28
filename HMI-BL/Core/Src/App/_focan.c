@@ -225,8 +225,8 @@ uint8_t FOCAN_xPascaDownload(can_rx_t *Rx, uint32_t *size) {
   p = FOTA_ValidateCRC(crc, *size, APP_START_ADDR);
   // Glue related information to new image
   if (p) {
-    FOTA_GlueInfo32(CRC_OFFSET, &crc);
-    FOTA_GlueInfo32(SIZE_OFFSET, size);
+    FOTA_SetAppMeta(CRC_OFFSET, &crc);
+    FOTA_SetAppMeta(SIZE_OFFSET, size);
   }
 
   // Send response

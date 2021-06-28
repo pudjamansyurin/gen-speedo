@@ -64,15 +64,13 @@ uint8_t FLASHER_BackupApp(void) {
   if (FOTA_NeedBackup()) {
     p = FLASHER_EraseBkpArea();
 
-    if (p) {
+    if (p)
       p = FLASHER_WriteBkpArea(ptr, APP_MAX_SIZE, 0);
-    }
   }
 
   // Erase APP area
-  if (p) {
+  if (p)
     p = FLASHER_EraseAppArea();
-  }
 
   return p;
 }
@@ -83,9 +81,8 @@ uint8_t FLASHER_RestoreApp(void) {
 
   p = FLASHER_EraseAppArea();
 
-  if (p) {
+  if (p)
     p = FLASHER_WriteAppArea(ptr, APP_MAX_SIZE, 0);
-  }
 
   return p;
 }

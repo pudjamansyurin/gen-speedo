@@ -111,7 +111,7 @@ void FOTA_GetCRC(uint32_t *crc) {
   *crc = *(uint32_t *)(address + CRC_OFFSET);
 }
 
-void FOTA_GlueInfo32(uint32_t offset, uint32_t *data) {
+void FOTA_SetAppMeta(uint32_t offset, uint32_t *data) {
   FLASHER_WriteAppArea((uint8_t *)data, sizeof(uint32_t), offset);
 }
 
