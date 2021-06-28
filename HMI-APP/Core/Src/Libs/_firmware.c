@@ -15,7 +15,7 @@
  * --------------------------------------------*/
 void FW_EnterModeIAP(void) {
   /* Set flag to SRAM */
-  *(uint32_t*)IAP_FLAG_ADDR = IAP_FLAG;
+  *(uint32_t*)IAP_FLAG_ADDR = IFLAG_SRAM;
   /* Reset */
   HAL_NVIC_SystemReset();
 }

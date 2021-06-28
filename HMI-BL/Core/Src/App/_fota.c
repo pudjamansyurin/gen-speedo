@@ -74,7 +74,7 @@ void FOTA_JumpToApplication(void) {
   /* Shutdown all peripherals */
   HAL_CAN_MspDeInit(&hcan2);
   HAL_CRC_MspDeInit(&hcrc);
-  BSP_LCD_DeInit();
+  _LCD_DeInit();
   MX_SDRAM_DeInitEx();
   HAL_RCC_DeInit();
   HAL_DeInit();
@@ -126,11 +126,11 @@ void FOTA_DisplayDevice(IAP_TYPE type) {
 
   if (init) {
     init = 0;
-    BSP_LCD_DisplayStringAt(30, 125, (uint8_t *)"Device:", LEFT_MODE);
+    _LCD_DisplayStringAt(30, 125, (uint8_t *)"Device:", LEFT_MODE);
   }
 
-  strcpy(title, type == IAP_HMI ? "HMI" : "VCU");
-  BSP_LCD_DisplayStringAt(160, 125, (uint8_t *)title, LEFT_MODE);
+  strcpy(title, type == ITYPE_HMI ? "HMI" : "VCU");
+  _LCD_DisplayStringAt(160, 125, (uint8_t *)title, LEFT_MODE);
 }
 
 void FOTA_DisplayStatus(char *status) {
@@ -139,23 +139,22 @@ void FOTA_DisplayStatus(char *status) {
 
   if (init) {
     init = 0;
-    BSP_LCD_DisplayStringAt(30, 150, (uint8_t *)"Status:", LEFT_MODE);
+    _LCD_DisplayStringAt(30, 150, (uint8_t *)"Status:", LEFT_MODE);
   }
 
   _RightPad(status_str, status, ' ', sizeof(status_str));
 
-  BSP_LCD_DisplayStringAt(160, 150, (uint8_t *)status_str, LEFT_MODE);
+  _LCD_DisplayStringAt(160, 150, (uint8_t *)status_str, LEFT_MODE);
 }
 void FOTA_DisplayPercent(float percent) {
   char percent_str[9];
 
   sprintf(percent_str, "%06.2f %%", percent);
 
-  BSP_LCD_DisplayStringAt((BSP_LCD_GetXSize() / 2) - 60,
-                          (BSP_LCD_GetYSize() / 2) - 10, (uint8_t *)percent_str,
-                          LEFT_MODE);
+  _LCD_DisplayStringAt((_LCD_GetXSize() / 2) - 60, (_LCD_GetYSize() / 2) - 10,
+                       (uint8_t *)percent_str, LEFT_MODE);
 
-  //  BSP_LCD_DisplayStringAt(
+  //  _LCD_DisplayStringAt(
   //      30,
   //      175,
   //      (uint8_t*) percent_str,

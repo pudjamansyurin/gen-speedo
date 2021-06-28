@@ -10,12 +10,20 @@
 
 /* Includes
  * --------------------------------------------*/
-#include "Drivers/_log.h"
 #include "_defs.h"
+#include "Drivers/_log.h"
+#include "App/_iap.h"
 
 #if APP
 #include "Libs/_rtos.h"
 #endif
+
+/* Exported macros
+ * --------------------------------------------*/
+#define BIT(x) (1ULL << x)
+#define BV(var, x) (var |= (1ULL << x))
+#define BC(var, x) (var &= ~(1ULL << x))
+#define BT(var, x) (var ^= (1ULL << x))
 
 /* Exported unions
  * --------------------------------------------*/

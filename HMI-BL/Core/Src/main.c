@@ -22,13 +22,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "App/_common.h"
+#include "App/_focan.h"
+#include "App/_fota.h"
+#include "BSP/_lcd.h"
 #include "Drivers/_canbus.h"
 #include "Drivers/_flasher.h"
 #include "Drivers/_sdram.h"
-#include "App/_common.h"
-#include "App/_fota.h"
-#include "App/_focan.h"
-#include "BSP/_lcd.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -81,17 +82,17 @@ static void MX_IWDG_Init(void);
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  * @retval int
-  */
-int main(void)
-{
+ * @brief  The application entry point.
+ * @retval int
+ */
+int main(void) {
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick.
+   */
   HAL_Init();
 
   /* USER CODE BEGIN Init */
@@ -117,81 +118,81 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-    /* USER CODE END WHILE */
+  /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
-	/* IAP flag has been set, initiate firmware download procedure */
-	if (*(uint32_t*) IAP_FLAG_ADDR == IAP_FLAG) {
-		/* Initialize LCD */
-		BSP_LCD_Init();
+  /* USER CODE BEGIN 3 */
+  /* IAP flag has been set, initiate firmware download procedure */
+  if (*(uint32_t *)IAP_FLAG_ADDR == IFLAG_SRAM) {
+    /* Initialize LCD */
+    _LCD_Init();
 
-		printf("IAP set, do DFU.\n");
-		/* Everything went well */
-		if (FOCAN_Upgrade(0)) {
-			/* Reset IAP flag */
-			*(uint32_t*) IAP_FLAG_ADDR = 0;
-			/* Take branching decision on next reboot */
-			FOTA_Reboot();
-		}
-		/* Reset IAP flag */
-		*(uint32_t*) IAP_FLAG_ADDR = 0;
-		/* FOTA failed */
-		HAL_NVIC_SystemReset();
-	}
-	/* Jump to application if it exist and DFU finished */
-	else if (FOTA_ValidImage(APP_START_ADDR)) {
-		printf("Jump to application.\n");
-		/* Jump sequence */
-		FOTA_JumpToApplication();
-	}
-	/* Try to restore the backup */
-	else {
-		/* Initialize LCD */
-		BSP_LCD_Init();
+    printf("IAP set, do DFU.\n");
+    /* Everything went well */
+    if (FOCAN_Upgrade(0)) {
+      /* Reset IAP flag */
+      *(uint32_t *)IAP_FLAG_ADDR = 0;
+      /* Take branching decision on next reboot */
+      FOTA_Reboot();
+    }
+    /* Reset IAP flag */
+    *(uint32_t *)IAP_FLAG_ADDR = 0;
+    /* FOTA failed */
+    HAL_NVIC_SystemReset();
+  }
+  /* Jump to application if it exist and DFU finished */
+  else if (FOTA_ValidImage(APP_START_ADDR)) {
+    printf("Jump to application.\n");
+    /* Jump sequence */
+    FOTA_JumpToApplication();
+  }
+  /* Try to restore the backup */
+  else {
+    /* Initialize LCD */
+    _LCD_Init();
 
-		/* Check is the backup image valid */
-		if (FOTA_ValidImage(BKP_START_ADDR)) {
-			printf("Has backed-up image, roll-back.\n");
-			FOTA_DisplayDevice(IAP_HMI);
-			FOTA_DisplayStatus("Roll-back firmware.");
-			/* Restore back old image to application area */
-			if (FLASHER_RestoreApp()) {
-				/* Take branching decision on next reboot */
-				FOTA_Reboot();
-			}
-		} else {
-			printf("No image at all, do DFU.\n");
-			/* Download new firmware for the first time */
-			if (FOCAN_Upgrade(1)) {
-				/* Take branching decision on next reboot */
-				FOTA_Reboot();
-			}
-		}
-		HAL_NVIC_SystemReset();
-		/* Meaningless, failure indicator */
-		_Error("Boot-loader failure!!");
-	}
+    /* Check is the backup image valid */
+    if (FOTA_ValidImage(BKP_START_ADDR)) {
+      printf("Has backed-up image, roll-back.\n");
+      FOTA_DisplayDevice(ITYPE_HMI);
+      FOTA_DisplayStatus("Roll-back firmware.");
+      /* Restore back old image to application area */
+      if (FLASHER_RestoreApp()) {
+        /* Take branching decision on next reboot */
+        FOTA_Reboot();
+      }
+    } else {
+      printf("No image at all, do DFU.\n");
+      /* Download new firmware for the first time */
+      if (FOCAN_Upgrade(1)) {
+        /* Take branching decision on next reboot */
+        FOTA_Reboot();
+      }
+    }
+    HAL_NVIC_SystemReset();
+    /* Meaningless, failure indicator */
+    _Error("Boot-loader failure!!");
+  }
   /* USER CODE END 3 */
 }
 
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
-void SystemClock_Config(void)
-{
+ * @brief System Clock Configuration
+ * @retval None
+ */
+void SystemClock_Config(void) {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
-  */
+   */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
   /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
+   * in the RCC_OscInitTypeDef structure.
+   */
+  RCC_OscInitStruct.OscillatorType =
+      RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -200,47 +201,41 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLN = 180;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 4;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
     Error_Handler();
   }
   /** Activate the Over-Drive mode
-  */
-  if (HAL_PWREx_EnableOverDrive() != HAL_OK)
-  {
+   */
+  if (HAL_PWREx_EnableOverDrive() != HAL_OK) {
     Error_Handler();
   }
   /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+   */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK |
+                                RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
-  {
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK) {
     Error_Handler();
   }
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
   PeriphClkInitStruct.PLLSAI.PLLSAIN = 60;
   PeriphClkInitStruct.PLLSAI.PLLSAIR = 2;
   PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_4;
-  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
-  {
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {
     Error_Handler();
   }
 }
 
 /**
-  * @brief CAN2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_CAN2_Init(void)
-{
-
+ * @brief CAN2 Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_CAN2_Init(void) {
   /* USER CODE BEGIN CAN2_Init 0 */
 
   /* USER CODE END CAN2_Init 0 */
@@ -260,24 +255,20 @@ static void MX_CAN2_Init(void)
   hcan2.Init.AutoRetransmission = DISABLE;
   hcan2.Init.ReceiveFifoLocked = DISABLE;
   hcan2.Init.TransmitFifoPriority = DISABLE;
-  if (HAL_CAN_Init(&hcan2) != HAL_OK)
-  {
+  if (HAL_CAN_Init(&hcan2) != HAL_OK) {
     Error_Handler();
   }
   /* USER CODE BEGIN CAN2_Init 2 */
 
   /* USER CODE END CAN2_Init 2 */
-
 }
 
 /**
-  * @brief CRC Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_CRC_Init(void)
-{
-
+ * @brief CRC Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_CRC_Init(void) {
   /* USER CODE BEGIN CRC_Init 0 */
 
   /* USER CODE END CRC_Init 0 */
@@ -286,24 +277,20 @@ static void MX_CRC_Init(void)
 
   /* USER CODE END CRC_Init 1 */
   hcrc.Instance = CRC;
-  if (HAL_CRC_Init(&hcrc) != HAL_OK)
-  {
+  if (HAL_CRC_Init(&hcrc) != HAL_OK) {
     Error_Handler();
   }
   /* USER CODE BEGIN CRC_Init 2 */
 
   /* USER CODE END CRC_Init 2 */
-
 }
 
 /**
-  * @brief DMA2D Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_DMA2D_Init(void)
-{
-
+ * @brief DMA2D Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_DMA2D_Init(void) {
   /* USER CODE BEGIN DMA2D_Init 0 */
 
   /* USER CODE END DMA2D_Init 0 */
@@ -319,28 +306,23 @@ static void MX_DMA2D_Init(void)
   hdma2d.LayerCfg[1].InputColorMode = DMA2D_INPUT_ARGB8888;
   hdma2d.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
   hdma2d.LayerCfg[1].InputAlpha = 0;
-  if (HAL_DMA2D_Init(&hdma2d) != HAL_OK)
-  {
+  if (HAL_DMA2D_Init(&hdma2d) != HAL_OK) {
     Error_Handler();
   }
-  if (HAL_DMA2D_ConfigLayer(&hdma2d, 1) != HAL_OK)
-  {
+  if (HAL_DMA2D_ConfigLayer(&hdma2d, 1) != HAL_OK) {
     Error_Handler();
   }
   /* USER CODE BEGIN DMA2D_Init 2 */
 
   /* USER CODE END DMA2D_Init 2 */
-
 }
 
 /**
-  * @brief IWDG Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_IWDG_Init(void)
-{
-
+ * @brief IWDG Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_IWDG_Init(void) {
   /* USER CODE BEGIN IWDG_Init 0 */
 
   /* USER CODE END IWDG_Init 0 */
@@ -351,24 +333,20 @@ static void MX_IWDG_Init(void)
   hiwdg.Instance = IWDG;
   hiwdg.Init.Prescaler = IWDG_PRESCALER_256;
   hiwdg.Init.Reload = 4095;
-  if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
-  {
+  if (HAL_IWDG_Init(&hiwdg) != HAL_OK) {
     Error_Handler();
   }
   /* USER CODE BEGIN IWDG_Init 2 */
 
   /* USER CODE END IWDG_Init 2 */
-
 }
 
 /**
-  * @brief LTDC Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_LTDC_Init(void)
-{
-
+ * @brief LTDC Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_LTDC_Init(void) {
   /* USER CODE BEGIN LTDC_Init 0 */
 
   /* USER CODE END LTDC_Init 0 */
@@ -394,8 +372,7 @@ static void MX_LTDC_Init(void)
   hltdc.Init.Backcolor.Blue = 0;
   hltdc.Init.Backcolor.Green = 0;
   hltdc.Init.Backcolor.Red = 0;
-  if (HAL_LTDC_Init(&hltdc) != HAL_OK)
-  {
+  if (HAL_LTDC_Init(&hltdc) != HAL_OK) {
     Error_Handler();
   }
   pLayerCfg.WindowX0 = 0;
@@ -413,20 +390,16 @@ static void MX_LTDC_Init(void)
   pLayerCfg.Backcolor.Blue = 0;
   pLayerCfg.Backcolor.Green = 0;
   pLayerCfg.Backcolor.Red = 0;
-  if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg, 0) != HAL_OK)
-  {
+  if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg, 0) != HAL_OK) {
     Error_Handler();
   }
   /* USER CODE BEGIN LTDC_Init 2 */
 
   /* USER CODE END LTDC_Init 2 */
-
 }
 
 /* FMC initialization function */
-static void MX_FMC_Init(void)
-{
-
+static void MX_FMC_Init(void) {
   /* USER CODE BEGIN FMC_Init 0 */
 
   /* USER CODE END FMC_Init 0 */
@@ -438,7 +411,7 @@ static void MX_FMC_Init(void)
   /* USER CODE END FMC_Init 1 */
 
   /** Perform the SDRAM1 memory initialization sequence
-  */
+   */
   hsdram1.Instance = FMC_SDRAM_DEVICE;
   /* hsdram1.Init */
   hsdram1.Init.SDBank = FMC_SDRAM_BANK1;
@@ -460,23 +433,21 @@ static void MX_FMC_Init(void)
   SdramTiming.RPDelay = 2;
   SdramTiming.RCDDelay = 16;
 
-  if (HAL_SDRAM_Init(&hsdram1, &SdramTiming) != HAL_OK)
-  {
-    Error_Handler( );
+  if (HAL_SDRAM_Init(&hsdram1, &SdramTiming) != HAL_OK) {
+    Error_Handler();
   }
 
   /* USER CODE BEGIN FMC_Init 2 */
-	MX_SDRAM_InitEx();
+  MX_SDRAM_InitEx();
   /* USER CODE END FMC_Init 2 */
 }
 
 /**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GPIO_Init(void)
-{
+ * @brief GPIO Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_GPIO_Init(void) {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
@@ -490,23 +461,23 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOE, GPIO1_Pin|GPIO2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE, GPIO1_Pin | GPIO2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, LCD_POWER_Pin|LCD_BACKLIGHT_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, LCD_POWER_Pin | LCD_BACKLIGHT_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(SYS_LED_GPIO_Port, SYS_LED_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : GPIO1_Pin GPIO2_Pin */
-  GPIO_InitStruct.Pin = GPIO1_Pin|GPIO2_Pin;
+  GPIO_InitStruct.Pin = GPIO1_Pin | GPIO2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LCD_POWER_Pin LCD_BACKLIGHT_Pin */
-  GPIO_InitStruct.Pin = LCD_POWER_Pin|LCD_BACKLIGHT_Pin;
+  GPIO_InitStruct.Pin = LCD_POWER_Pin | LCD_BACKLIGHT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -518,7 +489,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(SYS_LED_GPIO_Port, &GPIO_InitStruct);
-
 }
 
 /* USER CODE BEGIN 4 */
@@ -526,30 +496,29 @@ static void MX_GPIO_Init(void)
 /* USER CODE END 4 */
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
-void Error_Handler(void)
-{
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
+void Error_Handler(void) {
   /* USER CODE BEGIN Error_Handler_Debug */
-	/* User can add his own implementation to report the HAL error return state */
-	// _Error("Error Handler");
+  /* User can add his own implementation to report the HAL error return state */
+  // _Error("Error Handler");
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
-void assert_failed(uint8_t *file, uint32_t line)
-{
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
+void assert_failed(uint8_t *file, uint32_t line) {
   /* USER CODE BEGIN 6 */
-	/* User can add his own implementation to report the file name and line number,
-     tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* User can add his own implementation to report the file name and line
+number, tex: printf("Wrong parameters value: file %s on line %d\r\n", file,
+line) */
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

@@ -8,6 +8,7 @@
 /* Includes
  * --------------------------------------------*/
 #include "Libs/_rtos.h"
+#include "App/_common.h"
 
 /* External variables
  * --------------------------------------------*/

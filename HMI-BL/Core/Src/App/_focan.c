@@ -26,15 +26,13 @@ static uint8_t SendSqueeze(uint32_t address, void *data, uint8_t size);
  * --------------------------------------------*/
 uint8_t FOCAN_Upgrade(uint8_t factory) {
   can_rx_t Rx = {0};
-  uint8_t p = 1, success = 0;
-  uint32_t timeout = 30000;
-  uint32_t tick, iTick;
-  uint32_t SIZE = 0;
-  IAP_TYPE type = IAP_HMI;
+  uint8_t p = 1, ok = 0;
+  uint32_t tick, iTick, timeout = 30000, SIZE = 0;
+  IAP_TYPE type = ITYPE_HMI;
 
   // Empty Firmware
   if (factory) {
-    FOTA_DisplayDevice(IAP_HMI);
+    FOTA_DisplayDevice(ITYPE_HMI);
     FOTA_DisplayStatus("No Firmware.");
     FOCAN_RequestFota();
   }
@@ -68,7 +66,7 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
           if (p) p = FOCAN_xPascaDownload(&Rx, &SIZE);
 
           /* Handle success DFU */
-          success = p;
+          ok = p;
           break;
         case CAND_FOCAN_PROGRESS:
           tick = _GetTickMS();
@@ -97,14 +95,11 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
 
     // reset watchdog
     HAL_IWDG_Refresh(&hiwdg);
-  } while (p && !success);
+  } while (p && !ok);
 
   // Final response
-  if (type == IAP_HMI) {
-    if (success)
-      FOTA_DisplayStatus("Success.");
-    else
-      FOTA_DisplayStatus("Failed.");
+  if (type == ITYPE_HMI) {
+    FOTA_DisplayStatus(ok ? "Success." : "Failed.");
     _DelayMS(1000);
   }
 
