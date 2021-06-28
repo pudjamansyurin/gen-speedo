@@ -2,7 +2,7 @@
  * _sdram.h
  *
  *  Created on: Mar 13, 2020
- *      Author: pudja
+ *      Author: Pudja Mansyurin
  */
 
 #ifndef INC_DRIVERS__SDRAM_H_

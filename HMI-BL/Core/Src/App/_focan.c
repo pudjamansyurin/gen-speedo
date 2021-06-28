@@ -2,7 +2,7 @@
  * _focan.c
  *
  *  Created on: 29 Jun 2020
- *      Author: geni
+ *      Author: Pudja Mansyurin
  */
 
 /* Includes

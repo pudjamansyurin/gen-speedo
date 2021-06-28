@@ -2,7 +2,7 @@
  * _sdram.c
  *
  *  Created on: Mar 13, 2020
- *      Author: pudja
+ *      Author: Pudja Mansyurin
  */
 
 /* Includes
