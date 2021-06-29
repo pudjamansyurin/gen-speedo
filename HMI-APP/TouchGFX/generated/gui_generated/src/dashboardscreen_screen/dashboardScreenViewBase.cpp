@@ -13,7 +13,7 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     __background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
 
     background.setPosition(-1, -1, 800, 480);
-    background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    background.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
 
     batteryLow.setXY(298, 181);
     batteryLow.setVisible(false);
@@ -78,19 +78,19 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     frameContainer.setPosition(0, 0, 800, 480);
 
     tripUnit.setXY(292, 114);
-    tripUnit.setColor(touchgfx::Color::getColorFrom24BitRGB(128, 128, 128));
+    tripUnit.setColor(touchgfx::Color::getColorFrom24BitRGB(3, 0, 0));
     tripUnit.setLinespacing(0);
     tripUnit.setTypedText(touchgfx::TypedText(T_SINGLEUSEID1));
     frameContainer.add(tripUnit);
 
     signalPercent.setXY(485, 61);
-    signalPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    signalPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     signalPercent.setLinespacing(0);
     signalPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID9));
     frameContainer.add(signalPercent);
 
     batteryPercent.setXY(377, 61);
-    batteryPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    batteryPercent.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     batteryPercent.setLinespacing(0);
     batteryPercent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID10));
     frameContainer.add(batteryPercent);
@@ -221,21 +221,21 @@ dashboardScreenViewBase::dashboardScreenViewBase()
     tripModeContainer.add(nextTripModeText);
 
     tripValue.setPosition(374, 102, 119, 20);
-    tripValue.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    tripValue.setColor(touchgfx::Color::getColorFrom24BitRGB(3, 0, 0));
     tripValue.setLinespacing(0);
     Unicode::snprintf(tripValueBuffer, TRIPVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID11).getText());
     tripValue.setWildcard(tripValueBuffer);
     tripValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID3));
 
     signalValue.setPosition(443, 61, 39, 20);
-    signalValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    signalValue.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     signalValue.setLinespacing(0);
     Unicode::snprintf(signalValueBuffer, SIGNALVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID13).getText());
     signalValue.setWildcard(signalValueBuffer);
     signalValue.setTypedText(touchgfx::TypedText(T_SINGLEUSEID4));
 
     batteryValue.setPosition(335, 61, 39, 20);
-    batteryValue.setColor(touchgfx::Color::getColorFrom24BitRGB(179, 179, 179));
+    batteryValue.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     batteryValue.setLinespacing(0);
     Unicode::snprintf(batteryValueBuffer, BATTERYVALUE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID12).getText());
     batteryValue.setWildcard(batteryValueBuffer);

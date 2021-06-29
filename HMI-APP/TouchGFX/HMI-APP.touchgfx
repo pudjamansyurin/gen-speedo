@@ -71,9 +71,9 @@
           {
             "Type": "Box",
             "Color": {
-              "Red": 0,
-              "Green": 0,
-              "Blue": 0
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
             },
             "Alpha": 255,
             "Name": "background",
@@ -354,9 +354,9 @@
                 "TextId": "SingleUseId1",
                 "TextRotation": "0",
                 "Color": {
-                  "Red": 128,
-                  "Green": 128,
-                  "Blue": 128
+                  "Red": 3,
+                  "Green": 0,
+                  "Blue": 0
                 },
                 "Alpha": 255,
                 "AutoSize": true,
@@ -378,9 +378,9 @@
                 "TextId": "SingleUseId9",
                 "TextRotation": "0",
                 "Color": {
-                  "Red": 179,
-                  "Green": 179,
-                  "Blue": 179
+                  "Red": 0,
+                  "Green": 0,
+                  "Blue": 0
                 },
                 "Alpha": 255,
                 "AutoSize": true,
@@ -402,9 +402,9 @@
                 "TextId": "SingleUseId10",
                 "TextRotation": "0",
                 "Color": {
-                  "Red": 179,
-                  "Green": 179,
-                  "Blue": 179
+                  "Red": 0,
+                  "Green": 0,
+                  "Blue": 0
                 },
                 "Alpha": 255,
                 "AutoSize": true,
@@ -974,9 +974,9 @@
             "TextId": "SingleUseId3",
             "TextRotation": "0",
             "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
+              "Red": 3,
+              "Green": 0,
+              "Blue": 0
             },
             "Alpha": 255,
             "AutoSize": false,
@@ -1003,9 +1003,9 @@
             "TextId": "SingleUseId4",
             "TextRotation": "0",
             "Color": {
-              "Red": 179,
-              "Green": 179,
-              "Blue": 179
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
             },
             "Alpha": 255,
             "AutoSize": false,
@@ -1032,9 +1032,9 @@
             "TextId": "SingleUseId5",
             "TextRotation": "0",
             "Color": {
-              "Red": 179,
-              "Green": 179,
-              "Blue": 179
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
             },
             "Alpha": 255,
             "AutoSize": false,
