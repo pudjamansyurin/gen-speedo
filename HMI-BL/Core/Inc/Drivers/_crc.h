@@ -2,16 +2,18 @@
  * _crc.h
  *
  *  Created on: Feb 4, 2020
- *      Author: pudja
+ *      Author: Pudja Mansyurin
  */
 
 #ifndef CRC_H_
 #define CRC_H_
 
-/* Includes ------------------------------------------------------------------*/
-#include "Libs/_utils.h"
+/* Includes
+ * --------------------------------------------*/
+#include "App/_common.h"
 
-/* Public functions prototype ------------------------------------------------*/
+/* Public functions prototype
+ * --------------------------------------------*/
 /**
  * @brief  Calculates 32-bit CRC value from 8-bit input array
  * @param  *arr: Pointer to 8-bit data array for CRC calculation

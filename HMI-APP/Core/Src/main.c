@@ -24,7 +24,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "_defines.h"
+#include "_defs.h"
 #include "Drivers/_sdram.h"
 #include "Drivers/_canbus.h"
 #include "Libs/_firmware.h"

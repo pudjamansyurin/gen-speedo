@@ -1,25 +1,14 @@
-#include <gui/dashboardscreen_screen/dashboardScreenView.hpp>
 #include <gui/dashboardscreen_screen/dashboardScreenPresenter.hpp>
+#include <gui/dashboardscreen_screen/dashboardScreenView.hpp>
 
 dashboardScreenPresenter::dashboardScreenPresenter(dashboardScreenView& v)
-:
-    view(v)
-{
+    : view(v) {}
 
-}
+void dashboardScreenPresenter::activate() {}
 
-void dashboardScreenPresenter::activate()
-{
+void dashboardScreenPresenter::deactivate() {}
 
-}
-
-void dashboardScreenPresenter::deactivate()
-{
-
-}
-
-void dashboardScreenPresenter::setSeinLeft(uint8_t value)
-{
+void dashboardScreenPresenter::setSeinLeft(uint8_t value) {
   static uint8_t init = 1, _value;
 
   if (_value != value || init) {
@@ -28,8 +17,7 @@ void dashboardScreenPresenter::setSeinLeft(uint8_t value)
     view.writeSein(1, value);
   }
 }
-void dashboardScreenPresenter::setSeinRight(uint8_t value)
-{
+void dashboardScreenPresenter::setSeinRight(uint8_t value) {
   static uint8_t init = 1, _value;
 
   if (_value != value || init) {
@@ -38,8 +26,7 @@ void dashboardScreenPresenter::setSeinRight(uint8_t value)
     view.writeSein(0, value);
   }
 }
-void dashboardScreenPresenter::setSpeed(uint8_t value)
-{
+void dashboardScreenPresenter::setSpeed(uint8_t value) {
   static uint8_t init = 1, _value;
 
   if (_value != value || init) {
@@ -48,8 +35,7 @@ void dashboardScreenPresenter::setSpeed(uint8_t value)
     view.writeSpeed(value * 100 / MCU_SPEED_MAX_KPH);
   }
 }
-void dashboardScreenPresenter::setDiscur(uint8_t value)
-{
+void dashboardScreenPresenter::setDiscur(uint8_t value) {
   static uint8_t init = 1;
   static uint32_t _value;
 
@@ -59,8 +45,7 @@ void dashboardScreenPresenter::setDiscur(uint8_t value)
     view.writeDiscur(value * 100 / MCU_DISCUR_MAX);
   }
 }
-void dashboardScreenPresenter::setState(int8_t value)
-{
+void dashboardScreenPresenter::setState(int8_t value) {
   static uint8_t init = 1;
   static int8_t _value;
 
@@ -70,8 +55,7 @@ void dashboardScreenPresenter::setState(int8_t value)
     view.writeState(value);
   }
 }
-void dashboardScreenPresenter::setBmsState(uint8_t value)
-{
+void dashboardScreenPresenter::setBmsState(uint8_t value) {
   static uint8_t init = 1, _value;
 
   if (_value != value || init) {
@@ -80,8 +64,7 @@ void dashboardScreenPresenter::setBmsState(uint8_t value)
     view.writeBmsState(value);
   }
 }
-void dashboardScreenPresenter::setMcuState(uint8_t value)
-{
+void dashboardScreenPresenter::setMcuState(uint8_t value) {
   static uint8_t init = 1, _value;
 
   if (_value != value || init) {
@@ -90,8 +73,7 @@ void dashboardScreenPresenter::setMcuState(uint8_t value)
     view.writeMcuState(value);
   }
 }
-void dashboardScreenPresenter::setScanningState(uint8_t value)
-{
+void dashboardScreenPresenter::setScanningState(uint8_t value) {
   static uint8_t init = 1, _value;
 
   if (_value != value || init) {
@@ -100,8 +82,7 @@ void dashboardScreenPresenter::setScanningState(uint8_t value)
     view.writeScanningState(value);
   }
 }
-void dashboardScreenPresenter::setCanState(uint8_t value)
-{
+void dashboardScreenPresenter::setCanState(uint8_t value) {
   static uint8_t init = 1, _value;
 
   if (_value != value || init) {
@@ -110,8 +91,7 @@ void dashboardScreenPresenter::setCanState(uint8_t value)
     view.writeCanState(value);
   }
 }
-void dashboardScreenPresenter::setBattery(uint8_t percent)
-{
+void dashboardScreenPresenter::setBattery(uint8_t percent) {
   static uint8_t init = 1, _percent;
 
   if (_percent != percent || init) {
@@ -120,8 +100,7 @@ void dashboardScreenPresenter::setBattery(uint8_t percent)
     view.writeBattery(percent);
   }
 }
-void dashboardScreenPresenter::setSignal(uint8_t percent)
-{
+void dashboardScreenPresenter::setSignal(uint8_t percent) {
   static uint8_t init = 1, _percent;
 
   if (_percent != percent || init) {
@@ -130,8 +109,7 @@ void dashboardScreenPresenter::setSignal(uint8_t percent)
     view.writeSignal(percent);
   }
 }
-void dashboardScreenPresenter::setIndicator(uint8_t index)
-{
+void dashboardScreenPresenter::setIndicator(uint8_t index) {
   static uint8_t init = 1, _index;
 
   if (_index != index || init) {
@@ -140,8 +118,7 @@ void dashboardScreenPresenter::setIndicator(uint8_t index)
     view.writeIndicator(index);
   }
 }
-void dashboardScreenPresenter::setDriveMode(uint8_t index)
-{
+void dashboardScreenPresenter::setDriveMode(uint8_t index) {
   static uint8_t init = 1, _index;
 
   if (_index != index || init) {
@@ -151,8 +128,7 @@ void dashboardScreenPresenter::setDriveMode(uint8_t index)
     // touchgfx_printf("D = %d\n", index);
   }
 }
-void dashboardScreenPresenter::setTripMode(uint8_t index)
-{
+void dashboardScreenPresenter::setTripMode(uint8_t index) {
   static uint8_t init = 1, _index;
 
   if (_index != index || init) {
@@ -162,8 +138,7 @@ void dashboardScreenPresenter::setTripMode(uint8_t index)
     // touchgfx_printf("T = %d\n", index);
   }
 }
-void dashboardScreenPresenter::setTripValue(uint16_t value)
-{
+void dashboardScreenPresenter::setTripValue(uint16_t value) {
   static uint8_t init = 1;
   static uint16_t _value;
 
@@ -173,15 +148,15 @@ void dashboardScreenPresenter::setTripValue(uint16_t value)
     view.writeTripValue(value);
   }
 }
-void dashboardScreenPresenter::setReportMode(uint8_t index, uint16_t value)
-{
+void dashboardScreenPresenter::setPredictionMode(uint8_t index,
+                                                 uint16_t value) {
   static uint8_t init = 1, _index;
 
   if (_index != index || init) {
     init = 0;
     _index = index;
-    view.writeReportMode(index);
-    view.writeReportValue(value);
+    view.writePredictionMode(index);
+    view.writePredictionValue(value);
   }
 
   static uint8_t initVal = 1;
@@ -190,11 +165,10 @@ void dashboardScreenPresenter::setReportMode(uint8_t index, uint16_t value)
   if (_value != value || initVal) {
     initVal = 0;
     _value = value;
-    view.writeReportValue(value);
+    view.writePredictionValue(value);
   }
 }
-void dashboardScreenPresenter::setModeSelector(uint8_t mode)
-{
+void dashboardScreenPresenter::setModeSelector(uint8_t mode) {
   static uint8_t init = 1, _mode;
 
   if (_mode != mode || init) {
@@ -203,8 +177,7 @@ void dashboardScreenPresenter::setModeSelector(uint8_t mode)
     view.writeModeSelector(mode);
   }
 }
-void dashboardScreenPresenter::setModeSession(uint8_t state)
-{
+void dashboardScreenPresenter::setModeSession(uint8_t state) {
   static uint8_t init = 1, _state;
 
   if (_state != state || init) {
@@ -214,11 +187,9 @@ void dashboardScreenPresenter::setModeSession(uint8_t state)
   }
 }
 
-uint8_t dashboardScreenPresenter::getIndicatorState(uint8_t index)
-{
+uint8_t dashboardScreenPresenter::getIndicatorState(uint8_t index) {
   return model->readIndicatorState(index);
 }
-uint8_t dashboardScreenPresenter::getCurrentIndicator()
-{
+uint8_t dashboardScreenPresenter::getCurrentIndicator() {
   return model->readCurrentIndicator();
 }

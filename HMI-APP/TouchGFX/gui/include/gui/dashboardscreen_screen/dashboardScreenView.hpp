@@ -1,11 +1,11 @@
 #ifndef DASHBOARDVIEW_HPP
 #define DASHBOARDVIEW_HPP
 
-#include <gui_generated/dashboardscreen_screen/dashboardScreenViewBase.hpp>
 #include <gui/dashboardscreen_screen/dashboardScreenPresenter.hpp>
+#include <gui_generated/dashboardscreen_screen/dashboardScreenViewBase.hpp>
 
 #if !defined(SIMULATOR)
-#include "_defines.h"
+#include "_defs.h"
 #endif
 
 typedef struct {
@@ -18,13 +18,13 @@ typedef struct {
 } trip_t;
 
 typedef struct {
-	touchgfx::TextAreaWithOneWildcard *pValueText[HBAR_M_REPORT_MAX];
-	touchgfx::Unicode::UnicodeChar *pValueTextBuffer[HBAR_M_REPORT_MAX];
-} report_t;
+  touchgfx::TextAreaWithOneWildcard *pValueText[HBAR_M_PREDICTION_MAX];
+  touchgfx::Unicode::UnicodeChar *pValueTextBuffer[HBAR_M_PREDICTION_MAX];
+} prediction_t;
 
 typedef struct {
   Image *image;
-  MoveAnimator< Container > *container;
+  MoveAnimator<Container> *container;
 } icon_t;
 
 typedef struct {
@@ -38,9 +38,8 @@ typedef struct {
   coordinate_t next;
 } position_t;
 
-class dashboardScreenView : public dashboardScreenViewBase
-{
-public:
+class dashboardScreenView : public dashboardScreenViewBase {
+ public:
   dashboardScreenView();
   virtual ~dashboardScreenView() {}
   virtual void setupScreen();
@@ -62,14 +61,15 @@ public:
   virtual void writeDriveMode(uint8_t index);
   virtual void writeTripMode(uint8_t index);
   virtual void writeTripValue(uint16_t value);
-  virtual void writeReportMode(uint8_t index);
-  virtual void writeReportValue(uint16_t value);
+  virtual void writePredictionMode(uint8_t index);
+  virtual void writePredictionValue(uint16_t value);
 
   virtual void writeModeSelector(uint8_t mode);
   virtual void writeModeVisible(uint8_t state);
-protected:
+
+ protected:
   uint32_t ticker;
   uint16_t iconAssets[INDICATOR_MAX + 1];
 };
 
-#endif // DASHBOARDVIEW_HPP
+#endif  // DASHBOARDVIEW_HPP
