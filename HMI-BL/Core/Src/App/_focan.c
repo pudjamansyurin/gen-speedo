@@ -65,7 +65,7 @@ uint8_t FOCAN_Upgrade(uint8_t factory) {
           p = SIZE;
           if (p) p = FOCAN_xPascaDownload(&Rx, &SIZE);
 
-          /* Handle success DFU */
+          /* Handle success IAP */
           ok = p;
           break;
         case CAND_FOCAN_PROGRESS:

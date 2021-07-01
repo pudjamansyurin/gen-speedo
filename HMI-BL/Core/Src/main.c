@@ -126,7 +126,7 @@ int main(void) {
     /* Initialize LCD */
     _LCD_Init();
 
-    printf("IAP set, do DFU.\n");
+    printf("IAP set, do IAP.\n");
     /* Everything went well */
     if (FOCAN_Upgrade(0)) {
       /* Reset IAP flag */
@@ -139,7 +139,7 @@ int main(void) {
     /* FOTA failed */
     HAL_NVIC_SystemReset();
   }
-  /* Jump to application if it exist and DFU finished */
+  /* Jump to application if it exist and IAP finished */
   else if (FOTA_ValidImage(APP_START_ADDR)) {
     printf("Jump to application.\n");
     /* Jump sequence */
@@ -161,7 +161,7 @@ int main(void) {
         FOTA_Reboot();
       }
     } else {
-      printf("No image at all, do DFU.\n");
+      printf("No image at all, do IAP.\n");
       /* Download new firmware for the first time */
       if (FOCAN_Upgrade(1)) {
         /* Take branching decision on next reboot */
