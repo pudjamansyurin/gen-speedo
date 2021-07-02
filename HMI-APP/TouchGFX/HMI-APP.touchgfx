@@ -21,7 +21,7 @@
           },
           {
             "Type": "Image",
-            "RelativeFilename": "StaticColor.png",
+            "RelativeFilename": "StaticColor3.png",
             "Alpha": 255,
             "Name": "imageColor",
             "X": 0,

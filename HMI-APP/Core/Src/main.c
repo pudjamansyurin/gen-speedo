@@ -710,6 +710,8 @@ void StartManagerTask(void *argument)
 	VCU_Init();
 	HMI1_Init();
 
+    _LcdPower(1);
+
 	// suspend other threads
 	//      osThreadSuspend(DisplayTaskHandle);
 	//      osThreadSuspend(CanTxTaskHandle);

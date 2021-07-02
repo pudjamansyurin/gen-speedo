@@ -7,7 +7,7 @@
 #include <touchgfx/Bitmap.hpp>
 
 const uint16_t BITMAP_STATIC_ID = 0;
-const uint16_t BITMAP_STATICCOLOR_ID = 1;
+const uint16_t BITMAP_STATICCOLOR3_ID = 1;
 
 namespace BitmapDatabase
 {

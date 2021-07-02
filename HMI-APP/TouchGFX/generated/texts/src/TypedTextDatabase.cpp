@@ -6,14 +6,10 @@
 #include <texts/TypedTextDatabase.hpp>
 
 extern touchgfx::GeneratedFont& getFont_venus_rising_rg_12_4bpp();
-extern touchgfx::GeneratedFont& getFont_venus_rising_rg_15_4bpp();
-extern touchgfx::GeneratedFont& getFont_venus_rising_rg_17_4bpp();
 
 const touchgfx::Font* touchgfx_fonts[] =
 {
-    &(getFont_venus_rising_rg_12_4bpp()),
-    &(getFont_venus_rising_rg_15_4bpp()),
-    &(getFont_venus_rising_rg_17_4bpp())
+    &(getFont_venus_rising_rg_12_4bpp())
 };
 
 extern const touchgfx::TypedText::TypedTextData typedText_database_DEFAULT[];
@@ -63,12 +59,6 @@ void resetFont(touchgfx::FontId fontId)
     {
     case 0:
         touchgfx_fonts[0] = &(getFont_venus_rising_rg_12_4bpp());
-        break;
-    case 1:
-        touchgfx_fonts[1] = &(getFont_venus_rising_rg_15_4bpp());
-        break;
-    case 2:
-        touchgfx_fonts[2] = &(getFont_venus_rising_rg_17_4bpp());
         break;
     }
 }
