@@ -12,10 +12,8 @@
 #include <gui/common/FrontendApplication.hpp>
 #include <gui/model/Model.hpp>
 
-#include <gui/welcomescreen_screen/welcomeScreenView.hpp>
-#include <gui/welcomescreen_screen/welcomeScreenPresenter.hpp>
-#include <gui/dashboardscreen_screen/dashboardScreenView.hpp>
-#include <gui/dashboardscreen_screen/dashboardScreenPresenter.hpp>
+#include <gui/staticscreen_screen/staticScreenView.hpp>
+#include <gui/staticscreen_screen/staticScreenPresenter.hpp>
 
 
 /**
@@ -38,9 +36,8 @@ public:
      * A list of all view types. Must end with meta::Nil.
      * @note All view types used in the application MUST be added to this list!
      */
-    typedef touchgfx::meta::TypeList< welcomeScreenView,
-            touchgfx::meta::TypeList< dashboardScreenView,
-            touchgfx::meta::Nil >
+    typedef touchgfx::meta::TypeList< staticScreenView,
+            touchgfx::meta::Nil
             > GeneratedViewTypes;
 
     /**
@@ -52,9 +49,8 @@ public:
      * A list of all presenter types. Must end with meta::Nil.
      * @note All presenter types used in the application MUST be added to this list!
      */
-    typedef touchgfx::meta::TypeList< welcomeScreenPresenter,
-            touchgfx::meta::TypeList< dashboardScreenPresenter,
-            touchgfx::meta::Nil >
+    typedef touchgfx::meta::TypeList< staticScreenPresenter,
+            touchgfx::meta::Nil
             > GeneratedPresenterTypes;
 
     /**
@@ -77,7 +73,7 @@ public:
 
     virtual void gotoStartScreen(FrontendApplication& app)
     {
-        app.gotowelcomeScreenScreenNoTransition();
+        app.gotostaticScreenScreenNoTransition();
     }
 protected:
     FrontendHeapBase(touchgfx::AbstractPartition& presenters, touchgfx::AbstractPartition& views, touchgfx::AbstractPartition& transitions, FrontendApplication& app)

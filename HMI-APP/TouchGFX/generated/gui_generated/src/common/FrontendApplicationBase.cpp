@@ -9,10 +9,8 @@
 #include <touchgfx/Texts.hpp>
 #include <touchgfx/hal/HAL.hpp>
 #include <platform/driver/lcd/LCD16bpp.hpp>
-#include <gui/welcomescreen_screen/welcomeScreenView.hpp>
-#include <gui/welcomescreen_screen/welcomeScreenPresenter.hpp>
-#include <gui/dashboardscreen_screen/dashboardScreenView.hpp>
-#include <gui/dashboardscreen_screen/dashboardScreenPresenter.hpp>
+#include <gui/staticscreen_screen/staticScreenView.hpp>
+#include <gui/staticscreen_screen/staticScreenPresenter.hpp>
 
 using namespace touchgfx;
 
@@ -23,7 +21,6 @@ FrontendApplicationBase::FrontendApplicationBase(Model& m, FrontendHeap& heap)
       model(m)
 {
     touchgfx::HAL::getInstance()->setDisplayOrientation(touchgfx::ORIENTATION_LANDSCAPE);
-    touchgfx::Texts::setLanguage(GB);
     reinterpret_cast<touchgfx::LCD16bpp&>(touchgfx::HAL::lcd()).enableTextureMapperAll();
 }
 
@@ -31,28 +28,15 @@ FrontendApplicationBase::FrontendApplicationBase(Model& m, FrontendHeap& heap)
  * Screen Transition Declarations
  */
 
-// welcomeScreen
+// staticScreen
 
-void FrontendApplicationBase::gotowelcomeScreenScreenNoTransition()
+void FrontendApplicationBase::gotostaticScreenScreenNoTransition()
 {
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotowelcomeScreenScreenNoTransitionImpl);
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotostaticScreenScreenNoTransitionImpl);
     pendingScreenTransitionCallback = &transitionCallback;
 }
 
-void FrontendApplicationBase::gotowelcomeScreenScreenNoTransitionImpl()
+void FrontendApplicationBase::gotostaticScreenScreenNoTransitionImpl()
 {
-    touchgfx::makeTransition<welcomeScreenView, welcomeScreenPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
-// dashboardScreen
-
-void FrontendApplicationBase::gotodashboardScreenScreenNoTransition()
-{
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotodashboardScreenScreenNoTransitionImpl);
-    pendingScreenTransitionCallback = &transitionCallback;
-}
-
-void FrontendApplicationBase::gotodashboardScreenScreenNoTransitionImpl()
-{
-    touchgfx::makeTransition<dashboardScreenView, dashboardScreenPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    touchgfx::makeTransition<staticScreenView, staticScreenPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }

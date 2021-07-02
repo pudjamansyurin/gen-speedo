@@ -15,22 +15,16 @@ public:
     FrontendApplicationBase(Model& m, FrontendHeap& heap);
     virtual ~FrontendApplicationBase() { }
 
-    // welcomeScreen
-    void gotowelcomeScreenScreenNoTransition();
-
-    // dashboardScreen
-    void gotodashboardScreenScreenNoTransition();
+    // staticScreen
+    void gotostaticScreenScreenNoTransition();
 
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
     FrontendHeap& frontendHeap;
     Model& model;
 
-    // welcomeScreen
-    void gotowelcomeScreenScreenNoTransitionImpl();
-
-    // dashboardScreen
-    void gotodashboardScreenScreenNoTransitionImpl();
+    // staticScreen
+    void gotostaticScreenScreenNoTransitionImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP
