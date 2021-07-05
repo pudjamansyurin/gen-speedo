@@ -5,7 +5,7 @@
         "Components": [
           {
             "Type": "Image",
-            "RelativeFilename": "Static.png",
+            "RelativeFilename": "Rev1.2.png",
             "Alpha": 255,
             "Name": "imageBlack",
             "X": 0,
@@ -21,7 +21,7 @@
           },
           {
             "Type": "Image",
-            "RelativeFilename": "StaticColor3.png",
+            "RelativeFilename": "Rev1.1.png",
             "Alpha": 255,
             "Name": "imageColor",
             "X": 0,

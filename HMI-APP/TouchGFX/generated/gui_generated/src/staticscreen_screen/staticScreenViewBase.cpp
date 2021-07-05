@@ -13,10 +13,10 @@ staticScreenViewBase::staticScreenViewBase()
 
     imageBlack.setXY(0, 0);
     imageBlack.setVisible(false);
-    imageBlack.setBitmap(touchgfx::Bitmap(BITMAP_STATIC_ID));
+    imageBlack.setBitmap(touchgfx::Bitmap(BITMAP_REV1_2_ID));
 
     imageColor.setXY(0, 0);
-    imageColor.setBitmap(touchgfx::Bitmap(BITMAP_STATICCOLOR3_ID));
+    imageColor.setBitmap(touchgfx::Bitmap(BITMAP_REV1_1_ID));
 
     add(__background);
     add(imageBlack);
